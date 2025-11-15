@@ -1,4 +1,4 @@
-
+﻿
 CBase::CBase() : m_dwRefCnt(0)
 {
 
