@@ -1,0 +1,32 @@
+﻿#pragma once
+#include "CBase.h"
+#include "CGameObject.h"
+
+BEGIN(Engine)
+
+class ENGINE_DLL CLayer : public CBase
+{
+private:
+	explicit CLayer();
+	virtual ~CLayer();
+
+public:
+	CComponent*		Get_Component(COMPONENTID eID, OBJTYPE eObjType, COMPONENTTYPE eComponentType);
+	HRESULT			Add_GameObject(OBJTYPE eObjType, CGameObject* pGameObject);
+
+public:
+	HRESULT			Ready_Layer();
+	_int			Update_Layer(const _float& fTimeDelta);
+	void			LateUpdate_Layer(const _float& fTimeDelta);
+
+private:
+	map<OBJTYPE, CGameObject*>			m_mapObject;
+
+public:
+	static CLayer* Create();
+
+private:
+	virtual void	Free();
+};
+
+END

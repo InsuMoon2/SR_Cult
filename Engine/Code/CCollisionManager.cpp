@@ -1,0 +1,107 @@
+﻿#include "CCollisionManager.h"
+#include "CCollider.h"
+#include "CGameObject.h"
+
+IMPLEMENT_SINGLETON(CCollisionManager)
+
+CCollisionManager::CCollisionManager()
+{
+}
+
+CCollisionManager::~CCollisionManager()
+{
+    Free();
+}
+
+void CCollisionManager::Ready_Collision()
+{
+    // TODO
+}
+
+void CCollisionManager::Update()
+{
+    auto& colliders = m_Colliders;
+    const _uint count = m_Colliders.size();
+
+    for (_uint i = 0; i < count; i++)
+    {
+        for (_uint j = i + 1; j < count; j++)
+        {
+            CCollider* src = m_Colliders[i];
+            CCollider* dst = m_Colliders[j];
+
+            if (src == nullptr || dst == nullptr)
+                continue;
+
+            // TODO : Owner 세팅 후 비교
+
+            bool isColliding = src->CheckCollision(dst);
+
+            if (isColliding)
+            {
+                // 이번 프레임에 새로 겹치기 시작하면
+                if (!src->IsOverlapping(dst))
+                {
+                    // Owner에게 이벤트 전달, 비교가 아닌 대입임
+                    if (CGameObject* ownerSrc = src->Get_Owner())
+                    {
+                        ownerSrc->OnBeginOverlap(src, dst);
+                    }
+
+                    if (CGameObject* ownerDst = dst->Get_Owner())
+                    {
+                        ownerDst->OnBeginOverlap(dst, src);
+                    }
+
+                    src->AddOverlap(dst);
+                    dst->AddOverlap(src);
+                }
+            }
+
+            else
+            {
+                // 이전 프레임까지 겹쳐 있었는데, 이제 떨어졌으면
+                if (src->IsOverlapping(dst))
+                {
+                    if (CGameObject* ownerSrc = src->Get_Owner())
+                    {
+                        ownerSrc->OnEndOverlap(src, dst);
+                    }
+
+                    if (CGameObject* ownerDst = dst->Get_Owner())
+                    {
+                        ownerDst->OnEndOverlap(dst, src);
+                    }
+
+                    // 충돌 상태 제거
+                    src->RemoveOverlap(dst);
+                    dst->RemoveOverlap(src);
+                }
+            }
+        }
+    }
+
+
+}
+
+void CCollisionManager::AddCollider(CCollider* collider)
+{
+    if (collider == nullptr)
+        return;
+
+    m_Colliders.push_back(collider);
+}
+
+void CCollisionManager::RemoveCollider(CCollider* collider)
+{
+    if (collider == nullptr)
+        return;
+
+    auto iter = remove(m_Colliders.begin(), m_Colliders.end(), collider);
+    m_Colliders.erase(iter, m_Colliders.end());
+}
+
+void CCollisionManager::Free()
+{
+    m_Colliders.clear();
+}
