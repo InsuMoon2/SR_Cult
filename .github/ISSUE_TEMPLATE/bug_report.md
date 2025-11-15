@@ -1,9 +1,9 @@
 ---
-name: Bug report
+name: BUG_TEMPLATE
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+title: "[BUG]: 버그_"
+labels: bug
+assignees: InsuMoon2
 
 ---
 
