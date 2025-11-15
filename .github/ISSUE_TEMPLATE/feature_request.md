@@ -1,7 +1,7 @@
 ---
 name: FEATURE TEMPLATE
 about: Suggest an idea for this project
-title: "[FEATURE] _"
+title: "[FEATURE] 피쳐_"
 labels: enhancement
 assignees: ''
 
