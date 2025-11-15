@@ -106,8 +106,9 @@
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)
-call Copy.bat</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\"
+xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,8 +130,9 @@ call Copy.bat</Command>
       <EnableUAC>true</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)
-call Copy.bat</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\"
+xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -149,8 +151,9 @@ call Copy.bat</Command>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)
-call Copy.bat</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\"
+xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -172,8 +175,9 @@ call Copy.bat</Command>
       <EnableUAC>true</EnableUAC>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)
-call Copy.bat</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.dll" "$(SolutionDir)Client\Bin\"
+xcopy /Y /I "$(SolutionDir)Engine\Bin\Engine.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

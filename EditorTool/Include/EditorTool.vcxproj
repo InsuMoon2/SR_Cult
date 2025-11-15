@@ -101,7 +101,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)EditorTool\Bin\EditorTool.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)EditorTool\Header\CImGuiManager.h" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -123,7 +124,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)EditorTool\Bin\EditorTool.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)EditorTool\Header\CImGuiManager.h" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -143,7 +145,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)EditorTool\Bin\EditorTool.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)EditorTool\Header\CImGuiManager.h" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,7 +168,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>cd /d $(SolutionDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)EditorTool\Bin\EditorTool.lib" "$(SolutionDir)Reference\Library\"
+xcopy /Y /I "$(SolutionDir)EditorTool\Header\CImGuiManager.h" "$(SolutionDir)Reference\Header\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

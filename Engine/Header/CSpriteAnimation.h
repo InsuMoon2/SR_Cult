@@ -16,7 +16,7 @@ public:
               _int      startX,
               _int      startY,
               _float    interval,
-              _bool      xAxis,
+              _bool     xAxis,
               ANIMSTATE state);
 
     void Reset();
@@ -47,7 +47,7 @@ private:
     _int m_FrameY;
 
     ANIMSTATE m_State;
-    _bool      m_XAxis;		// true면 X축으로 재생, false면 y축으로 재생
+    _bool     m_XAxis;		    // true면 X축으로 재생, false면 y축으로 재생
     _float    m_Interval;		// 다음 프레임까지 간격
     _float    m_AccTime;		// 누적 시간
 };
