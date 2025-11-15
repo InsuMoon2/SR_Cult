@@ -1,79 +1,87 @@
-#include "CRenderer.h"
+﻿#include "CRenderer.h"
+
+#include "CGameObject.h"
 
 IMPLEMENT_SINGLETON(CRenderer)
 
 CRenderer::CRenderer()
-{
-}
+{ }
 
 CRenderer::~CRenderer()
 {
-	Free();
+    CRenderer::Free();
 }
 
-void CRenderer::Add_RenderGroup(RENDERID eType, CGameObject* pGameObject)
+void CRenderer::Add_RenderGroup(RENDERID type, CGameObject* gameObject)
 {
-	if (RENDER_END <= eType || nullptr == pGameObject)
-		return;
+     if (type < RENDER_PRIORITY || type >= RENDER_END || nullptr == gameObject)
+        return;
 
-	m_RenderGroup[eType].push_back(pGameObject);
-	pGameObject->AddRef();
-
+    m_RenderGroup[type].push_back(gameObject);
+    gameObject->AddRef();
 }
 
-void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& graphicDev)
 {
-	Render_Priority(pGraphicDev);
-	Render_NonAlpha(pGraphicDev);
-	Render_Alpha(pGraphicDev);
-	Render_UI(pGraphicDev);
+    Render_Priority(graphicDev);
+    Render_NonAlpha(graphicDev);
+    Render_Alpha(graphicDev);
+    Render_UI(graphicDev);
 
-	Clear_RenderGroup();
+    Clear_RenderGroup();
 }
 
 void CRenderer::Clear_RenderGroup()
 {
-	for (size_t i = 0; i < RENDER_END; ++i)
-	{
-		for_each(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), CDeleteObj());
-		m_RenderGroup[i].clear();
-	}
-
+    for (size_t i = 0; i < RENDER_END; ++i)
+    {
+        for_each(m_RenderGroup[i].begin(), m_RenderGroup[i].end(), CDeleteObj());
+        m_RenderGroup[i].clear();
+    }
 }
 
-void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& graphicDev)
 {
-	for (auto& pObj : m_RenderGroup[RENDER_PRIORITY])
-		pObj->Render_GameObject();
-
+    for (auto& obj : m_RenderGroup[RENDER_PRIORITY])
+    {
+        obj->Render_GameObject();
+    }
 }
 
-void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& graphicDev)
 {
-	for (auto& pObj : m_RenderGroup[RENDER_NONALPHA])
-		pObj->Render_GameObject();
+    for (auto& obj : m_RenderGroup[RENDER_NONALPHA])
+    {
+        obj->Render_GameObject();
+    }
 }
 
-void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
 {
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+    graphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    graphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	for (auto& pObj : m_RenderGroup[RENDER_ALPHA])
-		pObj->Render_GameObject();
+    for (auto& obj : m_RenderGroup[RENDER_ALPHA])
+    {
+        obj->Render_GameObject();
+    }
 
-	pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
+void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
 {
-	for (auto& pObj : m_RenderGroup[RENDER_UI])
-		pObj->Render_GameObject();
+    // TODO 석호: 직교 투영 설정
+
+    for (auto& obj : m_RenderGroup[RENDER_UI])
+    {
+        obj->Render_GameObject();
+    }
 }
 
 void CRenderer::Free()
 {
-	Clear_RenderGroup();
+    Clear_RenderGroup();
 }

@@ -1,75 +1,77 @@
 ﻿#include "CLayer.h"
 
+#include "CGameObject.h"
+
 CLayer::CLayer()
-{
-}
+{ }
 
 CLayer::~CLayer()
-{
-}
+{ }
 
-CComponent* CLayer::Get_Component(COMPONENTID eID, OBJTYPE eObjType, COMPONENTTYPE eComponentType)
+CComponent* CLayer::Get_Component(COMPONENTID componentID, OBJTYPE objType, COMPONENTTYPE componentType)
 {
-    auto iter = m_mapObject.find(eObjType);
+    auto iter = m_Objects.find(objType);
 
-    if (iter == m_mapObject.end())
+    if (iter == m_Objects.end())
         return nullptr;
 
-    return iter->second->Get_Component(eID, eComponentType);
+    return iter->second->Get_Component(componentID, componentType);
 }
 
-HRESULT CLayer::Add_GameObject(OBJTYPE eObjType, CGameObject* pGameObject)
+HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
 {
-    if (nullptr == pGameObject)
+    if (nullptr == gameObject)
         return E_FAIL;
 
-    m_mapObject.insert({ eObjType, pGameObject });
+    m_Objects.insert({ objType, gameObject });
 
     return S_OK;
 }
 
 HRESULT CLayer::Ready_Layer()
 {
-	return S_OK;
+    return S_OK;
 }
 
-_int CLayer::Update_Layer(const _float& fTimeDelta)
+_int CLayer::Update_Layer(const _float& timeDelta)
 {
-	_int	iResult(0);
+    _int result = 0;
 
-	for (auto& pObj : m_mapObject)
-	{
-		iResult = pObj.second->Update_GameObject(fTimeDelta);
+    for (auto& obj : m_Objects)
+    {
+        result = obj.second->Update_GameObject(timeDelta);
 
-		if (iResult & 0x80000000)
-			return iResult;
-	}
+        if (result & 0x80000000)
+            return result;
+    }
 
-	return iResult;
+    return result;
 }
 
-void CLayer::LateUpdate_Layer(const _float& fTimeDelta)
+void CLayer::LateUpdate_Layer(const _float& timeDelta)
 {
-	for (auto& pObj : m_mapObject)
-		pObj.second->LateUpdate_GameObject(fTimeDelta);
+    for (auto& obj : m_Objects)
+    {
+        obj.second->LateUpdate_GameObject(timeDelta);
+    }
 }
 
 CLayer* CLayer::Create()
 {
-	CLayer* pLayer = new CLayer;
+    auto layer = new CLayer;
 
-	if (FAILED(pLayer->Ready_Layer()))
-	{
-		MSG_BOX("Layer Create Failed");
-		Safe_Release(pLayer);
-		return nullptr;
-	}
+    if (FAILED(layer->Ready_Layer()))
+    {
+        MSG_BOX("Layer Create Failed");
+        Safe_Release(layer);
+        return nullptr;
+    }
 
-	return pLayer;
+    return layer;
 }
 
 void CLayer::Free()
 {
-	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteMap());
-	m_mapObject.clear();
+    for_each(m_Objects.begin(), m_Objects.end(), CDeleteMap());
+    m_Objects.clear();
 }

@@ -1,30 +1,30 @@
 ﻿#include "CGameObject.h"
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphicDev)
-    : m_pGraphicDev(pGraphicDev)
+#include "CComponent.h"
+
+CGameObject::CGameObject(LPDIRECT3DDEVICE9 graphicDev)
+    : m_GraphicDev(graphicDev)
 {
-    m_pGraphicDev->AddRef();
+    m_GraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
-    : m_pGraphicDev(rhs.m_pGraphicDev)
+    : m_GraphicDev(rhs.m_GraphicDev)
 {
-    m_pGraphicDev->AddRef();
+    m_GraphicDev->AddRef();
 }
 
 CGameObject::~CGameObject()
-{
-    
-}
+{ }
 
-CComponent* CGameObject::Get_Component(COMPONENTID eID, COMPONENTTYPE eComponentType)
+CComponent* CGameObject::Get_Component(COMPONENTID componentID, COMPONENTTYPE componentType)
 {
-    CComponent* pComponent = Find_Component(eID, eComponentType);
+    CComponent* component = Find_Component(componentID, componentType);
 
-    if (nullptr == pComponent)
+    if (nullptr == component)
         return nullptr;
 
-    return pComponent;
+    return component;
 }
 
 HRESULT CGameObject::Ready_GameObject()
@@ -32,29 +32,32 @@ HRESULT CGameObject::Ready_GameObject()
     return S_OK;
 }
 
-_int CGameObject::Update_GameObject(const _float& fTimeDelta)
+_int CGameObject::Update_GameObject(const _float& timeDelta)
 {
-    for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->Update_Component(fTimeDelta);
+    for (auto& component : m_Components[ID_DYNAMIC])
+    {
+        component.second->Update_Component(timeDelta);
+    }
 
     return 0;
 }
 
-void CGameObject::LateUpdate_GameObject(const _float& fTimeDelta)
+void CGameObject::LateUpdate_GameObject(const _float& timeDelta)
 {
-    for (auto& pComponent : m_mapComponent[ID_DYNAMIC])
-        pComponent.second->LateUpdate_Component();
+    for (auto& component : m_Components[ID_DYNAMIC])
+    {
+        component.second->LateUpdate_Component();
+    }
 }
 
 void CGameObject::Render_GameObject()
-{
-}
+{ }
 
-CComponent* CGameObject::Find_Component(COMPONENTID eID, COMPONENTTYPE eComponentType)
+CComponent* CGameObject::Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType)
 {
-    auto& componentMap = m_mapComponent[eID];
+    auto& componentMap = m_Components[componentID];
 
-    auto iter = componentMap.find(eComponentType);
+    auto iter = componentMap.find(componentType);
     if (iter == componentMap.end())
         return nullptr;
 
@@ -65,9 +68,9 @@ void CGameObject::Free()
 {
     for (_uint i = 0; i < ID_END; ++i)
     {
-        for_each(m_mapComponent[i].begin(), m_mapComponent[i].end(), CDeleteMap());
-        m_mapComponent[i].clear();
+        for_each(m_Components[i].begin(), m_Components[i].end(), CDeleteMap());
+        m_Components[i].clear();
     }
 
-    Safe_Release(m_pGraphicDev);
+    Safe_Release(m_GraphicDev);
 }

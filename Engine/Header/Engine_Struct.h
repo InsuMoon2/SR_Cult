@@ -1,62 +1,59 @@
-#ifndef Engine_Struct_h__
+ï»¿#ifndef Engine_Struct_h__
 #define Engine_Struct_h__
-
-#include "Engine_Typedef.h"
 
 namespace Engine
 {
-	typedef struct tagVertexColor
-	{
-		_vec3		vPosition;			
-		_ulong		dwColor;
-	
-	}VTXCOL;
+// ìƒ‰ìƒ ì •ë³´ë¥¼ í¬í•¨í•˜ëŠ” ì •ì  êµ¬ì¡°ì²´
+typedef struct tagVertexColor
+{
+    _vec3  position;
+    _ulong color;
+} VTXCOL;
 
-	const _ulong	FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
+constexpr _ulong FVF_COL = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
 
-	typedef struct tagVertexTexture
-	{
-		_vec3		vPosition;
-		_vec2		vTexUV;
+// ê¸°ë³¸ UV ì¢Œí‘œ ë° ì¡°ëª… ê³„ì‚°ìš© ë²•ì„ ì„ ê°€ì§€ëŠ” í…ìŠ¤ì²˜ ì •ì  êµ¬ì¡°ì²´
+typedef struct tagVertexTexture
+{
+    _vec3 position;
+    _vec3 normal;
+    _vec2 texUV;
+} VTXTEX;
 
-	}VTXTEX;
+constexpr _ulong FVF_TEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
-	const _ulong	FVF_TEX = D3DFVF_XYZ  | D3DFVF_TEX1;
+// íë¸Œ ë§µ ìƒ˜í”Œë§ì„ ìœ„í•œ 3ì°¨ì› í…ìŠ¤ì²˜ ì¢Œí‘œë¥¼ ê°€ì§„ ì •ì  êµ¬ì¡°ì²´
+typedef struct tagVertexCubeTexture
+{
+    _vec3 position;
+    _vec3 texUV;
+} VTXCUBE;
 
-	typedef struct tagVertexCubeTexture
-	{
-		_vec3		vPosition;
-		_vec3		vTexUV;
+constexpr _ulong FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);
+// D3DFVF_TEXCOORDSIZE3(0) :
+// í…ìŠ¤ì²˜ì˜ UV ì¢Œí‘œ ê°’ì„ FLOATí˜• 3ê°œë¡œ í‘œí˜„í•˜ê² ë‹¤ëŠ” ë§¤í¬ë¡œ
+// ê´„í˜¸ ì•ˆì˜ ìˆ«ì 0ì˜ ì˜ë¯¸ëŠ” ë³¸ë˜ ë²„í…ìŠ¤ì— í…ìŠ¤ì³ UVê°’ì´ ì—¬ëŸ¬ê°œê°€ ì˜¬ ìˆ˜ ìˆëŠ”ë°
+// ê·¸ì¤‘ 0ë²ˆì§¸ ê°’ì„ ì§€ì •í•˜ê² ë‹¤ëŠ” ì˜ë¯¸
 
-	}VTXCUBE;
+typedef struct tagIndex16
+{
+    _ushort _0;
+    _ushort _1;
+    _ushort _2;
+} INDEX16;
 
-	const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0); // ÅØ½ºÃ³ÀÇ UV ÁÂÇ¥ °ªÀ» FLOATÇü 3°³·Î Ç¥ÇöÇÏ°Ú´Ù´Â ¸ÅÅ©·Î(°ıÈ£¾ÈÀÇ ¼ıÀÚ 0ÀÇ ÀÇ¹Ì´Â º»·¡ ¹öÅØ½º¿¡ ÅØ½ºÃÄ UV°ªÀÌ ¿©·¯°³°¡ ¿Ã ¼ö ÀÖ´Âµ¥ ±×Áß 0¹øÂ° °ªÀ» ÁöÁ¤ÇÏ°Ú´Ù´Â ÀÇ¹Ì)
+typedef struct tagIndex32
+{
+    _ulong _0;
+    _ulong _1;
+    _ulong _2;
+} INDEX32;
 
-	typedef struct tagIndex16
-	{
-		_ushort  _0;
-		_ushort  _1;
-		_ushort  _2;
-
-	}INDEX16;
-
-	typedef struct tagIndex32
-	{
-		_ulong	_0;
-		_ulong	_1;
-		_ulong	_2;
-
-	}INDEX32;	
-
-	typedef struct tagSprite
-	{
-		_uint	Index; // ½ºÇÁ¶óÀÌÆ® ÀÎµ¦½º
-		_float	Duration;	  // ÇÁ·¹ÀÓ ÀüÈ¯ ¼Óµµ
-
-	} Sprite;
-
-
+typedef struct tagSprite
+{
+    _uint  index;           // ìŠ¤í”„ë¼ì´íŠ¸ ì¸ë±ìŠ¤
+    _float duration;        // í”„ë ˆì„ ì „í™˜ ì†ë„
+} SPRITE;
 }
-
 
 #endif // Engine_Struct_h__

@@ -1,30 +1,27 @@
 ﻿#pragma once
-
 #include "CGameObject.h"
 
-namespace Engine
-{
-	class CRcTex;
-	class CTransform;
-	class CTexture;
-	class CAnimator;
-    class CProtoMgr;
-    class CRectCollider;
-}
-
+BEGIN(Engine)
+class CRcTex;
+class CTransform;
+class CTexture;
+class CAnimator;
+class CProtoMgr;
+class CRectCollider;
+END
 
 class CPlayer : public CGameObject
 {
 private:
-	explicit CPlayer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CPlayer(const CPlayer& rhs);
-	virtual ~CPlayer();
+    explicit CPlayer(DEVICE graphicDev);
+    explicit CPlayer(const CPlayer& rhs);
+    ~CPlayer() override;
 
 public:
-	virtual			HRESULT		Ready_GameObject();
-	virtual			_int		Update_GameObject(const _float& fTimeDelta);
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
-	virtual			void		Render_GameObject();
+    HRESULT Ready_GameObject() override;
+    _int    Update_GameObject(const _float& timeDelta) override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
     void Render_Setting();
     void Render_Reset();
@@ -33,22 +30,19 @@ public:
     void OnEndOverlap(CCollider* self, CCollider* other) override;
 
 private:
-	HRESULT			Add_Component();
-	void			Key_Input(const _float& fTimeDelta);
+    HRESULT Add_Component();
+    void    Key_Input(const _float& timeDelta);
 
 private:
-	Engine::CRcTex*		m_pBufferCom;
-	Engine::CTransform* m_pTransformCom;
-	Engine::CTexture*	m_pTextureCom;
-	Engine::CAnimator*  m_AnimatorCom;
-
+    Engine::CRcTex*        m_BufferCom;
+    Engine::CTransform*    m_TransformCom;
+    Engine::CTexture*      m_TextureCom;
+    Engine::CAnimator*     m_AnimatorCom;
     Engine::CRectCollider* m_RectColCom;
 
 public:
-	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    static CPlayer* Create(DEVICE graphicDev);
 
 private:
-	virtual void Free();
-
+    void Free() override;
 };
-

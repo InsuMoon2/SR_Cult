@@ -1,42 +1,45 @@
 ﻿#pragma once
-
 #include "CBase.h"
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class CGameObject;
 class CTransform;
 
+/// @brief 오브젝트에 부착되어 기능을 모듈화하는 엔진의 최소 단위 클래스
+/// @details
+/// - 기본적으로 프로토타입 패턴을 사용해 동일 구성을 빠르게 복제하고 일관된 초기화를 유지한다.
+/// - 생명 주기는 소유 오브젝트와 참조 카운트에 의해 관리되며, 자원 해제는 Free()를 통해 수행된다
+/// - 자신의 소유자인 오브젝트 m_Owner, 소유자의 Transform 컴포넌트 m_TransformCom 를 가진다
 class ENGINE_DLL CComponent : public CBase
 {
 protected:
-	explicit CComponent();
-	explicit CComponent(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CComponent(const CComponent& rhs);
-	virtual ~CComponent();
+    explicit CComponent();
+    explicit CComponent(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CComponent(const CComponent& rhs);
+    ~CComponent() override;
 
 public:
-	virtual _int Update_Component(const _float& fTimeDelta) { return 0; }
-	virtual void LateUpdate_Component() { }
+    virtual _int Update_Component(const _float& timeDelta) { return 0; }
+    virtual void LateUpdate_Component() { }
 
-	CGameObject* Get_Owner() { return m_Owner; }
-    void Set_Owner(CGameObject* Owner);
+    CGameObject* Get_Owner() { return m_Owner; }
+    void         Set_Owner(CGameObject* owner);
 
     CTransform* Get_Transform() { return m_TransformCom; }
 
 protected:
-	DEVICE			m_GraphicDev;
-	_bool			m_Clone;
+    DEVICE m_GraphicDev;
+    _bool  m_IsClone;
 
-	CGameObject*	m_Owner;
-    CTransform*     m_TransformCom;
+    CGameObject* m_Owner;
+    CTransform*  m_TransformCom;
 
 public:
-	virtual CComponent* Clone()	PURE;		// 프로토타입 사용 예
+    virtual CComponent* Clone() PURE;		// 프로토타입 사용 예
 
 protected:
-	virtual void				Free();
+    void Free() override;
 };
 
 END

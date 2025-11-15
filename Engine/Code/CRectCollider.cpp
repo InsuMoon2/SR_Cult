@@ -1,35 +1,32 @@
 ﻿#include "CRectCollider.h"
-#include "CSphereCollider.h"
+
 #include "CRcCol.h"
+#include "CSphereCollider.h"
 #include "CTransform.h"
 
-CRectCollider::CRectCollider(DEVICE GraphicDev)
-    : CCollider(GraphicDev, COLLIDERTYPE::Rect)
-    , m_BufferCom(nullptr), m_Size(1.f, 1.f)
+CRectCollider::CRectCollider(DEVICE graphicDev)
+    : CCollider(graphicDev, COLLIDERTYPE::RECT)
+      , m_BufferCom(nullptr), m_Size(1.f, 1.f)
 
-{
-
-}
+{ }
 
 CRectCollider::CRectCollider(const CRectCollider& rhs)
-    : CCollider(rhs) , m_BufferCom(rhs.m_BufferCom), m_Size(rhs.m_Size)
+    : CCollider(rhs), m_BufferCom(rhs.m_BufferCom), m_Size(rhs.m_Size)
 {
     if (m_BufferCom)
         m_BufferCom->AddRef();
 }
 
 CRectCollider::~CRectCollider()
-{
+{ }
 
-}
-
-HRESULT CRectCollider::Ready_BoxCollider(DEVICE GraphicDev)
+HRESULT CRectCollider::Ready_BoxCollider(DEVICE graphicDev)
 {
-    if (FAILED(CCollider::Ready_Collider()))   
+    if (FAILED(CCollider::Ready_Collider()))
         return E_FAIL;
 
     // 렌더용 RcCol Create, 일단 테스트 후 프로토타입으로 변경
-    m_BufferCom = CRcCol::Create(GraphicDev);
+    m_BufferCom = CRcCol::Create(graphicDev);
 
     if (m_BufferCom == nullptr)
         return E_FAIL;
@@ -37,20 +34,16 @@ HRESULT CRectCollider::Ready_BoxCollider(DEVICE GraphicDev)
     return S_OK;
 }
 
-_int CRectCollider::Update_Component(const _float& fTimeDelta)
+_int CRectCollider::Update_Component(const _float& timeDelta)
 {
-    _int iExit = CCollider::Update_Component(fTimeDelta);
+    _int exit = CCollider::Update_Component(timeDelta);
 
-
-
-    return iExit;
+    return exit;
 }
 
 void CRectCollider::LateUpdate_Component()
 {
     CCollider::LateUpdate_Component();
-
-
 }
 
 void CRectCollider::Render()
@@ -65,7 +58,7 @@ void CRectCollider::Render()
         return;
 
     // 월드 행렬 가져와서,
-    _matrix matWorld = *transform->Get_World();
+    _matrix matWorld = transform->Get_World();
 
     // RectCollider Scale 반영
     _matrix matScale;
@@ -90,12 +83,14 @@ bool CRectCollider::CheckCollision(CCollider* other)
 {
     switch (other->GetColliderType())
     {
-    case COLLIDERTYPE::Rect:
+    case COLLIDERTYPE::RECT:
         return CheckCollisionBox2Box(this, static_cast<CRectCollider*>(other));
 
-    case COLLIDERTYPE::Sphere:
+    case COLLIDERTYPE::SPHERE:
         return CheckCollisionSphere2Box(static_cast<CSphereCollider*>(other), this);
 
+    default:
+        break;
     }
 
     return false;
@@ -103,7 +98,7 @@ bool CRectCollider::CheckCollision(CCollider* other)
 
 CRectCollider* CRectCollider::Create(DEVICE GraphicDev)
 {
-    CRectCollider* box = new CRectCollider(GraphicDev);
+    auto box = new CRectCollider(GraphicDev);
 
     if (FAILED(box->Ready_BoxCollider(GraphicDev)))
     {
@@ -117,9 +112,9 @@ CRectCollider* CRectCollider::Create(DEVICE GraphicDev)
 
 CComponent* CRectCollider::Clone()
 {
-    CRectCollider* col = new CRectCollider(*this);
+    auto col = new CRectCollider(*this);
 
-    col->Ready_Collider();     
+    col->Ready_Collider();
 
     return col;
 }

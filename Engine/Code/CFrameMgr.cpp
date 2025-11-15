@@ -1,53 +1,54 @@
-#include "CFrameMgr.h"
+﻿#include "CFrameMgr.h"
+
+#include "CFrame.h"
 
 IMPLEMENT_SINGLETON(CFrameMgr)
 
 CFrameMgr::CFrameMgr()
-{
-}
+{ }
 
 CFrameMgr::~CFrameMgr()
 {
-	Free();
+    CFrameMgr::Free();
 }
 
-_bool CFrameMgr::IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta)
+_bool CFrameMgr::IsPermit_Call(const wstring& frameTag, const _float& timeDelta)
 {
-	CFrame* pFrame = Find_Frame(pFrameTag);
-	if (nullptr == pFrame)
-		return false;
+    CFrame* frame = Find_Frame(move(frameTag));
+    if (nullptr == frame)
+        return false;
 
-	return pFrame->IsPermit_Call(fTimeDelta);
+    return frame->IsPermit_Call(timeDelta);
 }
 
-HRESULT CFrameMgr::Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit)
+HRESULT CFrameMgr::Ready_Frame(const wstring& frameTag, const _float& callLimit)
 {
-	CFrame* pFrame = Find_Frame(pFrameTag);
+    CFrame* frame = Find_Frame(frameTag);
 
-	if (nullptr != pFrame)
-		return E_FAIL;
+    if (nullptr != frame)
+        return E_FAIL;
 
-	pFrame = CFrame::Create(fCallLimit);
-	if (nullptr == pFrame)
-		return E_FAIL;
+    frame = CFrame::Create(callLimit);
+    if (nullptr == frame)
+        return E_FAIL;
 
-	m_mapFrame.insert({ pFrameTag, pFrame });
+    m_Frames.insert({ frameTag, frame });
 
-	return S_OK;
+    return S_OK;
 }
 
-CFrame* CFrameMgr::Find_Frame(const _tchar* pFrameTag)
+CFrame* CFrameMgr::Find_Frame(const wstring& frameTag)
 {
-	auto iter = find_if(m_mapFrame.begin(), m_mapFrame.end(), CTag_Finder(pFrameTag));
+    auto iter = find_if(m_Frames.begin(), m_Frames.end(), CTag_Finder(move(frameTag)));
 
-	if (iter == m_mapFrame.end())
-		return nullptr;
+    if (iter == m_Frames.end())
+        return nullptr;
 
-	return iter->second;
+    return iter->second;
 }
 
 void CFrameMgr::Free()
 {
-	for_each(m_mapFrame.begin(), m_mapFrame.end(), CDeleteMap());
-	m_mapFrame.clear();
+    for_each(m_Frames.begin(), m_Frames.end(), CDeleteMap());
+    m_Frames.clear();
 }

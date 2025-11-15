@@ -1,41 +1,36 @@
-#pragma once
-
+ï»¿#pragma once
 #include "CBase.h"
-#include "CGraphicDev.h"
-#include "CTimerMgr.h"
-#include "CFrameMgr.h"
 
-namespace Engine
-{
-	class CManagement;
-}
+BEGIN(Engine)
+class CGraphicDev;
+class CManagement;
+END
 
 class CMainApp : public CBase
 {
-private:	// »ý¼ºÀÚ, ¼Ò¸êÀÚ
-	explicit CMainApp();
-	virtual ~CMainApp();
+private:
+    explicit CMainApp();
+    ~CMainApp() override;
 
 public:
-	HRESULT Ready_MainApp();
-	int		Update_MainApp(const float& fTimeDelta);
-	void	LateUpdate_MainApp(const float& fTimeDelta);
-	void	Render_MainApp();
+    HRESULT Ready_MainApp();
+    _int    Update_MainApp(const float& timeDelta);
+    void    LateUpdate_MainApp(const float& timeDelta);
+    void    Render_MainApp();
 
 private:
-	HRESULT		Ready_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev);
-	HRESULT		Ready_Scene(LPDIRECT3DDEVICE9 pGraphicDev);
+    HRESULT Ready_DefaultSetting(DEVICE* graphicDev);
+    HRESULT Ready_Scene(DEVICE graphicDev);
 
 private:
-	Engine::CGraphicDev* m_DeviceClass;
-	Engine::CManagement* m_ManagementClass;
+    Engine::CManagement* m_ManagementClass;
+    Engine::CGraphicDev* m_DeviceClass;
 
-	LPDIRECT3DDEVICE9	 m_GraphicDev;
+    DEVICE m_GraphicDev;
 
-public:	
-	static CMainApp*	Create();
+public:
+    static CMainApp* Create();
 
 private:
-	virtual void		Free()override;
+    void Free() override;
 };
-

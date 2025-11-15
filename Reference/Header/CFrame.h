@@ -1,33 +1,29 @@
-#pragma once
+﻿#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
-class ENGINE_DLL CFrame :    public CBase
+class ENGINE_DLL CFrame : public CBase
 {
 private:
-	explicit CFrame();
-	virtual ~CFrame();
+    explicit CFrame();
+    ~CFrame() override;
 
 public:
-	_bool		IsPermit_Call(const _float& fTimeDelta);
+    _bool IsPermit_Call(const _float& timeDelta);
 
 public:
-	HRESULT		Ready_Frame(const _float& fCallLimit);
+    HRESULT Ready_Frame(const _float& callLimit);
 
 private:
-	_float		m_fCallLimit;
-	_float		m_fAccTimeDelta;
-
+    _float m_CallLimit;
+    _float m_AccTimeDelta;
 
 public:
-	static CFrame* Create(const _float& fCallLimit);
+    static CFrame* Create(const _float& callLimit);
 
 private:
-	virtual void	Free();
-
-
+    void Free() override;
 };
 
 END

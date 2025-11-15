@@ -1,92 +1,87 @@
-#include "CTriCol.h"
+ï»¿#include "CTriCol.h"
 
 CTriCol::CTriCol()
-{
-}
+{ }
 
-CTriCol::CTriCol(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
-{
-}
+CTriCol::CTriCol(LPDIRECT3DDEVICE9 graphicDev)
+    : CVIBuffer(graphicDev)
+{ }
 
 CTriCol::CTriCol(const CTriCol& rhs)
-	: CVIBuffer(rhs)
-{
-}
+    : CVIBuffer(rhs)
+{ }
 
 CTriCol::~CTriCol()
-{
-}
+{ }
 
 HRESULT CTriCol::Ready_Buffer()
 {
-	m_dwVtxSize = sizeof(VTXCOL);
-	m_dwVtxCnt = 3;
-	m_dwTriCnt = 1;
-	m_dwFVF = FVF_COL;
+    m_VtxSize = sizeof(VTXCOL);
+    m_VtxCnt  = 3;
+    m_TriCnt  = 1;
+    m_FVF     = FVF_COL;
 
-	m_dwIdxSize = sizeof(INDEX32);
-	m_IdxFmt = D3DFMT_INDEX32;
+    m_IdxSize = sizeof(INDEX32);
+    m_IdxFmt    = D3DFMT_INDEX32;
 
-	if (FAILED(CVIBuffer::Ready_Buffer()))
-		return E_FAIL;
+    if (FAILED(CVIBuffer::Ready_Buffer()))
+        return E_FAIL;
 
-	VTXCOL* pVertex = NULL;
+    VTXCOL* vertex = nullptr;
 
-	// 3 ¸Å°³ º¯¼ö : m_pVB¿¡ º¸°üµÈ Á¤Á¡µé Áß Ã¹ ¹øÂ° Á¤Á¡ÀÇ ÁÖ¼Ò¸¦ ¾ò¾î¿À´Â °Í
+    // 3 ë§¤ê°œ ë³€ìˆ˜ : m_pVBì— ë³´ê´€ëœ ì •ì ë“¤ ì¤‘ ì²« ë²ˆì§¸ ì •ì ì˜ ì£¼ì†Œë¥¼ ì–»ì–´ì˜¤ëŠ” ê²ƒ
 
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+    m_VB->Lock(0, 0, (void**)&vertex, 0);
 
-	pVertex[0].vPosition = { 0.f, 1.f, 0.f };
-	pVertex[0].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+    vertex[0].position = { 0.f, 1.f, 0.f };
+    vertex[0].color    = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
 
-	pVertex[1].vPosition = { 1.f, -1.f, 0.f };
-	pVertex[1].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+    vertex[1].position = { 1.f, -1.f, 0.f };
+    vertex[1].color    = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
 
-	pVertex[2].vPosition = { -1.f, -1.f, 0.f };
-	pVertex[2].dwColor = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
+    vertex[2].position = { -1.f, -1.f, 0.f };
+    vertex[2].color    = D3DXCOLOR(0.f, 1.f, 0.f, 1.f);
 
-	m_pVB->Unlock();
+    m_VB->Unlock();
 
-	INDEX32* pIndex = NULL;
+    INDEX32* index = nullptr;
 
-	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+    m_IB->Lock(0, 0, (void**)&index, 0);
 
-	pIndex[0]._0 = 0;
-	pIndex[0]._1 = 1;
-	pIndex[0]._2 = 2;
+    index[0]._0 = 0;
+    index[0]._1 = 1;
+    index[0]._2 = 2;
 
-	m_pIB->Unlock();
+    m_IB->Unlock();
 
-
-	return S_OK;
+    return S_OK;
 }
 
 void CTriCol::Render_Buffer()
 {
-	CVIBuffer::Render_Buffer();
+    CVIBuffer::Render_Buffer();
 }
 
-CTriCol* CTriCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CTriCol* CTriCol::Create(LPDIRECT3DDEVICE9 graphicDev)
 {
-	CTriCol* pTriCol = new CTriCol(pGraphicDev);
+    auto triCol = new CTriCol(graphicDev);
 
-	if (FAILED(pTriCol->Ready_Buffer()))
-	{
-		Safe_Release(pTriCol);
-		MSG_BOX("TriCol Create Failed");
-		return nullptr;
-	}
+    if (FAILED(triCol->Ready_Buffer()))
+    {
+        Safe_Release(triCol);
+        MSG_BOX("TriCol Create Failed");
+        return nullptr;
+    }
 
-	return pTriCol;
+    return triCol;
 }
 
 CComponent* CTriCol::Clone()
 {
-	return new CTriCol(*this);
+    return new CTriCol(*this);
 }
 
 void CTriCol::Free()
 {
-	CVIBuffer::Free();
+    CVIBuffer::Free();
 }

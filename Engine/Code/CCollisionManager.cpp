@@ -1,16 +1,16 @@
 ﻿#include "CCollisionManager.h"
+
 #include "CCollider.h"
 #include "CGameObject.h"
 
 IMPLEMENT_SINGLETON(CCollisionManager)
 
 CCollisionManager::CCollisionManager()
-{
-}
+{ }
 
 CCollisionManager::~CCollisionManager()
 {
-    Free();
+    CCollisionManager::Free();
 }
 
 void CCollisionManager::Ready_Collision()
@@ -20,8 +20,8 @@ void CCollisionManager::Ready_Collision()
 
 void CCollisionManager::Update()
 {
-    auto& colliders = m_Colliders;
-    const _uint count = m_Colliders.size();
+    auto&       colliders = m_Colliders;
+    const _uint count     = static_cast<_uint>(m_Colliders.size());
 
     for (_uint i = 0; i < count; i++)
     {
@@ -44,14 +44,10 @@ void CCollisionManager::Update()
                 {
                     // Owner에게 이벤트 전달, 비교가 아닌 대입임
                     if (CGameObject* ownerSrc = src->Get_Owner())
-                    {
                         ownerSrc->OnBeginOverlap(src, dst);
-                    }
 
                     if (CGameObject* ownerDst = dst->Get_Owner())
-                    {
                         ownerDst->OnBeginOverlap(dst, src);
-                    }
 
                     src->AddOverlap(dst);
                     dst->AddOverlap(src);
@@ -64,14 +60,10 @@ void CCollisionManager::Update()
                 if (src->IsOverlapping(dst))
                 {
                     if (CGameObject* ownerSrc = src->Get_Owner())
-                    {
                         ownerSrc->OnEndOverlap(src, dst);
-                    }
 
                     if (CGameObject* ownerDst = dst->Get_Owner())
-                    {
                         ownerDst->OnEndOverlap(dst, src);
-                    }
 
                     // 충돌 상태 제거
                     src->RemoveOverlap(dst);
@@ -80,8 +72,6 @@ void CCollisionManager::Update()
             }
         }
     }
-
-
 }
 
 void CCollisionManager::AddCollider(CCollider* collider)

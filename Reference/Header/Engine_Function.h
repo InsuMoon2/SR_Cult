@@ -1,108 +1,136 @@
-#ifndef Engine_Function_h__
+ï»¿#ifndef Engine_Function_h__
 #define Engine_Function_h__
-
-#include "Engine_Typedef.h"
 
 namespace Engine
 {
-	// ÅÛÇÃ¸´Àº ±â´ÉÀÇ Á¤ÇØÁ®ÀÖÀ¸³ª ÀÚ·áÇüÀº Á¤ÇØÁ®ÀÖÁö ¾ÊÀº °Í
-	// ±â´ÉÀ» ÀÎ½ºÅÏ½ºÈ­ ÇÏ±â À§ÇÏ¿© ¸¸µé¾îµÎ´Â Æ²
+// ========================================
+// Inline Function
+// ========================================
 
-	template<typename T>
-	void	Safe_Delete(T& Pointer)
-	{
-		if (nullptr != Pointer)
-		{
-			delete Pointer;
-			Pointer = nullptr;
-		}
-	}
+///@brief ê°’ì„ ì§€ì •ëœ ìµœì†Œ/ìµœëŒ€ ë²”ìœ„ ë‚´ë¡œ ì œí•œ
+///@param value ì œí•œí•  ì›ë³¸ ê°’
+///@param min ìµœì†Œ í•œê³„ê°’
+///@param max ìµœëŒ€ í•œê³„ê°’
+///@return ë²”ìœ„ ë‚´ë¡œ ì œí•œëœ ê°’
+inline float Clamp(const float value, const float min, const float max)
+{
+    return (value < min) ? min : ((value > max) ? max : value);
+}
 
-	template<typename T>
-	void	Safe_Delete_Array(T& Pointer)
-	{
-		if (nullptr != Pointer)
-		{
-			delete [] Pointer;
-			Pointer = nullptr;
-		}
-	}
+// ========================================
+// template Function
+// ========================================
 
-	template<typename T>
-	unsigned long Safe_Release(T& pInstance)
-	{
-		unsigned long		dwRefCnt = 0;
+// ë‹¨ì¼ ê°ì²´ë¥¼ ì•ˆì „í•˜ê²Œ ì‚­ì œ
+template <typename T>
+void Safe_Delete(T& pointer)
+{
+    if (nullptr != pointer)
+    {
+        delete pointer;
+        pointer = nullptr;
+    }
+}
 
-		if (nullptr != pInstance)
-		{
-			dwRefCnt = pInstance->Release();
+// ë°°ì—´ë¡œ í• ë‹¹ëœ ê°ì²´ë¥¼ ì•ˆì „í•˜ê²Œ ì‚­ì œ
+template <typename T>
+void Safe_Delete_Array(T& pointer)
+{
+    if (nullptr != pointer)
+    {
+        delete[] pointer;
+        pointer = nullptr;
+    }
+}
 
-			if (0 == dwRefCnt)
-				pInstance = NULL;
-		}
+// COM ê°ì²´ì˜ ì°¸ì¡° ì¹´ìš´íŠ¸ë¥¼ ê°ì†Œì‹œí‚¤ê³  0ì´ ë˜ë©´ í¬ì¸í„°ë¥¼ NULLë¡œ ì´ˆê¸°í™”
+template <typename T>
+unsigned long Safe_Release(T& instance)
+{
+    unsigned long refCnt = 0;
 
-		return dwRefCnt;
-	}
+    if (nullptr != instance)
+    {
+        refCnt = instance->Release();
 
+        if (0 == refCnt)
+            instance = NULL;
+    }
 
-	// Functor
-	class CTag_Finder
-	{
-	public:
-		explicit CTag_Finder(const _tchar* pTag) : m_pTargetTag(pTag){}
-		~CTag_Finder(void) {}
+    return refCnt;
+}
 
-	public:
-		template<typename T> 
-		_bool		operator()(const T& pair)
-		{
-			if (0 == lstrcmpW(m_pTargetTag, pair.first))
-				return true;
-			
-			return false;
-		}
+// ========================================
+// Functor
+// ========================================
 
-	private:
-		const _tchar*		m_pTargetTag = nullptr;
-	};
+// STL ì»¨í…Œì´ë„ˆì—ì„œ ë¬¸ìì—´ë¡œ ì´ë£¨ì–´ì§„ íƒœê·¸ë¥¼ ì°¾ê¸° ìœ„í•œ Functor
+class CTag_Finder
+{
+public:
+    explicit CTag_Finder(std::wstring tag)
+        : m_TargetTag(std::move(tag))
+    { }
 
-	class CDeleteObj
-	{
-	public:
-		explicit CDeleteObj(void) {}
-		~CDeleteObj(void) {}
-	public: // operator
-		template <typename T>
-		void operator () (T& pInstance)
-		{
-			_ulong dwRefCnt = 0;
+    ~CTag_Finder(void)
+    { }
 
-			dwRefCnt = pInstance->Release();
+public:
+    template <typename T>
+    _bool operator()(const T& pair)
+    {
+        return m_TargetTag == pair.first;
+    }
 
-			if (0 == dwRefCnt)
-				pInstance = nullptr;
-		}
-	};
+private:
+    std::wstring m_TargetTag;
+};
 
-	// ¿¬°üÄÁÅ×ÀÌ³Ê »èÁ¦¿ë
-	class CDeleteMap
-	{
-	public:
-		explicit CDeleteMap(void) {}
-		~CDeleteMap(void) {}
-	public: // operator	
-		template <typename T>
-		void operator () (T& Pair)
-		{
-			_ulong dwRefCnt = 0;
+// Release í•¨ìˆ˜ë¥¼ ì œê³µí•˜ëŠ” ê°ì²´ë¥¼ ì•ˆì „í•˜ê²Œ ì‚­ì œí•˜ê¸° ìœ„í•œ Functor
+class CDeleteObj
+{
+public:
+    explicit CDeleteObj(void)
+    { }
 
-			dwRefCnt = Pair.second->Release();
+    ~CDeleteObj(void)
+    { }
 
-			if (0 == dwRefCnt)
-				Pair.second = NULL;
-		}
-	};
+public:
+    template <typename T>
+    void operator ()(T& instance)
+    {
+        _ulong refCnt = 0;
 
+        refCnt = instance->Release();
+
+        if (0 == refCnt)
+            instance = nullptr;
+    }
+};
+
+// ì—°ê´€ ì»¨í…Œì´ë„ˆ(map, unordered_map ë“±)ì˜ second ê°’ì„ Release í•˜ê¸° ìœ„í•œ Functor
+class CDeleteMap
+{
+public:
+    explicit CDeleteMap(void)
+    { }
+
+    ~CDeleteMap(void)
+    { }
+
+public:
+    template <typename T>
+    void operator ()(T& pair)
+    {
+        _ulong refCnt = 0;
+
+        refCnt = pair.second->Release();
+
+        if (0 == refCnt)
+            pair.second = NULL;
+    }
+};
 }
 
 #endif // Engine_Function_h__

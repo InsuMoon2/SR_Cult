@@ -1,29 +1,26 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class ENGINE_DLL CRcTex : public CVIBuffer
 {
 private:
-	explicit CRcTex();
-	explicit CRcTex(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CRcTex(const CRcTex& rhs);
-	virtual ~CRcTex();
+    explicit CRcTex();
+    explicit CRcTex(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CRcTex(const CRcTex& rhs);
+    ~CRcTex() override;
 
 public:
-	virtual HRESULT		Ready_Buffer();
-	virtual void		Render_Buffer();
+    HRESULT Ready_Buffer() override;
+    void    Render_Buffer() override;
 
-	void Set_UV(_float u0, _float v0, _float u1, _float v1);
+    void Set_UV(_float u0, _float v0, _float u1, _float v1);
 
 public:
-	static CRcTex* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual CComponent* Clone();
+    static CRcTex* Create(LPDIRECT3DDEVICE9 graphicDev);
+    CComponent*    Clone() override;
 private:
-	virtual void Free();
-
+    void Free() override;
 };
 
 END

@@ -1,90 +1,97 @@
 ﻿#include "CTexture.h"
 
-CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CComponent(pGraphicDev)
-{
-}
+CTexture::CTexture(LPDIRECT3DDEVICE9 graphicDev)
+    : CComponent(graphicDev)
+{ }
 
 CTexture::CTexture(const CTexture& rhs)
-	: CComponent(rhs)
+    : CComponent(rhs)
 {
-	size_t iSize = rhs.m_vecTexture.size();
+    size_t size = rhs.m_Textures.size();
 
-	m_vecTexture.reserve(iSize);
+    m_Textures.reserve(size);
 
-	m_vecTexture = rhs.m_vecTexture;
+    m_Textures = rhs.m_Textures;
 
-	for (_uint i = 0; i < iSize; ++i)
-		m_vecTexture[i]->AddRef();
-
+    for (_uint i = 0; i < size; ++i)
+    {
+        m_Textures[i]->AddRef();
+    }
 }
 
 CTexture::~CTexture()
+{ }
+
+HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, const _uint& count)
 {
-}
+    m_Textures.reserve(count);
 
-HRESULT CTexture::Ready_Texture(TEXTUREID eType, const wstring& pPath, const _uint& iCnt)
-{
-    m_vecTexture.reserve(iCnt);
+    IDirect3DBaseTexture9* texture = nullptr;
 
-    IDirect3DBaseTexture9* pTexture = nullptr;
-
-    for (_uint i = 0; i < iCnt; ++i)
+    for (_uint i = 0; i < count; ++i)
     {
-        wchar_t szFileName[MAX_PATH] = L"";
+        wchar_t fileName[MAX_PATH] = L"";
 
-        swprintf_s(szFileName, MAX_PATH, pPath.c_str(), i);
+        swprintf_s(fileName, MAX_PATH, filePath.c_str(), i);
 
-        switch (eType)
+        switch (texType)
         {
         case TEX_NORMAL:
+        {
             if (FAILED(D3DXCreateTextureFromFile(
-                m_GraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture)))
+                m_GraphicDev, fileName, (LPDIRECT3DTEXTURE9*)&texture)))
                 return E_FAIL;
-            break;
-
+        }
+        break;
         case TEX_CUBE:
+        {
             if (FAILED(D3DXCreateCubeTextureFromFile(
-                m_GraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture)))
+                m_GraphicDev, fileName, (LPDIRECT3DCUBETEXTURE9*)&texture)))
                 return E_FAIL;
-            break;
+        }
+        break;
+        default:
+            return E_FAIL;
         }
 
-        m_vecTexture.push_back(pTexture);
+        m_Textures.push_back(texture);
     }
 
     return S_OK;
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, const wstring& pPath, const _uint& iCnt)
+void CTexture::Set_Texture(const _uint& index)
 {
-    CTexture* pTexture = new CTexture(pGraphicDev);
+    if (m_Textures.empty() || m_Textures.size() <= index)
+        return;
 
-    if (FAILED(pTexture->Ready_Texture(eType, pPath, iCnt)))
+    m_GraphicDev->SetTexture(0, m_Textures[index]);
+}
+
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
+                           TEXTUREID         texType,
+                           const wstring&    filePath,
+                           const _uint&      count)
+{
+    auto texture = new CTexture(graphicDev);
+
+    if (FAILED(texture->Ready_Texture(texType, filePath, count)))
     {
-        Safe_Release(pTexture);
+        Safe_Release(texture);
         MSG_BOX("Texture Create Failed");
         return nullptr;
     }
 
-    return pTexture;
-}
-
-void CTexture::Set_Texture(const _uint& iIndex)
-{
-	if (m_vecTexture.empty() || m_vecTexture.size() <= iIndex)
-		return;
-
-	m_GraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+    return texture;
 }
 
 CComponent* CTexture::Clone()
 {
-	return new CTexture(*this);
+    return new CTexture(*this);
 }
 
 void CTexture::Free()
 {
-	for_each(m_vecTexture.begin(), m_vecTexture.end(), CDeleteObj());
-	m_vecTexture.clear();
+    for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());
+    m_Textures.clear();
 }

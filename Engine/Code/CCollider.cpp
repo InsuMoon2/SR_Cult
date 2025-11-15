@@ -1,26 +1,20 @@
 ﻿#include "CCollider.h"
 
 #include "CCollisionManager.h"
-#include "CGameObject.h"
 #include "CRectCollider.h"
 #include "CSphereCollider.h"
 #include "CTransform.h"
 
-CCollider::CCollider(DEVICE GraphicDev, COLLIDERTYPE eColliderType)
-    : CComponent(GraphicDev), m_ColliderType(eColliderType)
-{
-
-}
+CCollider::CCollider(DEVICE graphicDev, COLLIDERTYPE colliderType)
+    : CComponent(graphicDev), m_ColliderType(colliderType)
+{ }
 
 CCollider::CCollider(const CCollider& rhs)
     : CComponent(rhs), m_ColliderType(rhs.m_ColliderType)
-{
-	
-}
+{ }
 
 CCollider::~CCollider()
-{
-}
+{ }
 
 HRESULT CCollider::Ready_Collider()
 {
@@ -29,13 +23,11 @@ HRESULT CCollider::Ready_Collider()
     return S_OK;
 }
 
-_int CCollider::Update_Component(const _float& fTimeDelta)
+_int CCollider::Update_Component(const _float& timeDelta)
 {
-    _int iExit = CComponent::Update_Component(fTimeDelta);
+    _int exit = CComponent::Update_Component(timeDelta);
 
-
-
-    return iExit;
+    return exit;
 }
 
 void CCollider::LateUpdate_Component()
@@ -131,8 +123,8 @@ bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
     ts->Get_Info(INFO_POS, &cs3);
     tb->Get_Info(INFO_POS, &cb3);
 
-    _float radius = s1->Get_Radius();
-    _vec2 boxSize = b2->Get_Size();
+    _float radius  = s1->Get_Radius();
+    _vec2  boxSize = b2->Get_Size();
 
     _float halfW = boxSize.x * 0.5f;
     _float halfH = boxSize.y * 0.5f;
@@ -159,8 +151,8 @@ bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
     else if (closestY > maxY)
         closestY = maxY;
 
-    _float dx = cs3.x - closestX;
-    _float dy = cs3.y - closestY;
+    _float dx     = cs3.x - closestX;
+    _float dy     = cs3.y - closestY;
     _float distSq = dx * dx + dy * dy;
 
     return distSq <= (radius * radius);
@@ -183,12 +175,12 @@ bool CCollider::CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider
 
     _float r1 = s1->Get_Radius();
     _float r2 = s2->Get_Radius();
-    
+
     _float dx = p1.x - p2.x;
     _float dy = p1.y - p2.y;
-    
+
     _float distSq = dx * dx + dy * dy;
-    _float sum = r1 + r2;
+    _float sum    = r1 + r2;
 
     return distSq <= (sum * sum);
 }

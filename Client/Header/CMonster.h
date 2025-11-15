@@ -1,43 +1,39 @@
 ﻿#pragma once
-
 #include "CGameObject.h"
-#include "CTriCol.h"
-#include "CTransform.h"
 
 BEGIN(Engine)
+class CTransform;
+class CTriCol;
 class CRectCollider;
 END
 
 class CMonster : public CGameObject
 {
 private:
-	explicit CMonster(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CMonster(const CMonster& rhs);
-	virtual ~CMonster();
+    explicit CMonster(DEVICE graphicDev);
+    explicit CMonster(const CMonster& rhs);
+    ~CMonster() override;
 
 public:
-	virtual			HRESULT		Ready_GameObject();
-	virtual			_int		Update_GameObject(const _float& fTimeDelta);
-	virtual			void		LateUpdate_GameObject(const _float& fTimeDelta);
-	virtual			void		Render_GameObject();
+    HRESULT Ready_GameObject() override;
+    _int    Update_GameObject(const _float& timeDelta) override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
-	void OnBeginOverlap(CCollider* self, CCollider* other) override;
-	void OnEndOverlap(CCollider* self, CCollider* other) override;
-
-private:
-	HRESULT			Add_Component();
+    void OnBeginOverlap(CCollider* self, CCollider* other) override;
+    void OnEndOverlap(CCollider* self, CCollider* other) override;
 
 private:
-	Engine::CTriCol*	m_pBufferCol;
-	Engine::CTransform* m_pTransformCom;
+    HRESULT Add_Component();
 
+private:
+    Engine::CTriCol*       m_BufferCol;
+    Engine::CTransform*    m_TransformCom;
     Engine::CRectCollider* m_RectColCom;
 
 public:
-	static CMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    static CMonster* Create(DEVICE graphicDev);
 
 private:
-	virtual void Free();
-
+    void Free() override;
 };
-

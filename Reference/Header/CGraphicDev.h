@@ -1,40 +1,35 @@
-#pragma once
-
+Ôªø#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class ENGINE_DLL CGraphicDev : public CBase
 {
-	DECLARE_SINGLETON(CGraphicDev)
+    DECLARE_SINGLETON(CGraphicDev)
 
 private:
-	explicit CGraphicDev();
-	virtual ~CGraphicDev();
+    explicit CGraphicDev();
+    ~CGraphicDev() override;
 
 public:
-	LPDIRECT3DDEVICE9		Get_GraphicDev() { return m_pGraphicDev; }
+    LPDIRECT3DDEVICE9 Get_GraphicDev() { return m_GraphicDev; }
 
 public:
-	HRESULT		Ready_GraphicDev(HWND hWnd, WINMODE eMode,
-		const _uint& iSizeX,
-		const _uint& iSizeY,
-		CGraphicDev** ppGraphicDev);
+    HRESULT Ready_GraphicDev(HWND          hWnd,
+                             WINMODE       mode,
+                             const _uint&  sizeX,
+                             const _uint&  sizeY,
+                             CGraphicDev** outGraphicDev);
 
-	void		Render_Begin(D3DXCOLOR Color);
-	void		Render_End();
-
-
-private:
-	LPDIRECT3D9			m_pSDK;					// 1. ±◊∑°«» ƒ´µÂ º∫¥… ¡∂ªÁ ∞¥√º
-	LPDIRECT3DDEVICE9	m_pGraphicDev;			// 2. ±◊∏Æ±‚ ¥„¥Á ƒƒ ∞¥√º
+    void Render_Begin(D3DXCOLOR color);
+    void Render_End();
 
 private:
-	virtual void	Free();
+    LPDIRECT3D9       m_SDK;           // 1. Í∑∏ÎûòÌîΩ Ïπ¥Îìú ÏÑ±Îä• Ï°∞ÏÇ¨ Í∞ùÏ≤¥
+    LPDIRECT3DDEVICE9 m_GraphicDev;    // 2. Í∑∏Î¶¨Í∏∞ Îã¥Îãπ Direct3D ÎîîÎ∞îÏù¥Ïä§ (COM Í∞ùÏ≤¥)
 
+private:
+    void Free() override;
 };
 
 END
-
-
