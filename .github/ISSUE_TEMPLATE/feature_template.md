@@ -1,8 +1,8 @@
 ---
 name: FEATURE_TEMPLATE
 about: Suggest an idea for this project
-title: ''
-labels: ''
+title: "[FEAT] : 수정내용.."
+labels: enhancement
 assignees: ''
 
 ---
