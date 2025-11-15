@@ -3,7 +3,7 @@ name: BUG_TEMPLATE
 about: Create a report to help us improve
 title: "[BUG] : 버그 타이틀.."
 labels: bug
-assignees: InsuMoon2
+assignees: ''
 
 ---
 
