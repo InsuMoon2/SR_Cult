@@ -1,8 +1,8 @@
 ---
-name: FEATURE TEMPLATE
+name: FEATURE_TEMPLATE
 about: Suggest an idea for this project
-title: "[FEATURE] 피쳐_"
-labels: enhancement
+title: ''
+labels: ''
 assignees: ''
 
 ---
