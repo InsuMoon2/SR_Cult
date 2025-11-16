@@ -1,42 +1,32 @@
 ﻿#include "CSphereCollider.h"
 #include "CRectCollider.h"
 
-CSphereCollider::CSphereCollider(DEVICE GraphicDev)
-    : CCollider(GraphicDev, COLLIDERTYPE::Sphere)
-{
-
-}
+CSphereCollider::CSphereCollider(DEVICE graphicDev)
+    : CCollider(graphicDev, COLLIDERTYPE::SPHERE)
+{ }
 
 CSphereCollider::CSphereCollider(const CSphereCollider& rhs)
     : CCollider(rhs), m_Radius(rhs.m_Radius)
-{
-}
+{ }
 
 CSphereCollider::~CSphereCollider()
+{ }
+
+HRESULT CSphereCollider::Ready_SphereCollider(DEVICE graphicDev)
 {
-
-}
-
-HRESULT CSphereCollider::Ready_SphereCollider(DEVICE GraphicDev)
-{
-
     return S_OK;
 }
 
-_int CSphereCollider::Update_Component(const _float& fTimeDelta)
+_int CSphereCollider::Update_Component(const _float& timeDelta)
 {
-    _int iExit = CCollider::Update_Component(fTimeDelta);
+    _int exit = CCollider::Update_Component(timeDelta);
 
-
-
-    return iExit;
+    return exit;
 }
 
 void CSphereCollider::LateUpdate_Component()
 {
     CCollider::LateUpdate_Component();
-
-
 }
 
 void CSphereCollider::Render()
@@ -48,21 +38,24 @@ bool CSphereCollider::CheckCollision(CCollider* other)
 {
     switch (other->GetColliderType())
     {
-    case COLLIDERTYPE::Rect:
+    case COLLIDERTYPE::RECT:
         return CheckCollisionSphere2Box(this, static_cast<CRectCollider*>(other));
 
-    case COLLIDERTYPE::Sphere:
+    case COLLIDERTYPE::SPHERE:
         return CheckCollisionSphere2Sphere(this, static_cast<CSphereCollider*>(other));
+
+    default:
+        break;
     }
 
     return false;
 }
 
-CSphereCollider* CSphereCollider::Create(DEVICE GraphicDev)
+CSphereCollider* CSphereCollider::Create(DEVICE graphicDev)
 {
-    CSphereCollider* sphere = new CSphereCollider(GraphicDev);
+    auto sphere = new CSphereCollider(graphicDev);
 
-    if (FAILED(sphere->Ready_SphereCollider(GraphicDev)))
+    if (FAILED(sphere->Ready_SphereCollider(graphicDev)))
     {
         Safe_Release(sphere);
         MSG_BOX("SphereCollider Create Failed");

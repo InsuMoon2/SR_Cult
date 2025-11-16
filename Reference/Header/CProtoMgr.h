@@ -1,36 +1,32 @@
 ﻿#pragma once
-#include "CTriCol.h"
-#include "CRcCol.h"
-#include "CRcTex.h"
-
-#include "CTransform.h"
-#include "CTexture.h"
+#include "CBase.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
+class CComponent;
 
-class ENGINE_DLL CProtoMgr :  public CBase
+class ENGINE_DLL CProtoMgr : public CBase
 {
-	DECLARE_SINGLETON(CProtoMgr)
+    DECLARE_SINGLETON(CProtoMgr)
 
 private:
-	CProtoMgr();
-	virtual ~CProtoMgr();
+    CProtoMgr();
+    ~CProtoMgr() override;
 
 public:
-    // 이러면 Component밖에 Prototype을 못만드는데, 생각을 좀 더 해봐야 할듯
+    // TODO 인수: 이러면 Component밖에 Prototype을 못만드는데, 생각을 좀 더 해봐야 할듯
     // ProtoMgr를 여러개로 쪼갤지, 키값 받아서 쓸지 ?
-	HRESULT			Ready_Prototype(COMPONENTTYPE eComponentType, CComponent* pComponent);
-	CComponent*     Clone_Prototype(COMPONENTTYPE eComponentType);
+    HRESULT     Ready_Prototype(COMPONENTTYPE componentType, CComponent* component);
+    CComponent* Clone_Prototype(COMPONENTTYPE componentType);
 
 private:
-	CComponent* Find_Prototype(COMPONENTTYPE eComponentType);
+    CComponent* Find_Prototype(COMPONENTTYPE componentType);
 
 private:
-	map<COMPONENTTYPE, CComponent*>		m_mapPrototype;
+    map<COMPONENTTYPE, CComponent*> m_Prototypes;
 
 private:
-	virtual void Free();
-
+    void Free() override;
 };
 
 END

@@ -9,20 +9,18 @@ CResourceManager::CResourceManager()
 
 CResourceManager::~CResourceManager()
 {
-	Free();
+    CResourceManager::Free();
 }
 
-CTexture* CResourceManager::LoadTexture(const wstring& Key, const wstring& Path, TEXTUREID Type, UINT Index)
+CTexture* CResourceManager::LoadTexture(const wstring& key, const wstring& path, TEXTUREID type, UINT index)
 {
-	return nullptr;
+    return nullptr;
 }
 
-CTexture* CResourceManager::FindTexture(const wstring& Key)
+CTexture* CResourceManager::FindTexture(const wstring& key)
 {
-	return nullptr;
+    return nullptr;
 }
 
 void CResourceManager::Free()
-{
-
-}
+{ }

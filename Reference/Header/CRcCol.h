@@ -1,27 +1,25 @@
-#pragma once
+﻿#pragma once
 #include "CVIBuffer.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class ENGINE_DLL CRcCol : public CVIBuffer
 {
 private:
-	explicit CRcCol();
-	explicit CRcCol(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CRcCol(const CRcCol& rhs);
-	virtual ~CRcCol();
+    explicit CRcCol();
+    explicit CRcCol(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CRcCol(const CRcCol& rhs);
+    ~CRcCol() override;
 
 public:
-	virtual HRESULT		Ready_Buffer();
-	virtual void		Render_Buffer();
+    HRESULT Ready_Buffer() override;
+    void    Render_Buffer() override;
 
 public:
-	static CRcCol* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual CComponent* Clone();
+    static CRcCol* Create(LPDIRECT3DDEVICE9 graphicDev);
+    CComponent*    Clone() override;
+
 private:
-	virtual void Free();
-
+    void Free() override;
 };
 
 END

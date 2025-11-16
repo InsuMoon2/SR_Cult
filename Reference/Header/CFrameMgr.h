@@ -1,29 +1,30 @@
-#pragma once
+﻿#pragma once
 #include "CBase.h"
-#include "CFrame.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
+class CFrame;
 
 class ENGINE_DLL CFrameMgr : public CBase
 {
-	DECLARE_SINGLETON(CFrameMgr)
+    DECLARE_SINGLETON(CFrameMgr)
 
 private:
-	explicit CFrameMgr();
-	virtual ~CFrameMgr();
+    explicit CFrameMgr();
+    ~CFrameMgr() override;
 
 public:
-	_bool	IsPermit_Call(const _tchar* pFrameTag, const _float& fTimeDelta);
-	HRESULT Ready_Frame(const _tchar* pFrameTag, const _float& fCallLimit);
+    _bool   IsPermit_Call(const wstring& frameTag, const _float& timeDelta);
+    HRESULT Ready_Frame(const wstring& frameTag, const _float& callLimit);
 
 private:
-	CFrame* Find_Frame(const _tchar* pFrameTag);
+    CFrame* Find_Frame(const wstring& frameTag);
 
 private:
-	map<const _tchar*, CFrame*>			m_mapFrame;
+    map<wstring, CFrame*> m_Frames;
 
 public:
-	virtual void	Free();
+    void Free() override;
 };
 
 END

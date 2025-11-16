@@ -1,33 +1,33 @@
 ﻿#pragma once
-
 #include "CBase.h"
-#include "CTimer.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
+class CTimer;
 
 class ENGINE_DLL CTimerMgr : public CBase
 {
+    DECLARE_SINGLETON(CTimerMgr)
 
-	DECLARE_SINGLETON(CTimerMgr)
 private:
-	explicit CTimerMgr();
-	virtual ~CTimerMgr();
+    explicit CTimerMgr();
+    ~CTimerMgr() override;
 
 public:
-	_float			Get_TimeDelta(const _tchar* pTimerTag);
-	void			Set_TimeDelta(const _tchar* pTimerTag);
+    _float Get_TimeDelta(const wstring& timerTag);
+    void   Set_TimeDelta(const wstring& timerTag);
 
 public:
-	HRESULT			Ready_Timer(const _tchar* pTimerTag);
+    HRESULT Ready_Timer(const wstring& timerTag);
 
 private:
-	CTimer* Find_Timer(const _tchar* pTimerTag);
+    CTimer* Find_Timer(const wstring& timerTag);
 
 private:
-	map<const _tchar*, CTimer*>		m_mapTimer;
+    map<wstring, CTimer*> m_Timers;
 
 private:
-	virtual void		Free();
+    void Free() override;
 };
 
 END

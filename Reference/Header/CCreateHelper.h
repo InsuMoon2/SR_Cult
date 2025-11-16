@@ -1,9 +1,10 @@
 ﻿#pragma once
-
-#include "CGameObject.h"
 #include "CProtoMgr.h"
 
-template<typename T>
+BEGIN(Engine)
+class CGameObject;
+
+template <typename T>
 static T* CreateProtoComponent(CGameObject* Owner, COMPONENTTYPE eComponentType)
 {
     if (Owner == nullptr)
@@ -25,3 +26,5 @@ static T* CreateProtoComponent(CGameObject* Owner, COMPONENTTYPE eComponentType)
 
     return component;
 }
+
+END

@@ -1,48 +1,46 @@
-#include "CFrame.h"
+﻿#include "CFrame.h"
 
-CFrame::CFrame() : m_fCallLimit(0.f), m_fAccTimeDelta(0.f)
-{
-}
+CFrame::CFrame()
+    : m_CallLimit(0.f), m_AccTimeDelta(0.f)
+{ }
 
 CFrame::~CFrame()
+{ }
+
+_bool CFrame::IsPermit_Call(const _float& timeDelta)
 {
+    m_AccTimeDelta += timeDelta;
+
+    if (m_AccTimeDelta >= m_CallLimit)
+    {
+        m_AccTimeDelta = 0.f;
+
+        return true;
+    }
+
+    return false;
 }
 
-_bool CFrame::IsPermit_Call(const _float& fTimeDelta)
+HRESULT CFrame::Ready_Frame(const _float& callLimit)
 {
-	m_fAccTimeDelta += fTimeDelta;
+    m_CallLimit = 1.f / callLimit;
 
-	if (m_fAccTimeDelta >= m_fCallLimit)
-	{
-		m_fAccTimeDelta = 0.f;
-
-		return true;
-	}
-
-	return false;
+    return S_OK;
 }
 
-HRESULT CFrame::Ready_Frame(const _float& fCallLimit)
+CFrame* CFrame::Create(const _float& callLimit)
 {
-	m_fCallLimit = 1.f / fCallLimit;
+    auto frame = new CFrame;
 
-	return S_OK;
-}
+    if (FAILED(frame->Ready_Frame(callLimit)))
+    {
+        Safe_Release(frame);
+        MSG_BOX("Frame create Failed");
+        return nullptr;
+    }
 
-CFrame* CFrame::Create(const _float& fCallLimit)
-{
-	CFrame* pFrame = new CFrame;
-
-	if (FAILED(pFrame->Ready_Frame(fCallLimit)))
-	{
-		Safe_Release(pFrame);
-		MSG_BOX("frame create Failed");
-		return nullptr;
-	}
-
-	return pFrame;
+    return frame;
 }
 
 void CFrame::Free()
-{
-}
+{}

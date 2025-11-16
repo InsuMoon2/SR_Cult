@@ -1,38 +1,34 @@
-#pragma once
+ï»¿#pragma once
 #include "CComponent.h"
 
 BEGIN(Engine)
-
-class ENGINE_DLL CVIBuffer :  public CComponent
+class ENGINE_DLL CVIBuffer : public CComponent
 {
 protected:
-	explicit CVIBuffer();
-	explicit CVIBuffer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CVIBuffer(const CVIBuffer& rhs);
-	virtual ~CVIBuffer();
+    explicit CVIBuffer();
+    explicit CVIBuffer(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CVIBuffer(const CVIBuffer& rhs);
+    ~CVIBuffer() override;
 
 public:
-	virtual HRESULT		Ready_Buffer();
-	virtual void		Render_Buffer();
-
-	void Set_UV(_float u0, _float v0, _float u1, _float v1);
+    virtual HRESULT Ready_Buffer();
+    virtual void    Render_Buffer();
 
 protected:
-	LPDIRECT3DVERTEXBUFFER9		m_pVB;
+    LPDIRECT3DVERTEXBUFFER9 m_VB;
 
-	_ulong						m_dwVtxSize;	// ¹öÅØ½º ±¸Á¶Ã¼ Å©±â
-	_ulong						m_dwVtxCnt;		// ¹öÅØ½º °³¼ö
-	_ulong						m_dwTriCnt;		// Ãâ·ÂÇÏ°íÀÚÇÏ´Â »ï°¢Çü °³¼ö
-	_ulong						m_dwFVF;		// ¹öÅØ½º Æ÷¸ËÀ» ÁöÁ¤ÇÏ´Â »ó¼ö °ª
+    _ulong m_VtxSize;	        // ë‹¨ì¼ ì •ì  êµ¬ì¡°ì²´ì˜ ë°”ì´íŠ¸ í¬ê¸°
+    _ulong m_VtxCnt;		    // ë²„í¼ì— í¬í•¨ëœ ì •ì  ìˆ˜
+    _ulong m_TriCnt;		    // ë Œë”ë§í•  ì‚¼ê°í˜• ìˆ˜
+    _ulong m_FVF;		        // ë²„í…ìŠ¤ í¬ë§·ì„ ì§€ì •í•˜ëŠ” FVF í”Œë˜ê·¸ ê°’
 
+    LPDIRECT3DINDEXBUFFER9 m_IB;
 
-	LPDIRECT3DINDEXBUFFER9		m_pIB;
-
-	_ulong						m_dwIdxSize;
-	D3DFORMAT					m_IdxFmt;
+    _ulong    m_IdxSize;      // í•œ ê°œì˜ ì‚¼ê°í˜• ì¸ë±ìŠ¤ê°€ ì°¨ì§€í•˜ëŠ” ë°”ì´íŠ¸ í¬ê¸°
+    D3DFORMAT m_IdxFmt;         // ì¸ë±ìŠ¤ ë°ì´í„° í¬ë§·
 
 public:
-	virtual void Free();
+    void Free() override;
 };
 
 END

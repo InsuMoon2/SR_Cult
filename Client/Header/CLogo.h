@@ -1,31 +1,28 @@
 ﻿#pragma once
-
 #include "CScene.h"
 
 class CLogo : public CScene
 {
 private:
-	explicit CLogo(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CLogo();
+    explicit CLogo(DEVICE graphicDev);
+    ~CLogo() override;
 
 public:
-	virtual			HRESULT		Ready_Scene();
-	virtual			_int		Update_Scene(const _float& fTimeDelta);
-	virtual			void		LateUpdate_Scene(const _float& fTimeDelta);
-	virtual			void		Render_Scene();
+    HRESULT Ready_Scene() override;
+    _int    Update_Scene(const _float& timeDelta) override;
+    void    LateUpdate_Scene(const _float& timeDelta) override;
+    void    Render_Scene() override;
 
 private:
-	HRESULT			Ready_Environment_Layer(LAYERTYPE eLayerType);
-	HRESULT			Ready_GameLogic_Layer(LAYERTYPE eLayerType) { return S_OK; }
-	HRESULT			Ready_UI_Layer(LAYERTYPE eLayerType) { return S_OK; }
+    HRESULT Ready_Environment_Layer(LAYERTYPE layerType);
+    HRESULT Ready_GameLogic_Layer(LAYERTYPE layerType) { return S_OK; }
+    HRESULT Ready_UI_Layer(LAYERTYPE layerType) { return S_OK; }
 
-	HRESULT			Ready_Prototype();
-
+    HRESULT Ready_Prototype();
 
 public:
-	static CLogo* Create(LPDIRECT3DDEVICE9 pGraphicDev);
-private:
-	virtual void Free();
+    static CLogo* Create(DEVICE graphicDev);
 
+private:
+    void Free() override;
 };
-

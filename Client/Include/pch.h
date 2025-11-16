@@ -9,8 +9,11 @@
 
 #include "framework.h"
 
+#pragma warning(push)
+#pragma warning(disable: 26495)
 #include <d3d9.h>
 #include <d3dx9.h>
+#pragma warning(pop)
 
 // ImGui
 #include "imgui.h"
@@ -18,10 +21,17 @@
 #include "imgui_impl_win32.h"
 #include "ImGuiFileDialog.h"
 
-#include <vector>
+#include <algorithm>
 #include <list>
 #include <map>
-#include <algorithm>
+#include <vector>
+#include <process.h>
+
+#include "Engine_Enum.h"
+#include "Engine_Macro.h"
+#include "Engine_Typedef.h"
+#include "Engine_Struct.h"
+#include "Engine_Function.h"
 
 #ifdef _DEBUG
 
@@ -29,15 +39,17 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
-#ifndef DBG_NEW 
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-#define new DBG_NEW 
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
 
 #endif
 #endif
 
-extern HWND g_hWnd;
+extern HINSTANCE g_hInst;
+extern HWND      g_hWnd;
 
 using namespace std;
+using namespace Engine;
 
 #endif //PCH_H

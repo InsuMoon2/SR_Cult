@@ -1,32 +1,38 @@
 ﻿#pragma once
 #include "CBase.h"
-#include "CGameObject.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
+class CComponent;
+class CGameObject;
 
+/// @brief 동일 목적의 게임 오브젝트들을 묶어 관리하는 중간 클래스
+/// @details
+/// - Scene 내부에서 업데이트/렌더링 순서를 제어하며, 오브젝트 등록과 탐색을 담당한다.
+/// - 레이어를 통해 오브젝트 간 결합을 줄이고 Scene 구성의 유연성을 높인다.
 class ENGINE_DLL CLayer : public CBase
 {
 private:
-	explicit CLayer();
-	virtual ~CLayer();
+    explicit CLayer();
+    ~CLayer() override;
 
 public:
-	CComponent*		Get_Component(COMPONENTID eID, OBJTYPE eObjType, COMPONENTTYPE eComponentType);
-	HRESULT			Add_GameObject(OBJTYPE eObjType, CGameObject* pGameObject);
+    CComponent* Get_Component(COMPONENTID componentID, OBJTYPE objType, COMPONENTTYPE componentType);
+    HRESULT     Add_GameObject(OBJTYPE objType, CGameObject* gameObject);
 
 public:
-	HRESULT			Ready_Layer();
-	_int			Update_Layer(const _float& fTimeDelta);
-	void			LateUpdate_Layer(const _float& fTimeDelta);
+    HRESULT Ready_Layer();
+    _int    Update_Layer(const _float& timeDelta);
+    void    LateUpdate_Layer(const _float& timeDelta);
 
 private:
-	map<OBJTYPE, CGameObject*>			m_mapObject;
+    map<OBJTYPE, CGameObject*> m_Objects;
 
 public:
-	static CLayer* Create();
+    static CLayer* Create();
 
 private:
-	virtual void	Free();
+    void Free() override;
 };
 
 END

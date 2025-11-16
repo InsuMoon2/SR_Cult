@@ -82,6 +82,30 @@
     <Filter Include="00. Manager\06. CollisionManager">
       <UniqueIdentifier>{93a85b41-e469-4d41-954a-5ab31f5b185c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00. Manager\07. FontMgr">
+      <UniqueIdentifier>{a0fb6c51-8f62-42cc-bdcc-9c8776524e4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\08. DInputMgr">
+      <UniqueIdentifier>{9dfaecc0-6c91-487e-adb9-3d0fc84b70d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\09. LightMgr">
+      <UniqueIdentifier>{34ebc283-99bb-4f50-ac94-078a81e4a58f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\07. FontMgr\Font">
+      <UniqueIdentifier>{a0f269c7-2b42-440d-a293-93bb94267149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Manager\09. LightMgr\Light">
+      <UniqueIdentifier>{c9363ee9-dd7a-428a-8653-bebc7a8e42a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\04. Collider\00. Rect Collider">
+      <UniqueIdentifier>{f8680463-e8ed-4340-bb6c-5ebefac91735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\04. Collider\01. Sphere Collider">
+      <UniqueIdentifier>{74ed2b5d-6811-4b9c-82ae-e5a8cf390be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\03. Camera">
+      <UniqueIdentifier>{2a24c0e1-3d74-4392-81ed-50675f58e78f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -174,11 +198,29 @@
     <ClInclude Include="..\Header\CCollisionManager.h">
       <Filter>00. Manager\06. CollisionManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\header\CFont.h">
+      <Filter>00. Manager\07. FontMgr\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CFontMgr.h">
+      <Filter>00. Manager\07. FontMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CDInputMgr.h">
+      <Filter>00. Manager\08. DInputMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CLight.h">
+      <Filter>00. Manager\09. LightMgr\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CLightMgr.h">
+      <Filter>00. Manager\09. LightMgr</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CRectCollider.h">
-      <Filter>02. Prototype\04. Collider</Filter>
+      <Filter>02. Prototype\04. Collider\00. Rect Collider</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CSphereCollider.h">
-      <Filter>02. Prototype\04. Collider</Filter>
+      <Filter>02. Prototype\04. Collider\01. Sphere Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CCameraCom.h">
+      <Filter>02. Prototype\03. Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,11 +293,29 @@
     <ClCompile Include="..\Code\CCollisionManager.cpp">
       <Filter>00. Manager\06. CollisionManager</Filter>
     </ClCompile>
+    <ClCompile Include="..\code\CFont.cpp">
+      <Filter>00. Manager\07. FontMgr\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CFontMgr.cpp">
+      <Filter>00. Manager\07. FontMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CDInputMgr.cpp">
+      <Filter>00. Manager\08. DInputMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CLight.cpp">
+      <Filter>00. Manager\09. LightMgr\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CLightMgr.cpp">
+      <Filter>00. Manager\09. LightMgr</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CRectCollider.cpp">
-      <Filter>02. Prototype\04. Collider</Filter>
+      <Filter>02. Prototype\04. Collider\00. Rect Collider</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CSphereCollider.cpp">
-      <Filter>02. Prototype\04. Collider</Filter>
+      <Filter>02. Prototype\04. Collider\01. Sphere Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CCameraCom.cpp">
+      <Filter>02. Prototype\03. Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

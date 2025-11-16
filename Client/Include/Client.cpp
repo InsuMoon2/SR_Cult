@@ -2,32 +2,34 @@
 //
 
 #include "pch.h"
-#include "framework.h"
 #include "Client.h"
-#include <CImGuiManager.h>
-#include "CMainApp.h"
-#include <locale.h>
+#include "framework.h"
 
-FILE* debug;
+#include <locale.h>
+#include "CFrameMgr.h"
+#include "CImGuiManager.h"
+#include "CMainApp.h"
+#include "CTimerMgr.h"
 
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
-HINSTANCE hInst;                                // 현재 인스턴스입니다.
-WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
-WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-HWND    g_hWnd;
+HINSTANCE g_hInst;                                  // 현재 인스턴스입니다.
+WCHAR     szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
+WCHAR     szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+HWND      g_hWnd;
+FILE*     debug;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+ATOM             MyRegisterClass(HINSTANCE hInstance);
+BOOL             InitInstance(HINSTANCE, int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+int APIENTRY wWinMain(_In_ HINSTANCE     hInstance,
+                      _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR        lpCmdLine,
+                      _In_ int           nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -42,10 +44,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
+    if (!InitInstance(hInstance, nCmdShow))
         return FALSE;
-    }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
 
@@ -65,7 +65,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return E_FAIL;
 
     // 프레임 생성
-
     if (FAILED(CFrameMgr::GetInstance()->Ready_Frame(L"Frame60", 60.f)))
         return E_FAIL;
 
@@ -86,30 +85,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_Immediate");
+
             _float fTimer_Immediate = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_Immediate");
 
             if (CFrameMgr::GetInstance()->IsPermit_Call(L"Frame60", fTimer_Immediate))
             {
                 CTimerMgr::GetInstance()->Set_TimeDelta(L"Timer_FPS60");
+
                 _float fTimer_FPS60 = CTimerMgr::GetInstance()->Get_TimeDelta(L"Timer_FPS60");
 
                 pMainApp->Update_MainApp(fTimer_FPS60);
                 pMainApp->LateUpdate_MainApp(fTimer_FPS60);
                 pMainApp->Render_MainApp();
             }
-        }       
+        }
     }
 
-    _ulong dwRefCnt(0);
+    _ulong refCnt(0);
 
-    if (dwRefCnt = Safe_Release(pMainApp))
+    if (refCnt = Safe_Release(pMainApp))
     {
         MSG_BOX("MainApp Release Failed");
         return FALSE;
     }
 
-          
-    return (int) msg.wParam;
+    return static_cast<int>(msg.wParam);
 }
 
 //
@@ -123,17 +123,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName = NULL;
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.style         = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc   = WndProc;
+    wcex.cbClsExtra    = 0;
+    wcex.cbWndExtra    = 0;
+    wcex.hInstance     = hInstance;
+    wcex.hIcon         = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
+    wcex.hCursor       = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName  = nullptr;
+    wcex.lpszClassName = szWindowClass;
+    wcex.hIconSm       = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
@@ -150,28 +150,33 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
-   
-   RECT rc{ 0,0, WINCX, WINCY };
+    g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+    RECT rc{ 0, 0, WINCX, WINCY };
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, 
-      rc.right - rc.left, 
-      rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
+    AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+    HWND hWnd = CreateWindowW(szWindowClass,
+                              szTitle,
+                              WS_OVERLAPPEDWINDOW,
+                              CW_USEDEFAULT,
+                              0,
+                              rc.right - rc.left,
+                              rc.bottom - rc.top,
+                              nullptr,
+                              nullptr,
+                              hInstance,
+                              nullptr);
 
-   g_hWnd = hWnd;
+    if (!hWnd)
+        return FALSE;
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+    g_hWnd = hWnd;
 
-   return TRUE;
+    ShowWindow(hWnd, nCmdShow);
+    UpdateWindow(hWnd);
+
+    return TRUE;
 }
 
 //
@@ -191,50 +196,50 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
-
 #pragma region Debug Log
     case WM_CREATE:
+    {
         AllocConsole();
         _tfreopen_s(&debug, _T("CONOUT$"), _T("w"), stdout);
         _tfreopen_s(&debug, _T("CONIN$"), _T("r"), stdin);
         _tfreopen_s(&debug, _T("CONERR"), _T("w"), stderr);
         _tsetlocale(LC_ALL, _T(""));
-        break;
+    }
+    break;
     case WM_CLOSE:
+    {
         FreeConsole();
         DestroyWindow(hWnd);
-        break;
+    }
+    break;
 #pragma endregion
-
     case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다:
+        switch (wmId)
         {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        case IDM_ABOUT:
+            DialogBox(g_hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
-
+    }
+    break;
     case WM_KEYDOWN:
-
+    {
         switch (wParam)
         {
         case VK_ESCAPE:
             DestroyWindow(g_hWnd);
             break;
         }
-
-        break;
-  
+    }
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
@@ -259,6 +264,9 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
             EndDialog(hDlg, LOWORD(wParam));
             return (INT_PTR)TRUE;
         }
+        break;
+
+    default:
         break;
     }
     return (INT_PTR)FALSE;

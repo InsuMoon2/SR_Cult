@@ -1,53 +1,55 @@
-#pragma once
-
+ï»¿#pragma once
 #include "CBase.h"
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class ENGINE_DLL CSpriteAnimation : public CBase
 {
 private:
-	explicit CSpriteAnimation();
-	explicit CSpriteAnimation(const CSpriteAnimation& rhs);
-	virtual ~CSpriteAnimation();
+    explicit CSpriteAnimation();
+    explicit CSpriteAnimation(const CSpriteAnimation& rhs);
+    ~CSpriteAnimation() override;
 
 public:
-	void Init(_uint MaxX, _uint MaxY, _int StartX, _int StartY,
-		_float Interval, bool xAxis, ANIMSTATE State);
+    void Init(_uint     maxX,
+              _uint     maxY,
+              _int      startX,
+              _int      startY,
+              _float    interval,
+              _bool     xAxis,
+              ANIMSTATE state);
 
-	void Reset();
-	void Update(const _float& TimeDelta);
+    void Reset();
+    void Update(const _float& timeDelta);
 
-	_int   Get_FrameX() const { return m_FrameX; }
-	_int   Get_FrameY() const { return m_FrameY; }
-	_int   Get_MaxFrameX() const { return m_MaxFrameX; }
-	_int   Get_MaxFrameY() const { return m_MaxFrameY; }
+    _int Get_FrameX() const { return m_FrameX; }
+    _int Get_FrameY() const { return m_FrameY; }
+    _int Get_MaxFrameX() const { return m_MaxFrameX; }
+    _int Get_MaxFrameY() const { return m_MaxFrameY; }
 
-	// ÇöÀç UV »ç°¢Çü
-	void   Get_UV(_float& u0, _float& v0, _float& u1, _float& v1) const;
+    // í˜„ì¬ UV ì‚¬ê°í˜•
+    void Get_UV(_float& u0, _float& v0, _float& u1, _float& v1) const;
 
-	bool   IsFinished() const { return m_State == ANIMSTATE::Stop; }
+    _bool IsFinished() const { return m_State == ANIMSTATE::STOP; }
 
-	static CSpriteAnimation* Create();
+    static CSpriteAnimation* Create();
 
 private:
-	void Free() override;
+    void Free() override;
 
 private:
-	// ½ºÇÁ¶óÀÌÆ® ½ÃÆ® ÀüÃ¼ °³¼ö (°¡·Î X ¼¼·Î)
-	_int m_MaxFrameX;
-	_int m_MaxFrameY;
+    // ìŠ¤í”„ë¼ì´íŠ¸ ì‹œíŠ¸ ì „ì²´ ê°œìˆ˜ (ê°€ë¡œ X ì„¸ë¡œ)
+    _int m_MaxFrameX;
+    _int m_MaxFrameY;
 
-	// ÇöÀç ÇÁ·¹ÀÓ ÁÂÇ¥ (0 ~ max-1 ±îÁö°¡ ¹üÀ§ÀÓ)
-	_int m_FrameX;
-	_int m_FrameY;
+    // í˜„ì¬ í”„ë ˆì„ ì¢Œí‘œ (0 ~ max-1 ê¹Œì§€ê°€ ë²”ìœ„ì„)
+    _int m_FrameX;
+    _int m_FrameY;
 
-	ANIMSTATE	m_State;
-	bool		m_XAxis;		// true¸é XÃàÀ¸·Î Àç»ı, false¸é yÃàÀ¸·Î Àç»ı
-	_float		m_Interval;		// ´ÙÀ½ ÇÁ·¹ÀÓ±îÁö °£°İ
-	_float		m_AccTime;		// ´©Àû ½Ã°£
-
+    ANIMSTATE m_State;
+    _bool     m_XAxis;		    // trueë©´ Xì¶•ìœ¼ë¡œ ì¬ìƒ, falseë©´ yì¶•ìœ¼ë¡œ ì¬ìƒ
+    _float    m_Interval;		// ë‹¤ìŒ í”„ë ˆì„ê¹Œì§€ ê°„ê²©
+    _float    m_AccTime;		// ëˆ„ì  ì‹œê°„
 };
 
 END;

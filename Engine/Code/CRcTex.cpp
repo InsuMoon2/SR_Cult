@@ -1,127 +1,119 @@
 ﻿#include "CRcTex.h"
 
 CRcTex::CRcTex()
-{
-}
+{ }
 
-CRcTex::CRcTex(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CVIBuffer(pGraphicDev)
-{
-}
+CRcTex::CRcTex(LPDIRECT3DDEVICE9 graphicDev)
+    : CVIBuffer(graphicDev)
+{ }
 
 CRcTex::CRcTex(const CRcTex& rhs)
-	: CVIBuffer(rhs)
-{
-}
+    : CVIBuffer(rhs)
+{ }
 
 CRcTex::~CRcTex()
-{
-}
+{ }
 
 HRESULT CRcTex::Ready_Buffer()
 {
-	m_dwVtxSize = sizeof(VTXTEX);
-	//m_dwVtxCnt = 6;
-	m_dwVtxCnt = 4;	
-	m_dwTriCnt = 2;
-	m_dwFVF = FVF_TEX;
+    m_VtxSize = sizeof(VTXTEX);
+    m_VtxCnt  = 4;
+    m_TriCnt  = 2;
+    m_FVF     = FVF_TEX;
 
-	m_dwIdxSize = sizeof(INDEX32);
-	m_IdxFmt = D3DFMT_INDEX32;
+    m_IdxSize = sizeof(INDEX32);
+    m_IdxFmt  = D3DFMT_INDEX32;
 
-	if (FAILED(CVIBuffer::Ready_Buffer()))
-		return E_FAIL;
+    if (FAILED(CVIBuffer::Ready_Buffer()))
+        return E_FAIL;
 
-	VTXTEX* pVertex = NULL;
-		
+    VTXTEX* vtxtex = nullptr;
 
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+    m_VB->Lock(0, 0, (void**)&vtxtex, 0);
 
-	pVertex[0].vPosition = { -1.f, 1.f, 0.f };
-	pVertex[0].vTexUV = {0.f, 0.f};
+    vtxtex[0].position = { -1.f, 1.f, 0.f };
+    vtxtex[0].texUV    = { 0.f, 0.f };
 
-	pVertex[1].vPosition = { 1.f, 1.f, 0.f };
-	pVertex[1].vTexUV = {1.f, 0.f};
+    vtxtex[1].position = { 1.f, 1.f, 0.f };
+    vtxtex[1].texUV    = { 1.f, 0.f };
 
-	pVertex[2].vPosition = { 1.f, -1.f, 0.f };
-	pVertex[2].vTexUV = {1.f, 1.f};
+    vtxtex[2].position = { 1.f, -1.f, 0.f };
+    vtxtex[2].texUV    = { 1.f, 1.f };
 
-	pVertex[3].vPosition = { -1.f, -1.f, 0.f };
-	pVertex[3].vTexUV = { 0.f, 1.f };
+    vtxtex[3].position = { -1.f, -1.f, 0.f };
+    vtxtex[3].texUV    = { 0.f, 1.f };
 
-	m_pVB->Unlock();
+    m_VB->Unlock();
 
+    INDEX32* index = nullptr;
 
-	INDEX32* pIndex = NULL;
+    m_IB->Lock(0, 0, (void**)&index, 0);
 
-	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
+    // 오른쪽 위
+    index[0]._0 = 0;
+    index[0]._1 = 1;
+    index[0]._2 = 2;
 
-	// 오른쪽 위
-	pIndex[0]._0 = 0;
-	pIndex[0]._1 = 1;
-	pIndex[0]._2 = 2;
+    // 왼쪽 아래
+    index[1]._0 = 0;
+    index[1]._1 = 2;
+    index[1]._2 = 3;
 
-	// 왼쪽 아래
-	pIndex[1]._0 = 0;
-	pIndex[1]._1 = 2;
-	pIndex[1]._2 = 3;
+    m_IB->Unlock();
 
-	m_pIB->Unlock();
-
-
-	return S_OK;
+    return S_OK;
 }
 
 void CRcTex::Render_Buffer()
 {
-	CVIBuffer::Render_Buffer();
+    CVIBuffer::Render_Buffer();
 }
 
 void CRcTex::Set_UV(_float u0, _float v0, _float u1, _float v1)
 {
-	VTXTEX* pVertex = nullptr;
+    VTXTEX* vertex = nullptr;
 
-	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
+    m_VB->Lock(0, 0, (void**)&vertex, 0);
 
-	// 좌상단
-	pVertex[0].vTexUV.x = u0;
-	pVertex[0].vTexUV.y = v0;
+    // 좌상단
+    vertex[0].texUV.x = u0;
+    vertex[0].texUV.y = v0;
 
-	// 우상단
-	pVertex[1].vTexUV.x = u1;
-	pVertex[1].vTexUV.y = v0;
+    // 우상단
+    vertex[1].texUV.x = u1;
+    vertex[1].texUV.y = v0;
 
-	// 우하단
-	pVertex[2].vTexUV.x = u1;
-	pVertex[2].vTexUV.y = v1;
+    // 우하단
+    vertex[2].texUV.x = u1;
+    vertex[2].texUV.y = v1;
 
-	// 좌하단
-	pVertex[3].vTexUV.x = u0;
-	pVertex[3].vTexUV.y = v1;
+    // 좌하단
+    vertex[3].texUV.x = u0;
+    vertex[3].texUV.y = v1;
 
-	m_pVB->Unlock();
+    m_VB->Unlock();
 }
 
-CRcTex* CRcTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRcTex* CRcTex::Create(LPDIRECT3DDEVICE9 graphicDev)
 {
-	CRcTex* pRcTex = new CRcTex(pGraphicDev);
+    auto rcTex = new CRcTex(graphicDev);
 
-	if (FAILED(pRcTex->Ready_Buffer()))
-	{
-		Safe_Release(pRcTex);
-		MSG_BOX("RcTex Create Failed");
-		return nullptr;
-	}
+    if (FAILED(rcTex->Ready_Buffer()))
+    {
+        Safe_Release(rcTex);
+        MSG_BOX("RcTex Create Failed");
+        return nullptr;
+    }
 
-	return pRcTex;
+    return rcTex;
 }
 
 CComponent* CRcTex::Clone()
 {
-	return new CRcTex(*this);
+    return new CRcTex(*this);
 }
 
 void CRcTex::Free()
 {
-	CVIBuffer::Free();
+    CVIBuffer::Free();
 }

@@ -1,75 +1,80 @@
 ﻿#include "pch.h"
 #include "CMonster.h"
 
-#include <CCreateHelper.h>
-
-#include "CProtoMgr.h"
+#include "CCreateHelper.h"
 #include "CManagement.h"
-#include "CRenderer.h"
 #include "CRectCollider.h"
+#include "CRenderer.h"
+#include "CTransform.h"
+#include "CTriCol.h"
 
-CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	: CGameObject(pGraphicDev)
-{
-}
+CMonster::CMonster(DEVICE graphicDev)
+    : CGameObject(graphicDev),
+      m_BufferCol(nullptr),
+      m_TransformCom(nullptr),
+      m_RectColCom(nullptr)
+{ }
 
 CMonster::CMonster(const CMonster& rhs)
-	:CGameObject(rhs)
-{
-}
+    : CGameObject(rhs),
+      m_BufferCol(rhs.m_BufferCol),
+      m_TransformCom(rhs.m_TransformCom),
+      m_RectColCom(rhs.m_RectColCom)
+{ }
 
 CMonster::~CMonster()
-{
-}
+{ }
 
 HRESULT CMonster::Ready_GameObject()
 {
-	if (FAILED(Add_Component()))
-		return E_FAIL;
+    if (FAILED(Add_Component()))
+        return E_FAIL;
 
-	return S_OK;
+    return S_OK;
 }
 
-_int CMonster::Update_GameObject(const _float& fTimeDelta)
+_int CMonster::Update_GameObject(const _float& timeDelta)
 {
-	_int iExit = CGameObject::Update_GameObject(fTimeDelta);
+    _int exit = CGameObject::Update_GameObject(timeDelta);
 
-	CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_NONALPHA, this);
 
-	return iExit;
+    return exit;
 }
 
-void CMonster::LateUpdate_GameObject(const _float& fTimeDelta)
+void CMonster::LateUpdate_GameObject(const _float& timeDelta)
 {
-	CGameObject::LateUpdate_GameObject(fTimeDelta);
+    CGameObject::LateUpdate_GameObject(timeDelta);
 
-	/*Engine::CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>
-		(Engine::CManagement::GetInstance()->Get_Component
-		(ID_DYNAMIC, L"GameLogic_Layer", L"Player", L"Com_Transform"));
+    /*Engine::CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>
+        (Engine::CManagement::GetInstance()->Get_Component
+        (ID_DYNAMIC, L"GameLogic_Layer", L"Player", L"Com_Transform"));
 
-	if (nullptr == pPlayerTransformCom)
-		return;*/
+    if (nullptr == pPlayerTransformCom)
+        return;*/
 
-    CTransform* pPlayerTransformCom = dynamic_cast<CTransform*>(
-        CManagement::GetInstance()->Get_Component(ID_DYNAMIC, LAYERTYPE::GameLogic, OBJTYPE::Player, COMPONENTTYPE::Transform));
+    auto playerTransformCom = dynamic_cast<CTransform*>(
+        CManagement::GetInstance()->Get_Component(ID_DYNAMIC,
+                                                  LAYERTYPE::GAMELOGIC,
+                                                  OBJTYPE::PLAYER,
+                                                  COMPONENTTYPE::TRANSFORM));
 
-    NULL_CHECK(pPlayerTransformCom);
+    NULL_CHECK(playerTransformCom);
 
-	_vec3	vPlayerPos{};
-	pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+    _vec3 vPlayerPos{};
+    playerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
-	m_pTransformCom->Chase_Target(&vPlayerPos, fTimeDelta, 5.f);
-
+    m_TransformCom->Chase_Target(&vPlayerPos, timeDelta, 5.f);
 }
 
 void CMonster::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_World());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-	m_pBufferCol->Render_Buffer();
+    m_BufferCol->Render_Buffer();
 
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     m_RectColCom->Render();
 }
@@ -77,54 +82,52 @@ void CMonster::Render_GameObject()
 void CMonster::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
-
 }
 
 void CMonster::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
-
 }
 
 HRESULT CMonster::Add_Component()
 {
-	// buffer
-    m_pBufferCol = CreateProtoComponent<CTriCol>(this, COMPONENTTYPE::TriCol);
-    NULL_CHECK_RETURN(m_pBufferCol, E_FAIL);
+    // buffer
+    m_BufferCol = CreateProtoComponent<CTriCol>(this, COMPONENTTYPE::TRI_COLOR);
+    NULL_CHECK_RETURN(m_BufferCol, E_FAIL);
 
-	m_mapComponent[ID_STATIC].insert({ COMPONENTTYPE::TriCol, m_pBufferCol });
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TRI_COLOR, m_BufferCol });
 
-	// transform
-    m_pTransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::Transform);
-    NULL_CHECK_RETURN(m_pTransformCom, E_FAIL);
+    // transform
+    m_TransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::TRANSFORM);
+    NULL_CHECK_RETURN(m_TransformCom, E_FAIL);
 
-    m_mapComponent[ID_DYNAMIC].insert({ COMPONENTTYPE::Transform, m_pTransformCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
 
     // RectColCom
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RectCol);
+    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
     NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
     m_RectColCom->Set_Size(_vec2(2.f, 2.f));
 
-    m_mapComponent[ID_DYNAMIC].insert({ COMPONENTTYPE::RectCol, m_RectColCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
 
-	return S_OK;
+    return S_OK;
 }
 
-CMonster* CMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMonster* CMonster::Create(DEVICE graphicDev)
 {
-	CMonster* Monster = new CMonster(pGraphicDev);
+    auto monster = new CMonster(graphicDev);
 
-	if (FAILED(Monster->Ready_GameObject()))
-	{
-		MSG_BOX("Monster Create Failed");
-		Safe_Release(Monster);
-		return nullptr;
-	}
+    if (FAILED(monster->Ready_GameObject()))
+    {
+        MSG_BOX("Monster Create Failed");
+        Safe_Release(monster);
+        return nullptr;
+    }
 
-	return Monster;
+    return monster;
 }
 
 void CMonster::Free()
 {
-	CGameObject::Free();
+    CGameObject::Free();
 }

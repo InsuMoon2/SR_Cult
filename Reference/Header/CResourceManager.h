@@ -1,31 +1,27 @@
-#pragma once
-
+﻿#pragma once
 #include "CBase.h"
-#include "CGameObject.h"
 #include "Engine_Define.h"
 
-class CTexture;
-
 BEGIN(Engine)
+class CTexture;
 
 class ENGINE_DLL CResourceManager : public CBase
 {
-	DECLARE_SINGLETON(CResourceManager)
+    DECLARE_SINGLETON(CResourceManager)
 
 private:
-	explicit CResourceManager();
-	virtual ~CResourceManager();
+    explicit CResourceManager();
+    ~CResourceManager() override;
 
 public:
-	CTexture* LoadTexture(const wstring& Key, const wstring& Path, TEXTUREID Type, UINT Index);
-	CTexture* FindTexture(const wstring& Key);
+    CTexture* LoadTexture(const wstring& key, const wstring& path, TEXTUREID type, UINT index);
+    CTexture* FindTexture(const wstring& key);
 
 private:
-	virtual void Free() override;
+    void Free() override;
 
 private:
-	map<wstring, CTexture*> m_Textures;
-
+    map<wstring, CTexture*> m_Textures;
 };
 
 END

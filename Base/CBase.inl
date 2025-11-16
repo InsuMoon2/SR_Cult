@@ -1,28 +1,23 @@
-﻿
-CBase::CBase() : m_dwRefCnt(0)
-{
+﻿#pragma once
 
-}
-CBase::~CBase()
-{
+CBase::CBase()
+    : m_RefCnt(0)
+{ }
 
-}
-
-unsigned long CBase::AddRef()
+unsigned long CBase::AddRef() noexcept
 {
-	return ++m_dwRefCnt;
+    return ++m_RefCnt;
 }
 
-unsigned long CBase::Release()
+unsigned long CBase::Release() noexcept
 {
-	if (0 == m_dwRefCnt)
-	{
-		Free();
+    if (0 == m_RefCnt)
+    {
+        Free();
+        delete this;
 
-		delete this;
+        return 0;
+    }
 
-		return 0;
-	}
-
-	return m_dwRefCnt--;
+    return m_RefCnt--;
 }

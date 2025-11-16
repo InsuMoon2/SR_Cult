@@ -3,56 +3,82 @@
 
 namespace Engine
 {
-	enum WINMODE { MODE_FULL, MODE_WIN };
+// 윈도우 생성 시 사용할 화면 모드
+enum WINMODE { MODE_FULL, MODE_WIN };
 
-	// Dynamic 컴포넌트 경우 매 프레임마다 갱신해야하는 컴포넌트 집단
-	enum COMPONENTID { ID_DYNAMIC, ID_STATIC, ID_END };
+/// @brief 컴포넌트 업데이트에 따른 인덱스
+///	@details
+///	- ID_DYNAMIC : 다이나믹 컴포넌트. 매 프레임마다 갱신할 경우
+/// - ID_STATIC : 스태틱 컴포넌트. 갱신할 필요가 없을 경우
+enum COMPONENTID { ID_DYNAMIC, ID_STATIC, ID_END };
 
-	enum INFO {	INFO_RIGHT, INFO_UP, INFO_LOOK, INFO_POS, INFO_END };
+// 게임 오브젝트의 방향 및 위치 벡터 인덱스
+enum INFO { INFO_RIGHT, INFO_UP, INFO_LOOK, INFO_POS, INFO_END };
 
-	enum ROTATION { ROT_X, ROT_Y, ROT_Z, ROT_END };
+// 회전 축 인덱스
+enum ROTATION { ROT_X, ROT_Y, ROT_Z, ROT_END };
 
-	enum TEXTUREID { TEX_NORMAL, TEX_CUBE, TEX_END };
+// 텍스처 자원의 타입 구분 인덱스
+enum TEXTUREID { TEX_NORMAL, TEX_CUBE, TEX_END };
 
-	enum RENDERID { RENDER_PRIORITY, RENDER_NONALPHA, RENDER_ALPHA, RENDER_UI, RENDER_END };
+// 렌더링 우선순위별 렌더링 그룹 인덱스
+enum RENDERID { RENDER_PRIORITY, RENDER_NONALPHA, RENDER_ALPHA, RENDER_UI, RENDER_END };
 
-	enum MOUSEKEYSTATE { DIM_LB, DIM_RB, DIM_MB, DIM_END };
+// DirectInput 마우스 버튼 상태 인덱스
+enum MOUSEKEYSTATE { DIM_LB, DIM_RB, DIM_MB, DIM_END };
 
-	enum MOUSEMOVESTATE {	DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
+// DirectInput 마우스 이동 축 인덱스
+enum MOUSEMOVESTATE { DIMS_X, DIMS_Y, DIMS_Z, DIMS_END };
 
-    enum class COLLIDERTYPE { Rect, Circle, Box, Sphere };
+enum class COLLIDERTYPE { RECT, CIRCLE, BOX, SPHERE };
 
-    enum class ANIMSTATE
-    {
-        Stop = 0,		// Stop
-        Loop,			// 계속 반복
-        Once,			// 한번만 재생
-        Reverse_Loop,	// 거꾸로 계속 반복
-        Reverse_Once,	// 거꾸로 한번만 재생
+enum class ANIMSTATE
+{
+    STOP,		    // 정지
+    LOOP,			// 계속 반복
+    ONCE,			// 한번만 재생
+    REVERSE_LOOP,	// 거꾸로 계속 반복
+    REVERSE_ONCE,	// 거꾸로 한번만 재생
 
-        END
-    };
+    ANIM_END
+};
 
-    enum class LAYERTYPE { Enviroment, GameLogic, UI, END };
-    enum class OBJTYPE { Player, Monster, /* 오브젝트 타입 종류 추가 */ END };
+enum class LAYERTYPE
+{
+    ENVIRONMENT,
+    GAMELOGIC,
+    CAMERA,
+    UI,
 
-	enum class COMPONENTTYPE
-	{
-		TriCol,
-		RcCol,
-		RcTex,
-		Transform,
-		Texture,
-		Animator,
-		Camera,
+    LAYER_END
+};
 
-        RectCol,
-        CircleCol,
-        BoxCol,
-        SphereCol,
+enum class OBJTYPE
+{
+    PLAYER,
+    MONSTER,
+    /* 오브젝트 타입 종류 추가 */
 
-        END
-	};
+    OBJ_END
+};
 
+// 만들어지는 컴포넌트마다 부여하는 고유 타입
+enum class COMPONENTTYPE
+{
+    TRI_COLOR,
+    RC_COLOR,
+    RC_TEX,
+    TRANSFORM,
+    TEXTURE,
+    ANIMATOR,
+    CAMERA,
+
+    RECT_COLL,
+    CIRCLE_COLL,
+    BOX_COLL,
+    SPHERE_COLL,
+
+    COMPONENT_END
+};
 }
 #endif // Engine_Enum_h__

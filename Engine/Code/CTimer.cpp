@@ -1,59 +1,53 @@
-#include "CTimer.h"
+ï»¿#include "CTimer.h"
 
-CTimer::CTimer() : m_fTimeDelta(0.f)
-{
-	ZeroMemory(&m_FixTime, sizeof(LARGE_INTEGER));
-	ZeroMemory(&m_LastTime, sizeof(LARGE_INTEGER));
-	ZeroMemory(&m_FrameTime, sizeof(LARGE_INTEGER));
-	ZeroMemory(&m_CpuTick, sizeof(LARGE_INTEGER));
-}
+CTimer::CTimer()
+    : m_FrameTime{}, m_FixTime{}, m_LastTime{}, m_CpuTick{},
+      m_TimeDelta(0.f)
+{ }
 
 CTimer::~CTimer()
-{
-}
+{ }
 
 HRESULT CTimer::Ready_Timer()
 {
-	QueryPerformanceCounter(&m_FrameTime);			// 1077
-	QueryPerformanceCounter(&m_LastTime);			// 1085
-	QueryPerformanceCounter(&m_FixTime);			// 1090
+    QueryPerformanceCounter(&m_FrameTime);  // ex) 1077
+    QueryPerformanceCounter(&m_LastTime);   // ex) 1085
+    QueryPerformanceCounter(&m_FixTime);	// ex) 1090
 
-	QueryPerformanceFrequency(&m_CpuTick);		// cpu tick °ªÀ» ¾ò¾î¿À´Â ÇÔ¼ö
+    QueryPerformanceFrequency(&m_CpuTick);	// CPU Tick ê°’ì„ ì–»ì–´ì˜¤ëŠ” í•¨ìˆ˜
 
-	return S_OK;
+    return S_OK;
 }
 
 void CTimer::Update_Timer()
 {
-	QueryPerformanceCounter(&m_FrameTime);			// 1500
+    QueryPerformanceCounter(&m_FrameTime);  // ex) 1500
 
+    if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
+    {
+        QueryPerformanceFrequency(&m_CpuTick);
+        m_FixTime = m_FrameTime;
+    }
 
-	if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
-	{
-		QueryPerformanceFrequency(&m_CpuTick);
-		m_FixTime = m_FrameTime;
-	}
+    m_TimeDelta = static_cast<_float>(m_FrameTime.QuadPart - m_LastTime.QuadPart)
+        / static_cast<_float>(m_CpuTick.QuadPart);
 
-
-	m_fTimeDelta = (m_FrameTime.QuadPart - m_LastTime.QuadPart) / (_float)m_CpuTick.QuadPart;
-
-	m_LastTime = m_FrameTime;
+    m_LastTime = m_FrameTime;
 }
 
 CTimer* CTimer::Create()
 {
-	CTimer* pInstance = new CTimer;
+    auto timer = new CTimer;
 
-	if (FAILED(pInstance->Ready_Timer()))
-	{
-		Engine::Safe_Release(pInstance);
-		return nullptr;
-	}
+    if (FAILED(timer->Ready_Timer()))
+    {
+        MSG_BOX("Timer Create Failed");
+        Engine::Safe_Release(timer);
+        return nullptr;
+    }
 
-	return pInstance;
+    return timer;
 }
 
 void CTimer::Free()
-{
-}
-
+{ }
