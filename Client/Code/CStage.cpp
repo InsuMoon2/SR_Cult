@@ -31,9 +31,14 @@ HRESULT CStage::Ready_Scene()
     if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::GAMELOGIC)))
         return E_FAIL;
 
-    if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::CAMERA)))
-        return E_FAIL;
+    //if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::CAMERA)))
+    //    return E_FAIL;
 
+    if (FAILED(Ready_Camera_Layer(LAYERTYPE::CAMERA)))
+    {
+        return E_FAIL;
+    }
+    
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
 
@@ -111,8 +116,8 @@ HRESULT CStage::Ready_Camera_Layer(LAYERTYPE layerType)
 
     _matrix matView, matProj;
 
-    _vec3 vEye = { 0.f, 0.f, -10.f };
-    _vec3 vAt  = { 0.f, 0.f, 10.f };
+    _vec3 vEye = { 0.f, 2.f, -10.f };
+    _vec3 vAt  = { 0.f, 0.f, 1.f };
     _vec3 vUp  = { 0.f, 1.f, 0.f };
 
     D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
