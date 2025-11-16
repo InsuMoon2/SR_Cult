@@ -166,16 +166,21 @@ HRESULT CPlayer::Add_Component()
 
 void CPlayer::Animation_Setting()
 {
+    // 애니메이션 생성
     m_AnimatorCom->Create_Animation(L"PlayerIdle", 150, 1, 1, 0.02f);
     m_AnimatorCom->Create_Animation(L"PlayerRun", 19, 1, 1, 0.02f);
     m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 1, 1, 0.02f);
     m_AnimatorCom->Create_Animation(L"PlayerRunUp", 19, 1, 1, 0.02f);
 
+#pragma region 보스 테스트
     //m_AnimatorCom->Create_Animation(L"BossTest", 400, 1, 1, 0.02f);
-
     //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest", ANIMSTATE::LOOP);
+#pragma endregion
+
+    // State -> Animation 연동
     m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
+
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)

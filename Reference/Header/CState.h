@@ -20,6 +20,8 @@ public:
     void    LateUpdate_Component() override;
 
 public:
+    void Update_Animation();
+
     void    Change_State(PLAYERSTATE State);
     void    Change_Dir(PLAYERDIR Dir);
 

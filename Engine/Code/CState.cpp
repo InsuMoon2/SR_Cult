@@ -39,6 +39,21 @@ _int CState::Update_Component(const _float& timeDelta)
 {
     _int exit = CComponent::Update_Component(timeDelta);
 
+    Update_Animation();
+
+    return exit;
+}
+
+void CState::LateUpdate_Component()
+{
+    CComponent::LateUpdate_Component();
+
+
+
+}
+
+void CState::Update_Animation()
+{
     // Animator를 안 들고 있으면, Owner에서 한번 탐색
     if (m_Animator == nullptr && m_Owner != nullptr)
     {
@@ -53,7 +68,7 @@ _int CState::Update_Component(const _float& timeDelta)
         auto iter = m_PlayerStateMap.find(m_State);
         if (iter != m_PlayerStateMap.end())
         {
-            ANIMSTATE animState = ANIMSTATE::LOOP; 
+            ANIMSTATE animState = ANIMSTATE::LOOP; // 기본 LOOP 로 세팅
 
             auto animIter = m_AnimStateMap.find(m_State);
 
@@ -65,17 +80,6 @@ _int CState::Update_Component(const _float& timeDelta)
 
         m_PrevState = m_State;
     }
-
-
-    return exit;
-}
-
-void CState::LateUpdate_Component()
-{
-    CComponent::LateUpdate_Component();
-
-
-
 }
 
 void CState::Change_State(PLAYERSTATE State)
