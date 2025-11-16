@@ -42,7 +42,7 @@ HRESULT CPlayer::Ready_GameObject()
     Animation_Setting();
 
     // 크기 변환 테스트
-    m_TransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
+    m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
 
     return S_OK;
 }
@@ -175,10 +175,16 @@ void CPlayer::Animation_Setting()
 #pragma region 보스 테스트
     //m_AnimatorCom->Create_Animation(L"BossTest", 400, 1, 1, 0.02f);
     //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest", ANIMSTATE::LOOP);
+
+    m_AnimatorCom->Create_Animation(L"BossPack", 20, 20, 1, 0.02f);
+    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossPack", ANIMSTATE::LOOP);
+
+    //m_AnimatorCom->Create_Animation(L"BossTest_Dead", 19, 1, 1, 0.02f);
+    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest_Dead", ANIMSTATE::LOOP);
 #pragma endregion
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
+    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
 
 }

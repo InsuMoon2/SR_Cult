@@ -192,6 +192,12 @@ HRESULT CStage::Ready_Prototype()
     playerTex->Add_Texture(TEX_NORMAL, L"BossTest",
         L"../Bin/Resource/Texture/Monster/Boss2/TOWW-Boss2_Idle.png");
 
+    playerTex->Add_Texture(TEX_NORMAL, L"BossTest_Dead",
+        L"../Bin/Resource/Texture/Monster/Boss2/TOWW-Boss-dead.png");
+
+    playerTex->Add_Texture(TEX_NORMAL, L"BossPack",
+        L"../Bin/Resource/Texture/Monster/Boss2/TOWW_Boss_Idle_Pack_Scale.png");
+
     // 세팅 이후 Texture 컴포넌트 프로토타입 생성
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEXTURE, playerTex)))
