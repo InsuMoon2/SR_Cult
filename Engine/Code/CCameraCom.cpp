@@ -11,7 +11,7 @@ CCameraCom::CCameraCom()
       m_isDirty(false)
 { }
 
-CCameraCom::CCameraCom(LPDIRECT3DDEVICE9 graphicDev)
+CCameraCom::CCameraCom(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_ViewMode(VIEW_QUARTER), m_ProjType(PROJ_PERSPECTIVE),
       m_Offset(0.f, 4.f, -6.f),
@@ -165,7 +165,7 @@ void CCameraCom::Key_Input()
 #pragma endregion
 }
 
-CCameraCom* CCameraCom::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCameraCom* CCameraCom::Create(DEVICE pGraphicDev)
 {
     auto CameraCom = new CCameraCom(pGraphicDev);
 

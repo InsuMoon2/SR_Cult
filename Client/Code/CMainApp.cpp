@@ -13,6 +13,7 @@
 #include "CRenderer.h"
 #include "CStage.h"
 #include "CTimerMgr.h"
+#include "CLogo.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),
@@ -111,7 +112,7 @@ HRESULT CMainApp::Ready_DefaultSetting(DEVICE* graphicDev)
 
 HRESULT CMainApp::Ready_Scene(DEVICE graphicDev)
 {
-    Engine::CScene* logo = CStage::Create(graphicDev);
+    Engine::CScene* logo = CLogo::Create(graphicDev);
 
     if (nullptr == logo)
         return E_FAIL;

@@ -21,7 +21,7 @@ void CRenderer::Add_RenderGroup(RENDERID type, CGameObject* gameObject)
     gameObject->AddRef();
 }
 
-void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_GameObject(DEVICE& graphicDev)
 {
     Render_Priority(graphicDev);
     Render_NonAlpha(graphicDev);
@@ -40,7 +40,7 @@ void CRenderer::Clear_RenderGroup()
     }
 }
 
-void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_Priority(DEVICE& graphicDev)
 {
     for (auto& obj : m_RenderGroup[RENDER_PRIORITY])
     {
@@ -48,7 +48,7 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& graphicDev)
     }
 }
 
-void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_NonAlpha(DEVICE& graphicDev)
 {
     for (auto& obj : m_RenderGroup[RENDER_NONALPHA])
     {
@@ -56,7 +56,7 @@ void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& graphicDev)
     }
 }
 
-void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_Alpha(DEVICE& graphicDev)
 {
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
@@ -71,7 +71,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_UI(DEVICE& graphicDev)
 {
     // TODO 석호: 직교 투영 설정
 

@@ -6,7 +6,7 @@ class ENGINE_DLL CVIBuffer : public CComponent
 {
 protected:
     explicit CVIBuffer();
-    explicit CVIBuffer(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CVIBuffer(DEVICE graphicDev);
     explicit CVIBuffer(const CVIBuffer& rhs);
     ~CVIBuffer() override;
 

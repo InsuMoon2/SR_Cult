@@ -11,7 +11,7 @@ class ENGINE_DLL CTransform : public CComponent
 {
 private:
     explicit CTransform();
-    explicit CTransform(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CTransform(DEVICE graphicDev);
     explicit CTransform(const CTransform& rhs);
     ~CTransform() override;
 
@@ -104,7 +104,7 @@ private:
 #pragma endregion
 
 public:
-    static CTransform* Create(LPDIRECT3DDEVICE9 graphicDev);
+    static CTransform* Create(DEVICE graphicDev);
     CComponent*        Clone() override;
 
 private:

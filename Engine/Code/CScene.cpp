@@ -2,7 +2,7 @@
 
 #include "CLayer.h"
 
-CScene::CScene(LPDIRECT3DDEVICE9 graphicDev)
+CScene::CScene(DEVICE graphicDev)
     : m_pGraphicDev(graphicDev)
 {
     m_pGraphicDev->AddRef();

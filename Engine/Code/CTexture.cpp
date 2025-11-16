@@ -1,6 +1,6 @@
 ﻿#include "CTexture.h"
 
-CTexture::CTexture(LPDIRECT3DDEVICE9 graphicDev)
+CTexture::CTexture(DEVICE graphicDev)
     : CComponent(graphicDev)
 { }
 
@@ -68,7 +68,7 @@ void CTexture::Set_Texture(const _uint& index)
     m_GraphicDev->SetTexture(0, m_Textures[index]);
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
+CTexture* CTexture::Create(DEVICE graphicDev,
                            TEXTUREID         texType,
                            const wstring&    filePath,
                            const _uint&      count)

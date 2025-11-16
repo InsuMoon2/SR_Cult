@@ -7,7 +7,7 @@ CComponent::CComponent()
       m_Owner(nullptr), m_TransformCom(nullptr)
 { }
 
-CComponent::CComponent(LPDIRECT3DDEVICE9 graphicDev)
+CComponent::CComponent(DEVICE graphicDev)
     : m_GraphicDev(graphicDev), m_IsClone(false),
       m_Owner(nullptr), m_TransformCom(nullptr)
 {

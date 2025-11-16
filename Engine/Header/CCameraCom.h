@@ -32,7 +32,7 @@ public:
 
 private:
     explicit CCameraCom();
-    explicit CCameraCom(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CCameraCom(DEVICE graphicDev);
     explicit CCameraCom(const CCameraCom& rhs);
     ~CCameraCom() override;
 
@@ -127,7 +127,7 @@ private:
     _bool m_isDirty;        // 투영 변환 재연산 트리거
 
 public:
-    static CCameraCom* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+    static CCameraCom* Create(DEVICE pGraphicDev);
     CComponent*        Clone() override;
 
 private:

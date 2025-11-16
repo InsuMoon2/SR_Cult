@@ -12,7 +12,7 @@ CLightMgr::~CLightMgr()
     CLightMgr::Free();
 }
 
-HRESULT CLightMgr::Ready_Light(LPDIRECT3DDEVICE9 graphicDev,
+HRESULT CLightMgr::Ready_Light(DEVICE graphicDev,
                                const D3DLIGHT9*  lightInfo,
                                const _uint&      index)
 {

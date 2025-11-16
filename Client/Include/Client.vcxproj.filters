@@ -34,6 +34,12 @@
     <Filter Include="02. GameObject\02. Monster">
       <UniqueIdentifier>{6f01c3c0-bd94-4864-a1cb-3dc64219e5ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. UI">
+      <UniqueIdentifier>{2c329504-b509-4cd3-9c28-9acdb3fad354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\00. UIMainMenuPanel">
+      <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -66,6 +72,9 @@
     <ClInclude Include="..\Header\CStage.h">
       <Filter>01. Scene\01. Stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUIMainMenuPanel.h">
+      <Filter>03. UI\00. UIMainMenuPanel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -88,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIMainMenuPanel.cpp">
+      <Filter>03. UI\00. UIMainMenuPanel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@
 CRcTex::CRcTex()
 { }
 
-CRcTex::CRcTex(LPDIRECT3DDEVICE9 graphicDev)
+CRcTex::CRcTex(DEVICE graphicDev)
     : CVIBuffer(graphicDev)
 { }
 
@@ -94,7 +94,7 @@ void CRcTex::Set_UV(_float u0, _float v0, _float u1, _float v1)
     m_VB->Unlock();
 }
 
-CRcTex* CRcTex::Create(LPDIRECT3DDEVICE9 graphicDev)
+CRcTex* CRcTex::Create(DEVICE graphicDev)
 {
     auto rcTex = new CRcTex(graphicDev);
 

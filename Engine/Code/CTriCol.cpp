@@ -3,7 +3,7 @@
 CTriCol::CTriCol()
 { }
 
-CTriCol::CTriCol(LPDIRECT3DDEVICE9 graphicDev)
+CTriCol::CTriCol(DEVICE graphicDev)
     : CVIBuffer(graphicDev)
 { }
 
@@ -62,7 +62,7 @@ void CTriCol::Render_Buffer()
     CVIBuffer::Render_Buffer();
 }
 
-CTriCol* CTriCol::Create(LPDIRECT3DDEVICE9 graphicDev)
+CTriCol* CTriCol::Create(DEVICE graphicDev)
 {
     auto triCol = new CTriCol(graphicDev);
 

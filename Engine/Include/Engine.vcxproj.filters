@@ -106,6 +106,21 @@
     <Filter Include="02. Prototype\03. Camera">
       <UniqueIdentifier>{2a24c0e1-3d74-4392-81ed-50675f58e78f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI">
+      <UniqueIdentifier>{9f16ce17-86aa-4294-9b30-f73d6b17bf09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\00. UIPanel">
+      <UniqueIdentifier>{bd6e1520-8dbf-4e4f-aaa1-d5976d52d9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\01. UIButton">
+      <UniqueIdentifier>{50e2ee6d-a6e5-43e5-abeb-b5e6429b241a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\02. UIImage">
+      <UniqueIdentifier>{5048492a-7a02-476f-a178-e175a2e9aaa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\03. UIText">
+      <UniqueIdentifier>{27088e1a-191e-4a09-ae66-8adb0412f419}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -222,6 +237,21 @@
     <ClInclude Include="..\header\CCameraCom.h">
       <Filter>02. Prototype\03. Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUI.h">
+      <Filter>04. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIPanel.h">
+      <Filter>04. UI\00. UIPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIButton.h">
+      <Filter>04. UI\01. UIButton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIImage.h">
+      <Filter>04. UI\02. UIImage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIText.h">
+      <Filter>04. UI\03. UIText</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -316,6 +346,21 @@
     </ClCompile>
     <ClCompile Include="..\code\CCameraCom.cpp">
       <Filter>02. Prototype\03. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUI.cpp">
+      <Filter>04. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIPanel.cpp">
+      <Filter>04. UI\00. UIPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIButton.cpp">
+      <Filter>04. UI\01. UIButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIImage.cpp">
+      <Filter>04. UI\02. UIImage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIText.cpp">
+      <Filter>04. UI\03. UIText</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

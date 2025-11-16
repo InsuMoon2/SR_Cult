@@ -28,7 +28,7 @@ public:
     HRESULT Set_Scene(CScene* scene);   // 강제 씬 전환
     _int    Update_Scene(const _float& timeDelta);
     void    LateUpdate_Scene(const _float& timeDelta);
-    void    Render_Scene(LPDIRECT3DDEVICE9 graphicDev);
+    void    Render_Scene(DEVICE graphicDev);
 
 public:
     HRESULT Request_ChangeScene(CScene* nextScene);    // 씬 전환 예약
