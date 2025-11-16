@@ -106,6 +106,9 @@
     <Filter Include="02. Prototype\03. Camera">
       <UniqueIdentifier>{2a24c0e1-3d74-4392-81ed-50675f58e78f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Prototype\05. State">
+      <UniqueIdentifier>{db0654d4-8fff-42b9-afe9-06d252ae2cd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -222,6 +225,12 @@
     <ClInclude Include="..\header\CCameraCom.h">
       <Filter>02. Prototype\03. Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CState.h">
+      <Filter>02. Prototype\05. State</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CEnumHelper.h">
+      <Filter>98. Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -316,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="..\code\CCameraCom.cpp">
       <Filter>02. Prototype\03. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CState.cpp">
+      <Filter>02. Prototype\05. State</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

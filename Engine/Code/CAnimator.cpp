@@ -6,14 +6,16 @@
 
 CAnimator::CAnimator(DEVICE graphicDev)
     : CComponent(graphicDev),
-      m_CurAnimation(nullptr), m_Texture(nullptr), m_Play(false), m_BufferCom(nullptr)
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr)
 { }
 
 CAnimator::CAnimator(const CAnimator& rhs)
     : CComponent(rhs),
-      m_CurAnimation(nullptr), m_Texture(nullptr), m_Play(false), m_BufferCom(nullptr)
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr)
 // TODO 석호: rhs.m_CurAnimation 등을 사용해야 복제의 의도와 맞지 않나?
-{ }
+{
+    
+}
 
 CAnimator::~CAnimator()
 { }
@@ -23,7 +25,7 @@ HRESULT CAnimator::Ready_Animator()
     if (m_Owner == nullptr)
         return E_FAIL;
 
-    // TODO : Stage-> Create -> ReadyAnimator 호출 시키에는 OwnerSetting이 안돼있는데 어떻게 바꿀지?
+    // TODO : Stage-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
     m_BufferCom = dynamic_cast<CRcTex*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::RC_TEX));
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
@@ -97,33 +99,35 @@ HRESULT CAnimator::Create_Animation(const wstring& key,
                                     _uint          maxX,
                                     _uint          maxY,
                                     _int           lineY,
-                                    _float         interval,
-                                    ANIMSTATE      state)
+                                    _float         interval)
 {
-    CSpriteAnimation* anim = CSpriteAnimation::Create();
-
-    anim->Init(maxX,
-               maxY,
-               0,
-               lineY,
-               interval,
-               true,
-               state);
+    CSpriteAnimation* anim
+     = CSpriteAnimation::Create(maxX, maxY, 0,
+                                lineY, interval, true);
 
     return Add_Animation(key, anim);
 }
 
-void CAnimator::Play_Animation(const wstring& Key)
+void CAnimator::Play_Animation(const wstring& key, ANIMSTATE state, bool reset)
 {
-    CSpriteAnimation* anim = Find_Animation(Key);
+	CSpriteAnimation* anim = Find_Animation(key);
+	if (anim == nullptr)
+		return;
 
-    if (anim == nullptr)
-        return;
+	// 플레이 중에 같은 애니메이션, 상태가 같으면 변경 X
+	if (m_Play && m_CurAnimation == anim && anim->GetState() == state)
+		return;
 
-    anim->Reset(); // 초기화 이후 재생
+	m_CurAnimation = anim;
+	m_CurKey = key;
 
-    m_CurAnimation = anim;
-    m_Play         = true;
+	m_CurAnimation->SetState(state);
+
+	if (reset)
+		m_CurAnimation->Reset();
+
+	// STOP이면 False, 나머지는 True값 세팅
+	m_Play = (state != ANIMSTATE::STOP);
 }
 
 void CAnimator::Stop_Animation()

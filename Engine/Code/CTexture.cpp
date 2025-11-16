@@ -17,6 +17,8 @@ CTexture::CTexture(const CTexture& rhs)
     {
         m_Textures[i]->AddRef();
     }
+
+    m_KeyIndexMap = rhs.m_KeyIndexMap;
 }
 
 CTexture::~CTexture()
@@ -66,6 +68,41 @@ void CTexture::Set_Texture(const _uint& index)
         return;
 
     m_GraphicDev->SetTexture(0, m_Textures[index]);
+}
+
+HRESULT CTexture::Add_Texture(TEXTUREID texType, const wstring& key, const wstring& filePath)
+{
+    IDirect3DBaseTexture9* texture = nullptr;
+
+    switch (texType)
+    {
+    case TEX_NORMAL:
+        if (FAILED(D3DXCreateTextureFromFile(
+            m_GraphicDev, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&texture)))
+            return E_FAIL;
+        break;
+
+    case TEX_CUBE:
+        if (FAILED(D3DXCreateCubeTextureFromFile(
+            m_GraphicDev, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&texture)))
+            return E_FAIL;
+        break;
+    }
+
+    m_Textures.push_back(texture);
+
+    _uint index = static_cast<_uint>(m_Textures.size() - 1);
+    m_KeyIndexMap[key] = index;
+}
+
+void CTexture::Set_Texture(const wstring& key)
+{
+    auto iter = m_KeyIndexMap.find(key);
+
+    if (iter == m_KeyIndexMap.end())
+        return;
+
+    Set_Texture(iter->second);
 }
 
 CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
