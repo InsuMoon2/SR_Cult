@@ -19,12 +19,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
-    : CGameObject(rhs),
-      m_BufferCom(rhs.m_BufferCom),
-      m_TransformCom(rhs.m_TransformCom),
-      m_TextureCom(rhs.m_TextureCom),
-      m_AnimatorCom(rhs.m_AnimatorCom),
-      m_RectColCom(rhs.m_RectColCom)
+    : CGameObject(rhs)
 { }
 
 CPlayer::~CPlayer()
@@ -103,24 +98,22 @@ void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
 HRESULT CPlayer::Add_Component()
 {
     // buffer
-    //m_pBufferCom = CreateProtoComponent<CRcTex>(this, L"Proto_RcTex");
     m_BufferCom = CreateProtoComponent<CRcTex>(this, COMPONENTTYPE::RC_TEX);
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::RC_TEX, m_BufferCom });
 
     // transform
-    //m_pTransformCom = CreateProtoComponent<CTransform>(this, L"Proto_Transform");
     m_TransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::TRANSFORM);
     NULL_CHECK_RETURN(m_TransformCom, E_FAIL);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
 
     // texture
-    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEXTURE);
+    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_PLAYER);
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
-    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEXTURE, m_TextureCom });
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_PLAYER, m_TextureCom });
 
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
     NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
@@ -128,10 +121,6 @@ HRESULT CPlayer::Add_Component()
     m_AnimatorCom->Ready_Animator();
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
-
-    // TestPlayer
-    //m_Animator->Create_LineAnimation(L"Idle", 24, 12, 9, 0.1f, ANIMSTATE::Loop);
-    //m_Animator->Create_LineAnimation(L"Run", 24, 12, 1, 0.1f, ANIMSTATE::Loop);
 
     // Lamb Idle
     m_AnimatorCom->Create_Animation(L"Idle", 150, 1, 1, 0.02f, ANIMSTATE::LOOP);

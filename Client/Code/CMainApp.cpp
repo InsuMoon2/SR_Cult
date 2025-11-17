@@ -8,10 +8,10 @@
 #include "CGraphicDev.h"
 #include "CImGuiManager.h"
 #include "CLightMgr.h"
+#include "CLogo.h"
 #include "CManagement.h"
 #include "CProtoMgr.h"
 #include "CRenderer.h"
-#include "CStage.h"
 #include "CTimerMgr.h"
 
 CMainApp::CMainApp()
@@ -95,11 +95,11 @@ HRESULT CMainApp::Ready_DefaultSetting(DEVICE* graphicDev)
 
     // Fonts
     if (FAILED(CFontMgr::GetInstance()->Ready_Font(
-        *graphicDev, L"Font_Default", L"견명조", 20, 20, FW_HEAVY)))
+        *graphicDev, L"견명조", L"견명조", 20, 20, FW_HEAVY)))
         return E_FAIL;
 
     if (FAILED(CFontMgr::GetInstance()->Ready_Font(
-        *graphicDev, L"Font_Jinji", L"궁서", 20, 15, FW_THIN)))
+        *graphicDev, L"궁서", L"궁서", 20, 15, FW_THIN)))
         return E_FAIL;
 
     // DInput
@@ -111,7 +111,7 @@ HRESULT CMainApp::Ready_DefaultSetting(DEVICE* graphicDev)
 
 HRESULT CMainApp::Ready_Scene(DEVICE graphicDev)
 {
-    Engine::CScene* logo = CStage::Create(graphicDev);
+    Engine::CScene* logo = CLogo::Create(graphicDev);
 
     if (nullptr == logo)
         return E_FAIL;

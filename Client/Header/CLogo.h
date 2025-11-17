@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "CScene.h"
 
+class CLoading;
+
 class CLogo : public CScene
 {
 private:
@@ -19,6 +21,9 @@ private:
     HRESULT Ready_UI_Layer(LAYERTYPE layerType) { return S_OK; }
 
     HRESULT Ready_Prototype();
+
+private:
+    CLoading* m_pLoading;
 
 public:
     static CLogo* Create(DEVICE graphicDev);
