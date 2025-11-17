@@ -149,33 +149,29 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 
 HRESULT CStage::Ready_Prototype()
 {
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
-        return E_FAIL;
-
-
-
-    // Animator
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    // RectCol
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
-        return E_FAIL;
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
+    //    return E_FAIL;
 
     return S_OK;
 }
