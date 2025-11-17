@@ -29,7 +29,7 @@ public:
 		m_pInstance = nullptr;
 	}
 
-	void InitImGui(HWND hWnd, DEVICE pGraphicDev);
+	void InitImGui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev);
 	void ResizeScreen();
 
 	void Update();

@@ -3,7 +3,7 @@
 #include "CLayer.h"
 
 CScene::CScene(DEVICE graphicDev)
-    : m_pGraphicDev(graphicDev)
+    : m_GraphicDev(graphicDev)
 {
     m_GraphicDev->AddRef();
 }
@@ -17,7 +17,7 @@ CComponent* CScene::Get_Component(COMPONENTID   componentID,
                                   COMPONENTTYPE componentType)
 {
     auto iter = m_Layers.find(layerType);
-
+    
     if (iter == m_Layers.end())
         return nullptr;
 

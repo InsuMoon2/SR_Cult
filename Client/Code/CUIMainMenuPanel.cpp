@@ -37,6 +37,7 @@ void CUIMainMenuPanel::LateUpdate_GameObject(const _float& timeDelta)
 
 void CUIMainMenuPanel::Render_GameObject()
 {
+    CUIPanel
 }
 
 CUIMainMenuPanel* CUIMainMenuPanel::Create(DEVICE graphicDev)
@@ -45,7 +46,7 @@ CUIMainMenuPanel* CUIMainMenuPanel::Create(DEVICE graphicDev)
 
     if (FAILED(mainmenupanel->Ready_GameObject()))
     {
-        MSG_BOX("Logo Create Failed");
+        MSG_BOX("MainMenu Create Failed");
         Safe_Release(mainmenupanel);
         return nullptr;
     }

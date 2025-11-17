@@ -29,8 +29,8 @@ public:
     virtual void    Render_Scene() PURE;
 
 protected:
-    map<LAYERTYPE, CLayer*> m_mapLayer;
-    DEVICE       m_pGraphicDev;
+    map<LAYERTYPE, CLayer*> m_Layers;
+    DEVICE       m_GraphicDev;
 
 protected:
     void Free() override;

@@ -18,7 +18,7 @@ public:
     virtual void    Render_GameObject();
 
 private:
-	DEVICE			m_pGraphicDev;
+	DEVICE			m_GraphicDev;
 
 protected:
 	virtual void				Free();

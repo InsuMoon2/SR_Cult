@@ -18,5 +18,5 @@ public:
 
 public:
     static CUIMainMenuPanel* Create(DEVICE graphicDev);
-};
+};  
 
