@@ -1,14 +1,15 @@
 ﻿#include "CUIPanel.h"
+#include "CUI.h"
 
 CUIPanel::CUIPanel()
 {
 }
 
-CUIPanel::CUIPanel(DEVICE graphicDev)
+CUIPanel::CUIPanel(DEVICE graphicDev):CUI(graphicDev)
 {
 }
 
-CUIPanel::CUIPanel(const CUIPanel& rhs)
+CUIPanel::CUIPanel(const CUIPanel& rhs):CUI(rhs)
 {
 }
 
@@ -45,13 +46,25 @@ void CUIPanel::AddChild(CUI* ui)
 		return;
 
 	m_Children.push_back(ui);
+
+    ui->AddRef();
 }
 
 void CUIPanel::Render_GameObject()
 {
+
+    for (auto& child : m_Children)
+        child->Render_GameObject();
+
+
 }
 
 void CUIPanel::Free()
 {
-	
+    for (auto& child : m_Children)
+        Safe_Release(child);
+
+    m_Children.clear();     
+
+    CGameObject::Free();       
 }

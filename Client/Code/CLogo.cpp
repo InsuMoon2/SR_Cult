@@ -12,6 +12,7 @@
 #include "CRcTex.h"
 #include "CStage.h"
 #include "CTexture.h"
+#include "CUIMainMenuPanel.h"
 
 CLogo::CLogo(DEVICE graphicDev)
     : Engine::CScene(graphicDev), m_pLoading(nullptr)
@@ -26,6 +27,9 @@ HRESULT CLogo::Ready_Scene()
         return E_FAIL;
 
     if (FAILED(Ready_Environment_Layer(LAYERTYPE::ENVIRONMENT)))
+        return E_FAIL;
+
+    if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
 
     m_pLoading = CLoading::Create(m_GraphicDev, CLoading::LOADING_STAGE);
@@ -72,24 +76,39 @@ void CLogo::Render_Scene()
 
 HRESULT CLogo::Ready_Environment_Layer(LAYERTYPE layerType)
 {
-    auto layer = Engine::CLayer::Create();
-
-    NULL_CHECK_RETURN(layer, E_FAIL)
-
-    Engine::CGameObject* gameObject = nullptr;
-
-    gameObject = CMainBG::Create(m_GraphicDev);
-
-    NULL_CHECK_RETURN(m_GraphicDev, E_FAIL)
-
-    if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
-        return E_FAIL;
-
-    m_Layers.insert({ layerType, layer });
+    //auto layer = Engine::CLayer::Create();
+    //
+    //NULL_CHECK_RETURN(layer, E_FAIL)
+    //
+    //Engine::CGameObject* gameObject = nullptr;
+    //
+    //gameObject = CMainBG::Create(m_GraphicDev);
+    //
+    //NULL_CHECK_RETURN(m_GraphicDev, E_FAIL)
+    //
+    //if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
+    //    return E_FAIL;
+    //
+    //m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }
+HRESULT CLogo::Ready_UI_Layer(LAYERTYPE layerType)
+{
+   // auto layer = Engine::CLayer::Create();
+   // 
+   // NULL_CHECK_RETURN(layer, E_FAIL)
+   //
+   // CGameObject* gameObject = nullptr;
+   //
+   // gameObject = CUIMainMenuPanel::Create(m_GraphicDev);
+   //
+   // NULL_CHECK_RETURN(gameObject, E_FAIL)
+   //
+   // if(FAILED(layer->Add_GameObject(OBJTYPE::UI,gameObject)))
 
+    return S_OK;
+}
 HRESULT CLogo::Ready_Prototype()
 {
     // 로고 내 사용하는 프로토타입은 여기서만 추가

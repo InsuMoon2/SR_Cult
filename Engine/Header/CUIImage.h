@@ -2,6 +2,10 @@
 #include "CUI.h"
 
 BEGIN(Engine)
+
+class CRcTex;
+class CTexture;
+
 class CUIImage : public CUI
 {
 public:
@@ -13,9 +17,17 @@ public:
 public:
     virtual HRESULT Ready_GameObject();
     virtual void Render_GameObject();
+    HRESULT Add_Component();
 
 public:
     static CUIImage* Create(DEVICE graphicDev);
 
+
+private:
+    CRcTex* m_BufferCom;
+    CTexture* m_TextureCom;
+
+protected:
+    void Free() override;
 };
 END

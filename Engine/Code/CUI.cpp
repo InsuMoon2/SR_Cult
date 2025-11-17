@@ -19,14 +19,17 @@ CUI::~CUI()
 }
 
 
-HRESULT Ready_GameObject()
+HRESULT CUI::Ready_GameObject()
 {
 
+
+    return S_OK;
 }
 
 _int  CUI::Update_GameObject(const _float& timeDelta)
 {
 
+    return S_OK;
 }
 
 void  CUI::LateUpdate_GameObject(const _float& timeDelta)
