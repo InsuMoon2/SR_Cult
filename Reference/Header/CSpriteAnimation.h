@@ -11,13 +11,13 @@ private:
     ~CSpriteAnimation() override;
 
 public:
-    void Init(_uint     maxX,
+    HRESULT Ready_SpriteAnim(
+              _uint     maxX,
               _uint     maxY,
               _int      startX,
               _int      startY,
               _float    interval,
-              _bool     xAxis,
-              ANIMSTATE state);
+              _bool     xAxis);
 
     void Reset();
     void Update(const _float& timeDelta);
@@ -30,9 +30,18 @@ public:
     // 현재 UV 사각형
     void Get_UV(_float& u0, _float& v0, _float& u1, _float& v1) const;
 
+    void      SetState(ANIMSTATE state) { m_State = state; }
+    ANIMSTATE GetState() const { return m_State; }
+
     _bool IsFinished() const { return m_State == ANIMSTATE::STOP; }
 
-    static CSpriteAnimation* Create();
+    static CSpriteAnimation* Create(
+        _uint     maxX,
+        _uint     maxY,
+        _int      startX,
+        _int      startY,
+        _float    interval,
+        _bool     xAxis);
 
 private:
     void Free() override;
@@ -41,6 +50,10 @@ private:
     // 스프라이트 시트 전체 개수 (가로 X 세로)
     _int m_MaxFrameX;
     _int m_MaxFrameY;
+
+    // 시작 프레임
+    _int m_StartFrameX;
+    _int m_StartFrameY;
 
     // 현재 프레임 좌표 (0 ~ max-1 까지가 범위임)
     _int m_FrameX;

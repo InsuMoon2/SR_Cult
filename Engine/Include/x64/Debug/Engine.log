@@ -1,0 +1,75 @@
+﻿  CAnimator.cpp
+  CRectCollider.cpp
+  CCollisionManager.cpp
+C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp(24,41): warning C4267: '초기화 중': 'size_t'에서 'Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp(24,23): warning C4267: '초기화 중': 'size_t'에서 'const Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  CCollider.cpp
+  CComponent.cpp
+  CFrame.cpp
+  CFrameMgr.cpp
+  CGameObject.cpp
+  CGraphicDev.cpp
+  CLayer.cpp
+  CManagement.cpp
+  CProtoMgr.cpp
+  CRcCol.cpp
+  CRcTex.cpp
+  CRenderer.cpp
+  CResourceManager.cpp
+  CScene.cpp
+  CSphereCollider.cpp
+  CSpriteAnimation.cpp
+  CTexture.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  CTimer.cpp
+  CTimerMgr.cpp
+  CTransform.cpp
+  CTriCol.cpp
+  CVIBuffer.cpp
+  코드를 생성하고 있습니다...
+     ../Bin\Engine.lib 라이브러리 및 ../Bin\Engine.exp 개체를 생성하고 있습니다.
+  Engine.vcxproj -> C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Bin\Engine.dll
+  '//'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
+  배치 파일이 아닙니다.
+  .\Engine\Bin\Engine.dll
+  1개 파일이 복사되었습니다.
+  .\Engine\Bin\Engine.lib
+  1개 파일이 복사되었습니다.
+  .\Engine\Header\CAnimator.h
+  .\Engine\Header\CCollider.h
+  .\Engine\Header\CCollisionManager.h
+  .\Engine\Header\CComponent.h
+  .\Engine\Header\CCreateHelper.h
+  .\Engine\Header\CFrame.h
+  .\Engine\Header\CFrameMgr.h
+  .\Engine\Header\CGameObject.h
+  .\Engine\Header\CGraphicDev.h
+  .\Engine\Header\CLayer.h
+  .\Engine\Header\CManagement.h
+  .\Engine\Header\CProtoMgr.h
+  .\Engine\Header\CRcCol.h
+  .\Engine\Header\CRcTex.h
+  .\Engine\Header\CRectCollider.h
+  .\Engine\Header\CRenderer.h
+  .\Engine\Header\CResourceManager.h
+  .\Engine\Header\CScene.h
+  .\Engine\Header\CSphereCollider.h
+  .\Engine\Header\CSpriteAnimation.h
+  .\Engine\Header\CTexture.h
+  .\Engine\Header\CTimer.h
+  .\Engine\Header\CTimerMgr.h
+  .\Engine\Header\CTransform.h
+  .\Engine\Header\CTriCol.h
+  .\Engine\Header\CVIBuffer.h
+  .\Engine\Header\Engine_Define.h
+  .\Engine\Header\Engine_Enum.h
+  .\Engine\Header\Engine_Function.h
+  .\Engine\Header\Engine_Macro.h
+  .\Engine\Header\Engine_Struct.h
+  .\Engine\Header\Engine_Typedef.h
+  32개 파일이 복사되었습니다.
+  .\EditorTool\Bin\EditorTool.lib
+  1개 파일이 복사되었습니다.
+  .\EditorTool\Header\CImGuiManager.h
+  1개 파일이 복사되었습니다.

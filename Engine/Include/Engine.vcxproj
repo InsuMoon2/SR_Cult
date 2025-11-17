@@ -184,6 +184,7 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClInclude Include="..\Header\CAnimator.h" />
     <ClInclude Include="..\header\CCameraCom.h" />
     <ClInclude Include="..\header\CDInputMgr.h" />
+    <ClInclude Include="..\Header\CEnumHelper.h" />
     <ClInclude Include="..\header\CFont.h" />
     <ClInclude Include="..\header\CFontMgr.h" />
     <ClInclude Include="..\header\CLight.h" />
@@ -207,6 +208,7 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClInclude Include="..\Header\CScene.h" />
     <ClInclude Include="..\Header\CSphereCollider.h" />
     <ClInclude Include="..\Header\CSpriteAnimation.h" />
+    <ClInclude Include="..\Header\CState.h" />
     <ClInclude Include="..\Header\CTexture.h" />
     <ClInclude Include="..\Header\CTimer.h" />
     <ClInclude Include="..\Header\CTimerMgr.h" />
@@ -251,6 +253,7 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClCompile Include="..\Code\CScene.cpp" />
     <ClCompile Include="..\Code\CSphereCollider.cpp" />
     <ClCompile Include="..\Code\CSpriteAnimation.cpp" />
+    <ClCompile Include="..\Code\CState.cpp" />
     <ClCompile Include="..\Code\CTexture.cpp" />
     <ClCompile Include="..\Code\CTimer.cpp" />
     <ClCompile Include="..\Code\CTimerMgr.cpp" />
