@@ -55,6 +55,9 @@
     <Filter Include="02. GameObject\04. Boss\02. Boss2">
       <UniqueIdentifier>{57866705-26b9-4ce7-9286-c9966a40a2a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\02. Editor">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -99,6 +102,12 @@
     <ClInclude Include="..\Header\CTestMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEdit.h">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTiled.h">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -133,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestMonster.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEdit.cpp">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTiled.cpp">
+      <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

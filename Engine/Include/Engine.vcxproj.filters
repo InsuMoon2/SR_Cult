@@ -112,6 +112,9 @@
     <Filter Include="00. Manager\10. SceneMgr">
       <UniqueIdentifier>{4d206c40-2a02-4585-82a7-34871e494d55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Logic\05. Tiled">
+      <UniqueIdentifier>{1e08cf3b-8a9b-415b-9274-78f77f8da805}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">

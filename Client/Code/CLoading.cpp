@@ -8,6 +8,7 @@
 #include "CRectCollider.h"
 #include "CState.h"
 #include "CTexture.h"
+#include "CTiled.h"
 #include "CTransform.h"
 #include "CTriCol.h"
 
@@ -123,6 +124,12 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
         return E_FAIL;
+
+    // Tile
+    if (FAILED(pProtoMgr->Ready_Prototype(COMPONENTTYPE::TEX_TILE,
+        CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/Tile0.png", 1))))
+        return E_FAIL;
+    
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";
 
