@@ -5,7 +5,7 @@
 CScene::CScene(DEVICE graphicDev)
     : m_pGraphicDev(graphicDev)
 {
-    m_pGraphicDev->AddRef();
+    m_GraphicDev->AddRef();
 }
 
 CScene::~CScene()
@@ -16,9 +16,9 @@ CComponent* CScene::Get_Component(COMPONENTID   componentID,
                                   OBJTYPE       objType,
                                   COMPONENTTYPE componentType)
 {
-    auto iter = m_mapLayer.find(layerType);
+    auto iter = m_Layers.find(layerType);
 
-    if (iter == m_mapLayer.end())
+    if (iter == m_Layers.end())
         return nullptr;
 
     return iter->second->Get_Component(componentID, objType, componentType);
@@ -31,7 +31,7 @@ HRESULT CScene::Ready_Scene()
 
 _int CScene::Update_Scene(const _float& timeDelta)
 {
-    for (auto& pLayer : m_mapLayer)
+    for (auto& pLayer : m_Layers)
     {
         pLayer.second->Update_Layer(timeDelta);
     }
@@ -39,18 +39,18 @@ _int CScene::Update_Scene(const _float& timeDelta)
     return 0;
 }
 
-void CScene::LateUpdate_Scene(const _float& fTimeDelta)
+void CScene::LateUpdate_Scene(const _float& timeDelta)
 {
-    for (auto& pLayer : m_mapLayer)
+    for (auto& pLayer : m_Layers)
     {
-        pLayer.second->LateUpdate_Layer(fTimeDelta);
+        pLayer.second->LateUpdate_Layer(timeDelta);
     }
 }
 
 void CScene::Free()
 {
-    for_each(m_mapLayer.begin(), m_mapLayer.end(), CDeleteMap());
-    m_mapLayer.clear();
+    for_each(m_Layers.begin(), m_Layers.end(), CDeleteMap());
+    m_Layers.clear();
 
-    Safe_Release(m_pGraphicDev);
+    Safe_Release(m_GraphicDev);
 }

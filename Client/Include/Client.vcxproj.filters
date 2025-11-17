@@ -39,6 +39,17 @@
     </Filter>
     <Filter Include="03. UI\00. UIMainMenuPanel">
       <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
+    <Filter Include="02. GameObject\00. Camera">
+      <UniqueIdentifier>{88744360-a492-4ab2-91a8-d0d1222dea90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\00. Camera\00. Main Camera">
+      <UniqueIdentifier>{398fce45-a108-419d-a30d-e54b730f2c37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Scene\00. Logo\Loading">
+      <UniqueIdentifier>{9a642b08-e705-4aea-b661-ffd283950929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\03. BackGround">
+      <UniqueIdentifier>{3bd3b899-a893-4ae5-b3f5-5248eddfadd4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +85,14 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUIMainMenuPanel.h">
       <Filter>03. UI\00. UIMainMenuPanel</Filter>
+    <ClInclude Include="..\header\CMainCamera.h">
+      <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\header\CLoading.h">
+      <Filter>01. Scene\00. Logo\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainBG.h">
+      <Filter>02. GameObject\03. BackGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +119,14 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUIMainMenuPanel.cpp">
       <Filter>03. UI\00. UIMainMenuPanel</Filter>
+    <ClCompile Include="..\code\CMainCamera.cpp">
+      <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\CLoading.cpp">
+      <Filter>01. Scene\00. Logo\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainBG.cpp">
+      <Filter>02. GameObject\03. BackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,6 @@ void CComponent::Set_Owner(CGameObject* owner)
         m_TransformCom = dynamic_cast<CTransform*>(
             m_Owner->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
     }
-
 }
 
 void CComponent::Free()

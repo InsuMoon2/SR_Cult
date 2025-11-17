@@ -12,10 +12,7 @@ CAnimator::CAnimator(DEVICE graphicDev)
 CAnimator::CAnimator(const CAnimator& rhs)
     : CComponent(rhs),
       m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr)
-// TODO 석호: rhs.m_CurAnimation 등을 사용해야 복제의 의도와 맞지 않나?
-{
-    
-}
+{ }
 
 CAnimator::~CAnimator()
 { }

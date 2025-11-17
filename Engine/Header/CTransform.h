@@ -49,6 +49,8 @@ public: // Setter       ====================================
     void Set_Scale(const _vec3& scale) { m_Scale = scale; }
     void Set_Scale(_float x, _float y, _float z) { m_Scale = { x, y, z }; }
 
+    void Set_World(const _matrix& matrix) { m_matWorld = matrix; }
+
 public: // Transform Operations     ========================
 
     // direction * dt * speed 를 매 프레임 더해 오브젝트를 움직이는 함수
@@ -62,7 +64,7 @@ public: // Transform Operations     ========================
     // 오브젝트 월드 회전축 기준 회전 함수
     void Rotation_World(ROTATION rotType, const _float& radian, const _float& timeDelta);
 
-    // TODO 석호: 수업 코드 기반의 추적. 쿼터뷰 환경에는 맞지 않으므로 사용시 수정하자
+    // 수업 코드 기반의 추적. 쿼터뷰 환경에는 맞지 않으므로 사용시 수정하자
     void Chase_Target(const _vec3* targetPos, const _float& timeDelta, const _float& speed);
 
 private: // Internal Calculations   ========================
