@@ -19,8 +19,7 @@ CUIMainMenuPanel::~CUIMainMenuPanel()
 
 HRESULT CUIMainMenuPanel::Ready_Panel()
 {
-	//if()
-
+	
 
 	return S_OK;
 }
