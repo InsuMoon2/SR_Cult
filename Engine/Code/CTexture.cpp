@@ -18,7 +18,7 @@ CTexture::CTexture(const CTexture& rhs)
         m_Textures[i]->AddRef();
     }
 
-    m_KeyIndexMap = rhs.m_KeyIndexMap;
+    m_AnimTextures = rhs.m_AnimTextures;
 }
 
 CTexture::~CTexture()
@@ -34,7 +34,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, cons
     {
         wchar_t fileName[MAX_PATH] = L"";
 
-        swprintf_s(fileName, MAX_PATH, filePath.c_str(), i);
+        swprintf_s(fileName, MAX_PATH, filePath.c_str(), i + 1);
 
         switch (texType)
         {
@@ -70,39 +70,57 @@ void CTexture::Set_Texture(const _uint& index)
     m_GraphicDev->SetTexture(0, m_Textures[index]);
 }
 
-HRESULT CTexture::Add_Texture(TEXTUREID texType, const wstring& key, const wstring& filePath)
+HRESULT CTexture::Add_Texture(const wstring& animKey, TEXTUREID texType, const wstring& filePathPattern, _uint count)
 {
-    IDirect3DBaseTexture9* texture = nullptr;
+    vector<IDirect3DBaseTexture9*>& frames = m_AnimTextures[animKey];
+    frames.reserve(count);
 
-    switch (texType)
+    for (_uint i = 0; i < count; ++i)
     {
-    case TEX_NORMAL:
-        if (FAILED(D3DXCreateTextureFromFile(
-            m_GraphicDev, filePath.c_str(), (LPDIRECT3DTEXTURE9*)&texture)))
-            return E_FAIL;
+        wchar_t fileName[MAX_PATH] = L"";
+
+        // 파일이 1~N 이면 (i+1), 0~N-1 이면 (i)로 맞춰줘
+        swprintf_s(fileName, MAX_PATH, filePathPattern.c_str(), i + 1);
+
+        IDirect3DBaseTexture9* texture = nullptr;
+
+        switch (texType)
+        {
+        case TEX_NORMAL:
+            if (FAILED(D3DXCreateTextureFromFile(
+                m_GraphicDev, fileName, (LPDIRECT3DTEXTURE9*)&texture)))
+                return E_FAIL;
+            break;
+
+        case TEX_CUBE:
+        {
+            if (FAILED(D3DXCreateCubeTextureFromFile(
+                m_GraphicDev, fileName, (LPDIRECT3DCUBETEXTURE9*)&texture)))
+                return E_FAIL;
+        }
         break;
 
-    case TEX_CUBE:
-        if (FAILED(D3DXCreateCubeTextureFromFile(
-            m_GraphicDev, filePath.c_str(), (LPDIRECT3DCUBETEXTURE9*)&texture)))
-            return E_FAIL;
-        break;
+        }
+
+        frames.push_back(texture);
     }
 
-    m_Textures.push_back(texture);
-
-    _uint index = static_cast<_uint>(m_Textures.size() - 1);
-    m_KeyIndexMap[key] = index;
+    return S_OK;
 }
 
-void CTexture::Set_Texture(const wstring& key)
+void CTexture::Set_Texture(const wstring& animKey, _uint frameIndex)
 {
-    auto iter = m_KeyIndexMap.find(key);
+    auto iter = m_AnimTextures.find(animKey);
 
-    if (iter == m_KeyIndexMap.end())
+    if (iter == m_AnimTextures.end())
         return;
 
-    Set_Texture(iter->second);
+    const vector<IDirect3DBaseTexture9*>& frames = iter->second;
+
+    if (frames.empty() || frameIndex >= frames.size())
+        return;
+
+    m_GraphicDev->SetTexture(0, frames[frameIndex]);
 }
 
 CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,

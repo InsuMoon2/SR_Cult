@@ -26,10 +26,8 @@ public:
     CSpriteAnimation* GetOrAdd_Animation(const wstring& key, CSpriteAnimation* animation);
 
     HRESULT Create_Animation(const wstring& key,
-                                _uint          maxX,         // 가로 최대 프레임
-                                _uint          maxY,         // 세로 최대 프레임
-                                _int           lineY,        // 몇 번째 줄에 있는지
-                                _float         interval);    // 다음 프레임으로 넘어가는 시간; // Loop ? Stop ?
+                                _uint          frameCount,
+                                _float         interval); 
 
     void Play_Animation(const wstring& key, ANIMSTATE state, bool reset = true);
     void Stop_Animation();
@@ -54,7 +52,8 @@ private:
 
     _bool                           m_Play;
 
-    Engine::CRcTex* m_BufferCom;
+    Engine::CRcTex*   m_BufferCom;
+    Engine::CTexture* m_Texture;
 
 };
 

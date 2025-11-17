@@ -10,6 +10,7 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
+#include "CState.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -66,14 +67,22 @@ _uint CLoading::Loading_ForState()
 
     m_LoadingText = L"Texture LOADING..........";
 
-    // Texture : Player
-    if (FAILED(pProtoMgr->Ready_Prototype(
-        COMPONENTTYPE::TEX_PLAYER, Engine::CTexture::Create(
-            m_GraphicDev,
-            TEX_NORMAL,
-            L"../Bin/Resource/Texture/Player/Lamb-idle_sheet.png",
-            1))))
+#pragma region TextureNumber
+    CTexture* playerTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
+    NULL_CHECK_RETURN(playerTex, E_FAIL);
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerIdle", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Test/Player_Idle/Lamb-idle%d.png", 150)))
         return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRunDown", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_PLAYER, playerTex)))
+        return E_FAIL;
+#pragma endregion
 
     m_LoadingText = L"Etc LOADING..........";
 
@@ -95,6 +104,11 @@ _uint CLoading::Loading_ForState()
     // Rect Collider
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // State
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";
