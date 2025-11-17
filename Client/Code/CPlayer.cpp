@@ -22,13 +22,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
-    : CGameObject(rhs),
-    m_BufferCom(rhs.m_BufferCom),
-    m_TransformCom(rhs.m_TransformCom),
-    m_TextureCom(rhs.m_TextureCom),
-    m_AnimatorCom(rhs.m_AnimatorCom),
-    m_RectColCom(rhs.m_RectColCom),
-    m_StateCom(rhs.m_StateCom)
+    : CGameObject(rhs)
 { }
 
 CPlayer::~CPlayer()
@@ -126,10 +120,10 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
 
     // texture
-    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEXTURE);
+    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_PLAYER);
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
-    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEXTURE, m_TextureCom });
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_PLAYER, m_TextureCom });
 
     // Animator
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
@@ -138,6 +132,12 @@ HRESULT CPlayer::Add_Component()
     m_AnimatorCom->Ready_Animator();
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
+
+    // Lamb Idle
+    m_AnimatorCom->Create_Animation(L"Idle", 150, 1, 1, 0.02f);
+
+    // 시작 애니메이션
+    m_AnimatorCom->Play_Animation(L"Idle", ANIMSTATE::LOOP);
 
     // RectCol Componet
     m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);

@@ -23,8 +23,9 @@ CStage::~CStage()
 
 HRESULT CStage::Ready_Scene()
 {
-    if (FAILED(Ready_Prototype()))
-        return E_FAIL;
+    // 로딩 스레드로 역할 이동
+    //if (FAILED(Ready_Prototype()))
+    //    return E_FAIL;
 
     if (FAILED(Ready_Environment_Layer(LAYERTYPE::ENVIRONMENT)))
         return E_FAIL;
@@ -32,14 +33,9 @@ HRESULT CStage::Ready_Scene()
     if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::GAMELOGIC)))
         return E_FAIL;
 
-    //if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::CAMERA)))
-    //    return E_FAIL;
-
     if (FAILED(Ready_Camera_Layer(LAYERTYPE::CAMERA)))
-    {
         return E_FAIL;
-    }
-    
+
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
 
@@ -72,39 +68,39 @@ HRESULT CStage::Ready_Environment_Layer(LAYERTYPE layerType)
 
     Engine::CGameObject* pGameObject = nullptr;
 
-    m_mapLayer.insert({ layerType, pLayer });          // scene -> map
+    m_Layers.insert({ layerType, pLayer });          // scene -> map
 
     return S_OK;
 }
 
 HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 {
-    Engine::CLayer* pLayer = Engine::CLayer::Create();
+    Engine::CLayer* layer = Engine::CLayer::Create();
 
-    if (nullptr == pLayer)
+    if (nullptr == layer)
         return E_FAIL;
 
-    Engine::CGameObject* pGameObject = nullptr;
+    Engine::CGameObject* gameObject = nullptr;
 
     // player
-    pGameObject = CPlayer::Create(m_pGraphicDev);
+    gameObject = CPlayer::Create(m_GraphicDev);
 
-    if (nullptr == pGameObject)
+    if (nullptr == gameObject)
         return E_FAIL;
 
-    if (FAILED(pLayer->Add_GameObject(OBJTYPE::PLAYER, pGameObject)))
+    if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
         return E_FAIL;
 
     // monster
-    //pGameObject = CMonster::Create(m_pGraphicDev);
-    //
-    //if (nullptr == pGameObject)
-    //    return E_FAIL;
-    //
-    //if (FAILED(pLayer->Add_GameObject(OBJTYPE::MONSTER, pGameObject)))
-    //    return E_FAIL;
+    gameObject = CMonster::Create(m_GraphicDev);
 
-    m_mapLayer.insert({ layerType, pLayer });
+    if (nullptr == gameObject)
+        return E_FAIL;
+
+    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+        return E_FAIL;
+
+    m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }
@@ -117,19 +113,19 @@ HRESULT CStage::Ready_Camera_Layer(LAYERTYPE layerType)
 
     _matrix matView, matProj;
 
-    _vec3 vEye = { 0.f, 2.f, -10.f };
-    _vec3 vAt  = { 0.f, 0.f, 1.f };
-    _vec3 vUp  = { 0.f, 1.f, 0.f };
+    _vec3 eye = { 0.f, 2.f, -10.f };
+    _vec3 at  = { 0.f, 0.f, 1.f };
+    _vec3 up  = { 0.f, 1.f, 0.f };
 
-    D3DXMatrixLookAtLH(&matView, &vEye, &vAt, &vUp);
+    D3DXMatrixLookAtLH(&matView, &eye, &at, &up);
     D3DXMatrixPerspectiveFovLH(&matProj,
                                D3DXToRadian(60.f),
                                static_cast<float>(WINCX) / WINCY,
                                0.1f,
                                1000.f);
 
-    m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-    m_pGraphicDev->SetTransform(D3DTS_VIEW, &matView);
+    m_GraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
+    m_GraphicDev->SetTransform(D3DTS_VIEW, &matView);
 
 #pragma endregion
 
@@ -145,7 +141,7 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 
     Engine::CGameObject* pGameObject = nullptr;
 
-    m_mapLayer.insert({ layerType, layer });
+    m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }
@@ -153,19 +149,19 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 HRESULT CStage::Ready_Prototype()
 {
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
         return E_FAIL;
 
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
         return E_FAIL;
     
 
@@ -215,17 +211,17 @@ HRESULT CStage::Ready_Prototype()
 
     // Animator
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
         return E_FAIL;
 
     // RectCol
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
         return E_FAIL;
 
     // State
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::STATE, CState::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
         return E_FAIL;
 
     return S_OK;
