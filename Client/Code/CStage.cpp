@@ -6,6 +6,10 @@
 #include "CMonster.h"
 #include "CPlayer.h"
 #include "CTransform.h"
+#include "CTriCol.h"
+#include "CState.h"
+#include "CManagement.h"
+#include "CTestMonster.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -96,7 +100,17 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Monster
     // -----------------------------
 
-    gameObject = CMonster::Create(m_GraphicDev);
+    // monster
+    /*gameObject = CMonster::Create(m_GraphicDev);
+    
+    if (nullptr == gameObject)
+        return E_FAIL;
+    
+    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+        return E_FAIL;*/
+
+    // testMonster
+    gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
         gameObject,
@@ -104,8 +118,8 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         L"CStage::Ready_GameLogic_Layer() failed: CMonster::Create() returned null")
 
     FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::MONSTER, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(MONSTER) failed")
+        layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
 
     // -----------------------------
     // Camera

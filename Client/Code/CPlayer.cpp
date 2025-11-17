@@ -35,9 +35,11 @@ HRESULT CPlayer::Ready_GameObject()
 
     Animation_Setting();
 
-    // 크기 변환 테스트
-    // m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
-    // m_TransformCom->Set_Pos(_vec3());Lamb-run-down1.png
+    m_StateCom->Change_State(PLAYERSTATE::IDLE);
+    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+
+    // Transform 테스트
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
 
     return S_OK;
 }
@@ -64,10 +66,18 @@ void CPlayer::Render_GameObject()
 
     Render_Setting();
 
+    if (m_TextureCom && m_AnimatorCom)
+    {
+        const wstring& key = m_AnimatorCom->Get_CurKey();
+        _int frame = m_AnimatorCom->Get_CurFrame();
+
+        m_TextureCom->Set_Texture(key, frame);
+    }
+
+
     m_BufferCom->Render_Buffer();
 
     TempImGuiRender();
-
     Render_Reset();
 
     m_RectColCom->Render(); // Render Reset 이후 호출해야함
@@ -129,7 +139,7 @@ HRESULT CPlayer::Add_Component()
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
     NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
 
-    m_AnimatorCom->Ready_Animator();
+    m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_PLAYER);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
@@ -219,10 +229,37 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
 void CPlayer::TempImGuiRender()
 {
-    ImGui::Begin("Player State");
+    if (ImGui::Begin("Player Inspector"))
+    {
+        // TransformComponent
+        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            const _vec3& pos = m_TransformCom->Get_Pos();
 
-    ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
-    ImGui::Text("Dir : %s", Engine::ToString(m_StateCom->Get_Dir()));
+            ImGui::Text("Position");
+
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##PlayerPosX", (float*)&pos.x);
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##PlayerPosY", (float*)&pos.y);
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##PlayerPosZ", (float*)&pos.z);
+
+            m_TransformCom->Set_Pos(pos);
+        }
+
+        // StateComponent
+        if (m_StateCom && ImGui::CollapsingHeader("State Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
+            ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
+        }
+    }
 
     ImGui::End();
 }

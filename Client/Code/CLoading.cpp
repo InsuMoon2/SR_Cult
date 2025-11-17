@@ -67,6 +67,7 @@ _uint CLoading::Loading_ForState()
     m_LoadingText = L"Texture LOADING..........";
 
 #pragma region TextureNumber
+    // Player
     CTexture* playerTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(playerTex, E_FAIL);
 
@@ -81,6 +82,19 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_PLAYER, playerTex)))
         return E_FAIL;
+
+    // Boss2 Test
+    CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
+    NULL_CHECK_RETURN(bossTex, E_FAIL);
+
+    if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+        return E_FAIL;
+
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_MONSTER, bossTex)))
+        return E_FAIL;
+
 #pragma endregion
 
     m_LoadingText = L"Etc LOADING..........";
