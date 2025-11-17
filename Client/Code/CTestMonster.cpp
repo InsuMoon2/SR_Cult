@@ -44,6 +44,9 @@ HRESULT CTestMonster::Ready_GameObject()
 
     Animation_Setting();
 
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 50.f));
+    m_TransformCom->Set_Scale(_vec3(7.f, 5.f, 1.f));
+
     return S_OK;
 }
 
@@ -67,8 +70,16 @@ void CTestMonster::Render_GameObject()
 
     Render_Setting();
 
-    m_BufferCom->Render_Buffer();
+    if (m_TextureCom && m_AnimatorCom)
+    {
+        const wstring& key = m_AnimatorCom->Get_CurKey();
+        _int frame = m_AnimatorCom->Get_CurFrame();
 
+        m_TextureCom->Set_Texture(key, frame);
+    }
+
+    m_BufferCom->Render_Buffer();
+    TempImGuiRender();
     Render_Reset();
 
     m_RectColCom->Render(); // Render Reset 이후 호출해야함
@@ -130,7 +141,7 @@ HRESULT CTestMonster::Add_Component()
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
     NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
 
-    m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_PLAYER);
+    m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_MONSTER);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
@@ -151,7 +162,26 @@ HRESULT CTestMonster::Add_Component()
 
 void CTestMonster::Animation_Setting()
 {
+    // 애니메이션 생성
+    m_AnimatorCom->Create_Animation(L"BossIdle", 400, 0.02f);
 
+    // State -> Animation 연동
+    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
+}
+
+void CTestMonster::TempImGuiRender()
+{
+    ImGui::Begin("Boss State");
+
+    ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
+    ImGui::Text("Dir : %s", Engine::ToString(m_StateCom->Get_Dir()));
+
+    ImGui::Text("Boss Pos : X: %f, Y: %f, Z: %f",
+        m_TransformCom->Get_Pos().x,
+        m_TransformCom->Get_Pos().y,
+        m_TransformCom->Get_Pos().z);
+
+    ImGui::End();
 }
 
 CTestMonster* CTestMonster::Create(DEVICE graphicDev)
@@ -160,7 +190,7 @@ CTestMonster* CTestMonster::Create(DEVICE graphicDev)
 
     if (FAILED(monster->Ready_GameObject()))
     {
-        MSG_BOX("Monster Create Failed");
+        MSG_BOX("Test Monster Create Failed");
         Safe_Release(monster);
         return nullptr;
     }

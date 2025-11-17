@@ -43,6 +43,8 @@ private:
     Engine::CRectCollider* m_RectColCom;
     Engine::CState* m_StateCom;
 
+    void TempImGuiRender();
+
 public:
     static CTestMonster* Create(DEVICE graphicDev);
 

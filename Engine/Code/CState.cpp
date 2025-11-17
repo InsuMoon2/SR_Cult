@@ -4,8 +4,8 @@
 
 CState::CState(DEVICE GraphicDev)
     : CComponent(GraphicDev)
-    , m_State(PLAYERSTATE::PLAYERSTATE_END)
-    , m_Dir(PLAYERDIR::PLAYERDIR_END)
+    , m_State(PLAYERSTATE::IDLE)
+    , m_Dir(PLAYERDIR::LEFT)
     , m_PrevState(PLAYERSTATE::PLAYERSTATE_END)
     , m_Animator(nullptr)
 {
@@ -13,10 +13,14 @@ CState::CState(DEVICE GraphicDev)
 
 CState::CState(const CState& rhs)
     : CComponent(rhs.m_GraphicDev)
-    , m_State(rhs.m_State)
+    /*, m_State(rhs.m_State)
     , m_Dir(rhs.m_Dir)
     , m_PrevState(rhs.m_PrevState)
-    , m_Animator(rhs.m_Animator)
+    , m_Animator(rhs.m_Animator)*/
+    , m_State(PLAYERSTATE::IDLE)
+    , m_Dir(PLAYERDIR::LEFT)
+    , m_PrevState(PLAYERSTATE::PLAYERSTATE_END)
+    , m_Animator(nullptr)
 {
 }
 

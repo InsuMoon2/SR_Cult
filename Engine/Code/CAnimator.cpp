@@ -48,12 +48,6 @@ _int CAnimator::Update_Component(const _float& timeDelta)
     // 애니메이션 업데이트
     m_CurAnimation->Update(timeDelta);
 
-    _int frameIndex = m_CurAnimation->Get_Frame();
-
-    const wstring& animKey = m_CurKey;
-
-    m_Texture->Set_Texture(animKey, frameIndex);
-
     return exit;
 }
 
@@ -135,6 +129,14 @@ void CAnimator::Play_Animation(const wstring& key, ANIMSTATE state, bool reset)
 void CAnimator::Stop_Animation()
 {
     m_Play = false;
+}
+
+_int CAnimator::Get_CurFrame()
+{
+    if (m_CurAnimation == nullptr)
+        return 0;
+
+    return m_CurAnimation->Get_Frame();
 }
 
 void CAnimator::Set_TextureType(COMPONENTTYPE type)

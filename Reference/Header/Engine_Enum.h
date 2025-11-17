@@ -58,6 +58,7 @@ enum class OBJTYPE
     PLAYER,
     MONSTER,
     /* 오브젝트 타입 종류 추가 */
+    BOSS2,
 
     OBJ_END
 };

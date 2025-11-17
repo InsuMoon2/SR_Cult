@@ -35,9 +35,11 @@ HRESULT CPlayer::Ready_GameObject()
 
     Animation_Setting();
 
-    // 크기 변환 테스트
-    // m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
-    // m_TransformCom->Set_Pos(_vec3());Lamb-run-down1.png
+    m_StateCom->Change_State(PLAYERSTATE::IDLE);
+    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+
+    // Transform 테스트
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
 
     return S_OK;
 }
@@ -64,10 +66,18 @@ void CPlayer::Render_GameObject()
 
     Render_Setting();
 
+    if (m_TextureCom && m_AnimatorCom)
+    {
+        const wstring& key = m_AnimatorCom->Get_CurKey();
+        _int frame = m_AnimatorCom->Get_CurFrame();
+
+        m_TextureCom->Set_Texture(key, frame);
+    }
+
+
     m_BufferCom->Render_Buffer();
 
     TempImGuiRender();
-
     Render_Reset();
 
     m_RectColCom->Render(); // Render Reset 이후 호출해야함
@@ -223,6 +233,11 @@ void CPlayer::TempImGuiRender()
 
     ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
     ImGui::Text("Dir : %s", Engine::ToString(m_StateCom->Get_Dir()));
+
+    ImGui::Text("Player Pos : X: %f, Y: %f, Z: %f",
+        m_TransformCom->Get_Pos().x,
+        m_TransformCom->Get_Pos().y,
+        m_TransformCom->Get_Pos().z);
 
     ImGui::End();
 }
