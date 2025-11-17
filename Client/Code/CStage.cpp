@@ -13,6 +13,7 @@
 #include "CTransform.h"
 #include "CTriCol.h"
 #include "CState.h"
+#include "CManagement.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)

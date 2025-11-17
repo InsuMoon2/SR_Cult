@@ -129,7 +129,7 @@ HRESULT CPlayer::Add_Component()
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
     NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
 
-    m_AnimatorCom->Ready_Animator();
+    m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_PLAYER);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 

@@ -14,7 +14,6 @@ private:
     ~CAnimator() override;
 
 public:
-    HRESULT Ready_Animator();
 
     _int Update_Component(const _float& timeDelta) override;
     void LateUpdate_Component() override;
@@ -37,10 +36,14 @@ public:
     // 현재 재생중인 키값
     const wstring& Get_CurKey() { return m_CurKey; }
 
+    // 주의! Object마다 Set_TextureType 설정 꼭 해줘야함
+    void Set_TextureType(COMPONENTTYPE type);
+
     static CAnimator* Create(DEVICE graphicDev);
     CComponent*       Clone() override;
 
 private:
+    HRESULT Ready_Animator();
     CSpriteAnimation* Find_Animation(const wstring& Key);
 
     void Free() override;
@@ -54,6 +57,10 @@ private:
 
     Engine::CRcTex*   m_BufferCom;
     Engine::CTexture* m_Texture;
+
+    bool    m_Initialized = false;
+
+    COMPONENTTYPE m_TextureType;
 
 };
 
