@@ -1,15 +1,10 @@
 ﻿#include "pch.h"
 #include "CStage.h"
 
-#include "CAnimator.h"
 #include "CLayer.h"
+#include "CMainCamera.h"
 #include "CMonster.h"
 #include "CPlayer.h"
-#include "CProtoMgr.h"
-#include "CRcCol.h"
-#include "CRcTex.h"
-#include "CRectCollider.h"
-#include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
 #include "CState.h"
@@ -33,9 +28,6 @@ HRESULT CStage::Ready_Scene()
         return E_FAIL;
 
     if (FAILED(Ready_GameLogic_Layer(LAYERTYPE::GAMELOGIC)))
-        return E_FAIL;
-
-    if (FAILED(Ready_Camera_Layer(LAYERTYPE::CAMERA)))
         return E_FAIL;
 
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
@@ -63,14 +55,14 @@ void CStage::Render_Scene()
 
 HRESULT CStage::Ready_Environment_Layer(LAYERTYPE layerType)
 {
-    Engine::CLayer* pLayer = Engine::CLayer::Create();
+    Engine::CLayer* layer = Engine::CLayer::Create();
 
-    if (nullptr == pLayer)
+    if (nullptr == layer)
         return E_FAIL;
 
     Engine::CGameObject* pGameObject = nullptr;
 
-    m_Layers.insert({ layerType, pLayer });          // scene -> map
+    m_Layers.insert({ layerType, layer });          // scene -> map
 
     return S_OK;
 }
@@ -79,19 +71,34 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 {
     Engine::CLayer* layer = Engine::CLayer::Create();
 
-    if (nullptr == layer)
-        return E_FAIL;
+    NULL_CHECK_RETURN_MSG(
+        layer,
+        E_FAIL,
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Create() returned null")
 
     Engine::CGameObject* gameObject = nullptr;
 
-    // player
+    // -----------------------------
+    // Player
+    // -----------------------------
+
     gameObject = CPlayer::Create(m_GraphicDev);
 
-    if (nullptr == gameObject)
-        return E_FAIL;
+    NULL_CHECK_RETURN_MSG(
+        gameObject,
+        E_FAIL,
+        L"CStage::Ready_GameLogic_Layer() failed: CPlayer::Create() returned null")
 
-    if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
-        return E_FAIL;
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::PLAYER, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(PLAYER) failed")
+
+    auto playerTransform =
+        dynamic_cast<CTransform*>(gameObject->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
+
+    // -----------------------------
+    // Monster
+    // -----------------------------
 
     // monster
     /*gameObject = CMonster::Create(m_GraphicDev);
@@ -105,40 +112,35 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // testMonster
     gameObject = CTestMonster::Create(m_GraphicDev);
 
-    if (nullptr == gameObject)
-        return E_FAIL;
+    NULL_CHECK_RETURN_MSG(
+        gameObject,
+        E_FAIL,
+        L"CStage::Ready_GameLogic_Layer() failed: CMonster::Create() returned null")
 
-    if (FAILED(layer->Add_GameObject(OBJTYPE::BOSS2, gameObject)))
-        return E_FAIL;
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
+
+    // -----------------------------
+    // Camera
+    // -----------------------------
+
+    gameObject = CMainCamera::Create(m_GraphicDev);
+
+    NULL_CHECK_RETURN_MSG(
+        gameObject,
+        E_FAIL,
+        L"CStage::Ready_GameLogic_Layer() failed: CMainCamera::Create() returned null")
+
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::CAMERA, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(CAMERA) failed")
+
+    FAILED_CHECK_MSG(
+        dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
+        L"CStage::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed")
 
     m_Layers.insert({ layerType, layer });
-
-    return S_OK;
-}
-
-HRESULT CStage::Ready_Camera_Layer(LAYERTYPE layerType)
-{
-    // TODO 석호: 카메라 오브젝트 만든 후 여기에 추가
-
-#pragma region 임시 카메라
-
-    _matrix matView, matProj;
-
-    _vec3 eye = { 0.f, 2.f, -10.f };
-    _vec3 at  = { 0.f, 0.f, 1.f };
-    _vec3 up  = { 0.f, 1.f, 0.f };
-
-    D3DXMatrixLookAtLH(&matView, &eye, &at, &up);
-    D3DXMatrixPerspectiveFovLH(&matProj,
-                               D3DXToRadian(60.f),
-                               static_cast<float>(WINCX) / WINCY,
-                               0.1f,
-                               1000.f);
-
-    m_GraphicDev->SetTransform(D3DTS_PROJECTION, &matProj);
-    m_GraphicDev->SetTransform(D3DTS_VIEW, &matView);
-
-#pragma endregion
 
     return S_OK;
 }
@@ -188,7 +190,7 @@ HRESULT CStage::Ready_Prototype()
 
 CStage* CStage::Create(DEVICE graphicDev)
 {
-    auto* stage = new CStage(graphicDev);
+    auto stage = new CStage(graphicDev);
 
     if (FAILED(stage->Ready_Scene()))
     {

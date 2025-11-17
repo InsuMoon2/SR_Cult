@@ -16,7 +16,6 @@ public:
 private:
     HRESULT Ready_Environment_Layer(LAYERTYPE layerType);
     HRESULT Ready_GameLogic_Layer(LAYERTYPE layerType);
-    HRESULT Ready_Camera_Layer(LAYERTYPE layerType);
     HRESULT Ready_UI_Layer(LAYERTYPE layerType);
 
     HRESULT Ready_Prototype();

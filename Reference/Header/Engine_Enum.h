@@ -57,6 +57,7 @@ enum class OBJTYPE
 {
     PLAYER,
     MONSTER,
+    CAMERA,
     /* 오브젝트 타입 종류 추가 */
     UI,
     BOSS2,

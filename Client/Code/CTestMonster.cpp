@@ -171,15 +171,37 @@ void CTestMonster::Animation_Setting()
 
 void CTestMonster::TempImGuiRender()
 {
-    ImGui::Begin("Boss State");
+    if (ImGui::Begin("Monster Inspector"))
+    {
+        // TransformComponent
+        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            const _vec3& pos = m_TransformCom->Get_Pos();
 
-    ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
-    ImGui::Text("Dir : %s", Engine::ToString(m_StateCom->Get_Dir()));
+            ImGui::Text("Position");
 
-    ImGui::Text("Boss Pos : X: %f, Y: %f, Z: %f",
-        m_TransformCom->Get_Pos().x,
-        m_TransformCom->Get_Pos().y,
-        m_TransformCom->Get_Pos().z);
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##MonsterPosX", (float*)&pos.x);
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##MonsterPosY", (float*)&pos.y);
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##MonsterPosZ", (float*)&pos.z);
+
+            m_TransformCom->Set_Pos(pos);
+        }
+
+        // StateComponent
+        if (m_StateCom && ImGui::CollapsingHeader("State Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
+            ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
+        }
+    }
 
     ImGui::End();
 }
