@@ -1,39 +1,41 @@
-﻿#include "CCreateHelper.h"
-#include "CUIImage.h"
+﻿#include "pch.h"
+#include "CCreateHelper.h"
+#include "CUIHeartBar.h"
 #include "CRcTex.h"
 #include "CTexture.h"
 
-CUIImage::CUIImage()
+CUIHeartBar::CUIHeartBar() : m_BufferCom(nullptr), m_TextureCom(nullptr)
+{
+
+}
+
+CUIHeartBar::CUIHeartBar(DEVICE pGraphicDev) : m_BufferCom(nullptr), m_TextureCom(nullptr)
 {
 }
 
-CUIImage::CUIImage(DEVICE pGraphicDev)
+CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) : m_BufferCom(nullptr), m_TextureCom(nullptr)
 {
 }
 
-CUIImage::CUIImage(const CUIImage& rhs)
+CUIHeartBar::~CUIHeartBar()
 {
 }
 
-CUIImage::~CUIImage()
-{
-}
-
-HRESULT CUIImage::Ready_GameObject()
+HRESULT CUIHeartBar::Ready_GameObject()
 {
     if (FAILED(Add_Component()))
         return E_FAIL;
 
     return S_OK;
 }
-void CUIImage::Render_GameObject()
+void CUIHeartBar::Render_GameObject()
 {
     m_TextureCom->Set_Texture(0);
     m_BufferCom->Render_Buffer();
 
 }
 
-HRESULT CUIImage::Add_Component()
+HRESULT CUIHeartBar::Add_Component()
 {
   
     // buffer
@@ -52,9 +54,9 @@ HRESULT CUIImage::Add_Component()
 
 }
 
-CUIImage* CUIImage::Create(DEVICE graphicDev)
+CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 {
-    auto image = new CUIImage(graphicDev);
+    auto image = new CUIHeartBar(graphicDev);
     if (FAILED(image->Ready_GameObject()))
      {
         Safe_Release(image);
@@ -66,6 +68,6 @@ CUIImage* CUIImage::Create(DEVICE graphicDev)
     return image;
 }
 
-void CUIImage::Free()
+void CUIHeartBar::Free()
 {
 }

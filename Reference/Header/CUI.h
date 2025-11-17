@@ -12,12 +12,13 @@ public:
 	virtual ~CUI();
 
 public:
-	virtual HRESULT Ready_UI() { return S_OK; }
-	virtual _int Update_UI(const _float& fTimeDelta) { return 0; }
-	virtual void LateUpdate_UI() {}
-	virtual void Render_UI() {}
-private:
-	DEVICE			m_pGraphicDev;
+    virtual HRESULT Ready_GameObject();
+    virtual _int    Update_GameObject(const _float& timeDelta);
+    virtual void    LateUpdate_GameObject(const _float& timeDelta);
+    virtual void    Render_GameObject();
+
+protected:
+	DEVICE			m_GraphicDev;
 
 protected:
 	virtual void				Free();

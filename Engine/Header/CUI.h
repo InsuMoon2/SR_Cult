@@ -17,7 +17,7 @@ public:
     virtual void    LateUpdate_GameObject(const _float& timeDelta);
     virtual void    Render_GameObject();
 
-private:
+protected:
 	DEVICE			m_GraphicDev;
 
 protected:

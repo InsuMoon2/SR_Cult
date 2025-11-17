@@ -37,9 +37,6 @@
     <Filter Include="03. UI">
       <UniqueIdentifier>{2c329504-b509-4cd3-9c28-9acdb3fad354}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. UI\00. UIMainMenuPanel">
-      <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\00. Camera">
       <UniqueIdentifier>{88744360-a492-4ab2-91a8-d0d1222dea90}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,18 @@
     </Filter>
     <Filter Include="02. GameObject\04. Boss\02. Boss2">
       <UniqueIdentifier>{57866705-26b9-4ce7-9286-c9966a40a2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\00. Panel">
+      <UniqueIdentifier>{ade4fa06-0596-47f1-a8dd-a436465050b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\01. UI">
+      <UniqueIdentifier>{24bc796c-e51d-498d-ac46-27d30f3b5e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\01. UI\00. UIHeartBar">
+      <UniqueIdentifier>{3b20149e-72ba-4412-85bc-072dbd1e6f7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\00. Panel\00. UIPlayerPanel">
+      <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +102,6 @@
     <ClInclude Include="..\Header\CStage.h">
       <Filter>01. Scene\01. Stage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CUIMainMenuPanel.h">
-      <Filter>03. UI\00. UIMainMenuPanel</Filter>
-    </ClInclude>
     <ClInclude Include="..\header\CMainCamera.h">
       <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
     </ClInclude>
@@ -107,6 +113,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CTestMonster.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIPlayerPanel.h">
+      <Filter>03. UI\00. Panel\00. UIPlayerPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIHeartBar.h">
+      <Filter>03. UI\01. UI\00. UIHeartBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +143,6 @@
     <ClCompile Include="..\Code\CStage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUIMainMenuPanel.cpp">
-      <Filter>03. UI\00. UIMainMenuPanel</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\CMainCamera.cpp">
       <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
     </ClCompile>
@@ -145,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CTestMonster.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIPlayerPanel.cpp">
+      <Filter>03. UI\00. Panel\00. UIPlayerPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIHeartBar.cpp">
+      <Filter>03. UI\01. UI\00. UIHeartBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

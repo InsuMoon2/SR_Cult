@@ -6,13 +6,13 @@ BEGIN(Engine)
 class CRcTex;
 class CTexture;
 
-class CUIImage : public CUI
+class CUIHeartBar : public CUI
 {
 public:
-    explicit  CUIImage();
-    explicit  CUIImage(DEVICE pGraphicDev);
-    explicit  CUIImage(const CUIImage& rhs);
-    virtual ~CUIImage();
+    explicit  CUIHeartBar();
+    explicit  CUIHeartBar(DEVICE pGraphicDev);
+    explicit  CUIHeartBar(const CUIHeartBar& rhs);
+    virtual ~CUIHeartBar();
 
 public:
     virtual HRESULT Ready_GameObject();
@@ -20,7 +20,7 @@ public:
     HRESULT Add_Component();
 
 public:
-    static CUIImage* Create(DEVICE graphicDev);
+    static CUIHeartBar* Create(DEVICE graphicDev);
 
 
 private:

@@ -6,15 +6,16 @@ class ENGINE_DLL CUIPanel : public CUI
 {
 public:
 	explicit  CUIPanel();
-	explicit  CUIPanel(DEVICE pGraphicDev);
+	explicit  CUIPanel(DEVICE graphicDev);
 	explicit  CUIPanel(const CUIPanel& rhs);
 	virtual ~CUIPanel();
 
 public:
-	virtual HRESULT Ready_Panel() { return S_OK; }
-	virtual _int Update_Panel(const _float& fTimeDelta);
-	virtual void LateUpdate_Panel() {}
-	virtual void Render_Panel() {};
+    virtual HRESULT Ready_GameObject();
+    virtual _int    Update_GameObject(const _float& timeDelta);
+    virtual void    LateUpdate_GameObject(const _float& timeDelta);
+    virtual void    Render_GameObject();
+
 
 public:
 	virtual void AddChild(CUI* ui);

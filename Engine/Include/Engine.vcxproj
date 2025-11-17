@@ -216,7 +216,6 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClInclude Include="..\Header\CTriCol.h" />
     <ClInclude Include="..\Header\CUI.h" />
     <ClInclude Include="..\Header\CUIButton.h" />
-    <ClInclude Include="..\Header\CUIImage.h" />
     <ClInclude Include="..\Header\CUIPanel.h" />
     <ClInclude Include="..\Header\CUIText.h" />
     <ClInclude Include="..\Header\CVIBuffer.h" />
@@ -261,7 +260,6 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClCompile Include="..\Code\CTriCol.cpp" />
     <ClCompile Include="..\Code\CUI.cpp" />
     <ClCompile Include="..\Code\CUIButton.cpp" />
-    <ClCompile Include="..\Code\CUIImage.cpp" />
     <ClCompile Include="..\Code\CUIPanel.cpp" />
     <ClCompile Include="..\Code\CUIText.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />

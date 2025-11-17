@@ -1,14 +1,14 @@
 ﻿#pragma once
 #include "CUIPanel.h"
 
-class CUIMainMenuPanel : public CUIPanel
+class CUIPlayerPanel : public CUIPanel
 {
 	
 public:
-	explicit CUIMainMenuPanel();
-	explicit CUIMainMenuPanel(DEVICE graphicDev);
-	explicit CUIMainMenuPanel(const CUIMainMenuPanel& rhs);
-	virtual ~CUIMainMenuPanel();
+	explicit CUIPlayerPanel();
+	explicit CUIPlayerPanel(DEVICE graphicDev);
+	explicit CUIPlayerPanel(const CUIPlayerPanel& rhs);
+	virtual ~CUIPlayerPanel();
 
 public:
 	virtual HRESULT Ready_GameObject() override;
@@ -17,6 +17,6 @@ public:
 	virtual void Render_GameObject() override;
 
 public:
-    static CUIMainMenuPanel* Create(DEVICE graphicDev);
+    static CUIPlayerPanel* Create(DEVICE graphicDev);
 };  
 
