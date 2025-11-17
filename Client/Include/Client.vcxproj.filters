@@ -52,6 +52,15 @@
     <Filter Include="02. GameObject\03. BackGround">
       <UniqueIdentifier>{3bd3b899-a893-4ae5-b3f5-5248eddfadd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\04. Boss">
+      <UniqueIdentifier>{979b02f0-f254-474f-a682-57df5e0a4ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04. Boss\01. Boss1">
+      <UniqueIdentifier>{194c3abf-b1d9-4b89-81c1-dac24568f8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\04. Boss\02. Boss2">
+      <UniqueIdentifier>{57866705-26b9-4ce7-9286-c9966a40a2a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -96,6 +105,9 @@
     <ClInclude Include="..\Header\CMainBG.h">
       <Filter>02. GameObject\03. BackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTestMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -130,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMainBG.cpp">
       <Filter>02. GameObject\03. BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTestMonster.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,14 +12,14 @@ private:
 
 public:
     HRESULT Ready_Texture(TEXTUREID texType, const wstring& filePath, const _uint& count = 1);
-    void    Set_Texture(const _uint& index = 0);
 
     HRESULT Add_Texture(const wstring& animKey,
                             TEXTUREID     texType,
                             const wstring& filePathPattern,
                             _uint         count);
 
-    void Set_Texture(const wstring& animKey, _uint frameIndex);
+    void    Set_Texture(const _uint& index = 0);
+    void    Set_Texture(const wstring& animKey, _uint frameIndex);
 
 private:
     vector<IDirect3DBaseTexture9*> m_Textures;
@@ -35,6 +35,8 @@ public:
 
 private:
     void Free() override;
+
+
 };
 
 END

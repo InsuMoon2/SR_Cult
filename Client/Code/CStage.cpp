@@ -13,6 +13,8 @@
 #include "CTransform.h"
 #include "CTriCol.h"
 #include "CState.h"
+#include "CManagement.h"
+#include "CTestMonster.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -92,12 +94,21 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         return E_FAIL;
 
     // monster
-    gameObject = CMonster::Create(m_GraphicDev);
+    /*gameObject = CMonster::Create(m_GraphicDev);
+    
+    if (nullptr == gameObject)
+        return E_FAIL;
+    
+    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+        return E_FAIL;*/
+
+    // testMonster
+    gameObject = CTestMonster::Create(m_GraphicDev);
 
     if (nullptr == gameObject)
         return E_FAIL;
 
-    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+    if (FAILED(layer->Add_GameObject(OBJTYPE::BOSS2, gameObject)))
         return E_FAIL;
 
     m_Layers.insert({ layerType, layer });
@@ -148,33 +159,29 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 
 HRESULT CStage::Ready_Prototype()
 {
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
-        return E_FAIL;
-
-
-
-    // Animator
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    // RectCol
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
-        return E_FAIL;
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
+    //    return E_FAIL;
+    //
+    //if (FAILED(CProtoMgr::GetInstance()
+    //    ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
+    //    return E_FAIL;
 
     return S_OK;
 }

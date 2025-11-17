@@ -29,6 +29,8 @@ CComponent* CGameObject::Get_Component(COMPONENTID componentID, COMPONENTTYPE co
 
 HRESULT CGameObject::Ready_GameObject()
 {
+    
+    
     return S_OK;
 }
 

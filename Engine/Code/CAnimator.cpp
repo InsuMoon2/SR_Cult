@@ -7,13 +7,13 @@
 
 CAnimator::CAnimator(DEVICE graphicDev)
     : CComponent(graphicDev),
-      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr)
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr), m_TextureType(COMPONENTTYPE::COMPONENT_END)
 {
 }
 
 CAnimator::CAnimator(const CAnimator& rhs)
     : CComponent(rhs),
-      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr)
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr), m_TextureType(rhs.m_TextureType)
 {
 }
 
@@ -25,12 +25,14 @@ HRESULT CAnimator::Ready_Animator()
     if (m_Owner == nullptr)
         return E_FAIL;
 
-    // TODO : 인수) Stage-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
+    // TODO : 인수) Loading-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
     m_BufferCom = dynamic_cast<CRcTex*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::RC_TEX));
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
-    // TODO : 인수) 이거 TEX_PLAYER 받으면 안된다. 다른 범용적인 방법을 찾아야함
-    m_Texture = dynamic_cast<CTexture*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::TEX_PLAYER));
+    // 주의! Object마다 Set_TextureType 설정 꼭 해줘야함
+    // ex) Player -> m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_PLAYER);
+
+    m_Texture = dynamic_cast<CTexture*>(m_Owner->Get_Component(ID_STATIC, m_TextureType));
     NULL_CHECK_RETURN(m_Texture, E_FAIL);
 
     return S_OK;
@@ -45,12 +47,6 @@ _int CAnimator::Update_Component(const _float& timeDelta)
 
     // 애니메이션 업데이트
     m_CurAnimation->Update(timeDelta);
-
-    _int frameIndex = m_CurAnimation->Get_Frame();
-
-    const wstring& animKey = m_CurKey;
-
-    m_Texture->Set_Texture(animKey, frameIndex);
 
     return exit;
 }
@@ -133,6 +129,28 @@ void CAnimator::Play_Animation(const wstring& key, ANIMSTATE state, bool reset)
 void CAnimator::Stop_Animation()
 {
     m_Play = false;
+}
+
+_int CAnimator::Get_CurFrame()
+{
+    if (m_CurAnimation == nullptr)
+        return 0;
+
+    return m_CurAnimation->Get_Frame();
+}
+
+void CAnimator::Set_TextureType(COMPONENTTYPE type)
+{
+    m_TextureType = type;
+
+    if (m_Owner && m_Initialized == false)
+    {
+        if (SUCCEEDED(Ready_Animator()))
+            m_Initialized = true;
+
+        else
+            MSG_BOX("Animator Ready Failed");
+    }
 }
 
 CAnimator* CAnimator::Create(DEVICE graphicDev)
