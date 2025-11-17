@@ -42,8 +42,8 @@ HRESULT CPlayer::Ready_GameObject()
     Animation_Setting();
 
     // 크기 변환 테스트
-    m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
-    m_TransformCom->Set_Pos(_vec3());
+    // m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
+    // m_TransformCom->Set_Pos(_vec3());Lamb-run-down1.png
 
     return S_OK;
 }
@@ -69,18 +69,6 @@ void CPlayer::Render_GameObject()
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
     Render_Setting();
-
-    // 현재 애니메이션 키로 텍스처 선택
-    if (m_TextureCom != nullptr && m_AnimatorCom != nullptr)
-    {
-        const wstring& texKey = m_AnimatorCom->Get_CurKey();
-
-        if (!texKey.empty())
-            m_TextureCom->Set_Texture(texKey);
-
-        else
-            m_TextureCom->Set_Texture(0);
-    }
 
     m_BufferCom->Render_Buffer();
 
@@ -169,25 +157,23 @@ HRESULT CPlayer::Add_Component()
 void CPlayer::Animation_Setting()
 {
     // 애니메이션 생성
-    m_AnimatorCom->Create_Animation(L"PlayerIdle", 150, 1, 1, 0.02f);
-    m_AnimatorCom->Create_Animation(L"PlayerRun", 19, 1, 1, 0.02f);
-    m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 1, 1, 0.02f);
-    m_AnimatorCom->Create_Animation(L"PlayerRunUp", 19, 1, 1, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerIdle", 0, 150, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRunDown", 0, 19, 0.02f);
 
 #pragma region 보스 테스트
     //m_AnimatorCom->Create_Animation(L"BossTest", 400, 1, 1, 0.02f);
     //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest", ANIMSTATE::LOOP);
 
-    m_AnimatorCom->Create_Animation(L"BossPack", 20, 20, 1, 0.02f);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossPack", ANIMSTATE::LOOP);
+    //m_AnimatorCom->Create_Animation(L"BossPack", 20, 20, 1, 0.02f);
+    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossPack", ANIMSTATE::LOOP);
 
     //m_AnimatorCom->Create_Animation(L"BossTest_Dead", 19, 1, 1, 0.02f);
     //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest_Dead", ANIMSTATE::LOOP);
 #pragma endregion
 
     // State -> Animation 연동
-    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
 
 }
 

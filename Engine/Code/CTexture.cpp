@@ -34,7 +34,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, cons
     {
         wchar_t fileName[MAX_PATH] = L"";
 
-        swprintf_s(fileName, MAX_PATH, filePath.c_str(), i);
+        swprintf_s(fileName, MAX_PATH, filePath.c_str(), i + 1);
 
         switch (texType)
         {

@@ -35,27 +35,23 @@ CSpriteAnimation::~CSpriteAnimation()
     CSpriteAnimation::Free();
 }
 
-HRESULT CSpriteAnimation::Ready_SpriteAnim(_uint     maxX,
-                            _uint     maxY,
-                            _int      startX,
-                            _int      startY,
-                            _float    interval,
-                            bool      xAxis)
+HRESULT CSpriteAnimation::Ready_SpriteAnim(
+                        _uint     startIndex,
+                        _uint     frameCount,
+                        _float      interval)
 {
-    m_MaxFrameX = (maxX == 0) ? 1 : maxX;
-    m_MaxFrameY = (maxY == 0) ? 1 : maxY;
+    m_MaxFrameX = (frameCount == 0) ? 1 : (_int)frameCount;
+    m_MaxFrameY = 1;
 
-    // 시작 프레임 기억
-    m_StartFrameX = startX;
-    m_StartFrameY = startY;
+    m_StartFrameX = (_int)startIndex;
+    m_StartFrameY = 0;
 
-    m_FrameX = startX;
-    m_FrameY = startY;
+    m_FrameX = 0;
+    m_FrameY = 0;
 
     m_Interval = interval;
-    m_XAxis    = xAxis;
-
-    m_State = ANIMSTATE::STOP;
+    m_XAxis = true;                 
+    m_State = ANIMSTATE::STOP;      // 처음엔 정지 상태
 
     m_AccTime = 0.f;
 
@@ -189,11 +185,11 @@ void CSpriteAnimation::Get_UV(_float& u0, _float& v0, _float& u1, _float& v1) co
     }
 }
 
-CSpriteAnimation* CSpriteAnimation::Create(_uint maxX, _uint maxY, _int startX, _int startY, _float interval, _bool xAxis)
+CSpriteAnimation* CSpriteAnimation::Create(_uint startIndex, _uint frameCount, _float interval)
 {
     auto sprite = new CSpriteAnimation();
 
-    if (FAILED(sprite->Ready_SpriteAnim(maxX, maxY, startX, startY, interval, xAxis)))
+    if (FAILED(sprite->Ready_SpriteAnim(startIndex, frameCount, interval)))
     {
         Safe_Release(sprite);
         MSG_BOX("Sprite Create Failed");

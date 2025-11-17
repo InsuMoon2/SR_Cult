@@ -203,8 +203,14 @@ HRESULT CStage::Ready_Prototype()
 #pragma region TextureNumber
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(COMPONENTTYPE::TEXTURE,
         Engine::CTexture::Create(m_pGraphicDev,TEX_NORMAL,
-                L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.jpg", 19))))
+                L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.png", 19))))
         return E_FAIL;
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(COMPONENTTYPE::TEXTURE,
+        Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/Test/Player_Idle/Lamb-idle%d.png", 150))))
+        return E_FAIL;
+
 #pragma endregion
 
     // Animator

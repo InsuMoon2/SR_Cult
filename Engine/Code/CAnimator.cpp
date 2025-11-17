@@ -98,15 +98,10 @@ CSpriteAnimation* CAnimator::GetOrAdd_Animation(const wstring& key, CSpriteAnima
     return animation;
 }
 
-HRESULT CAnimator::Create_Animation(const wstring& key,
-                                    _uint          maxX,
-                                    _uint          maxY,
-                                    _int           lineY,
-                                    _float         interval)
+HRESULT CAnimator::Create_Animation(const wstring& key, _uint startIndex, _uint frameCount, _float interval)
 {
     CSpriteAnimation* anim
-     = CSpriteAnimation::Create(maxX, maxY, 0,
-                                lineY, interval, true);
+        = CSpriteAnimation::Create(startIndex, frameCount, interval);
 
     return Add_Animation(key, anim);
 }
