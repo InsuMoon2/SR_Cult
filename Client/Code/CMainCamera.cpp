@@ -9,13 +9,13 @@ CMainCamera::CMainCamera(DEVICE graphicDev)
     : CGameObject(graphicDev),
       m_CameraCom(nullptr),
       m_TransformCom(nullptr),
-      m_TargetTransformCom(nullptr),
-      m_ViewMode(CCameraCom::VIEW_QUARTER)
+      m_TargetTransformCom(nullptr)
+//m_ViewMode(CCameraCom::VIEW_QUARTER)
 { }
 
 CMainCamera::CMainCamera(const CMainCamera& rhs)
-    : CGameObject(rhs),
-      m_ViewMode(rhs.m_ViewMode)
+    : CGameObject(rhs)
+//m_ViewMode(rhs.m_ViewMode)
 { }
 
 CMainCamera::~CMainCamera()
@@ -34,6 +34,9 @@ _int CMainCamera::Update_GameObject(const _float& timeDelta)
     _int exit = CGameObject::Update_GameObject(timeDelta);
 
     // TODO : 매 프레임 작업
+    // TODO : 모드 변경
+
+    Chase_CamTarget();
 
     return exit;
 }
@@ -46,7 +49,7 @@ void CMainCamera::LateUpdate_GameObject(const _float& timeDelta)
 void CMainCamera::Render_GameObject()
 { }
 
-HRESULT CMainCamera::Set_Target(CTransform* targetTransform)
+HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
 {
     NULL_CHECK_RETURN(targetTransform, E_FAIL)
 
@@ -57,8 +60,6 @@ HRESULT CMainCamera::Set_Target(CTransform* targetTransform)
 
 HRESULT CMainCamera::Add_Component()
 {
-    // todo 추가할 것
-
     // transform
     m_TransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::TRANSFORM);
     NULL_CHECK_RETURN(m_TransformCom, E_FAIL);
@@ -73,6 +74,13 @@ HRESULT CMainCamera::Add_Component()
 
     return S_OK;
 }
+
+void CMainCamera::Chase_CamTarget()
+{
+    m_TransformCom->Set_Pos(m_TargetTransformCom->Get_Pos());
+}
+
+void CMainCamera::Key_Input(const _float& timeDelta) {}
 
 CMainCamera* CMainCamera::Create(DEVICE graphicDev)
 {

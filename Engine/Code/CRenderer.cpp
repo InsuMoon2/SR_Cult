@@ -14,7 +14,7 @@ CRenderer::~CRenderer()
 
 void CRenderer::Add_RenderGroup(RENDERID type, CGameObject* gameObject)
 {
-     if (type < RENDER_PRIORITY || type >= RENDER_END || nullptr == gameObject)
+    if (type < RENDER_PRIORITY || type >= RENDER_END || nullptr == gameObject)
         return;
 
     m_RenderGroup[type].push_back(gameObject);
@@ -73,12 +73,42 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
 {
-    // TODO 석호: 직교 투영 설정
+    // TODO 석호: 일단 단순 구현해서, 나중에 가능하면 카메라 컴포넌트가 적은 부하로 관리 가능하게 만들자
+
+    // 직교 투영
+    if (m_RenderGroup[RENDER_UI].empty())
+        return;
+
+    _matrix prevView;
+    _matrix prevProj;
+
+    graphicDev->GetTransform(D3DTS_VIEW, &prevView);
+    graphicDev->GetTransform(D3DTS_PROJECTION, &prevProj);
+
+    _matrix uiView;
+    _matrix uiProj;
+
+    D3DXMatrixIdentity(&uiView);
+
+    D3DXMatrixOrthoOffCenterLH(
+        &uiProj,
+        0.f,
+        static_cast<_float>(WINCX),
+        static_cast<_float>(WINCY),
+        0.f,
+        0.f,
+        1.f);
+
+    graphicDev->SetTransform(D3DTS_VIEW, &uiView);
+    graphicDev->SetTransform(D3DTS_PROJECTION, &uiProj);
 
     for (auto& obj : m_RenderGroup[RENDER_UI])
     {
         obj->Render_GameObject();
     }
+
+    graphicDev->SetTransform(D3DTS_VIEW, &prevView);
+    graphicDev->SetTransform(D3DTS_PROJECTION, &prevProj);
 }
 
 void CRenderer::Free()
