@@ -143,6 +143,7 @@ HRESULT CPlayer::Add_Component()
 
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEXTURE, m_TextureCom });
 
+    // Animator
     m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
     NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
 

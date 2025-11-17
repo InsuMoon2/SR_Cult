@@ -22,7 +22,8 @@ public:
     void Reset();
     void Update(const _float& timeDelta);
 
-    _int Get_FrameX() const { return m_FrameX; }
+    // TODO : 테스트 이후 Y값 삭제하기
+    _int Get_Frame() const { return m_FrameX; }
     _int Get_FrameY() const { return m_FrameY; }
     _int Get_MaxFrameX() const { return m_MaxFrameX; }
     _int Get_MaxFrameY() const { return m_MaxFrameY; }

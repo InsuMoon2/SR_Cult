@@ -3,18 +3,18 @@
 #include "CGameObject.h"
 #include "CRcTex.h"
 #include "CSpriteAnimation.h"
+#include "CTexture.h"
 
 CAnimator::CAnimator(DEVICE graphicDev)
     : CComponent(graphicDev),
-      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr)
-{ }
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr)
+{
+}
 
 CAnimator::CAnimator(const CAnimator& rhs)
     : CComponent(rhs),
-      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr)
-// TODO 석호: rhs.m_CurAnimation 등을 사용해야 복제의 의도와 맞지 않나?
+      m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr)
 {
-    
 }
 
 CAnimator::~CAnimator()
@@ -29,6 +29,9 @@ HRESULT CAnimator::Ready_Animator()
     m_BufferCom = dynamic_cast<CRcTex*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::RC_TEX));
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
+    m_Texture = dynamic_cast<CTexture*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::TEXTURE));
+    NULL_CHECK_RETURN(m_Texture, E_FAIL);
+
     return S_OK;
 }
 
@@ -42,12 +45,12 @@ _int CAnimator::Update_Component(const _float& timeDelta)
     // 1. 애니메이션 업데이트
     m_CurAnimation->Update(timeDelta);
 
-    // 2. 현재 프레임에 해당하는 UV 계산
-    _float u0, v0, u1, v1;
-    m_CurAnimation->Get_UV(u0, v0, u1, v1);
+    // 2) 현재 프레임 인덱스 얻기
+    _int frameIndex = m_CurAnimation->Get_Frame();
 
-    // 3. RcTex에 UV 반영하기
-    m_BufferCom->Set_UV(u0, v0, u1, v1);
+    // 3) 텍스처 프레임 설정
+    m_Texture->Set_Texture(frameIndex);
+
 
     return exit;
 }

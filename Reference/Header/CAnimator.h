@@ -54,7 +54,8 @@ private:
 
     _bool                           m_Play;
 
-    Engine::CRcTex* m_BufferCom;
+    Engine::CRcTex*   m_BufferCom;
+    Engine::CTexture* m_Texture;
 
 };
 
