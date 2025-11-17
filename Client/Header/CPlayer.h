@@ -50,6 +50,9 @@ private:
     void TempImGuiRender();
 
 public:
+    int m_Hp;
+
+public:
     static CPlayer* Create(DEVICE graphicDev);
 
 private:

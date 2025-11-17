@@ -5,7 +5,6 @@ BEGIN(Engine)
 class ENGINE_DLL CUIPanel : public CUI
 {
 public:
-	explicit  CUIPanel();
 	explicit  CUIPanel(DEVICE graphicDev);
 	explicit  CUIPanel(const CUIPanel& rhs);
 	virtual ~CUIPanel();

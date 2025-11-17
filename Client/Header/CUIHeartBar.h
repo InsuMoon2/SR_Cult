@@ -9,8 +9,7 @@ class CTexture;
 class CUIHeartBar : public CUI
 {
 public:
-    explicit  CUIHeartBar();
-    explicit  CUIHeartBar(DEVICE pGraphicDev);
+    explicit  CUIHeartBar(DEVICE graphicDev);
     explicit  CUIHeartBar(const CUIHeartBar& rhs);
     virtual ~CUIHeartBar();
 

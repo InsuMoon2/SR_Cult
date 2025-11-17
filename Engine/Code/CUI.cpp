@@ -1,10 +1,7 @@
 ﻿#include "CUI.h"
 
-CUI::CUI() : CGameObject(m_GraphicDev)
-{
-}
 
-CUI::CUI(DEVICE graphicDev) : CGameObject(m_GraphicDev),m_GraphicDev(graphicDev)
+CUI::CUI(DEVICE graphicDev) : CGameObject(graphicDev),m_GraphicDev(graphicDev)
 {
 	m_GraphicDev->AddRef();
 }

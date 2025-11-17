@@ -76,20 +76,20 @@ void CLogo::Render_Scene()
 
 HRESULT CLogo::Ready_Environment_Layer(LAYERTYPE layerType)
 {
-    //auto layer = Engine::CLayer::Create();
-    //
-    //NULL_CHECK_RETURN(layer, E_FAIL)
-    //
-    //Engine::CGameObject* gameObject = nullptr;
-    //
-    //gameObject = CMainBG::Create(m_GraphicDev);
-    //
-    //NULL_CHECK_RETURN(m_GraphicDev, E_FAIL)
-    //
-    //if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
-    //    return E_FAIL;
-    //
-    //m_Layers.insert({ layerType, layer });
+    auto layer = Engine::CLayer::Create();
+    
+    NULL_CHECK_RETURN(layer, E_FAIL)
+    
+    Engine::CGameObject* gameObject = nullptr;
+    
+    gameObject = CMainBG::Create(m_GraphicDev);
+    
+    NULL_CHECK_RETURN(m_GraphicDev, E_FAIL)
+    
+    if (FAILED(layer->Add_GameObject(OBJTYPE::PLAYER, gameObject)))
+        return E_FAIL;
+    
+    m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }
@@ -100,7 +100,7 @@ HRESULT CLogo::Ready_UI_Layer(LAYERTYPE layerType)
     NULL_CHECK_RETURN(layer, E_FAIL)
    
     CGameObject* gameObject = nullptr;
-   
+
     gameObject = CUIPlayerPanel::Create(m_GraphicDev);
    
     NULL_CHECK_RETURN(gameObject, E_FAIL)
@@ -129,7 +129,12 @@ HRESULT CLogo::Ready_Prototype()
         return E_FAIL;
 
     //Texture : Player Heart
-    if(FAILED(CProtoMgr::GetInstance()->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART, Engine::CTexture::Create(m_GraphicDev,TEX_NORMAL, L"../Bin/Resource/Texture/Player/HP%d.png",2))))
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/Player/HP%d.png", 3))))
+    return E_FAIL;
+
     return S_OK;
 }
 

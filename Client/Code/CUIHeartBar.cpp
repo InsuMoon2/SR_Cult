@@ -4,16 +4,11 @@
 #include "CRcTex.h"
 #include "CTexture.h"
 
-CUIHeartBar::CUIHeartBar() : m_BufferCom(nullptr), m_TextureCom(nullptr)
-{
-
-}
-
-CUIHeartBar::CUIHeartBar(DEVICE pGraphicDev) : m_BufferCom(nullptr), m_TextureCom(nullptr)
+CUIHeartBar::CUIHeartBar(DEVICE graphicDev) : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr)
 {
 }
 
-CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) : m_BufferCom(nullptr), m_TextureCom(nullptr)
+CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) :CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr)
 {
 }
 
@@ -45,10 +40,10 @@ HRESULT CUIHeartBar::Add_Component()
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::RC_TEX, m_BufferCom });
 
     // texture
-    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_MAINBG);
+    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_UI_HEART);
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
-    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_MAINBG, m_TextureCom });
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_UI_HEART, m_TextureCom });
 
     return S_OK;
 
@@ -70,4 +65,8 @@ CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 
 void CUIHeartBar::Free()
 {
+    Safe_Release(m_BufferCom);
+    Safe_Release(m_TextureCom);
+
+    CUI::Free();
 }

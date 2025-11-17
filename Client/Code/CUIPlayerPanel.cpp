@@ -4,10 +4,6 @@
 #include "CRenderer.h"
 #include "CUIPanel.h"
 
-CUIPlayerPanel::CUIPlayerPanel()
-{
-}
-
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev):CUIPanel(graphicDev)
 {
 }
@@ -64,3 +60,9 @@ CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)
 
     return mainmenupanel;
 }
+
+void CUIPlayerPanel::Free()
+{
+    Engine::CUIPanel::Free();
+}
+

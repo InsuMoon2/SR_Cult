@@ -1,9 +1,6 @@
 ﻿#include "CUIPanel.h"
 #include "CUI.h"
 
-CUIPanel::CUIPanel()
-{
-}
 
 CUIPanel::CUIPanel(DEVICE graphicDev):CUI(graphicDev)
 {

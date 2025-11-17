@@ -6,7 +6,6 @@ BEGIN(Engine)
 class ENGINE_DLL CUI : public CGameObject
 {
 public:
-	explicit CUI();
 	explicit CUI(DEVICE pGraphicDev);
 	explicit CUI(const CUI& rhs);
 	virtual ~CUI();

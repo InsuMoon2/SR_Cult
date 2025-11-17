@@ -18,5 +18,8 @@ public:
 
 public:
     static CUIPlayerPanel* Create(DEVICE graphicDev);
+
+protected:
+    virtual void				Free();
 };  
 
