@@ -34,6 +34,15 @@
     <Filter Include="02. GameObject\02. Monster">
       <UniqueIdentifier>{6f01c3c0-bd94-4864-a1cb-3dc64219e5ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Item">
+      <UniqueIdentifier>{32cd9222-0684-4801-b832-d8f9219a290b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\03. Item">
+      <UniqueIdentifier>{07fe71d1-18f6-439f-9326-1c275bbac5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Inventory">
+      <UniqueIdentifier>{04ec017b-992f-4772-bbe2-7a8edb69490f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -66,6 +75,21 @@
     <ClInclude Include="..\Header\CStage.h">
       <Filter>01. Scene\01. Stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ItemData.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CItemDB.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemInstance.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDroppedItem.h">
+      <Filter>02. GameObject\03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInventory.h">
+      <Filter>04.Inventory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -88,6 +112,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\CStage.cpp">
       <Filter>01. Scene\01. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CItemDB.cpp">
+      <Filter>03. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDroppedItem.cpp">
+      <Filter>02. GameObject\03. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventory.cpp">
+      <Filter>04.Inventory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

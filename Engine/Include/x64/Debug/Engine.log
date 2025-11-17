@@ -1,8 +1,12 @@
 ﻿  CAnimator.cpp
+  CCameraCom.cpp
+  CDInputMgr.cpp
+  CFont.cpp
+  CFontMgr.cpp
+  CLight.cpp
+  CLightMgr.cpp
   CRectCollider.cpp
   CCollisionManager.cpp
-C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp(24,41): warning C4267: '초기화 중': 'size_t'에서 'Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp(24,23): warning C4267: '초기화 중': 'size_t'에서 'const Engine::_uint'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   CCollider.cpp
   CComponent.cpp
   CFrame.cpp
@@ -14,14 +18,14 @@ C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp
   CProtoMgr.cpp
   CRcCol.cpp
   CRcTex.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
   CRenderer.cpp
   CResourceManager.cpp
   CScene.cpp
   CSphereCollider.cpp
   CSpriteAnimation.cpp
   CTexture.cpp
-  코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
   CTimer.cpp
   CTimerMgr.cpp
   CTransform.cpp
@@ -29,47 +33,47 @@ C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Code\CCollisionManager.cpp
   CVIBuffer.cpp
   코드를 생성하고 있습니다...
      ../Bin\Engine.lib 라이브러리 및 ../Bin\Engine.exp 개체를 생성하고 있습니다.
-  Engine.vcxproj -> C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Engine\Bin\Engine.dll
-  '//'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
-  배치 파일이 아닙니다.
-  .\Engine\Bin\Engine.dll
+  Engine.vcxproj -> C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.dll
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.dll
   1개 파일이 복사되었습니다.
-  .\Engine\Bin\Engine.lib
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.lib
   1개 파일이 복사되었습니다.
-  .\Engine\Header\CAnimator.h
-  .\Engine\Header\CCollider.h
-  .\Engine\Header\CCollisionManager.h
-  .\Engine\Header\CComponent.h
-  .\Engine\Header\CCreateHelper.h
-  .\Engine\Header\CFrame.h
-  .\Engine\Header\CFrameMgr.h
-  .\Engine\Header\CGameObject.h
-  .\Engine\Header\CGraphicDev.h
-  .\Engine\Header\CLayer.h
-  .\Engine\Header\CManagement.h
-  .\Engine\Header\CProtoMgr.h
-  .\Engine\Header\CRcCol.h
-  .\Engine\Header\CRcTex.h
-  .\Engine\Header\CRectCollider.h
-  .\Engine\Header\CRenderer.h
-  .\Engine\Header\CResourceManager.h
-  .\Engine\Header\CScene.h
-  .\Engine\Header\CSphereCollider.h
-  .\Engine\Header\CSpriteAnimation.h
-  .\Engine\Header\CTexture.h
-  .\Engine\Header\CTimer.h
-  .\Engine\Header\CTimerMgr.h
-  .\Engine\Header\CTransform.h
-  .\Engine\Header\CTriCol.h
-  .\Engine\Header\CVIBuffer.h
-  .\Engine\Header\Engine_Define.h
-  .\Engine\Header\Engine_Enum.h
-  .\Engine\Header\Engine_Function.h
-  .\Engine\Header\Engine_Macro.h
-  .\Engine\Header\Engine_Struct.h
-  .\Engine\Header\Engine_Typedef.h
-  32개 파일이 복사되었습니다.
-  .\EditorTool\Bin\EditorTool.lib
-  1개 파일이 복사되었습니다.
-  .\EditorTool\Header\CImGuiManager.h
-  1개 파일이 복사되었습니다.
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CAnimator.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCameraCom.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCollider.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCollisionManager.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CComponent.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCreateHelper.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CDInputMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CFont.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CFontMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CFrame.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CFrameMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CGameObject.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CGraphicDev.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CLayer.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CLight.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CLightMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CManagement.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CProtoMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CRcCol.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CRcTex.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CRectCollider.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CRenderer.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CResourceManager.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CScene.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CSphereCollider.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CSpriteAnimation.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CTexture.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CTimer.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CTimerMgr.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CTransform.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CTriCol.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CVIBuffer.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Define.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Enum.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Function.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Macro.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Struct.h
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Typedef.h
+  38개 파일이 복사되었습니다.
