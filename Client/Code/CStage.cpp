@@ -166,7 +166,7 @@ HRESULT CStage::Ready_Prototype()
 
     // 빈 Texture를 일단 생성
     CTexture* playerTex = Engine::CTexture::Create(
-        m_pGraphicDev,
+        m_GraphicDev,
         TEX_NORMAL,
         L"",      
         0);    // 아무 것도 로드하지 않음
@@ -205,7 +205,7 @@ HRESULT CStage::Ready_Prototype()
 
     // State
     if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::STATE, CState::Create(m_pGraphicDev))))
+        ->Ready_Prototype(COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
         return E_FAIL;
 
     return S_OK;

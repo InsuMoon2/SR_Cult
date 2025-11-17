@@ -144,10 +144,10 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
     // Lamb Idle
-    m_AnimatorCom->Create_Animation(L"Idle", 150, 1, 1, 0.02f, ANIMSTATE::LOOP);
+    m_AnimatorCom->Create_Animation(L"Idle", 150, 1, 1, 0.02f);
 
     // 시작 애니메이션
-    m_AnimatorCom->Play_Animation(L"Idle");
+    m_AnimatorCom->Play_Animation(L"Idle", ANIMSTATE::LOOP);
 
     // RectCol Componet
     m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
