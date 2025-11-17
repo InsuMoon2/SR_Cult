@@ -189,11 +189,6 @@ HRESULT CStage::Ready_Prototype()
     playerTex->Add_Texture(TEX_NORMAL, L"PlayerRunUp",
         L"../Bin/Resource/Texture/Player/Lamb-run-up.png");
 
-    playerTex->Add_Texture(TEX_NORMAL, L"BossTest",
-        L"../Bin/Resource/Texture/Monster/Boss2/TOWW-Boss2_Idle.png");
-
-    playerTex->Add_Texture(TEX_NORMAL, L"BossTest_Dead",
-        L"../Bin/Resource/Texture/Monster/Boss2/TOWW-Boss-dead.png");
 
     playerTex->Add_Texture(TEX_NORMAL, L"BossPack",
         L"../Bin/Resource/Texture/Monster/Boss2/TOWW_Boss_Idle_Pack_Scale.png");

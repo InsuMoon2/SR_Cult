@@ -43,6 +43,7 @@ HRESULT CPlayer::Ready_GameObject()
 
     // 크기 변환 테스트
     m_TransformCom->Set_Scale(_vec3(12.f, 7.f, 7.f));
+    m_TransformCom->Set_Pos(_vec3());
 
     return S_OK;
 }
