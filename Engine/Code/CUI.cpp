@@ -18,6 +18,27 @@ CUI::~CUI()
 {
 }
 
+
+HRESULT Ready_GameObject()
+{
+
+}
+
+_int  CUI::Update_GameObject(const _float& timeDelta)
+{
+
+}
+
+void  CUI::LateUpdate_GameObject(const _float& timeDelta)
+{
+
+}
+
+void  CUI::Render_GameObject()
+{
+
+}
+
 void CUI::Free()
 {
 	Safe_Release(m_pGraphicDev);

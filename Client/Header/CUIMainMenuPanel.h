@@ -6,17 +6,17 @@ class CUIMainMenuPanel : public CUIPanel
 	
 public:
 	explicit CUIMainMenuPanel();
-	explicit CUIMainMenuPanel(DEVICE pGraphicDev);
+	explicit CUIMainMenuPanel(DEVICE graphicDev);
 	explicit CUIMainMenuPanel(const CUIMainMenuPanel& rhs);
 	virtual ~CUIMainMenuPanel();
 
 public:
-	virtual HRESULT Ready_Panel() override;
-	virtual _int Update_Panel(const _float& fTimeDelta) override;
-	virtual void LateUpdate_Panel() override;
-	virtual void Render_Panel() override;
+	virtual HRESULT Ready_GameObject() override;
+	virtual _int Update_GameObject(const _float& timeDelta) override;
+	virtual void LateUpdate_GameObject(const _float& timeDelta) override;
+	virtual void Render_GameObject() override;
 
 public:
-    static CUIMainMenuPanel* Create(DEVICE pGraphicDev);
+    static CUIMainMenuPanel* Create(DEVICE graphicDev);
 };
 

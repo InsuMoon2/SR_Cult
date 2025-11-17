@@ -119,9 +119,6 @@
     <Filter Include="04. UI\02. UIImage">
       <UniqueIdentifier>{5048492a-7a02-476f-a178-e175a2e9aaa5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\03. UIText">
-      <UniqueIdentifier>{27088e1a-191e-4a09-ae66-8adb0412f419}</UniqueIdentifier>
-    </Filter>
     <!-- main 에서 추가된 State / SceneMgr 필터 -->
     <Filter Include="02. Prototype\05. State">
       <UniqueIdentifier>{db0654d4-8fff-42b9-afe9-06d252ae2cd0}</UniqueIdentifier>
@@ -129,8 +126,10 @@
     <Filter Include="00. Manager\10. SceneMgr">
       <UniqueIdentifier>{4d206c40-2a02-4585-82a7-34871e494d55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\03. UIText">
+      <UniqueIdentifier>{27088e1a-191e-4a09-ae66-8adb0412f419}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
-
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
       <Filter>99. Header</Filter>
@@ -270,7 +269,6 @@
       <Filter>98. Utility</Filter>
     </ClInclude>
   </ItemGroup>
-
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
       <Filter>00. Manager\00. GraphicDev</Filter>

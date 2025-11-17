@@ -10,6 +10,9 @@ public:
     explicit  CUIImage(const CUIImage& rhs);
     virtual ~CUIImage();
 
+public:
+    virtual HRESULT Ready_GameObject();
+    virtual void Render_GameObject();
 
 public:
     static CUIImage* Create(DEVICE graphicDev);

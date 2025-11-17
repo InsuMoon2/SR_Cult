@@ -4,7 +4,28 @@
   CMonster.cpp
   CPlayer.cpp
   CStage.cpp
+  CUIMainMenuPanel.cpp
   Client.cpp
   코드를 생성하고 있습니다...
+EditorTool.lib(CImGuiManager.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(CImGuiManager.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_widgets.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_widgets.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_demo.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_demo.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_draw.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_draw.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_impl_dx9.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_impl_dx9.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_impl_win32.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_impl_win32.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(pch.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(pch.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+EditorTool.lib(imgui_tables.obj) : warning LNK4099: 'EditorTool.pdb' PDB를 'EditorTool.lib(imgui_tables.obj)' 또는 'C:\Users\boo62\OneDrive\문서\GitHub\Client\Bin\EditorTool.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
      ../Bin\Client.lib 라이브러리 및 ../Bin\Client.exp 개체를 생성하고 있습니다.
-  Client.vcxproj -> C:\Users\moon\Desktop\Jusin\GitDesktop\SR_Cult\Client\Bin\Client.exe
+CUIMainMenuPanel.obj : error LNK2019: "__declspec(dllimport) public: __cdecl Engine::CUIPanel::CUIPanel(void)" (__imp_??0CUIPanel@Engine@@QEAA@XZ)"public: __cdecl CUIMainMenuPanel::CUIMainMenuPanel(class CUIMainMenuPanel const &)" (??0CUIMainMenuPanel@@QEAA@AEBV0@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+CUIMainMenuPanel.obj : error LNK2019: "__declspec(dllimport) public: virtual __cdecl Engine::CUIPanel::~CUIPanel(void)" (__imp_??1CUIPanel@Engine@@UEAA@XZ)"public: virtual __cdecl CUIMainMenuPanel::~CUIMainMenuPanel(void)" (??1CUIMainMenuPanel@@UEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual int __cdecl CUIMainMenuPanel::Update_Panel(float const &)" (?Update_Panel@CUIMainMenuPanel@@UEAAHAEBM@Z)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __cdecl CUIMainMenuPanel::LateUpdate_Panel(void)" (?LateUpdate_Panel@CUIMainMenuPanel@@UEAAXXZ)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __cdecl CUIMainMenuPanel::Render_Panel(void)" (?Render_Panel@CUIMainMenuPanel@@UEAAXXZ)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual long __cdecl Engine::CUI::Ready_UI(void)" (?Ready_UI@CUI@Engine@@UEAAJXZ)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual int __cdecl Engine::CUI::Update_UI(float const &)" (?Update_UI@CUI@Engine@@UEAAHAEBM@Z)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __cdecl Engine::CUI::LateUpdate_UI(void)" (?LateUpdate_UI@CUI@Engine@@UEAAXXZ)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __cdecl Engine::CUI::Render_UI(void)" (?Render_UI@CUI@Engine@@UEAAXXZ)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "public: virtual void __cdecl Engine::CUIPanel::AddChild(class Engine::CUI *)" (?AddChild@CUIPanel@Engine@@UEAAXPEAVCUI@2@@Z)
+CUIMainMenuPanel.obj : error LNK2001: 확인할 수 없는 외부 기호 "protected: virtual void __cdecl Engine::CUIPanel::Free(void)" (?Free@CUIPanel@Engine@@MEAAXXZ)
+..\Bin\Client.exe : fatal error LNK1120: 11개의 확인할 수 없는 외부 참조입니다.
