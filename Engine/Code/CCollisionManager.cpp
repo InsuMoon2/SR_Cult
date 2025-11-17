@@ -20,8 +20,8 @@ void CCollisionManager::Ready_Collision()
 
 void CCollisionManager::Update()
 {
-    auto&       colliders = m_Colliders;
-    const _uint count     = static_cast<_uint>(m_Colliders.size());
+    auto& colliders = m_Colliders;
+    const _uint count = static_cast<_uint>(m_Colliders.size());
 
     for (_uint i = 0; i < count; i++)
     {
@@ -49,6 +49,7 @@ void CCollisionManager::Update()
                     if (CGameObject* ownerDst = dst->Get_Owner())
                         ownerDst->OnBeginOverlap(dst, src);
 
+                    // 충돌 상태 추가
                     src->AddOverlap(dst);
                     dst->AddOverlap(src);
                 }
