@@ -2,6 +2,7 @@
 #include "CMainCamera.h"
 
 #include "CCameraCom.h"
+#include "CCreateHelper.h"
 #include "CTransform.h"
 
 CMainCamera::CMainCamera(DEVICE graphicDev)
@@ -57,13 +58,34 @@ HRESULT CMainCamera::Set_Target(CTransform* targetTransform)
 HRESULT CMainCamera::Add_Component()
 {
     // todo 추가할 것
+
+    // transform
+    m_TransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::TRANSFORM);
+    NULL_CHECK_RETURN(m_TransformCom, E_FAIL);
+
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
+
+    // Camera Component
+    m_CameraCom = CreateProtoComponent<CCameraCom>(this, COMPONENTTYPE::CAMERA);
+    NULL_CHECK_RETURN(m_CameraCom, E_FAIL);
+
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::CAMERA, m_CameraCom });
+
     return S_OK;
 }
 
 CMainCamera* CMainCamera::Create(DEVICE graphicDev)
 {
-    // todo 추가할 것
-    return nullptr;
+    auto mainCamera = new CMainCamera(graphicDev);
+
+    if (FAILED(mainCamera->Ready_GameObject()))
+    {
+        MSG_BOX("MainCamera Create Failed");
+        Safe_Release(mainCamera);
+        return nullptr;
+    }
+
+    return mainCamera;
 }
 
 void CMainCamera::Free()
