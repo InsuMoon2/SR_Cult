@@ -5,12 +5,11 @@
 #include "CCameraCom.h"
 #include "CProtoMgr.h"
 #include "CRcCol.h"
-#include "CRcTex.h"
 #include "CRectCollider.h"
+#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CState.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
