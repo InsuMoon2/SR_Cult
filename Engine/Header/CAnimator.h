@@ -26,16 +26,18 @@ public:
     CSpriteAnimation* GetOrAdd_Animation(const wstring& key, CSpriteAnimation* animation);
 
     HRESULT Create_Animation(const wstring& key,
-                             _uint          maxX,      // 가로 최대 프레임
-                             _uint          maxY,      // 세로 최대 프레임
-                             _int           lineY,     // 몇 번째 줄에 있는지
-                             _float         interval, // 다음 프레임으로 넘어가는 시간
-                             ANIMSTATE      state = ANIMSTATE::LOOP); // Loop ? Stop ?
+                                _uint          maxX,         // 가로 최대 프레임
+                                _uint          maxY,         // 세로 최대 프레임
+                                _int           lineY,        // 몇 번째 줄에 있는지
+                                _float         interval);    // 다음 프레임으로 넘어가는 시간; // Loop ? Stop ?
 
-    void Play_Animation(const wstring& Key);
+    void Play_Animation(const wstring& key, ANIMSTATE state, bool reset = true);
     void Stop_Animation();
 
     CSpriteAnimation* Get_CurAnimation() const { return m_CurAnimation; }
+
+    // 현재 재생중인 키값
+    const wstring& Get_CurKey() { return m_CurKey; }
 
     static CAnimator* Create(DEVICE graphicDev);
     CComponent*       Clone() override;
@@ -48,10 +50,12 @@ private:
 private:
     map<wstring, CSpriteAnimation*> m_Animations;
     CSpriteAnimation*               m_CurAnimation;
-    CTexture*                       m_Texture;
-    _bool                            m_Play;
+    wstring                         m_CurKey;
+
+    _bool                           m_Play;
 
     Engine::CRcTex* m_BufferCom;
+
 };
 
 END

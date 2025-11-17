@@ -48,8 +48,8 @@ int CMainApp::Update_MainApp(const float& timeDelta)
     // Imgui
     {
         CImGuiManager::GetInstance()->Update();
-        ImGui::Begin("New Windows");
-        ImGui::End();
+        /*ImGui::Begin("New Windows");
+        ImGui::End();*/
     }
 
     return 0;

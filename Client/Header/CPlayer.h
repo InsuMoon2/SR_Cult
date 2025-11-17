@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CGameObject.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
 class CRcTex;
@@ -8,6 +9,7 @@ class CTexture;
 class CAnimator;
 class CProtoMgr;
 class CRectCollider;
+class CState;
 END
 
 class CPlayer : public CGameObject
@@ -23,6 +25,7 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
+
     void Render_Setting();
     void Render_Reset();
 
@@ -31,6 +34,7 @@ public:
 
 private:
     HRESULT Add_Component();
+    void    Animation_Setting();
     void    Key_Input(const _float& timeDelta);
 
 private:
@@ -39,6 +43,11 @@ private:
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
     Engine::CRectCollider* m_RectColCom;
+    Engine::CState*        m_StateCom;
+
+    map<PLAYERSTATE, wstring> m_StateAnim;
+
+    void TempImGuiRender();
 
 public:
     static CPlayer* Create(DEVICE graphicDev);
