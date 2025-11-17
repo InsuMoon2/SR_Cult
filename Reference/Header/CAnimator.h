@@ -26,7 +26,6 @@ public:
     CSpriteAnimation* GetOrAdd_Animation(const wstring& key, CSpriteAnimation* animation);
 
     HRESULT Create_Animation(const wstring& key,
-                                _uint          startIndex,
                                 _uint          frameCount,
                                 _float         interval); 
 

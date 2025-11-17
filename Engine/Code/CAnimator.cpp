@@ -25,11 +25,12 @@ HRESULT CAnimator::Ready_Animator()
     if (m_Owner == nullptr)
         return E_FAIL;
 
-    // TODO : Stage-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
+    // TODO : 인수) Stage-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
     m_BufferCom = dynamic_cast<CRcTex*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::RC_TEX));
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
-    m_Texture = dynamic_cast<CTexture*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::TEXTURE));
+    // TODO : 인수) 이거 TEX_PLAYER 받으면 안된다. 다른 범용적인 방법을 찾아야함
+    m_Texture = dynamic_cast<CTexture*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::TEX_PLAYER));
     NULL_CHECK_RETURN(m_Texture, E_FAIL);
 
     return S_OK;
@@ -37,20 +38,19 @@ HRESULT CAnimator::Ready_Animator()
 
 _int CAnimator::Update_Component(const _float& timeDelta)
 {
-    if (m_Play == false || m_CurAnimation == nullptr || m_BufferCom == nullptr)
+    if (m_Play == false || m_CurAnimation == nullptr || m_Texture == nullptr)
         return 0;
 
     _int exit = CComponent::Update_Component(timeDelta);
 
-    // 1. 애니메이션 업데이트
+    // 애니메이션 업데이트
     m_CurAnimation->Update(timeDelta);
 
-    // 2) 현재 프레임 인덱스 얻기
     _int frameIndex = m_CurAnimation->Get_Frame();
 
-    // 3) 텍스처 프레임 설정
-    m_Texture->Set_Texture(frameIndex);
+    const wstring& animKey = m_CurKey;
 
+    m_Texture->Set_Texture(animKey, frameIndex);
 
     return exit;
 }
@@ -98,10 +98,12 @@ CSpriteAnimation* CAnimator::GetOrAdd_Animation(const wstring& key, CSpriteAnima
     return animation;
 }
 
-HRESULT CAnimator::Create_Animation(const wstring& key, _uint startIndex, _uint frameCount, _float interval)
+HRESULT CAnimator::Create_Animation(const wstring& key, _uint frameCount, _float interval)
 {
     CSpriteAnimation* anim
-        = CSpriteAnimation::Create(startIndex, frameCount, interval);
+        = CSpriteAnimation::Create(frameCount, interval);
+
+    NULL_CHECK_RETURN(anim, E_FAIL);
 
     return Add_Animation(key, anim);
 }

@@ -163,51 +163,8 @@ HRESULT CStage::Ready_Prototype()
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
         return E_FAIL;
-    
-
-#pragma region 키값으로 Texture 추가하기
-    //빈 Texture를 일단 생성
-    //    CTexture* playerTex = Engine::CTexture::Create(
-    //        m_pGraphicDev,
-    //        TEX_NORMAL,
-    //        L"",
-    //        0);    // 아무 것도 로드하지 않음
-    //NULL_CHECK_RETURN(playerTex, E_FAIL);
-
-    //playerTex->Add_Texture(TEX_NORMAL, L"PlayerIdle",
-    //    L"../Bin/Resource/Texture/Player/Lamb-idle_sheet.png");
-
-    //playerTex->Add_Texture(TEX_NORMAL, L"PlayerRunDown",
-    //    L"../Bin/Resource/Texture/Player/Lamb-run-down.png");
-
-    //playerTex->Add_Texture(TEX_NORMAL, L"PlayerRun",
-    //    L"../Bin/Resource/Texture/Player/Lamb-run.png");
-
-    //playerTex->Add_Texture(TEX_NORMAL, L"PlayerRunUp",
-    //    L"../Bin/Resource/Texture/Player/Lamb-run-up.png");
 
 
-    //playerTex->Add_Texture(TEX_NORMAL, L"BossPack",
-    //    L"../Bin/Resource/Texture/Monster/Boss2/TOWW_Boss_Idle_Pack_Scale.png");
-
-    //// 세팅 이후 Texture 컴포넌트 프로토타입 생성
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::TEXTURE, playerTex)))
-    //    return E_FAIL;
-#pragma endregion
-
-#pragma region TextureNumber
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(COMPONENTTYPE::TEXTURE,
-        Engine::CTexture::Create(m_pGraphicDev,TEX_NORMAL,
-                L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.png", 19))))
-        return E_FAIL;
-
-    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(COMPONENTTYPE::TEXTURE,
-        Engine::CTexture::Create(m_pGraphicDev, TEX_NORMAL,
-            L"../Bin/Resource/Texture/Test/Player_Idle/Lamb-idle%d.png", 150))))
-        return E_FAIL;
-
-#pragma endregion
 
     // Animator
     if (FAILED(CProtoMgr::GetInstance()
@@ -217,11 +174,6 @@ HRESULT CStage::Ready_Prototype()
     // RectCol
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
-        return E_FAIL;
-
-    // State
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
         return E_FAIL;
 
     return S_OK;

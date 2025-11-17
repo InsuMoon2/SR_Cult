@@ -133,12 +133,6 @@ HRESULT CPlayer::Add_Component()
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
-    // Lamb Idle
-    m_AnimatorCom->Create_Animation(L"Idle", 150, 1, 1, 0.02f);
-
-    // 시작 애니메이션
-    m_AnimatorCom->Play_Animation(L"Idle", ANIMSTATE::LOOP);
-
     // RectCol Componet
     m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
     NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
@@ -157,19 +151,8 @@ HRESULT CPlayer::Add_Component()
 void CPlayer::Animation_Setting()
 {
     // 애니메이션 생성
-    m_AnimatorCom->Create_Animation(L"PlayerIdle", 0, 150, 0.02f);
-    m_AnimatorCom->Create_Animation(L"PlayerRunDown", 0, 19, 0.02f);
-
-#pragma region 보스 테스트
-    //m_AnimatorCom->Create_Animation(L"BossTest", 400, 1, 1, 0.02f);
-    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest", ANIMSTATE::LOOP);
-
-    //m_AnimatorCom->Create_Animation(L"BossPack", 20, 20, 1, 0.02f);
-    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossPack", ANIMSTATE::LOOP);
-
-    //m_AnimatorCom->Create_Animation(L"BossTest_Dead", 19, 1, 1, 0.02f);
-    //m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossTest_Dead", ANIMSTATE::LOOP);
-#pragma endregion
+    m_AnimatorCom->Create_Animation(L"PlayerIdle", 150, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 0.02f);
 
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
