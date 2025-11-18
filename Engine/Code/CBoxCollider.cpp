@@ -84,14 +84,11 @@ bool CBoxCollider::CheckCollision(CCollider* other)
     switch (other->GetColliderType())
     {
     case COLLIDERTYPE::BOX:
-        return CheckCollisionBox2Box(this, other);
+        return CheckCollisionBox2Box(this, static_cast<CBoxCollider*>(other));
 
     case COLLIDERTYPE::SPHERE:
         return CheckCollisionSphere2Box(static_cast<CSphereCollider*>(other), this);
 
-
-
-        break;
     }
 
     return false;

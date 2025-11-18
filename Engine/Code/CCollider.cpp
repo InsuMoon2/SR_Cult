@@ -65,7 +65,7 @@ void CCollider::RemoveOverlap(CCollider* other)
 }
 
 // AABB(Box) vs AABB(Box)
-bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
+bool CCollider::CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2)
 {
     if (b1 == nullptr || b2 == nullptr)
         return false;
@@ -77,9 +77,8 @@ bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
         return false;
 
     // 중심 좌표 (Transform의 INFO_POS 기준, XY 평면에서만 충돌 체크)
-    _vec3 p1, p2;
-    t1->Get_Info(INFO_POS, &p1);
-    t2->Get_Info(INFO_POS, &p2);
+    _vec3 p1 = t1->Get_Pos();
+    _vec3 p2 = t2->Get_Pos();
 
     _vec2 s1 = b1->Get_Size();
     _vec2 s2 = b2->Get_Size();
@@ -119,18 +118,16 @@ bool CCollider::CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2)
     NULL_CHECK_RETURN(t1, false);
     NULL_CHECK_RETURN(t2, false);
 
-    // 중심 좌표 (Transform의 INFO_POS 기준, XY 평면에서만 충돌 체크)
-    _vec3 p1, p2;
-    t1->Get_Info(INFO_POS, &p1);
-    t2->Get_Info(INFO_POS, &p2);
+    _vec3 p1 = t1->Get_Pos();
+    _vec3 p2 = t2->Get_Pos();
 
-    _vec2 s1 = b1->Get_Size();
-    _vec2 s2 = b2->Get_Size();
+    //_vec2 s1 = b1->Get_Size();
+    //_vec2 s2 = b2->Get_Size();
 
 }
 
 // Circle(Sphere) vs AABB(Box)
-bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
+bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CBoxCollider* b2)
 {
     if (s1 == nullptr || b2 == nullptr)
         return false;
@@ -146,7 +143,7 @@ bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
     tb->Get_Info(INFO_POS, &cb3);
 
     _float radius  = s1->Get_Radius();
-    _vec2  boxSize = b2->Get_Size();
+    _vec2  boxSize;// = b2->Get_Size();
 
     _float halfW = boxSize.x * 0.5f;
     _float halfH = boxSize.y * 0.5f;

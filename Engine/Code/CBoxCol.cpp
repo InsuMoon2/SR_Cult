@@ -1,5 +1,8 @@
 ﻿#include "CBoxCol.h"
 
+/**
+ * \brief Render에서 WireFrame으로 설정 중. Box 텍스쳐를 쓰지 않을거같음 
+ */
 CBoxCol::CBoxCol()
 {
 }
@@ -32,7 +35,6 @@ HRESULT CBoxCol::Ready_Buffer()
 		return E_FAIL;
 
 	VTXCUBE* pVertex = NULL;
-
 
 	m_VB->Lock(0, 0, (void**)&pVertex, 0);
 

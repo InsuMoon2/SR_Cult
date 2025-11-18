@@ -4,6 +4,7 @@
 
 BEGIN(Engine)
 class CRcTex;
+class CBoxCol;
 class CTransform;
 class CTexture;
 class CAnimator;
@@ -39,6 +40,7 @@ private:
     void    Key_Input(const _float& timeDelta);
 
 private:
+    //Engine::CRcTex*        m_BufferCom;
     Engine::CRcTex*        m_BufferCom;
     Engine::CTransform*    m_TransformCom;
     Engine::CTexture*      m_TextureCom;
