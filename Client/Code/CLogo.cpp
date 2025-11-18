@@ -99,13 +99,13 @@ HRESULT CLogo::Ready_UI_Layer(LAYERTYPE layerType)
     
     NULL_CHECK_RETURN(layer, E_FAIL)
    
-    CGameObject* gameObject = nullptr;
-
-    gameObject = CUIPlayerPanel::Create(m_GraphicDev);
-   
-    NULL_CHECK_RETURN(gameObject, E_FAIL)
-   
-    if(FAILED(layer->Add_GameObject(OBJTYPE::UI,gameObject)))
+  //  CGameObject* gameObject = nullptr;
+  //
+  //  gameObject = CUIPlayerPanel::Create(m_GraphicDev);
+  // 
+  //  NULL_CHECK_RETURN(gameObject, E_FAIL)
+  // 
+  //  if(FAILED(layer->Add_GameObject(OBJTYPE::UI,gameObject)))
 
     return S_OK;
 }
@@ -128,12 +128,7 @@ HRESULT CLogo::Ready_Prototype()
                 1))))
         return E_FAIL;
 
-    //Texture : Player Heart
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
-            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/Player/HP%d.png", 3))))
-    return E_FAIL;
+
 
     return S_OK;
 }

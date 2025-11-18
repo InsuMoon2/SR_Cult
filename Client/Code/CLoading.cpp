@@ -10,6 +10,7 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
+#include "CRcTex.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -58,8 +59,8 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
         return E_FAIL;
 
-    // Buffer : Rect UV
-    // CLogo 에서 이미 프로토타입 생성중이므로 비활성화
+    //// Buffer : Rect UV
+    //// CLogo 에서 이미 프로토타입 생성중이므로 비활성화
     //if (FAILED(pProtoMgr->Ready_Prototype(
     //    COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
     //    return E_FAIL;
@@ -81,6 +82,13 @@ _uint CLoading::Loading_ForState()
 
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_PLAYER, playerTex)))
+        return E_FAIL;
+
+    //Texture : Player Heart
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
         return E_FAIL;
 
     // Boss2 Test

@@ -10,6 +10,9 @@
 #include "CState.h"
 #include "CManagement.h"
 #include "CTestMonster.h"
+#include "CProtoMgr.h"
+#include "CTexture.h"
+#include "CUIPlayerPanel.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -84,6 +87,8 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
     gameObject = CPlayer::Create(m_GraphicDev);
 
+    m_player = dynamic_cast<CPlayer*>(gameObject);
+
     NULL_CHECK_RETURN_MSG(
         gameObject,
         E_FAIL,
@@ -109,7 +114,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
         return E_FAIL;*/
 
-    // testMonster
+     //testMonster
     gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
@@ -147,12 +152,21 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
 HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 {
-    Engine::CLayer* layer = Engine::CLayer::Create();
+    auto layer = Engine::CLayer::Create();
 
-    if (nullptr == layer)
-        return E_FAIL;
+    NULL_CHECK_RETURN(layer, E_FAIL)
 
-    Engine::CGameObject* pGameObject = nullptr;
+        CGameObject* gameObject = nullptr;
+
+    gameObject = CUIPlayerPanel::Create(m_GraphicDev);
+
+    NULL_CHECK_RETURN(gameObject, E_FAIL)
+
+    m_playerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
+    m_playerPanel->Set_Player(m_player);
+
+    if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
+            return E_FAIL;
 
     m_Layers.insert({ layerType, layer });
 

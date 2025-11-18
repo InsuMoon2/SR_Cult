@@ -59,8 +59,8 @@ enum class OBJTYPE
     MONSTER,
     CAMERA,
     /* 오브젝트 타입 종류 추가 */
-    BOSS2,
     UI,
+    BOSS2,
 
     OBJ_END
 };

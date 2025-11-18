@@ -202,7 +202,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
+         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
         
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
