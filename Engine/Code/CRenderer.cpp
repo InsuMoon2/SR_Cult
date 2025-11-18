@@ -90,12 +90,19 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
 
     D3DXMatrixIdentity(&uiView);
 
-    D3DXMatrixOrthoOffCenterLH(
+    /*D3DXMatrixOrthoOffCenterLH(
         &uiProj,
         0.f,
         static_cast<_float>(WINCX),
         static_cast<_float>(WINCY),
         0.f,
+        0.f,
+        1.f);*/
+
+    D3DXMatrixOrthoLH(
+        &uiProj,
+        static_cast<_float>(WINCX),
+        static_cast<_float>(WINCY),
         0.f,
         1.f);
 

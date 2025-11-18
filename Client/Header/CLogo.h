@@ -23,7 +23,7 @@ private:
     HRESULT Ready_Prototype();
 
 private:
-    CLoading* m_pLoading;
+    CLoading* m_Loading;
 
 public:
     static CLogo* Create(DEVICE graphicDev);

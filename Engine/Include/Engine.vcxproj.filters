@@ -234,6 +234,9 @@
     <ClInclude Include="..\Header\CEnumHelper.h">
       <Filter>98. Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPersistentObjectHelper.h">
+      <Filter>98. Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">

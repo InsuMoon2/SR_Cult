@@ -104,9 +104,6 @@ private:
     void Compute_Proj_Orthographic();
 
 private:
-    void Key_Input();
-
-private:
     CAM_MODE  m_CamMode;
     VIEW_TYPE m_ViewType;
     PROJ_TYPE m_ProjType;

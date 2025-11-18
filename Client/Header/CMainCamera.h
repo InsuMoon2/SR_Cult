@@ -2,8 +2,6 @@
 #include "CCameraCom.h"
 #include "CGameObject.h"
 
-// TODO : 미완성
-
 BEGIN(Engine)
 class CTransform;
 END
@@ -33,6 +31,8 @@ private:
 
     void Key_Input(const _float& timeDelta);
     void Chase_CamTarget(const _float& timeDelta);
+
+    void Render_ImGui();
 
 private:
     Engine::CCameraCom* m_CameraCom;

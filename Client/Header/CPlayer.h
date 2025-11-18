@@ -25,7 +25,6 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-
     void Render_Setting();
     void Render_Reset();
 
@@ -37,6 +36,8 @@ private:
     void    Animation_Setting();
     void    Key_Input(const _float& timeDelta);
 
+    void Render_ImGui();
+
 private:
     Engine::CRcTex*        m_BufferCom;
     Engine::CTransform*    m_TransformCom;
@@ -46,8 +47,6 @@ private:
     Engine::CState*        m_StateCom;
 
     map<PLAYERSTATE, wstring> m_StateAnim;
-
-    void TempImGuiRender();
 
 public:
     static CPlayer* Create(DEVICE graphicDev);

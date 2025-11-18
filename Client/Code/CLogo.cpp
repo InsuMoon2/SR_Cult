@@ -14,7 +14,7 @@
 #include "CTexture.h"
 
 CLogo::CLogo(DEVICE graphicDev)
-    : Engine::CScene(graphicDev), m_pLoading(nullptr)
+    : Engine::CScene(graphicDev), m_Loading(nullptr)
 { }
 
 CLogo::~CLogo()
@@ -28,9 +28,9 @@ HRESULT CLogo::Ready_Scene()
     if (FAILED(Ready_Environment_Layer(LAYERTYPE::ENVIRONMENT)))
         return E_FAIL;
 
-    m_pLoading = CLoading::Create(m_GraphicDev, CLoading::LOADING_STAGE);
+    m_Loading = CLoading::Create(m_GraphicDev, CLoading::LOADING_STAGE);
 
-    if (nullptr == m_pLoading)
+    if (nullptr == m_Loading)
         return E_FAIL;
 
     return S_OK;
@@ -41,7 +41,7 @@ _int CLogo::Update_Scene(const _float& timeDelta)
     _int exit = Engine::CScene::Update_Scene(timeDelta);
 
     // 로딩 작업 완료시 다음 스테이지 진행 가능
-    if (true == m_pLoading->Get_Finish())
+    if (true == m_Loading->Get_Finish())
     {
         if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_RETURN))
         {
@@ -65,7 +65,7 @@ void CLogo::Render_Scene()
     _vec2 pos{ 100.f, 100.f };
 
     CFontMgr::GetInstance()->Render_Font(L"견명조",
-                                         m_pLoading->Get_String(),
+                                         m_Loading->Get_String(),
                                          &pos,
                                          D3DXCOLOR(1.f, 0.f, 1.f, 1.f));
 }
@@ -128,5 +128,7 @@ CLogo* CLogo::Create(DEVICE graphicDev)
 
 void CLogo::Free()
 {
+     Safe_Release(m_Loading);
+
     Engine::CScene::Free();
 }

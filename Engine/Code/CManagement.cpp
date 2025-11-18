@@ -11,8 +11,8 @@ CManagement::CManagement()
     : m_Scene(nullptr),
       m_NextScene(nullptr),
       m_ShouldChangeScene(false),
-      m_PlayerObject(nullptr),
-      m_CameraObject(nullptr)
+      m_PersistentPlayer(nullptr),
+      m_PersistentCamera(nullptr)
 { }
 
 CManagement::~CManagement()
@@ -31,30 +31,49 @@ CComponent* CManagement::Get_Component(COMPONENTID   componentID,
     return m_Scene->Get_Component(componentID, layerType, objType, componentType);
 }
 
-HRESULT CManagement::Cache_PersistentObject(OBJTYPE objType, CGameObject* gameObject)
+//TODO 석호: 지속해야 할 오브젝트가 필요할 경우 여기서도 경우 추가
+HRESULT CManagement::Get_PersistentObject(OBJTYPE objType, CGameObject** outObject)
 {
-    NULL_CHECK_RETURN(gameObject, E_FAIL)
+    NULL_CHECK_RETURN(outObject, E_FAIL);
+
+    switch (objType)
+    {
+    case OBJTYPE::PLAYER:
+        *outObject = m_PersistentPlayer;
+        return S_OK;
+    case OBJTYPE::CAMERA:
+        *outObject = m_PersistentCamera;
+        return S_OK;
+    default:
+        MSG_BOX("CManagement::Get_PersistentObject() failed: invalid OBJTYPE value");
+        return E_FAIL;
+    }
+}
+
+HRESULT CManagement::Cache_PersistentObject(OBJTYPE objType, CGameObject* objectToCache)
+{
+    NULL_CHECK_RETURN(objectToCache, E_FAIL);
 
     CGameObject** target = nullptr;
 
     switch (objType)
     {
     case OBJTYPE::PLAYER:
-        target = &m_PlayerObject;
+        target = &m_PersistentPlayer;
         break;
     case OBJTYPE::CAMERA:
-        target = &m_CameraObject;
+        target = &m_PersistentCamera;
         break;
     default:
         return E_FAIL;
     }
 
-    if (*target == gameObject)
+    if (*target == objectToCache)
         return S_OK;
 
     Safe_Release(*target);
 
-    *target = gameObject;
+    *target = objectToCache;
     (*target)->AddRef();
 
     return S_OK;
@@ -119,6 +138,6 @@ void CManagement::Commit_ChangeScene()
 void CManagement::Free()
 {
     Safe_Release(m_Scene);
-    Safe_Release(m_PlayerObject);
-    Safe_Release(m_CameraObject);
+    Safe_Release(m_PersistentPlayer);
+    Safe_Release(m_PersistentCamera);
 }
