@@ -16,21 +16,27 @@ CUIPanel::~CUIPanel()
 
 HRESULT CUIPanel::Ready_GameObject()
 {
+    CUI::Ready_GameObject();
+
     return S_OK;
 }
 
 _int CUIPanel::Update_GameObject(const _float& timeDelta)
 {
+    _int exit = CUI::Update_GameObject(timeDelta);
+
 	for (auto& child : m_Children)
 	{
 		child->Update_GameObject(timeDelta);
 	}
 
-	return 0;
+	return exit;
 }
 
 void CUIPanel::LateUpdate_GameObject(const _float& timeDelta)
 {
+    CUI::LateUpdate_GameObject(timeDelta);
+
     for (auto& child : m_Children)
     {
         child->LateUpdate_GameObject(timeDelta);
@@ -49,10 +55,9 @@ void CUIPanel::AddChild(CUI* ui)
 
 void CUIPanel::Render_GameObject()
 {
-
+    
     for (auto& child : m_Children)
         child->Render_GameObject();
-
 
 }
 

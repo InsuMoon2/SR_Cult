@@ -7,11 +7,13 @@
 #include "CRenderer.h"
 #include "CAnimator.h"
 
-CUIHeartBar::CUIHeartBar(DEVICE graphicDev) : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr)
+CUIHeartBar::CUIHeartBar(DEVICE graphicDev) : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
+                                              m_TransformCom(nullptr)
 {
 }
 
-CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) :CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr)
+CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
+                                                   m_TransformCom(nullptr)
 {
 }
 
@@ -24,9 +26,9 @@ HRESULT CUIHeartBar::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
+    m_TransformCom->Set_Pos(_vec3(2.f, 2.f, 0.f));
+    m_TransformCom->Set_Scale(_vec3(64.f, 64.f, 1.f));   
 
-    m_TransformCom->Set_Scale(64.f * 0.5f, 64.f * 0.5f, 1.f);
-    m_TransformCom->Set_Pos(50.f, 50.f, 0.5f);
     return S_OK;
 }
 
@@ -41,20 +43,49 @@ _int CUIHeartBar::Update_GameObject(const _float& timeDelta)
 
 void CUIHeartBar::LateUpdate_GameObject(const _float& timeDelta)
 {
-    return;
+    CUI::LateUpdate_GameObject(timeDelta);
+
+    
 }
 
 void CUIHeartBar::Render_GameObject()
 {
+    // 월드 행렬 세팅
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    cout << "Heart Pos x : " << m_TransformCom->Get_Pos().x << endl;
-    cout << "Heart Pos y : " << m_TransformCom->Get_Pos().y << endl;
-    cout << "Heart Pos z : " << m_TransformCom->Get_Pos().z << endl;
-
-    m_TextureCom->Set_Texture(2);
+    m_TextureCom->Set_Texture(1);
     m_BufferCom->Render_Buffer();
 
+    if (ImGui::Begin("UI_Heart Inspector"))
+    {
+        // TransformComponent
+        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            const _vec3& pos = m_TransformCom->Get_Pos();
+
+            ImGui::Text("Position");
+
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##HeartX", (float*)&pos.x);
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##HeartY", (float*)&pos.y);
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##HeartZ", (float*)&pos.z);
+
+            m_TransformCom->Set_Pos(pos);
+
+            _vec3 scale = m_TransformCom->Get_Scale();
+            ImGui::InputFloat("ScaleX", &scale.x);
+            ImGui::InputFloat("ScaleY", &scale.y);
+            m_TransformCom->Set_Scale(scale);
+        }
+    }
+    ImGui::End();
 }
 
 HRESULT CUIHeartBar::Add_Component()
@@ -77,7 +108,6 @@ HRESULT CUIHeartBar::Add_Component()
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_UI_HEART, m_TextureCom });
-
 
     return S_OK;
 
