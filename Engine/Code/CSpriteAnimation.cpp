@@ -1,24 +1,33 @@
 ﻿#include "CSpriteAnimation.h"
 
 CSpriteAnimation::CSpriteAnimation()
-    : m_MaxFrameX(1), m_MaxFrameY(1),
-      m_FrameX(0), m_FrameY(0),
-      m_State(ANIMSTATE::STOP),
-      m_XAxis(true),
-      m_Interval(0.f),
-      m_AccTime(0.f)
-{ }
+    : m_MaxFrameX(1),
+    m_MaxFrameY(1),
+    m_StartFrameX(0),
+    m_StartFrameY(0),
+    m_FrameX(0),
+    m_FrameY(0),
+    m_State(ANIMSTATE::STOP),
+    m_XAxis(true),
+    m_Interval(0.f),
+    m_AccTime(0.f)
+{
+}
 
 CSpriteAnimation::CSpriteAnimation(const CSpriteAnimation& rhs)
 {
     m_MaxFrameX = rhs.m_MaxFrameX;
     m_MaxFrameY = rhs.m_MaxFrameY;
-    m_FrameX    = rhs.m_FrameX;
-    m_FrameY    = rhs.m_FrameY;
-    m_State     = rhs.m_State;
-    m_XAxis     = rhs.m_XAxis;
-    m_Interval  = rhs.m_Interval;
-    m_AccTime   = 0.f;
+
+    m_StartFrameX = rhs.m_StartFrameX;
+    m_StartFrameY = rhs.m_StartFrameY;
+
+    m_FrameX = rhs.m_FrameX;
+    m_FrameY = rhs.m_FrameY;
+    m_State = rhs.m_State;
+    m_XAxis = rhs.m_XAxis;
+    m_Interval = rhs.m_Interval;
+    m_AccTime = 0.f;
 }
 
 CSpriteAnimation::~CSpriteAnimation()
@@ -26,32 +35,30 @@ CSpriteAnimation::~CSpriteAnimation()
     CSpriteAnimation::Free();
 }
 
-void CSpriteAnimation::Init(_uint     maxX,
-                            _uint     maxY,
-                            _int      startX,
-                            _int      startY,
-                            _float    interval,
-                            bool      xAxis,
-                            ANIMSTATE state)
+HRESULT CSpriteAnimation::Ready_SpriteAnim(
+                        _uint     frameCount,
+                        _float      interval)
 {
-    m_MaxFrameX = (maxX == 0) ? 1 : maxX;
-    m_MaxFrameY = (maxY == 0) ? 1 : maxY;
+    m_MaxFrameX = (_int)frameCount;
+    m_MaxFrameY = 1;
 
-    m_FrameX = startX;
-    m_FrameY = startY;
+    m_FrameX = 0;
+    m_FrameY = 0;
 
     m_Interval = interval;
-    m_XAxis    = xAxis;
-    m_State    = state;
-
+    m_XAxis = true;
+    m_State = ANIMSTATE::STOP;
     m_AccTime = 0.f;
+
+    return S_OK;
 }
 
 void CSpriteAnimation::Reset()
 {
     m_AccTime = 0.f;
+    m_FrameX = m_StartFrameX;
+    m_FrameY = m_StartFrameY;
 
-    // 
 }
 
 void CSpriteAnimation::Update(const _float& timeDelta)
@@ -173,9 +180,16 @@ void CSpriteAnimation::Get_UV(_float& u0, _float& v0, _float& u1, _float& v1) co
     }
 }
 
-CSpriteAnimation* CSpriteAnimation::Create()
+CSpriteAnimation* CSpriteAnimation::Create(_uint frameCount, _float interval)
 {
     auto sprite = new CSpriteAnimation();
+
+    if (FAILED(sprite->Ready_SpriteAnim(frameCount, interval)))
+    {
+        Safe_Release(sprite);
+        MSG_BOX("Sprite Create Failed");
+        return nullptr;
+    }
 
     return sprite;
 }

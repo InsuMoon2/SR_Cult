@@ -35,7 +35,6 @@
 #include "../../Libs/DirectXTK/SimpleMath.h"
 using namespace DirectX;
 using namespace SimpleMath;
-// TODO 석호: 클라 쪽에서도 쓰게 할 것인가?
 
 //Fmod
 #include "../../Libs/Fmod/fmod.hpp"

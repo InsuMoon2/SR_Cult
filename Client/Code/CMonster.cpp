@@ -17,10 +17,11 @@ CMonster::CMonster(DEVICE graphicDev)
 
 CMonster::CMonster(const CMonster& rhs)
     : CGameObject(rhs),
-      m_BufferCol(rhs.m_BufferCol),
-      m_TransformCom(rhs.m_TransformCom),
-      m_RectColCom(rhs.m_RectColCom)
-{ }
+    m_BufferCol(nullptr),
+    m_TransformCom(nullptr),
+    m_RectColCom(nullptr)
+{
+}
 
 CMonster::~CMonster()
 { }
