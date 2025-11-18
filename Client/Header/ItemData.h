@@ -7,8 +7,8 @@ struct Item
     std::string type;
     std::string name;
     std::string desc;
-    std::string UIFileName;
-    std::string UIPath;
+    std::wstring UIFileName;
+    std::wstring UIPath;
 
 
     std::string additionalDesc;

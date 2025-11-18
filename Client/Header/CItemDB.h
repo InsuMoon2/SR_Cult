@@ -15,7 +15,7 @@ public:
     HRESULT LoadFromJson(const string& fileName);
 
     Item* GetItemById(int id);
-
+std::wstring ToWString(const std::string& str);
 
 private:
     std::vector<Item> m_vecItems;

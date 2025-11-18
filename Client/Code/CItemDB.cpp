@@ -53,7 +53,23 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
 
     nlohmann::json j;
 
+    // BOM 제거 처리
+    char c;
+    file.read(&c, 1);
 
+    if ((unsigned char)c != 0xEF) // BOM의 첫 바이트가 0xEF가 아니면
+    {
+        // BOM 없음 → 다시 스트림 처음으로 이동
+        file.seekg(0);
+    }
+    else
+    {
+        // BOM 존재 → 나머지 2바이트 제거
+        char c2, c3;
+        file.read(&c2, 1);
+        file.read(&c3, 1);
+        // 이제 f는 JSON 본문 위치에 정확히 있음
+    }
 
     try
     {
@@ -65,6 +81,8 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         return E_FAIL;
     }
 
+
+
     for (auto& node : j["items"])
     {
         Item item; // 구조체 지역으로 생성
@@ -73,8 +91,14 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         item.type = node["type"];
         item.name = node["name"];
         item.desc = node["desc"];
-        item.rarity = node["rarity"];
+        item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
+        item.UIPath = ToWString(node["UIPath"].get<std::string>());
+        //item.UIPath = node["UIPath"];
+
+        item.additionalDesc = node["additionalDesc"];
+   
         //JSON에 해당 키가 없을 때 사용할 기본값을 지정 있으면 데이터
+        item.quality = node.value("quality", 0);
         item.stackable = node.value("stackable", false);
         item.maxStack = node.value("maxStack", 1);
         item.price = node.value("price", 0);
@@ -98,6 +122,12 @@ Item* CItemDB::GetItemById(int id)
     assert(it != m_itemIndex.end());
     return &m_vecItems[it->second];
 }
+
+std::wstring CItemDB::ToWString(const std::string& str)
+{
+    return std::wstring(str.begin(), str.end());
+}
+
 
 void CItemDB::Free()
 {

@@ -33,4 +33,24 @@ static const char* ToString(PLAYERDIR dir)
     }
 }
 
+std::wstring Utf8ToWstring(const std::string& str)
+{
+    if (str.empty()) return std::wstring();
+
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0,
+        str.c_str(), -1,
+        nullptr, 0);
+
+    std::wstring result(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0,
+        str.c_str(), -1,
+        &result[0], size_needed);
+
+    // 널문자 제거
+    if (!result.empty() && result.back() == L'\0')
+        result.pop_back();
+
+    return result;
+}
+
 END

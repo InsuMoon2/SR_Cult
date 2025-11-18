@@ -36,7 +36,7 @@ HRESULT CMainApp::Ready_MainApp()
 
 #pragma region 데이터 파싱 테스트
 
-    if (FAILED(CItemDB::GetInstance()->LoadFromJson("Test.txt")))
+    if (FAILED(CItemDB::GetInstance()->LoadFromJson("ItemData.txt")))
         return E_FAIL;
 
 #pragma endregion
