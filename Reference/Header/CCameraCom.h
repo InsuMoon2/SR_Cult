@@ -4,8 +4,6 @@
 BEGIN(Engine)
 class CTransform;
 
-// TODO 석호: 다중 카메라 관리용 카메라 매니저 구성할 것
-
 /// @brief 컴포넌트 기반의 View/Proj 변환용 컴포넌트
 class ENGINE_DLL CCameraCom : public CComponent
 {
@@ -49,7 +47,7 @@ public:
     _int    Update_Component(const _float& timeDelta) override;
     void    LateUpdate_Component() override;
 
-public:
+public: // Setter
     void Set_CamMode(CAM_MODE camMode);     // 카메라 컨트롤 모드 변경
     void Set_ViewType(VIEW_TYPE viewType);  // 시점 타입 변경
     void Set_ProjType(PROJ_TYPE projType);  // 투영 타입 변경. UI등 Renderer에서 자동으로 직교 투영을 할 오브젝트가 아닌, 수동으로 직교 투영을 사용하고자 할 때 사용
@@ -80,7 +78,7 @@ public:
         m_isDirty = true;
     }
 
-public:
+public: // Getter
     CAM_MODE  Get_CamMode() const { return m_CamMode; }
     VIEW_TYPE Get_ViewType() const { return m_ViewType; }
     PROJ_TYPE Get_ProjType() const { return m_ProjType; }

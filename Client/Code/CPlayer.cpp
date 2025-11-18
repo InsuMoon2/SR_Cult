@@ -180,7 +180,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
     // 앞 뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_UP) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_W) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
@@ -189,7 +190,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_StateCom->Change_Dir(PLAYERDIR::UP);
     }
 
-    if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_S) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -200,7 +202,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
     // 좌 우
     m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_D) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
@@ -209,7 +212,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
     }
 
-    if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_A) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);

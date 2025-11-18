@@ -4,6 +4,7 @@
 #include "CCameraCom.h"
 #include "CCreateHelper.h"
 #include "CDInputMgr.h"
+#include "CRenderer.h"
 #include "CTransform.h"
 
 CMainCamera::CMainCamera(DEVICE graphicDev)
@@ -32,6 +33,8 @@ _int CMainCamera::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CGameObject::Update_GameObject(timeDelta);
 
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
+
     // TODO : 매 프레임 작업
 
     switch (m_CameraCom->Get_CamMode())
@@ -55,7 +58,11 @@ void CMainCamera::LateUpdate_GameObject(const _float& timeDelta)
 }
 
 void CMainCamera::Render_GameObject()
-{}
+{
+    m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
+
+    Render_ImGui();
+}
 
 HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
 {
@@ -91,20 +98,6 @@ void CMainCamera::Key_Input(const _float& timeDelta)
 
     _vec3 dir    = { 0.f, 0.f, 0.f };
     bool  moving = false;
-
-#pragma region 키 입력으로 카메라 시점 전환
-    //TODO : 자유 모드에서만 작동중
-
-    if (inputMgr->Get_DIKeyState(DIK_8) & 0x80)
-        m_CameraCom->Set_ViewType(CCameraCom::VIEW_FPS);
-
-    if (inputMgr->Get_DIKeyState(DIK_9) & 0x80)
-        m_CameraCom->Set_ViewType(CCameraCom::VIEW_TPS);
-
-    if (inputMgr->Get_DIKeyState(DIK_0) & 0x80)
-        m_CameraCom->Set_ViewType(CCameraCom::VIEW_QUARTER);
-
-#pragma endregion
 
     // 앞뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
@@ -162,31 +155,38 @@ void CMainCamera::Chase_CamTarget(const _float& timeDelta)
 
 void CMainCamera::Render_ImGui()
 {
+    if (m_CameraCom == nullptr)
+        return;
+
     if (ImGui::Begin("MainCam Inspector"))
     {
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+        ImGui::Text(u8"카메라 Free 모드 조작 :");
+        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하");
 
-            ImGui::Text("Position");
+        // ------------------------
+        // CAM_MODE 편집
+        // ------------------------
+        const char* camModeItems[] = { "Free", "Target" };
+        int         camMode        = static_cast<int>(m_CameraCom->Get_CamMode());
+        if (ImGui::Combo("Camera Mode", &camMode, camModeItems, IM_ARRAYSIZE(camModeItems)))
+            m_CameraCom->Set_CamMode(static_cast<CCameraCom::CAM_MODE>(camMode));
 
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosX", (float*)&pos.x);
+        // ------------------------
+        // VIEW_TYPE 편집
+        // ------------------------
+        const char* viewTypeItems[] = { "FPS", "TPS", "Quarter" };
+        int         viewType        = static_cast<int>(m_CameraCom->Get_ViewType());
+        if (ImGui::Combo("View Type", &viewType, viewTypeItems, IM_ARRAYSIZE(viewTypeItems)))
+            m_CameraCom->Set_ViewType(static_cast<CCameraCom::VIEW_TYPE>(viewType));
 
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosY", (float*)&pos.y);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosZ", (float*)&pos.z);
-
-            m_TransformCom->Set_Pos(pos);
-        }
+        // ------------------------
+        // PROJ_TYPE 편집
+        // ------------------------
+        const char* projTypeItems[] = { "Perspective", "Orthographic" };
+        int         projType        = static_cast<int>(m_CameraCom->Get_ProjType());
+        if (ImGui::Combo("Projection Type", &projType, projTypeItems, IM_ARRAYSIZE(projTypeItems)))
+            m_CameraCom->Set_ProjType(static_cast<CCameraCom::PROJ_TYPE>(projType));
     }
-
     ImGui::End();
 }
 

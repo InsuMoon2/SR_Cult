@@ -94,6 +94,20 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             COMPONENTTYPE::TRANSFORM));
 
     // -----------------------------
+    // Camera
+    // -----------------------------
+
+    FAILED_CHECK_MSG(
+        Engine::AcquirePersistentObject<CMainCamera>(
+            OBJTYPE::CAMERA,
+            m_GraphicDev,
+            layer,
+            &gameObject),
+        L"Persistent object setup failed");
+
+    dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
+
+    // -----------------------------
     // Monster
     // -----------------------------
 
@@ -130,9 +144,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
-    FAILED_CHECK_MSG(
-        dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
-        L"CStage::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed");
+    dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
     m_Layers.insert({ layerType, layer });
 
@@ -155,30 +167,6 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 
 HRESULT CStage::Ready_Prototype()
 {
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::TRI_COLOR, Engine::CTriCol::Create(m_GraphicDev))))
-    //    return E_FAIL;
-    //
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
-    //    return E_FAIL;
-    //
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::RC_TEX, Engine::CRcTex::Create(m_GraphicDev))))
-    //    return E_FAIL;
-    //
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::TRANSFORM, Engine::CTransform::Create(m_GraphicDev))))
-    //    return E_FAIL;
-    //
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::ANIMATOR, CAnimator::Create(m_GraphicDev))))
-    //    return E_FAIL;
-    //
-    //if (FAILED(CProtoMgr::GetInstance()
-    //    ->Ready_Prototype(COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
-    //    return E_FAIL;
-
     return S_OK;
 }
 
