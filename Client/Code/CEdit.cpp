@@ -111,16 +111,16 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
         return E_FAIL;*/
 
     // testMonster
-    gameObject = CTestMonster::Create(m_GraphicDev);
-
-    NULL_CHECK_RETURN_MSG(
-        gameObject,
-        E_FAIL,
-        L"CEdit::Ready_GameLogic_Layer() failed: CMonster::Create() returned null")
-
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
-        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
+    //gameObject = CTestMonster::Create(m_GraphicDev);
+    //
+    //NULL_CHECK_RETURN_MSG(
+    //    gameObject,
+    //    E_FAIL,
+    //    L"CEdit::Ready_GameLogic_Layer() failed: CMonster::Create() returned null")
+    //
+    //FAILED_CHECK_MSG(
+    //    layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
+    //    L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
 
     // -----------------------------
     // Camera

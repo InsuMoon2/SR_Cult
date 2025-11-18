@@ -60,6 +60,7 @@ enum class OBJTYPE
     CAMERA,
     /* 오브젝트 타입 종류 추가 */
     BOSS2,
+    TILE,
 
     OBJ_END
 };

@@ -58,9 +58,9 @@ enum class OBJTYPE
     PLAYER,
     MONSTER,
     CAMERA,
-    TILE,
     /* 오브젝트 타입 종류 추가 */
     BOSS2,
+    TILE,
 
     OBJ_END
 };
