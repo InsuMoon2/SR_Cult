@@ -24,6 +24,9 @@ HRESULT CUIHeartBar::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
+
+    m_TransformCom->Set_Scale(64.f * 0.5f, 64.f * 0.5f, 1.f);
+    m_TransformCom->Set_Pos(50.f, 50.f, 0.5f);
     return S_OK;
 }
 
@@ -31,7 +34,7 @@ _int CUIHeartBar::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CUI::Update_GameObject(timeDelta);
 
-    Engine::CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
+    //Engine::CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
     return exit;
 }

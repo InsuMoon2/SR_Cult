@@ -59,7 +59,6 @@ enum class OBJTYPE
     MONSTER,
     CAMERA,
     /* 오브젝트 타입 종류 추가 */
-    UI,
     BOSS2,
 
     OBJ_END
@@ -79,8 +78,6 @@ enum class COMPONENTTYPE
     TEX_MAINBG,
     TEX_MONSTER,
     // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
-
-    TEX_UI_HEART,
 
     ANIMATOR,
     CAMERA,

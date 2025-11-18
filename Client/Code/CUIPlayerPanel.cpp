@@ -46,13 +46,14 @@ void CUIPlayerPanel::LateUpdate_GameObject(const _float& timeDelta)
 
 void CUIPlayerPanel::Render_GameObject()
 {
+    CUIPanel::Render_GameObject();
     if (ImGui::Begin("Player Panel UI"))
     {
 
-        const float Hp = m_player->m_Hp;
-        ImGui::Text("HP :");
-        ImGui::SameLine();
-        ImGui::InputFloat("##", (float*)&Hp);
+        //const float Hp = m_player->m_Hp;
+        //ImGui::Text("HP :");
+        //ImGui::SameLine();
+        //ImGui::InputFloat("##", (float*)&Hp);
 
 
         

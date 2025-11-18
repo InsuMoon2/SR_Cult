@@ -85,7 +85,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Player
     // -----------------------------
 
-    gameObject = CPlayer::Create(m_GraphicDev);
+   /* gameObject = CPlayer::Create(m_GraphicDev);
 
     m_player = dynamic_cast<CPlayer*>(gameObject);
 
@@ -99,7 +99,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(PLAYER) failed")
 
     auto playerTransform =
-        dynamic_cast<CTransform*>(gameObject->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
+        dynamic_cast<CTransform*>(gameObject->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));*/
 
     // -----------------------------
     // Monster
@@ -115,7 +115,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         return E_FAIL;*/
 
      //testMonster
-    gameObject = CTestMonster::Create(m_GraphicDev);
+  /*  gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
         gameObject,
@@ -124,27 +124,27 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
     FAILED_CHECK_MSG(
         layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")*/
 
     // -----------------------------
     // Camera
     // -----------------------------
 
-    gameObject = CMainCamera::Create(m_GraphicDev);
-
-    NULL_CHECK_RETURN_MSG(
-        gameObject,
-        E_FAIL,
-        L"CStage::Ready_GameLogic_Layer() failed: CMainCamera::Create() returned null")
-
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::CAMERA, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(CAMERA) failed")
-
-    FAILED_CHECK_MSG(
-        dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
-        L"CStage::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed")
-
+    //gameObject = CMainCamera::Create(m_GraphicDev);
+    //
+    //NULL_CHECK_RETURN_MSG(
+    //    gameObject,
+    //    E_FAIL,
+    //    L"CStage::Ready_GameLogic_Layer() failed: CMainCamera::Create() returned null")
+    //
+    //FAILED_CHECK_MSG(
+    //    layer->Add_GameObject(OBJTYPE::CAMERA, gameObject),
+    //    L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(CAMERA) failed")
+//
+//    FAILED_CHECK_MSG(
+//        dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
+//        L"CStage::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed")
+//
     m_Layers.insert({ layerType, layer });
 
     return S_OK;
