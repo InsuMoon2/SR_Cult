@@ -1,13 +1,18 @@
 ﻿#include "CManagement.h"
 
 #include "CComponent.h"
+#include "CGameObject.h"
 #include "CRenderer.h"
 #include "CScene.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement()
-    : m_Scene(nullptr), m_NextScene(nullptr), m_ShouldChangeScene(false)
+    : m_Scene(nullptr),
+      m_NextScene(nullptr),
+      m_ShouldChangeScene(false),
+      m_PlayerObject(nullptr),
+      m_CameraObject(nullptr)
 { }
 
 CManagement::~CManagement()
@@ -24,6 +29,35 @@ CComponent* CManagement::Get_Component(COMPONENTID   componentID,
         return nullptr;
 
     return m_Scene->Get_Component(componentID, layerType, objType, componentType);
+}
+
+HRESULT CManagement::Cache_PersistentObject(OBJTYPE objType, CGameObject* gameObject)
+{
+    NULL_CHECK_RETURN(gameObject, E_FAIL)
+
+    CGameObject** target = nullptr;
+
+    switch (objType)
+    {
+    case OBJTYPE::PLAYER:
+        target = &m_PlayerObject;
+        break;
+    case OBJTYPE::CAMERA:
+        target = &m_CameraObject;
+        break;
+    default:
+        return E_FAIL;
+    }
+
+    if (*target == gameObject)
+        return S_OK;
+
+    Safe_Release(*target);
+
+    *target = gameObject;
+    (*target)->AddRef();
+
+    return S_OK;
 }
 
 HRESULT CManagement::Set_Scene(CScene* scene)
@@ -85,4 +119,6 @@ void CManagement::Commit_ChangeScene()
 void CManagement::Free()
 {
     Safe_Release(m_Scene);
+    Safe_Release(m_PlayerObject);
+    Safe_Release(m_CameraObject);
 }

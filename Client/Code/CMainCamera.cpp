@@ -10,12 +10,10 @@ CMainCamera::CMainCamera(DEVICE graphicDev)
       m_CameraCom(nullptr),
       m_TransformCom(nullptr),
       m_TargetTransformCom(nullptr)
-//m_ViewMode(CCameraCom::VIEW_QUARTER)
 { }
 
 CMainCamera::CMainCamera(const CMainCamera& rhs)
     : CGameObject(rhs)
-//m_ViewMode(rhs.m_ViewMode)
 { }
 
 CMainCamera::~CMainCamera()
@@ -36,7 +34,17 @@ _int CMainCamera::Update_GameObject(const _float& timeDelta)
     // TODO : 매 프레임 작업
     // TODO : 모드 변경
 
-    Chase_CamTarget();
+    switch (m_CameraCom->Get_CamMode())
+    {
+    case CCameraCom::CAM_FREE:
+        Key_Input(timeDelta);
+        break;
+    case CCameraCom::CAM_TARGET:
+        Chase_CamTarget(timeDelta);
+        break;
+    default:
+        break;
+    }
 
     return exit;
 }
@@ -75,12 +83,16 @@ HRESULT CMainCamera::Add_Component()
     return S_OK;
 }
 
-void CMainCamera::Chase_CamTarget()
+void CMainCamera::Key_Input(const _float& timeDelta)
+{
+
+
+}
+
+void CMainCamera::Chase_CamTarget(const _float& timeDelta)
 {
     m_TransformCom->Set_Pos(m_TargetTransformCom->Get_Pos());
 }
-
-void CMainCamera::Key_Input(const _float& timeDelta) {}
 
 CMainCamera* CMainCamera::Create(DEVICE graphicDev)
 {
