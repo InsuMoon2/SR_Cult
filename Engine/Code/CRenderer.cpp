@@ -90,22 +90,41 @@ void CRenderer::Render_UI(DEVICE& graphicDev)
 
     D3DXMatrixIdentity(&uiView);
 
-    D3DXMatrixOrthoOffCenterLH(
+    /*D3DXMatrixOrthoOffCenterLH(
         &uiProj,
         0.f,
         static_cast<_float>(WINCX),
         static_cast<_float>(WINCY),
         0.f,
         0.f,
+        1.f);*/
+
+    D3DXMatrixOrthoLH(
+        &uiProj,
+        static_cast<_float>(WINCX),
+        static_cast<_float>(WINCY),
+        0.f,
         1.f);
 
     graphicDev->SetTransform(D3DTS_VIEW, &uiView);
     graphicDev->SetTransform(D3DTS_PROJECTION, &uiProj);
 
+    // 깊이 끄기
+    graphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+
+    // 알파 블렌딩
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    graphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    graphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
     for (auto& obj : m_RenderGroup[RENDER_UI])
     {
         obj->Render_GameObject();
     }
+
+    // 상태 복구
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    graphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 
     graphicDev->SetTransform(D3DTS_VIEW, &prevView);
     graphicDev->SetTransform(D3DTS_PROJECTION, &prevProj);

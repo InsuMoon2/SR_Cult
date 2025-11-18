@@ -153,20 +153,18 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 {
     auto layer = Engine::CLayer::Create();
+    NULL_CHECK_RETURN(layer, E_FAIL);
 
-    NULL_CHECK_RETURN(layer, E_FAIL)
-
-        CGameObject* gameObject = nullptr;
+    CGameObject* gameObject = nullptr;
 
     gameObject = CUIPlayerPanel::Create(m_GraphicDev);
-
-    NULL_CHECK_RETURN(gameObject, E_FAIL)
+    NULL_CHECK_RETURN(gameObject, E_FAIL);
 
     m_playerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
     m_playerPanel->Set_Player(m_player);
 
     if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
-            return E_FAIL;
+        return E_FAIL;
 
     m_Layers.insert({ layerType, layer });
 

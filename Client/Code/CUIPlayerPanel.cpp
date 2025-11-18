@@ -18,13 +18,13 @@ CUIPlayerPanel::~CUIPlayerPanel()
 
 HRESULT CUIPlayerPanel::Ready_GameObject()
 {
+    CUIPanel::Ready_GameObject();
 
     auto image = CUIHeartBar::Create(m_GraphicDev);
     NULL_CHECK_RETURN(image, E_FAIL)
-    //image->Add_Component();
-        
-    AddChild(image); 
 
+        
+    AddChild(image);
 
     return S_OK;
 }
@@ -46,19 +46,18 @@ void CUIPlayerPanel::LateUpdate_GameObject(const _float& timeDelta)
 
 void CUIPlayerPanel::Render_GameObject()
 {
-    if (ImGui::Begin("Player Panel UI"))
+    CUIPanel::Render_GameObject();
+
+    /*if (ImGui::Begin("Player Panel UI"))
     {
 
         const float Hp = m_player->m_Hp;
         ImGui::Text("HP :");
         ImGui::SameLine();
         ImGui::InputFloat("##", (float*)&Hp);
+    }*/
 
-
-        
-    }
-
-    ImGui::End();
+    //ImGui::End();
 }
 
 CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)
