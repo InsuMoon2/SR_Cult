@@ -17,7 +17,7 @@ public:
 	virtual void		Render_Buffer();
 
 public:
-	static CBoxCol* Create(DEVICE pGraphicDev);
+	static  CBoxCol*    Create(DEVICE pGraphicDev);
 	virtual CComponent* Clone();
 private:
 	virtual void Free();

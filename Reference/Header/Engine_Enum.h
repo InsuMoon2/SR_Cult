@@ -69,7 +69,9 @@ enum class COMPONENTTYPE
 {
     TRI_COLOR,
     RC_COLOR,
+    BOX_COLOR,
     RC_TEX,
+    BOX_TEX,
     TRANSFORM,
     STATE,
     COMBATSTAT,

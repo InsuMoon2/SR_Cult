@@ -121,6 +121,9 @@
     <Filter Include="02. Prototype\04. Collider\02. Box Collider">
       <UniqueIdentifier>{a6dbfb3e-ff25-4d63-9b4f-885093b69017}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Prototype\00. VIBuffer\04. BoxTex">
+      <UniqueIdentifier>{ba70ee2a-9a1b-4729-8fdd-9884817fdb6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -246,11 +249,14 @@
     <ClInclude Include="..\Header\CCombatStat.h">
       <Filter>02. Prototype\06. CombatStat</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CBoxCol.h">
-      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CBoxCollider.h">
       <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxTex.h">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxCol.h">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,11 +359,14 @@
     <ClCompile Include="..\Code\CCombatStat.cpp">
       <Filter>02. Prototype\06. CombatStat</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CBoxCol.cpp">
-      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CBoxCollider.cpp">
       <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxTex.cpp">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxCol.cpp">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

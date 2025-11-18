@@ -4,12 +4,12 @@
 
 BEGIN(Engine)
 class CRcTex;
-class CBoxCol;
 class CTransform;
 class CTexture;
 class CAnimator;
 class CProtoMgr;
 class CRectCollider;
+class CBoxCollider;
 class CState;
 class CCombatStat;
 END
@@ -40,12 +40,12 @@ private:
     void    Key_Input(const _float& timeDelta);
 
 private:
-    //Engine::CRcTex*        m_BufferCom;
-    Engine::CRcTex*        m_BufferCom;
+    Engine::CRcTex*      m_BufferCom;
     Engine::CTransform*    m_TransformCom;
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
-    Engine::CRectCollider* m_RectColCom;
+    //Engine::CRectCollider* m_RectColCom;
+    Engine::CBoxCollider* m_BoxColCom;
 
     Engine::CState*        m_StateCom;
     Engine::CCombatStat*   m_CombatStat;

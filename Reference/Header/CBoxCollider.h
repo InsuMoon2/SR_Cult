@@ -2,6 +2,7 @@
 #include "CCollider.h"
 
 BEGIN(Engine)
+class CBoxTex;
 class CBoxCol;
 
 class ENGINE_DLL CBoxCollider : public CCollider
@@ -20,8 +21,8 @@ public:
 public:
     bool CheckCollision(CCollider* other) override;
 
-    const _vec3& Get_Size() const { return m_Size; }
-    void         Set_Size(_vec3 size) { m_Size = size; }
+    _vec3&      Get_Size();
+    void        Set_Size(_vec3 size) { m_Size = size; }
 
     static CBoxCollider*  Create(DEVICE GraphicDev);
     CComponent*           Clone() override;
@@ -31,7 +32,7 @@ protected:
 
 private:
     CBoxCol* m_BufferCom;
-    _vec3   m_Size{};
+    _vec3    m_Size;
 };
 
 END

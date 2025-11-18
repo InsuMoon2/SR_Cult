@@ -1,29 +1,29 @@
-﻿#include "CBoxCol.h"
+﻿#include "CBoxTex.h"
 
-CBoxCol::CBoxCol()
+CBoxTex::CBoxTex()
 {
 }
 
-CBoxCol::CBoxCol(DEVICE pGraphicDev)
+CBoxTex::CBoxTex(DEVICE pGraphicDev)
 	: CVIBuffer(pGraphicDev)
 {
 }
 
-CBoxCol::CBoxCol(const CBoxCol& rhs)
+CBoxTex::CBoxTex(const CBoxTex& rhs)
 	: CVIBuffer(rhs)
 {
 }
 
-CBoxCol::~CBoxCol()
+CBoxTex::~CBoxTex()
 {
 }
 
-HRESULT CBoxCol::Ready_Buffer()
+HRESULT CBoxTex::Ready_Buffer()
 {
-	m_VtxSize = sizeof(VTXCOL);
+	m_VtxSize = sizeof(VTXCUBE);
 	m_VtxCnt = 8;
 	m_TriCnt = 12;
-	m_FVF = FVF_COL;
+	m_FVF = FVF_CUBE;
 
 	m_IdxSize = sizeof(INDEX32);
 	m_IdxFmt = D3DFMT_INDEX32;
@@ -31,29 +31,35 @@ HRESULT CBoxCol::Ready_Buffer()
 	if (FAILED(CVIBuffer::Ready_Buffer()))
 		return E_FAIL;
 
-	VTXCOL* pVertex = NULL;
+	VTXCUBE* pVertex = NULL;
 
 	m_VB->Lock(0, 0, (void**)&pVertex, 0);
 
-    D3DXCOLOR color = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    //D3DXCOLOR color = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
-
 	// 전면
 	pVertex[0].position = { -1.f, 1.f, -1.f };
+	pVertex[0].texUV = pVertex[0].position;
+
 	pVertex[1].position = { 1.f, 1.f, -1.f };
+	pVertex[1].texUV = pVertex[1].position;
+
 	pVertex[2].position = { 1.f, -1.f, -1.f };
+	pVertex[2].texUV = pVertex[2].position;
+
 	pVertex[3].position = { -1.f, -1.f, -1.f };
+	pVertex[3].texUV = pVertex[3].position;
 
 	// 후면
 	pVertex[4].position = { -1.f, 1.f, 1.f };
-	pVertex[5].position = { 1.f, 1.f, 1.f };
-	pVertex[6].position = { 1.f, -1.f, 1.f };
-	pVertex[7].position = { -1.f, -1.f, 1.f };
+	pVertex[4].texUV = pVertex[4].position;
 
-    for (_int i = 0; i < 8; i++)
-    {
-        pVertex[i].color = color;
-    }
+	pVertex[5].position = { 1.f, 1.f, 1.f };
+	pVertex[5].texUV = pVertex[5].position;
+
+	pVertex[6].position = { 1.f, -1.f, 1.f };
+	pVertex[6].texUV = pVertex[6].position;
+
+	pVertex[7].position = { -1.f, -1.f, 1.f };
+	pVertex[7].texUV = pVertex[7].position;
 
 	m_VB->Unlock();
 
@@ -135,15 +141,18 @@ HRESULT CBoxCol::Ready_Buffer()
 	return S_OK;
 }
 
-void CBoxCol::Render_Buffer()
+void CBoxTex::Render_Buffer()
 {
+    m_GraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
 	CVIBuffer::Render_Buffer();
 
+    m_GraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
 
-CBoxCol* CBoxCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBoxTex* CBoxTex::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CBoxCol* boxCol = new CBoxCol(pGraphicDev);
+	CBoxTex* boxCol = new CBoxTex(pGraphicDev);
 
 	if (FAILED(boxCol->Ready_Buffer()))
 	{
@@ -155,12 +164,12 @@ CBoxCol* CBoxCol::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return boxCol;
 }
 
-CComponent* CBoxCol::Clone()
+CComponent* CBoxTex::Clone()
 {
-	return new CBoxCol(*this);
+	return new CBoxTex(*this);
 }
 
-void CBoxCol::Free()
+void CBoxTex::Free()
 {
 	CVIBuffer::Free();
 }

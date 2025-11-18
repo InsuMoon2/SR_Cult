@@ -5,6 +5,7 @@
 #include "CCreateHelper.h"
 #include "CRcTex.h"
 #include "CRectCollider.h"
+#include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
@@ -18,7 +19,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
     m_TransformCom(nullptr),
     m_TextureCom(nullptr),
     m_AnimatorCom(nullptr),
-    m_RectColCom(nullptr),
+    m_BoxColCom(nullptr),
     m_StateCom(nullptr)
 { }
 
@@ -86,7 +87,7 @@ void CPlayer::Render_GameObject()
     TempImGuiRender();
     Render_Reset();
 
-    m_RectColCom->Render(); // Render Reset 이후 호출해야함
+    m_BoxColCom->Render(); // Render Reset 이후 호출해야함
 }
 
 void CPlayer::Render_Setting()
@@ -119,6 +120,8 @@ void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)
 void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
+
+    cout << "Player HitOut" << endl;
 }
 
 HRESULT CPlayer::Add_Component()
@@ -150,11 +153,11 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
     // RectCol Componet
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
-    NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
-    m_RectColCom->Set_Size(_vec2(2.f, 2.f));
+    m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
+    NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
+    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
     // Stat
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);

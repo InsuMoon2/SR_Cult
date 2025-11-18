@@ -1,5 +1,5 @@
 ﻿#include "CBoxCollider.h"
-
+#include "CBoxTex.h"
 #include "CBoxCol.h"
 #include "CSphereCollider.h"
 #include "CTransform.h"
@@ -54,15 +54,14 @@ void CBoxCollider::Render()
         return;
 
     CTransform* transform = Get_Transform();
+
     if (transform == nullptr)
         return;
 
-    // 월드 행렬 가져와서,
     _matrix matWorld = transform->Get_World();
 
-    // RectCollider Scale 반영
     _matrix matScale;
-    D3DXMatrixScaling(&matScale, m_Size.x * 0.5f, m_Size.y * 0.5f, 1.f);
+    D3DXMatrixScaling(&matScale, m_Size.x * 0.5f, m_Size.y * 0.5f, m_Size.z * 0.5f);
 
     matWorld = matScale * matWorld;
 
@@ -81,6 +80,9 @@ void CBoxCollider::Render()
 
 bool CBoxCollider::CheckCollision(CCollider* other)
 {
+    if (other == nullptr)
+        return false;
+
     switch (other->GetColliderType())
     {
     case COLLIDERTYPE::BOX:
@@ -92,6 +94,11 @@ bool CBoxCollider::CheckCollision(CCollider* other)
     }
 
     return false;
+}
+
+_vec3& CBoxCollider::Get_Size()
+{
+    return m_Size;
 }
 
 CBoxCollider* CBoxCollider::Create(DEVICE GraphicDev)
