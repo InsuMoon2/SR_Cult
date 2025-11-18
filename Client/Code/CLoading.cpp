@@ -10,6 +10,7 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
+#include "CCombatStat.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -122,6 +123,11 @@ _uint CLoading::Loading_ForState()
     // State
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // CombatStat
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";

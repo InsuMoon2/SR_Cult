@@ -10,6 +10,7 @@ class CAnimator;
 class CProtoMgr;
 class CRectCollider;
 class CState;
+class CCombatStat;
 END
 
 class CPlayer : public CGameObject
@@ -43,7 +44,9 @@ private:
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
     Engine::CRectCollider* m_RectColCom;
+
     Engine::CState*        m_StateCom;
+    Engine::CCombatStat*   m_CombatStat;
 
     map<PLAYERSTATE, wstring> m_StateAnim;
 

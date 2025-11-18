@@ -72,6 +72,7 @@ enum class COMPONENTTYPE
     RC_TEX,
     TRANSFORM,
     STATE,
+    COMBATSTAT,
 
     TEXTURE,
     TEX_PLAYER,

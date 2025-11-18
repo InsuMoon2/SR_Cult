@@ -9,6 +9,7 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CState.h"
+#include "CCombatStat.h"
 #include "CEnumHelper.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
@@ -35,8 +36,13 @@ HRESULT CPlayer::Ready_GameObject()
 
     Animation_Setting();
 
+    // 플레이어 상태 초기값
     m_StateCom->Change_State(PLAYERSTATE::IDLE);
     m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+
+    m_CombatStat->Set_Hp(100.f);
+    m_CombatStat->Set_Attack(10.f);
+    m_CombatStat->Set_Mp(5.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
@@ -150,10 +156,18 @@ HRESULT CPlayer::Add_Component()
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
 
+    // Stat
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
     NULL_CHECK_RETURN(m_StateCom, E_FAIL);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
+
+    // CombatStat
+    m_CombatStat = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
+    NULL_CHECK_RETURN(m_CombatStat, E_FAIL);
+
+    //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStat });
 
     return S_OK;
 }
@@ -258,6 +272,14 @@ void CPlayer::TempImGuiRender()
         {
             ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
             ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
+        }
+
+        // CombatStatComponent
+        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("Hp : %.2f", m_CombatStat->Get_Hp());
+            ImGui::Text("Mp : %.2f", m_CombatStat->Get_Mp());
+            ImGui::Text("Attack : %.2f", m_CombatStat->Get_Attack());
         }
     }
 

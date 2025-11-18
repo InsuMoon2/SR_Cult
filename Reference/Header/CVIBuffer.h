@@ -24,7 +24,7 @@ protected:
 
     LPDIRECT3DINDEXBUFFER9 m_IB;
 
-    _ulong    m_IdxSize;      // 한 개의 삼각형 인덱스가 차지하는 바이트 크기
+    _ulong    m_IdxSize;        // 한 개의 삼각형 인덱스가 차지하는 바이트 크기
     D3DFORMAT m_IdxFmt;         // 인덱스 데이터 포맷
 
 public:

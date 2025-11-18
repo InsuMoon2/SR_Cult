@@ -4,6 +4,7 @@
 BEGIN(Engine)
 class CRectCollider;
 class CSphereCollider;
+class CBoxCollider;
 
 class ENGINE_DLL CCollider : public CComponent
 {
@@ -32,6 +33,8 @@ public:
 
 public:
     static bool CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2);
+    static bool CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2);
+
     static bool CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2);
     static bool CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider* s2);
 

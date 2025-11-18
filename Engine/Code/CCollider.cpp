@@ -1,5 +1,6 @@
 ﻿#include "CCollider.h"
 
+#include "CBoxCollider.h"
 #include "CCollisionManager.h"
 #include "CRectCollider.h"
 #include "CSphereCollider.h"
@@ -105,6 +106,27 @@ bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
     if (maxY1 < minY2) return false;
 
     return true;
+}
+
+bool CCollider::CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2)
+{
+    NULL_CHECK_RETURN(b1, false);
+    NULL_CHECK_RETURN(b2, false);
+
+    CTransform* t1 = b1->Get_Transform();
+    CTransform* t2 = b2->Get_Transform();
+
+    NULL_CHECK_RETURN(t1, false);
+    NULL_CHECK_RETURN(t2, false);
+
+    // 중심 좌표 (Transform의 INFO_POS 기준, XY 평면에서만 충돌 체크)
+    _vec3 p1, p2;
+    t1->Get_Info(INFO_POS, &p1);
+    t2->Get_Info(INFO_POS, &p2);
+
+    _vec2 s1 = b1->Get_Size();
+    _vec2 s2 = b2->Get_Size();
+
 }
 
 // Circle(Sphere) vs AABB(Box)
