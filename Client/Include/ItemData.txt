@@ -1,0 +1,60 @@
+{
+  "items": [
+    {
+      "id": 1001,
+      "type": "material",
+      "name": "Iron Ore",
+      "desc": "Ore used for forging weapons.",
+      "rarity": "common",
+      "stackable": true,
+      "maxStack": 99,
+      "price": 5
+    },
+
+    {
+      "id": 1002,
+      "type": "material",
+      "name": "Wood",
+      "desc": "Basic crafting wood.",
+      "rarity": "common",
+      "stackable": true,
+      "maxStack": 99,
+      "price": 2
+    },
+
+    {
+      "id": 2001,
+      "type": "weapon",
+      "name": "크루세이더의 칼날",
+      "desc": "적당한 데미지를 입히는 균형 잡힌 칼날입니다.",
+       "UIFileName": "Icon_Weapon_Sword",
+      "UIPath": "../Bin/Resource/ItemUI/Icon_Weapon_Sword.png,
+      "additionalDesc": "uncommon",
+      "stackable": false,
+      "price": 150,
+
+      "stats": 
+	{
+        "attack1": 1
+	"attack2": 1
+	"attack3": 1
+      	}
+    }
+,
+    {
+      "id": 2002,
+      "type": "weapon",
+      "name": "경건한 망치",
+      "desc": "필멸자의 무기보다 훨씬 더 큰 피해를 입힙니다.",
+      "UIFileName": "Icon_Weapon_Hammer_Godly",
+      "UIPath": "../Bin/Resource/ItemUI/Icon_Weapon_Hammer_Godly.png,
+      "additionalDesc": "uncommon",
+      "stackable": false,
+      "price": 150,
+
+      "stats": {
+        "attack1": 5
+      }
+    }
+  ]
+}

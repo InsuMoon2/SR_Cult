@@ -7,8 +7,13 @@ struct Item
     std::string type;
     std::string name;
     std::string desc;
+    std::string UIFileName;
+    std::string UIPath;
 
-    std::string rarity;
+
+    std::string additionalDesc;
+
+    int quality;
     bool stackable;
     int maxStack;
     int price;

@@ -1,43 +1,18 @@
-﻿  CAnimator.cpp
-  CCameraCom.cpp
+﻿  CCameraCom.cpp
   CDInputMgr.cpp
   CFont.cpp
   CFontMgr.cpp
   CLight.cpp
   CLightMgr.cpp
-  CRectCollider.cpp
-  CCollisionManager.cpp
-  CCollider.cpp
-  CComponent.cpp
-  CFrame.cpp
-  CFrameMgr.cpp
-  CGameObject.cpp
-  CGraphicDev.cpp
-  CLayer.cpp
-  CManagement.cpp
-  CProtoMgr.cpp
-  CRcCol.cpp
-  CRcTex.cpp
   코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
-  CRenderer.cpp
-  CResourceManager.cpp
-  CScene.cpp
-  CSphereCollider.cpp
-  CSpriteAnimation.cpp
-  CTexture.cpp
-  CTimer.cpp
-  CTimerMgr.cpp
-  CTransform.cpp
-  CTriCol.cpp
-  CVIBuffer.cpp
-  코드를 생성하고 있습니다...
+  LINK : ..\Bin\Engine.dll을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
      ../Bin\Engine.lib 라이브러리 및 ../Bin\Engine.exp 개체를 생성하고 있습니다.
   Engine.vcxproj -> C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.dll
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.dll
   1개 파일이 복사되었습니다.
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Bin\Engine.lib
   1개 파일이 복사되었습니다.
+  C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\.h
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CAnimator.h
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCameraCom.h
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\CCollider.h
@@ -76,4 +51,4 @@
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Macro.h
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Struct.h
   C:\Users\LG\Documents\GitHub\SR_Cult\Engine\Header\Engine_Typedef.h
-  38개 파일이 복사되었습니다.
+  39개 파일이 복사되었습니다.
