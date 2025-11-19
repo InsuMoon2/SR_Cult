@@ -15,6 +15,7 @@
 #include "CCombatStat.h"
 #include "CEnumHelper.h"
 
+
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
     m_BufferCom(nullptr),

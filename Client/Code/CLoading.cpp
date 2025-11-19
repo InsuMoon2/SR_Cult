@@ -14,6 +14,9 @@
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
+#include "CItemDB.h"
+#include "ItemData.h"
+#include "ItemInstance.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -104,17 +107,14 @@ _uint CLoading::Loading_ForState()
     NULL_CHECK_RETURN(bossTex, E_FAIL);
    
     if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 40)))
         return E_FAIL;
    
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
 
-    // item Test
-    //if (FAILED(pProtoMgr->Ready_Prototype(
-    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
-    //    return E_FAIL;
+
     
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
@@ -134,6 +134,23 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
+
+
+    //아이템
+    vector<Item> item = CItemDB::GetInstance()->GetVector();
+    vector<wstring> pathVec;
+    for (int i = 0; i < item.size();i++)
+    {
+    wstring path = CItemDB::GetInstance()->Utf8ToWstring(item[i].UIPath);
+    pathVec.push_back(path);
+
+    }
+    
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
+        COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec))))
+        return E_FAIL;
+    
+    
 
 #pragma endregion
 

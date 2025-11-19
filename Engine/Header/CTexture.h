@@ -12,6 +12,7 @@ private:
 
 public:
     HRESULT Ready_Texture(TEXTUREID texType, const wstring& filePath, const _uint& count = 1);
+    HRESULT Ready_Texture_List(const vector<wstring>& fileList, TEXTUREID texType);
 
     HRESULT Add_Texture(const wstring& animKey,
                             TEXTUREID     texType,
@@ -31,6 +32,9 @@ public:
                             TEXTUREID         texType,
                             const wstring&    filePath,
                             const _uint&      count);
+
+    static CTexture* Create(LPDIRECT3DDEVICE9 graphicDev, TEXTUREID texType, const vector<wstring>& fileList);
+
     CComponent* Clone() override;
 
 private:

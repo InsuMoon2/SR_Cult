@@ -7,13 +7,15 @@ class CStage : public CScene
 { 
 private:
     explicit CStage(DEVICE graphicDev);
-    ~CStage() override;
+    virtual ~CStage() override;
 
 public:
     HRESULT Ready_Scene() override;
     _int    Update_Scene(const _float& timeDelta) override;
     void    LateUpdate_Scene(const _float& timeDelta) override;
     void    Render_Scene() override;
+
+    void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
 
 private:
     HRESULT Ready_Environment_Layer(LAYERTYPE layerType);

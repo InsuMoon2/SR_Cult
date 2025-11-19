@@ -32,6 +32,8 @@ public:
     bool AddItem(ItemInstance itemInst);
     int FindEmptySlot(ItemType itemtype);
     bool RemoveItem(int itemID, int count);
+
+    const vector<InventorySlot>& GetVector() const { return m_vecInven; }
 public:
     static CInventory* Create(DEVICE graphicDev);
     virtual CComponent* Clone();

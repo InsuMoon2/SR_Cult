@@ -26,7 +26,7 @@ public:
     void    LateUpdate_Layer(const _float& timeDelta);
 
 private:
-    map<OBJTYPE, CGameObject*> m_Objects;
+    multimap<OBJTYPE, CGameObject*> m_Objects;
 
 public:
     static CLayer* Create();

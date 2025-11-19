@@ -6,6 +6,9 @@
 #include "CRectCollider.h"
 #include "CCreateHelper.h"
 #include "CRenderer.h"
+#include "CProtoMgr.h"
+#include "CItemDB.h"
+#include "ItemData.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
     : CGameObject(graphicDev), m_itemInst(itemInst),
@@ -30,6 +33,8 @@ HRESULT CDroppedItem::Ready_GameObject()
 
 HRESULT CDroppedItem::Ready_GameObject(_vec3 pos)
 {
+    m_index = CItemDB::GetInstance()->GetIndexById(m_itemInst.itemId);
+
     if (FAILED(Add_Component()))
         return E_FAIL;
 
@@ -55,9 +60,8 @@ void CDroppedItem::LateUpdate_GameObject(const _float& timeDelta)
 void CDroppedItem::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
-
-
-   // m_TextureCom->Set_Texture(0);
+    
+    m_TextureCom->Set_Texture(m_index);
 
     m_BufferCom->Render_Buffer();
 
@@ -66,7 +70,7 @@ void CDroppedItem::Render_GameObject()
 void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
-
+    // 여기에서 드롭 시스템 호출
     cout << "item Hit" << endl;
 }
 
@@ -105,6 +109,11 @@ HRESULT CDroppedItem::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
 
     return S_OK;
+}
+
+void CDroppedItem::PopDrop(float range, float height)
+{
+    // 추후 구현예정
 }
 
 CDroppedItem* CDroppedItem::Create(DEVICE graphicDev, ItemInstance itemInst, _vec3 pos)

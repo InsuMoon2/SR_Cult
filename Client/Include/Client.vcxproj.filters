@@ -141,6 +141,18 @@
     <ClInclude Include="..\Header\CInventory.h">
       <Filter>04.Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\ItemData.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ItemInstance.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDroppedItem.h">
+      <Filter>02. GameObject\03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CDropSystem.h">
+      <Filter>03. Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -193,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CInventory.cpp">
       <Filter>04.Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDroppedItem.cpp">
+      <Filter>02. GameObject\03. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CDropSystem.cpp">
+      <Filter>03. Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

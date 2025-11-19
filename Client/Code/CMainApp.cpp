@@ -14,6 +14,7 @@
 #include "CRenderer.h"
 #include "CTimerMgr.h"
 #include "CItemDB.h"
+#include "CDropSystem.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),
@@ -168,6 +169,7 @@ void CMainApp::Free()
 #pragma region 데이터 파싱 테스트
 
     CItemDB::DestroyInstance();
+    CDropSystem::DestroyInstance();
 
 #pragma endregion
 }

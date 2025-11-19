@@ -167,7 +167,7 @@ HRESULT CTestMonster::Add_Component()
 void CTestMonster::Animation_Setting()
 {
     // 애니메이션 생성
-    m_AnimatorCom->Create_Animation(L"BossIdle", 400, 0.02f);
+    m_AnimatorCom->Create_Animation(L"BossIdle", 40, 0.02f);
 
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);

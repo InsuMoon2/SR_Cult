@@ -29,17 +29,20 @@ public:
 private:
     HRESULT Add_Component();
 
+    void PopDrop(float range, float height); // 바닥완성 후 추가 작업 예정
 private:
     Engine::CRcTex* m_BufferCom;
     Engine::CTransform* m_TransformCom;
     Engine::CTexture* m_TextureCom;
     Engine::CRectCollider* m_RectColCom;
+    // 지형 타는 컴포넌트 추가예정
     
 public:
     static CDroppedItem* Create(DEVICE graphicDev, ItemInstance itemInst, _vec3 pos);
 
 private:
     ItemInstance m_itemInst;
+    int m_index=0;
 private:
     void Free() override;
 };

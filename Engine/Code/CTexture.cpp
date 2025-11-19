@@ -61,6 +61,44 @@ HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, cons
 
     return S_OK;
 }
+// 안은수 : 새로운 Ready_Texture_List 백터를 받아오는
+HRESULT CTexture::Ready_Texture_List(const vector<wstring>& fileList, TEXTUREID texType)
+{
+    m_Textures.reserve(fileList.size());
+
+    for (const auto& file : fileList)
+    {
+        IDirect3DBaseTexture9* texture = nullptr;
+
+        HRESULT hr = D3DXCreateTextureFromFile(
+            m_GraphicDev, file.c_str(), (LPDIRECT3DTEXTURE9*)&texture);
+
+        if (FAILED(hr))
+        {
+            OutputDebugStringW((L"[Texture Load Failed] " + file + L"\n").c_str());
+            return E_FAIL;
+        }
+
+        OutputDebugStringW((L"[Texture Loaded] " + file + L"\n").c_str());
+
+        if (texType == TEX_NORMAL)
+        {
+            if (FAILED(D3DXCreateTextureFromFile(
+                m_GraphicDev, file.c_str(), (LPDIRECT3DTEXTURE9*)&texture)))
+                return E_FAIL;
+        }
+        else if (texType == TEX_CUBE)
+        {
+            if (FAILED(D3DXCreateCubeTextureFromFile(
+                m_GraphicDev, file.c_str(), (LPDIRECT3DCUBETEXTURE9*)&texture)))
+                return E_FAIL;
+        }
+
+        m_Textures.push_back(texture);
+    }
+
+    return S_OK;
+}
 
 void CTexture::Set_Texture(const _uint& index)
 {
@@ -123,10 +161,8 @@ void CTexture::Set_Texture(const wstring& animKey, _uint frameIndex)
     m_GraphicDev->SetTexture(0, frames[frameIndex]);
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
-                           TEXTUREID         texType,
-                           const wstring&    filePath,
-                           const _uint&      count)
+
+CTexture* CTexture::Create(DEVICE graphicDev, TEXTUREID texType, const wstring& filePath, const _uint& count)
 {
     auto texture = new CTexture(graphicDev);
 
@@ -134,6 +170,23 @@ CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
     {
         Safe_Release(texture);
         MSG_BOX("Texture Create Failed");
+        return nullptr;
+    }
+
+    return texture;
+}
+
+// 안은수 : 새로운 오버로드 create
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
+    TEXTUREID texType,
+    const vector<wstring>& fileList)
+{
+    auto texture = new CTexture(graphicDev);
+
+    if (FAILED(texture->Ready_Texture_List(fileList, texType)))
+    {
+        Safe_Release(texture);
+        MSG_BOX("Texture Create Failed (List)");
         return nullptr;
     }
 
