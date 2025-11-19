@@ -146,6 +146,7 @@ void CMainCamera::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
     }
+
 }
 
 void CMainCamera::Chase_CamTarget(const _float& timeDelta)

@@ -45,7 +45,6 @@ private:
     Engine::CTransform*    m_TransformCom;
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
-    //Engine::CRectCollider* m_BoxColCom;
     Engine::CBoxCollider* m_BoxColCom;
 
     Engine::CState*        m_StateCom;

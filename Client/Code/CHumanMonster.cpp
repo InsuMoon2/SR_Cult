@@ -36,15 +36,14 @@ HRESULT CHumanMonster::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
     Animation_Setting();
-    //m_AnimatorCom->Play_Animation(L"HumanMonsterIdle", ANIMSTATE::LOOP);
 
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
     m_TransformCom->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
+
     return S_OK;
 }
 

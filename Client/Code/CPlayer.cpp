@@ -37,7 +37,6 @@ HRESULT CPlayer::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-
     // 플레이어 상태 초기값
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
@@ -45,11 +44,9 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStat->Set_Hp(100.f);
     m_CombatStat->Set_Attack(10.f);
     m_CombatStat->Set_Mp(5.f);
-    //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
-    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     Animation_Setting();
 
@@ -99,12 +96,21 @@ void CPlayer::Render_Setting()
     // 후면 출력
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+    m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
 
 }
 
 void CPlayer::Render_Reset()
 {
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "CLoading.h"
 
+
 #include "CAnimator.h"
 #include "CCameraCom.h"
 #include "CProtoMgr.h"
@@ -10,7 +11,7 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CRcTex.h"
+#include "CBoxTex.h"
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
@@ -67,6 +68,11 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::BOX_COLOR, Engine::CBoxCol::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Buffer : Box Tex
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_TEX, Engine::CBoxTex::Create(m_GraphicDev))))
+        return E_FAIL;
+
     //// Buffer : Rect UV
     //// CLogo 에서 이미 프로토타입 생성중이므로 비활성화
     //if (FAILED(pProtoMgr->Ready_Prototype(
@@ -104,7 +110,7 @@ _uint CLoading::Loading_ForState()
     NULL_CHECK_RETURN(bossTex, E_FAIL);
    
     if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 40)))
         return E_FAIL;
    
     if (FAILED(pProtoMgr->Ready_Prototype(

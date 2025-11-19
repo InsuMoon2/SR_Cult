@@ -4,7 +4,7 @@
 #include "CAnimator.h"
 #include "CCreateHelper.h"
 #include "CRcTex.h"
-#include "CRectCollider.h"
+#include "CBoxTex.h"
 #include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CTexture.h"
@@ -50,7 +50,7 @@ HRESULT CTestMonster::Ready_GameObject()
 
     //m_BoxColCom->Set_Size(_vec3(5.f, 5.f, 2.f));
 
-    m_TextureCom->Get_Transform()->Set_Scale(_vec3(10.f, 10.f, 1.f));
+    m_TextureCom->Get_Transform()->Set_Scale(_vec3(3.f, 3.f, 1.f));
 
     return S_OK;
 }
@@ -167,7 +167,7 @@ HRESULT CTestMonster::Add_Component()
 void CTestMonster::Animation_Setting()
 {
     // 애니메이션 생성
-    m_AnimatorCom->Create_Animation(L"BossIdle", 400, 0.02f);
+    m_AnimatorCom->Create_Animation(L"BossIdle", 40, 0.02f);
 
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
