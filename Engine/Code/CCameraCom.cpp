@@ -107,7 +107,14 @@ void CCameraCom::LateUpdate_Component()
 void CCameraCom::Set_CamMode(CAM_MODE camMode)
 {
     if (m_CamMode != camMode && camMode < CAM_END)
+    {
+        if (camMode == CAM_FREE)
+            m_ViewType = VIEW_FPS;
+        else if (camMode == CAM_TARGET)
+            m_ViewType = VIEW_QUARTER;
+
         m_CamMode = camMode;
+    }
 }
 
 void CCameraCom::Set_ViewType(VIEW_TYPE viewType)

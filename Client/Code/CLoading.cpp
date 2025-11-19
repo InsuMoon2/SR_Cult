@@ -44,8 +44,6 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForState()
 {
-    // TODO 석호: E_FAIL마다 경고 출력도 해야 할듯. 어디서 안되는건지 헷갈림
-
     auto pProtoMgr = CProtoMgr::GetInstance();
 
     m_LoadingText = L"Buffer LOADING..........";
