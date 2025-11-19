@@ -47,9 +47,8 @@ private:
     Engine::CAnimator*  m_AnimatorCom;
     //Engine::CRectCollider* m_BoxColCom;
     Engine::CBoxCollider* m_BoxColCom;
-
-    Engine::CState*      m_StateCom;
-    Engine::CCombatStat* m_CombatStat;
+    Engine::CState*       m_StateCom;
+    Engine::CCombatStat*  m_CombatStatCom;
 
     map<ACTORSTATE, wstring> m_StateAnim;
 

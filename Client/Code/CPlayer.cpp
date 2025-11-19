@@ -2,16 +2,16 @@
 #include "CPlayer.h"
 
 #include "CAnimator.h"
+#include "CBoxCollider.h"
+#include "CCombatStat.h"
 #include "CCreateHelper.h"
 #include "CDInputMgr.h"
 #include "CEnumHelper.h"
 #include "CRcTex.h"
-#include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CCombatStat.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
@@ -20,7 +20,8 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_TextureCom(nullptr),
       m_AnimatorCom(nullptr),
       m_BoxColCom(nullptr),
-      m_StateCom(nullptr)
+      m_StateCom(nullptr),
+      m_CombatStatCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -39,9 +40,9 @@ HRESULT CPlayer::Ready_GameObject()
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
-    m_CombatStat->Set_Hp(100.f);
-    m_CombatStat->Set_Attack(10.f);
-    m_CombatStat->Set_Mp(5.f);
+    m_CombatStatCom->Set_Hp(100.f);
+    m_CombatStatCom->Set_Attack(10.f);
+    m_CombatStatCom->Set_Mp(5.f);
     //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
@@ -168,11 +169,11 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
 
     // CombatStat
-    m_CombatStat = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
-    NULL_CHECK_RETURN(m_CombatStat, E_FAIL);
+    m_CombatStatCom = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
+    NULL_CHECK_RETURN(m_CombatStatCom, E_FAIL);
 
     //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStat });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStatCom });
 
     return S_OK;
 }
@@ -285,11 +286,11 @@ void CPlayer::Render_ImGui()
         }
 
         // CombatStatComponent
-        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::Text("Hp : %.2f", m_CombatStat->Get_Hp());
-            ImGui::Text("Mp : %.2f", m_CombatStat->Get_Mp());
-            ImGui::Text("Attack : %.2f", m_CombatStat->Get_Attack());
+            ImGui::Text("Hp : %.2f", m_CombatStatCom->Get_Hp());
+            ImGui::Text("Mp : %.2f", m_CombatStatCom->Get_Mp());
+            ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
         }
     }
 
