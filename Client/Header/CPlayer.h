@@ -32,6 +32,7 @@ public:
 
     void OnBeginOverlap(CCollider* self, CCollider* other) override;
     void OnEndOverlap(CCollider* self, CCollider* other) override;
+    void TempImGuiRender();
 
 private:
     HRESULT Add_Component();

@@ -16,7 +16,7 @@
 #include "CBoxCollider.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
-    : m_GraphicDev(pGraphicDev),
+    : m_GraphicDev(pGraphicDev),S
       m_Thread(nullptr), m_Crt{}, m_LoadingID(LOADING_END), m_IsFinish(false)
 {
     m_GraphicDev->AddRef();
@@ -111,11 +111,6 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
 
-    // item Test
-    //if (FAILED(pProtoMgr->Ready_Prototype(
-    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
-    //    return E_FAIL;
-    
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
@@ -134,6 +129,9 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
+
+
+
 
 #pragma endregion
 
