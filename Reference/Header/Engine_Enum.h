@@ -72,6 +72,7 @@ enum class OBJTYPE
     UI,
     BOSS2,
     HUMANMONSTER,
+    TILE,
 
     OBJ_END
 };
@@ -95,6 +96,7 @@ enum class COMPONENTTYPE
     TEX_HUMANMONSTER,
     TEX_UI_HEART,    
     TEX_ITEM,
+    TEX_TILE,
     // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
 
     ANIMATOR,

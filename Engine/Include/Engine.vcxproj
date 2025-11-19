@@ -230,6 +230,7 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClInclude Include="..\Header\Engine_Macro.h" />
     <ClInclude Include="..\Header\Engine_Struct.h" />
     <ClInclude Include="..\Header\Engine_Typedef.h" />
+    <ClInclude Include="CTerrainTex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAnimator.cpp" />
@@ -272,6 +273,7 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
     <ClCompile Include="..\Code\CUIPanel.cpp" />
     <ClCompile Include="..\Code\CUIText.cpp" />
     <ClCompile Include="..\Code\CVIBuffer.cpp" />
+    <ClCompile Include="CTerrainTex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,7 +10,7 @@
 #include "CState.h"
 #include "CManagement.h"
 #include "CTestMonster.h"
-#include "CTiled.h"
+#include "CTerrain.h"
 
 CEdit::CEdit(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -141,19 +141,19 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
         dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
         L"CEdit::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed");
 
-    // -----------------------------
-    // Tile
-    // -----------------------------
-    gameObject = CTiled::Create(m_GraphicDev);
+    //// -----------------------------
+    //// Tile
+    //// -----------------------------
+    //gameObject = CTerrain::Create(m_GraphicDev);
 
-    NULL_CHECK_RETURN_MSG(
-        gameObject,
-        E_FAIL,
-        L"CEdit::Ready_GameLogic_Layer() failed: CTiled::Create() returned null");
+    //NULL_CHECK_RETURN_MSG(
+    //    gameObject,
+    //    E_FAIL,
+    //    L"CEdit::Ready_GameLogic_Layer() failed: CTerrain::Create() returned null");
 
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::TILE, gameObject),
-        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(Tile) failed");
+    //FAILED_CHECK_MSG(
+    //    layer->Add_GameObject(OBJTYPE::TILE, gameObject),
+    //    L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(Tile) failed");
 
     m_Layers.insert({ layerType, layer });
 

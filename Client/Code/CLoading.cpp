@@ -15,6 +15,7 @@
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
+#include "CTerrain.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -126,20 +127,23 @@ _uint CLoading::Loading_ForState()
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
 
-
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterIdle", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Idle/Idle%d.png", 34)))
         return E_FAIL;
-
 
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterRun", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Run/Run%d.png", 18)))
         return E_FAIL;
 
-
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
+
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_TILE, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/Terrain/Tile%d.png", 15))))
+        return E_FAIL;
+
 
 #pragma endregion
 

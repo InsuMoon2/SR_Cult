@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CEdit.h" />
     <ClInclude Include="..\Header\CHumanMonster.h" />
     <ClInclude Include="..\Header\CInventory.h" />
     <ClInclude Include="..\Header\CItemDB.h" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CStage.h" />
     <ClInclude Include="..\Header\CTestMonster.h" />
+    <ClInclude Include="..\Header\CTerrain.h" />
     <ClInclude Include="..\Header\CUIHeartBar.h" />
     <ClInclude Include="..\Header\CUIPlayerPanel.h" />
     <ClInclude Include="CHumanMonster.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CEdit.cpp" />
     <ClCompile Include="..\Code\CHumanMonster.cpp" />
     <ClCompile Include="..\Code\CInventory.cpp" />
     <ClCompile Include="..\Code\CItemDB.cpp" />
@@ -205,6 +208,7 @@
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CStage.cpp" />
     <ClCompile Include="..\Code\CTestMonster.cpp" />
+    <ClCompile Include="..\Code\CTerrain.cpp" />
     <ClCompile Include="..\Code\CUIHeartBar.cpp" />
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp" />
     <ClCompile Include="CHumanMonster.cpp" />

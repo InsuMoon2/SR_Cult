@@ -18,7 +18,22 @@ CTexture::CTexture(const CTexture& rhs)
         m_Textures[i]->AddRef();
     }
 
-    m_AnimTextures = rhs.m_AnimTextures;
+    // 깊은 복사
+    for (const auto& keyValue : rhs.m_AnimTextures)
+    {
+        const wstring& key = keyValue.first;
+        const vector<IDirect3DBaseTexture9*>& textures = keyValue.second;
+
+        vector<IDirect3DBaseTexture9*>& dstFrames = m_AnimTextures[key];
+        dstFrames.reserve(textures.size());
+
+        for (auto* tex : textures)
+        {
+            dstFrames.push_back(tex);
+            if (tex)
+                tex->AddRef();
+        }
+    }
 }
 
 CTexture::~CTexture()
@@ -149,4 +164,14 @@ void CTexture::Free()
 {
     for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());
     m_Textures.clear();
+
+    for_each(m_AnimTextures.begin(), m_AnimTextures.end(),
+        [](auto& keyValue)
+        {
+            for (auto*& tex : keyValue.second)
+            {
+                Safe_Release(tex);
+            }
+        });
+    m_AnimTextures.clear();
 }

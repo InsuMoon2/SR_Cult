@@ -147,7 +147,7 @@
     <ClInclude Include="..\Header\CEdit.h">
       <Filter>01. Scene\02. Editor</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTiled.h">
+    <ClInclude Include="..\Header\CTerrain.h">
       <Filter>01. Scene\02. Editor</Filter>
     </ClInclude>
   </ItemGroup>
@@ -206,7 +206,7 @@
     <ClCompile Include="..\Code\CEdit.cpp">
       <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTiled.cpp">
+    <ClCompile Include="..\Code\CTerrain.cpp">
       <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
   </ItemGroup>
