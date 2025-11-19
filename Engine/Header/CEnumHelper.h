@@ -4,31 +4,31 @@
 
 BEGIN(Engine)
 
-static const char* ToString(PLAYERSTATE state)
+static const char* ToString(ACTORSTATE state)
 {
     switch (state)
     {
-    case PLAYERSTATE::IDLE:    return "Idle";
-    case PLAYERSTATE::RUN:     return "Run";
-    case PLAYERSTATE::ATTACK:  return "Attack";
-    case PLAYERSTATE::HIT:     return "Hit";
-    case PLAYERSTATE::DEAD:    return "Dead";
+    case ACTORSTATE::IDLE:    return "Idle";
+    case ACTORSTATE::RUN:     return "Run";
+    case ACTORSTATE::ATTACK:  return "Attack";
+    case ACTORSTATE::HIT:     return "Hit";
+    case ACTORSTATE::DEAD:    return "Dead";
 
-    case PLAYERSTATE::PLAYERSTATE_END:
+    case ACTORSTATE::PLAYERSTATE_END:
     default:                   return "Unknown";
     }
 }
 
-static const char* ToString(PLAYERDIR dir)
+static const char* ToString(ACTORDIR dir)
 {
     switch (dir)
     {
-    case PLAYERDIR::UP:        return "Up";
-    case PLAYERDIR::DOWN:      return "Down";
-    case PLAYERDIR::LEFT:      return "Left";
-    case PLAYERDIR::RIGHT:     return "Right";
+    case ACTORDIR::UP:        return "Up";
+    case ACTORDIR::DOWN:      return "Down";
+    case ACTORDIR::LEFT:      return "Left";
+    case ACTORDIR::RIGHT:     return "Right";
 
-    case PLAYERDIR::PLAYERDIR_END:
+    case ACTORDIR::PLAYERDIR_END:
     default:                   return "Unknown";
     }
 }

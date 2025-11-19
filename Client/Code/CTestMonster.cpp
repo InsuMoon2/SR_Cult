@@ -170,7 +170,7 @@ void CTestMonster::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"BossIdle", 400, 0.02f);
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
 }
 
 void CTestMonster::TempImGuiRender()

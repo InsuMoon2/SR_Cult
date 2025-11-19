@@ -108,7 +108,7 @@ enum class COMPONENTTYPE
     COMPONENT_END
 };
 
-enum class PLAYERSTATE
+enum class ACTORSTATE
 {
     IDLE,
     RUN,
@@ -119,7 +119,7 @@ enum class PLAYERSTATE
     PLAYERSTATE_END
 };
 
-enum class PLAYERDIR
+enum class ACTORDIR
 {
     UP,
     DOWN,
