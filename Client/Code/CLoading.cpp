@@ -11,6 +11,9 @@
 #include "CTransform.h"
 #include "CTriCol.h"
 #include "CRcTex.h"
+#include "CCombatStat.h"
+#include "CBoxCol.h"
+#include "CBoxCollider.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -57,6 +60,11 @@ _uint CLoading::Loading_ForState()
     // Buffer : Rect Color
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Buffer : Box Color
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_COLOR, Engine::CBoxCol::Create(m_GraphicDev))))
         return E_FAIL;
 
     //// Buffer : Rect UV
@@ -149,9 +157,19 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Box Collider
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_COLL, CBoxCollider::Create(m_GraphicDev))))
+        return E_FAIL;
+
     // State
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // CombatStat
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";

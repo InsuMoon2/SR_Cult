@@ -35,7 +35,6 @@ HRESULT CPlayer::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-    Animation_Setting();
 
     // 플레이어 상태 초기값
     m_StateCom->Change_State(PLAYERSTATE::IDLE);
@@ -49,6 +48,8 @@ HRESULT CPlayer::Ready_GameObject()
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
     m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
+
+    Animation_Setting();
 
     return S_OK;
 }
