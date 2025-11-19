@@ -13,7 +13,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CTimerMgr.h"
-#include "CLogo.h"
+#include "CItemDB.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),
@@ -32,6 +32,14 @@ HRESULT CMainApp::Ready_MainApp()
         return E_FAIL;
 
     CImGuiManager::GetInstance()->InitImGui(g_hWnd, m_GraphicDev);
+
+
+#pragma region 데이터 파싱 테스트
+
+    if (FAILED(CItemDB::GetInstance()->LoadFromJson("ItemData.txt")))
+        return E_FAIL;
+
+#pragma endregion
 
     return S_OK;
 }
@@ -156,4 +164,10 @@ void CMainApp::Free()
     CImGuiManager::DestroyInstance();
     CManagement::DestroyInstance();
     CGraphicDev::DestroyInstance();
+
+#pragma region 데이터 파싱 테스트
+
+    CItemDB::DestroyInstance();
+
+#pragma endregion
 }

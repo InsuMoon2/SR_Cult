@@ -7,7 +7,7 @@ class CTexture;
 class CState;
 class CTransform;
 class CRcTex;
-class CRectCollider;
+class CBoxCollider;
 END
 
 
@@ -42,7 +42,7 @@ public:
 private:
     CRcTex* m_BufferCom;
     CTransform* m_TransformCom;
-    CRectCollider* m_RectColCom;
+    CBoxCollider* m_BoxColCom;
     CState* m_StateCom;
     CTexture* m_TextureCom;
     CAnimator* m_AnimatorCom;
@@ -51,7 +51,7 @@ public:
     static CHumanMonster* Create(DEVICE graphicDev);
 
 private:
-    PLAYERSTATE m_State;
+    ACTORSTATE m_State;
 
 protected:
     void Free() override;
