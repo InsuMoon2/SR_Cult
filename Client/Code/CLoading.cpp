@@ -10,7 +10,6 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CRcTex.h"
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
@@ -91,7 +90,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_PLAYER, playerTex)))
         return E_FAIL;
-    
+
     //Texture : Player Heart
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
@@ -99,32 +98,34 @@ _uint CLoading::Loading_ForState()
                 L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
         return E_FAIL;
 
-   // // Boss2 Test
+    // // Boss2 Test
     CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(bossTex, E_FAIL);
-   
+
     if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
         L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
         return E_FAIL;
-   
+
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
+
+    // item Test
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
+    //    return E_FAIL;
 
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
 
-
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterIdle", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Idle/Idle%d.png", 34)))
         return E_FAIL;
 
-
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterRun", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Run/Run%d.png", 18)))
         return E_FAIL;
-
 
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))

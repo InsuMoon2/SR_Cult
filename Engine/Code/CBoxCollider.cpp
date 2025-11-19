@@ -60,7 +60,7 @@ void CBoxCollider::Render()
 
     _vec3 pos = transform->Get_Pos();
 
-    _vec3 worldSize = Get_Size();  
+    _vec3 worldSize = Get_Size();
 
     _matrix matScale, matTrans, matWorld;
 
@@ -99,7 +99,6 @@ bool CBoxCollider::CheckCollision(CCollider* other)
 
     case COLLIDERTYPE::SPHERE:
         return CheckCollisionSphere2Box(static_cast<CSphereCollider*>(other), this);
-
     }
 
     return false;
@@ -109,7 +108,7 @@ const _vec3 CBoxCollider::Get_Size() const
 {
     const CTransform* transform = Get_Transform();
 
-    _vec3 size = m_Size;  
+    _vec3 size = m_Size;
 
     if (transform)
     {
@@ -120,7 +119,7 @@ const _vec3 CBoxCollider::Get_Size() const
         size.z *= scale.z;
     }
 
-    return size; 
+    return size;
 }
 
 CBoxCollider* CBoxCollider::Create(DEVICE GraphicDev)

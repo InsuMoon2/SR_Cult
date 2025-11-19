@@ -13,14 +13,14 @@ public:
     HRESULT Ready_Light(const D3DLIGHT9* lightInfo, const _uint& index);
 
 private:
-    DEVICE m_GraphicDev;
-    D3DLIGHT9         m_Light;
-    _uint             m_Index;
+    DEVICE    m_GraphicDev;
+    D3DLIGHT9 m_Light;
+    _uint     m_Index;
 
 public:
-    static CLight* Create(DEVICE graphicDev,
-                          const D3DLIGHT9*  lightInfo,
-                          const _uint&      index);
+    static CLight* Create(DEVICE           graphicDev,
+                          const D3DLIGHT9* lightInfo,
+                          const _uint&     index);
 private:
     void Free() override;
 };

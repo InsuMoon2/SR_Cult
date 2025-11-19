@@ -50,11 +50,11 @@ void CFont::Render_Font(const wstring& text, const _vec2* pos, D3DXCOLOR color)
     m_Sprite->End();
 }
 
-CFont* CFont::Create(DEVICE graphicDev,
-                     const wstring&    fontType,
-                     const _uint&      width,
-                     const _uint&      height,
-                     const _uint&      weight)
+CFont* CFont::Create(DEVICE         graphicDev,
+                     const wstring& fontType,
+                     const _uint&   width,
+                     const _uint&   height,
+                     const _uint&   weight)
 {
     auto font = new CFont(graphicDev);
 

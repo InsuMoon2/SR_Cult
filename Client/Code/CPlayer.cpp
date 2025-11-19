@@ -4,23 +4,21 @@
 #include "CAnimator.h"
 #include "CCreateHelper.h"
 #include "CRcTex.h"
-#include "CRectCollider.h"
 #include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CState.h"
 #include "CCombatStat.h"
-#include "CEnumHelper.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr)
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -34,7 +32,6 @@ HRESULT CPlayer::Ready_GameObject()
 {
     if (FAILED(Add_Component()))
         return E_FAIL;
-
 
     // 플레이어 상태 초기값
     m_StateCom->Change_State(PLAYERSTATE::IDLE);
@@ -111,6 +108,9 @@ void CPlayer::Render_Reset()
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)
@@ -222,7 +222,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
-         m_TransformCom->Move_Pos(dir, timeDelta, speed);
+        m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
         
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
@@ -245,8 +245,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(PLAYERSTATE::IDLE);
     }
-
-
 }
 
 void CPlayer::TempImGuiRender()

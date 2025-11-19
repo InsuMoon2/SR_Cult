@@ -21,6 +21,7 @@ void CCollisionManager::Ready_Collision()
 void CCollisionManager::Update()
 {
     auto& colliders = m_Colliders;
+
     const _uint count = static_cast<_uint>(m_Colliders.size());
 
     for (_uint i = 0; i < count; i++)

@@ -42,20 +42,20 @@ private:
     void Render_ImGui();
 
 private:
-    Engine::CRcTex*        m_BufferCom;
-    Engine::CTransform*    m_TransformCom;
-    Engine::CTexture*      m_TextureCom;
-    Engine::CAnimator*     m_AnimatorCom;
+    Engine::CRcTex*     m_BufferCom;
+    Engine::CTransform* m_TransformCom;
+    Engine::CTexture*   m_TextureCom;
+    Engine::CAnimator*  m_AnimatorCom;
     //Engine::CRectCollider* m_BoxColCom;
     Engine::CBoxCollider* m_BoxColCom;
 
-    Engine::CState*        m_StateCom;
-    Engine::CCombatStat*   m_CombatStat;
+    Engine::CState*      m_StateCom;
+    Engine::CCombatStat* m_CombatStat;
 
     map<ACTORSTATE, wstring> m_StateAnim;
 
 public:
-    float m_Hp=100.f;
+    float m_Hp = 100.f;
 
 public:
     static CPlayer* Create(DEVICE graphicDev);

@@ -1,20 +1,21 @@
 ﻿#include "pch.h"
 #include "CUIPlayerPanel.h"
-#include "CUIHeartBar.h"
+
+#include "CPlayer.h"
 #include "CRenderer.h"
+#include "CUIHeartBar.h"
 #include "CUIPanel.h"
 
-CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev):CUIPanel(graphicDev)
-{
-}
+CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
+    : CUIPanel(graphicDev)
+{}
 
-CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs):CUIPanel(rhs)
-{
-}
+CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
+    : CUIPanel(rhs)
+{}
 
 CUIPlayerPanel::~CUIPlayerPanel()
-{
-}
+{}
 
 HRESULT CUIPlayerPanel::Ready_GameObject()
 {
@@ -23,7 +24,6 @@ HRESULT CUIPlayerPanel::Ready_GameObject()
     auto image = CUIHeartBar::Create(m_GraphicDev);
     NULL_CHECK_RETURN(image, E_FAIL)
 
-        
     AddChild(image);
 
     return S_OK;
@@ -37,11 +37,10 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
     return exit;
 }
- 
+
 void CUIPlayerPanel::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUIPanel::LateUpdate_GameObject(timeDelta);
-
 }
 
 void CUIPlayerPanel::Render_GameObject()
@@ -78,4 +77,3 @@ void CUIPlayerPanel::Free()
 {
     Engine::CUIPanel::Free();
 }
-

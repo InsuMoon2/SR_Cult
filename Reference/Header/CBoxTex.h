@@ -3,7 +3,6 @@
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
 /**
  * \brief Render에서 WireFrame으로 설정 중. Box 텍스쳐를 쓰지 않을거같음
  * CubeTex와 동일한 구조
@@ -12,21 +11,20 @@ BEGIN(Engine)
 class ENGINE_DLL CBoxTex : public CVIBuffer
 {
 private:
-	explicit CBoxTex();
-	explicit CBoxTex(DEVICE pGraphicDev);
-	explicit CBoxTex(const CBoxTex& rhs);
-	virtual ~CBoxTex();
+    explicit CBoxTex();
+    explicit CBoxTex(DEVICE pGraphicDev);
+    explicit CBoxTex(const CBoxTex& rhs);
+    ~CBoxTex() override;
 
 public:
-	virtual HRESULT		Ready_Buffer();
-	virtual void		Render_Buffer();
+    HRESULT Ready_Buffer() override;
+    void    Render_Buffer() override;
 
 public:
-	static CBoxTex* Create(DEVICE pGraphicDev);
-	virtual CComponent* Clone();
+    static CBoxTex* Create(DEVICE pGraphicDev);
+    CComponent*     Clone() override;
 private:
-	virtual void Free();
-
+    void Free() override;
 };
 
 END

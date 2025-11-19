@@ -17,7 +17,7 @@ CComponent* CScene::Get_Component(COMPONENTID   componentID,
                                   COMPONENTTYPE componentType)
 {
     auto iter = m_Layers.find(layerType);
-    
+
     if (iter == m_Layers.end())
         return nullptr;
 

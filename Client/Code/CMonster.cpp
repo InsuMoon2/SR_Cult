@@ -17,11 +17,10 @@ CMonster::CMonster(DEVICE graphicDev)
 
 CMonster::CMonster(const CMonster& rhs)
     : CGameObject(rhs),
-    m_BufferCol(nullptr),
-    m_TransformCom(nullptr),
-    m_RectColCom(nullptr)
-{
-}
+      m_BufferCol(nullptr),
+      m_TransformCom(nullptr),
+      m_RectColCom(nullptr)
+{}
 
 CMonster::~CMonster()
 { }
@@ -72,11 +71,11 @@ void CMonster::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-   
+
     m_BufferCol->Render_Buffer();
-   
+
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-   
+
     m_RectColCom->Render();
 }
 
