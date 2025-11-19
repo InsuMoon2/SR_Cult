@@ -93,6 +93,7 @@ void CPlayer::Render_GameObject()
 
 void CPlayer::Render_Setting()
 {
+    // 후면 출력
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
     m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -108,6 +109,7 @@ void CPlayer::Render_Reset()
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)

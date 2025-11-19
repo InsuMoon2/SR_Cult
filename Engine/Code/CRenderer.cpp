@@ -70,8 +70,6 @@ void CRenderer::Render_Alpha(DEVICE& graphicDev)
 
 void CRenderer::Render_UI(DEVICE& graphicDev)
 {
-    // TODO 석호: 일단 단순 구현해서, 나중에 가능하면 카메라 컴포넌트가 적은 부하로 관리 가능하게 만들자
-
     // 직교 투영
     if (m_RenderGroup[RENDER_UI].empty())
         return;
