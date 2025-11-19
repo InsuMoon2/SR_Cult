@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CHumanMonster.h" />
     <ClInclude Include="..\header\CLoading.h" />
     <ClInclude Include="..\Header\CLogo.h" />
     <ClInclude Include="..\Header\CMainApp.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CHumanMonster.cpp" />
     <ClCompile Include="..\code\CLoading.cpp" />
     <ClCompile Include="..\Code\CLogo.cpp" />
     <ClCompile Include="..\Code\CMainApp.cpp" />

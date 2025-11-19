@@ -38,6 +38,8 @@ HRESULT CPlayer::Ready_GameObject()
     m_StateCom->Change_State(PLAYERSTATE::IDLE);
     m_StateCom->Change_Dir(PLAYERDIR::LEFT);
 
+    //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
+
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
 

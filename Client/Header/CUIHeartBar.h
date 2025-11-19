@@ -17,7 +17,7 @@ public:
 public:
     virtual HRESULT Ready_GameObject();
     virtual _int    Update_GameObject(const _float& timeDelta) override;
-    virtual void    LateUpdate_GameObject(const _float& timeDelta);
+    void LateUpdate_GameObject(const _float& timeDelta) override;
 
     virtual void Render_GameObject();
     HRESULT Add_Component();

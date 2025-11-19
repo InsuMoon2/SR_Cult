@@ -9,6 +9,7 @@
 
 CUIHeartBar::CUIHeartBar(DEVICE graphicDev) : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
                                               m_TransformCom(nullptr)
+
 {
 }
 
@@ -26,8 +27,8 @@ HRESULT CUIHeartBar::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-    m_TransformCom->Set_Pos(_vec3(2.f, 2.f, 0.f));
-    m_TransformCom->Set_Scale(_vec3(64.f, 64.f, 1.f));   
+    m_TransformCom->Set_Pos(_vec3(-500.f, 300.f, 0.f));
+    m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));   
 
     return S_OK;
 }
@@ -45,7 +46,6 @@ void CUIHeartBar::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUI::LateUpdate_GameObject(timeDelta);
 
-    
 }
 
 void CUIHeartBar::Render_GameObject()
