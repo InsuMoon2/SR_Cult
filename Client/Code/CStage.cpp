@@ -81,6 +81,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Player
     // -----------------------------
 
+    // 플레이어 생성
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CPlayer>(
             OBJTYPE::PLAYER,
@@ -89,6 +90,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
+    // 플레이어의 Transform 가져오기
     const auto playerTransform =
         dynamic_cast<CTransform*>(gameObject->Get_Component(
             ID_DYNAMIC,
@@ -98,6 +100,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Camera
     // -----------------------------
 
+    // 카메라 생성
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CMainCamera>(
             OBJTYPE::CAMERA,
@@ -106,6 +109,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
+    // 카메라 타겟을 플레이어로 설정
     dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
     // -----------------------------
@@ -148,8 +152,6 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             layer,
             &gameObject),
         L"Persistent object setup failed");
-
-    dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
     m_Layers.insert({ layerType, layer });
 

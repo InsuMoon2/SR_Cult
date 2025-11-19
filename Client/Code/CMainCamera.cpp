@@ -35,8 +35,6 @@ _int CMainCamera::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
 
-    // TODO : 매 프레임 작업
-
     switch (m_CameraCom->Get_CamMode())
     {
     case CCameraCom::CAM_FREE:
@@ -66,9 +64,13 @@ void CMainCamera::Render_GameObject()
 
 HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
 {
-    NULL_CHECK_RETURN(targetTransform, E_FAIL)
-
-    m_TargetTransformCom = targetTransform;
+    if (nullptr == targetTransform)
+        m_CameraCom->Set_CamMode(CCameraCom::CAM_FREE);
+    else
+    {
+        m_TargetTransformCom = targetTransform;
+        m_CameraCom->Set_CamMode(CCameraCom::CAM_TARGET);
+    }
 
     return S_OK;
 }
@@ -100,7 +102,7 @@ void CMainCamera::Key_Input(const _float& timeDelta)
     bool  moving = false;
 
     // 앞뒤
-    m_TransformCom->Get_Info(INFO_LOOK, &dir);
+    dir = m_TransformCom->Get_Look();
     if (inputMgr->Get_DIKeyState(DIK_I) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
@@ -116,7 +118,7 @@ void CMainCamera::Key_Input(const _float& timeDelta)
     }
 
     // 좌우
-    m_TransformCom->Get_Info(INFO_RIGHT, &dir);
+    dir = m_TransformCom->Get_Right();
     if (inputMgr->Get_DIKeyState(DIK_L) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
@@ -132,7 +134,7 @@ void CMainCamera::Key_Input(const _float& timeDelta)
     }
 
     // 상하
-    m_TransformCom->Get_Info(INFO_UP, &dir);
+    dir = m_TransformCom->Get_Up();
     if (inputMgr->Get_DIKeyState(DIK_P) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
@@ -144,6 +146,19 @@ void CMainCamera::Key_Input(const _float& timeDelta)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
+        moving = true;
+    }
+
+    // Y축 회전
+    if (inputMgr->Get_DIKeyState(DIK_U) & 0x80)
+    {
+        m_TransformCom->Rotation(ROT_Y, D3DXToRadian(-180), timeDelta);
+        moving = true;
+    }
+
+    if (inputMgr->Get_DIKeyState(DIK_O) & 0x80)
+    {
+        m_TransformCom->Rotation(ROT_Y, D3DXToRadian(180), timeDelta);
         moving = true;
     }
 }
@@ -161,7 +176,7 @@ void CMainCamera::Render_ImGui()
     if (ImGui::Begin("MainCam Inspector"))
     {
         ImGui::Text(u8"카메라 Free 모드 조작 :");
-        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하");
+        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하 | U 좌회전 | O 우회전");
 
         // ------------------------
         // CAM_MODE 편집
