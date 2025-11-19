@@ -132,7 +132,8 @@ void CTransform::Rotation(ROTATION rotType, const _float& radian, const _float& 
     D3DXQuaternionRotationAxis(&deltaRot, &axis, angle);
 
     // [Local Rotation]  (오브젝트 로컬 축 기준)
-    D3DXQuaternionMultiply(&m_Rotation, &deltaRot, &m_Rotation);
+    // Local Rotation: Current * Delta
+    D3DXQuaternionMultiply(&m_Rotation, &m_Rotation, &deltaRot);
 
     D3DXQuaternionNormalize(&m_Rotation, &m_Rotation);
 }
@@ -163,7 +164,8 @@ void CTransform::Rotation_World(ROTATION rotType, const _float& radian, const _f
     D3DXQuaternionRotationAxis(&deltaRot, &axis, angle);
 
     // [World Rotation]  (월드 축 기준)
-    D3DXQuaternionMultiply(&m_Rotation, &m_Rotation, &deltaRot);
+    // World Rotation: Delta * Current
+    D3DXQuaternionMultiply(&m_Rotation, &deltaRot, &m_Rotation);
 
     D3DXQuaternionNormalize(&m_Rotation, &m_Rotation);
 }
