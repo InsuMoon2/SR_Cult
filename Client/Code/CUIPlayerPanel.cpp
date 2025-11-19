@@ -1,10 +1,12 @@
 ﻿#include "pch.h"
 #include "CUIPlayerPanel.h"
 
-#include "CPlayer.h"
+#include "CCombatStat.h"
+#include "CPlayer.h" 
 #include "CRenderer.h"
 #include "CUIHeartBar.h"
 #include "CUIPanel.h"
+#include "CTransform.h"
 
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev)
@@ -21,10 +23,18 @@ HRESULT CUIPlayerPanel::Ready_GameObject()
 {
     CUIPanel::Ready_GameObject();
 
-    auto image = CUIHeartBar::Create(m_GraphicDev);
-    NULL_CHECK_RETURN(image, E_FAIL)
+    auto heart1 = CUIHeartBar::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(heart1, E_FAIL)
+    AddChild(heart1);
 
-    AddChild(image);
+    auto heart2 = CUIHeartBar::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(heart2, E_FAIL)
+        AddChild(heart2);
+
+    auto heart3 = CUIHeartBar::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(heart3, E_FAIL)
+        AddChild(heart3);
+
 
     return S_OK;
 }
@@ -35,42 +45,123 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
+    auto stat = dynamic_cast<CCombatStat*>(m_Player->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::COMBATSTAT));  
+
+    if (stat == nullptr)
+        return 0;
+
+
+    float hp = stat->Get_Hp();
+    float maxHp = stat->Get_MaxHp();
+
+    int heartCount = maxHp;
+
+    int i = 0;
+
+    for(auto child : m_Children)
+    {
+        auto heartBar = dynamic_cast<CUIHeartBar*>(child);
+        float start = i * 1.0f;
+        float end = start + 1.0f;
+
+        HEARTSTATE state;
+
+        if (hp >= end)
+            state = HEARTSTATE::FULL;
+
+        else if (hp > start)
+            state = HEARTSTATE::HALF;
+
+        else
+            state = HEARTSTATE::EMPTY;
+
+        heartBar->Set_State(state);
+
+        i++;
+    }
+
+
+
     return exit;
 }
 
 void CUIPlayerPanel::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUIPanel::LateUpdate_GameObject(timeDelta);
-}
 
+}
 void CUIPlayerPanel::Render_GameObject()
 {
     CUIPanel::Render_GameObject();
 
-    /*if (ImGui::Begin("Player Panel UI"))
+    if (ImGui::Begin("UI_Heart Inspector"))
     {
 
-        const float Hp = m_player->m_Hp;
-        ImGui::Text("HP :");
-        ImGui::SameLine();
-        ImGui::InputFloat("##", (float*)&Hp);
-    }*/
+        for (auto child : m_Children)
+        {
 
-    //ImGui::End();
+            CUIHeartBar* heartBar = dynamic_cast<CUIHeartBar*>(child);
+
+            if (!heartBar)
+            {
+                continue;
+            }
+
+            ImGui::PushID(heartBar->Get_ID());
+
+
+            CTransform* m_HeartTransformCom = dynamic_cast<CTransform*>(heartBar->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
+
+            // TransformComponent
+            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            {
+                const _vec3& pos = m_HeartTransformCom->Get_Pos();
+
+                ImGui::Text("Position");
+
+                ImGui::Text("X :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartX", (float*)&pos.x);
+
+                ImGui::Text("Y :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartY", (float*)&pos.y);
+
+                ImGui::Text("Z :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartZ", (float*)&pos.z);
+
+                m_HeartTransformCom->Set_Pos(pos);
+
+                const _vec3& scale = m_HeartTransformCom->Get_Scale();
+
+                ImGui::InputFloat("ScaleX", (float*)&scale.x);
+                ImGui::InputFloat("ScaleY", (float*)&scale.y);
+
+                m_HeartTransformCom->Set_Scale(scale);
+            }
+        
+
+            ImGui::PopID();
+        }
+      
+    }
+    ImGui::End();
 }
 
 CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)
 {
-    auto mainmenupanel = new CUIPlayerPanel(graphicDev);
+    auto mainmenuPanel = new CUIPlayerPanel(graphicDev);
 
-    if (FAILED(mainmenupanel->Ready_GameObject()))
+    if (FAILED(mainmenuPanel->Ready_GameObject()))
     {
         MSG_BOX("MainMenu Create Failed");
-        Safe_Release(mainmenupanel);
+        Safe_Release(mainmenuPanel);
         return nullptr;
     }
 
-    return mainmenupanel;
+    return mainmenuPanel;
+         
 }
 
 void CUIPlayerPanel::Free()

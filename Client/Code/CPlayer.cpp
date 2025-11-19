@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "CPlayer.h"
 
+#include "CEnumHelper.h"
 #include "CAnimator.h"
 #include "CCreateHelper.h"
 #include "CRcTex.h"
@@ -34,10 +35,11 @@ HRESULT CPlayer::Ready_GameObject()
         return E_FAIL;
 
     // 플레이어 상태 초기값
-    m_StateCom->Change_State(PLAYERSTATE::IDLE);
-    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+    m_StateCom->Change_State(ACTORSTATE::IDLE);
+    m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
-    m_CombatStat->Set_Hp(100.f);
+    m_CombatStat->Set_Hp(6.f);
+    m_CombatStat->Set_MaxHp(6.f);
     m_CombatStat->Set_Attack(10.f);
     m_CombatStat->Set_Mp(5.f);
     //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
@@ -185,8 +187,8 @@ void CPlayer::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 0.02f);
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
 
 }
 
@@ -205,7 +207,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::UP);
+        m_StateCom->Change_Dir(ACTORDIR::UP);
     }
 
     if (GetAsyncKeyState(VK_DOWN) & 0x8000)
@@ -214,7 +216,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::DOWN);
+        m_StateCom->Change_Dir(ACTORDIR::DOWN);
     }
 
     // 좌 우
@@ -225,7 +227,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
         
-        m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
+        m_StateCom->Change_Dir(ACTORDIR::RIGHT);
     }
 
     if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -234,16 +236,16 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+        m_StateCom->Change_Dir(ACTORDIR::LEFT);
     }
 
     if (m_StateCom)
     {
         if (moving)
-            m_StateCom->Change_State(PLAYERSTATE::RUN);
+            m_StateCom->Change_State(ACTORSTATE::RUN);
 
         else
-            m_StateCom->Change_State(PLAYERSTATE::IDLE);
+            m_StateCom->Change_State(ACTORSTATE::IDLE);
     }
 }
 
@@ -287,6 +289,18 @@ void CPlayer::TempImGuiRender()
             ImGui::Text("Mp : %.2f", m_CombatStat->Get_Mp());
             ImGui::Text("Attack : %.2f", m_CombatStat->Get_Attack());
         }
+
+        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            const float hp = m_CombatStat->Get_Hp();
+
+            ImGui::Text("SetHp :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##PlayerHp", (float*)&hp);
+
+            m_CombatStat->Set_Hp(hp);
+        }
+
     }
 
     ImGui::End();

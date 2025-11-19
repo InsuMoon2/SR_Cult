@@ -8,6 +8,7 @@ class CState;
 class CTransform;
 class CRcTex;
 class CBoxCollider;
+class CCombatStat;
 END
 
 class CHumanMonster : public CGameObject
@@ -42,7 +43,7 @@ private:
     CState*       m_StateCom;
     CTexture*     m_TextureCom;
     CAnimator*    m_AnimatorCom;
-
+    CCombatStat*  m_CombatStat;
 public:
     static CHumanMonster* Create(DEVICE graphicDev);
 

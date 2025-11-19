@@ -33,6 +33,7 @@ public:
     void OnBeginOverlap(CCollider* self, CCollider* other) override;
     void OnEndOverlap(CCollider* self, CCollider* other) override;
     void TempImGuiRender();
+    CCombatStat* Get_CombatStat() { return m_CombatStat; }
 
 private:
     HRESULT Add_Component();
@@ -40,6 +41,8 @@ private:
     void    Key_Input(const _float& timeDelta);
 
     void Render_ImGui();
+
+
 
 private:
     Engine::CRcTex*     m_BufferCom;
@@ -54,8 +57,6 @@ private:
 
     map<ACTORSTATE, wstring> m_StateAnim;
 
-public:
-    float m_Hp = 100.f;
 
 public:
     static CPlayer* Create(DEVICE graphicDev);

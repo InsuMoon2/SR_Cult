@@ -89,6 +89,8 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
+    m_Player = dynamic_cast<CPlayer*>(gameObject);
+
     const auto playerTransform =
         dynamic_cast<CTransform*>(gameObject->Get_Component(
             ID_DYNAMIC,
@@ -120,18 +122,18 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     //
     //if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
     //    return E_FAIL;
+    //
+    //testMonster
+    //gameObject = CTestMonster::Create(m_GraphicDev);
 
-    //  //testMonster
-    gameObject = CTestMonster::Create(m_GraphicDev);
+    //NULL_CHECK_RETURN_MSG(
+    //    gameObject,
+    //    E_FAIL,
+    //    L"CStage::Ready_GameLogic_Layer() failed: CMonster::Create() returned null");
 
-    NULL_CHECK_RETURN_MSG(
-        gameObject,
-        E_FAIL,
-        L"CStage::Ready_GameLogic_Layer() failed: CMonster::Create() returned null");
-
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
+    //FAILED_CHECK_MSG(
+    //    layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
+    //    L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
 
     //HumanMonster
     gameObject = CHumanMonster::Create(m_GraphicDev);
@@ -166,8 +168,8 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     gameObject = CUIPlayerPanel::Create(m_GraphicDev);
     NULL_CHECK_RETURN(gameObject, E_FAIL);
 
-    m_playerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
-    m_playerPanel->Set_Player(m_player);
+   m_PlayerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
+   m_PlayerPanel->Set_Player(m_Player);
 
     if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
         return E_FAIL;
