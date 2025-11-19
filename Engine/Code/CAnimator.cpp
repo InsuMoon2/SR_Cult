@@ -46,7 +46,7 @@ _int CAnimator::Update_Component(const _float& timeDelta)
     _int exit = CComponent::Update_Component(timeDelta);
 
     // 애니메이션 업데이트
-    m_CurAnimation->Update(timeDelta);
+    m_CurAnimation->Update(timeDelta);                                                                                                                                                  
 
     return exit;
 }
