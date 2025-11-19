@@ -1,35 +1,35 @@
 ﻿#include "pch.h"
 #include "CHumanMonster.h"
-#include "CTransform.h"
+
 #include "CAnimator.h"
-#include "CRcTex.h"
-#include "CTexture.h"
 #include "CBoxCollider.h"
-#include "CState.h"
-#include "CRenderer.h"
-#include "CEnumHelper.h"
 #include "CCreateHelper.h"
+#include "CEnumHelper.h"
 #include "CManagement.h"
+#include "CRcTex.h"
+#include "CRenderer.h"
+#include "CState.h"
+#include "CTexture.h"
+#include "CTransform.h"
 
-CHumanMonster::CHumanMonster(DEVICE graphicDev): CGameObject(graphicDev), m_BufferCom(nullptr), m_TransformCom(nullptr),
-                                                 m_BoxColCom(nullptr),
-                                                 m_StateCom(nullptr),
-                                                 m_TextureCom(nullptr),
-                                                 m_AnimatorCom(nullptr)
-{
-}
+CHumanMonster::CHumanMonster(DEVICE graphicDev)
+    : CGameObject(graphicDev), m_BufferCom(nullptr), m_TransformCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr)
+{}
 
-CHumanMonster::CHumanMonster(const CHumanMonster& rhs): CGameObject(rhs), m_BufferCom(nullptr), m_TransformCom(nullptr),
-                                                        m_BoxColCom(nullptr),
-                                                        m_StateCom(nullptr),
-                                                        m_TextureCom(nullptr),
-                                                        m_AnimatorCom(nullptr)
-{
-}
+CHumanMonster::CHumanMonster(const CHumanMonster& rhs)
+    : CGameObject(rhs), m_BufferCom(nullptr), m_TransformCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr)
+{}
 
 CHumanMonster::~CHumanMonster()
-{
-}
+{}
 
 HRESULT CHumanMonster::Ready_GameObject()
 {
@@ -61,9 +61,9 @@ void CHumanMonster::LateUpdate_GameObject(const _float& timeDelta)
 
     auto playerTransformCom = dynamic_cast<CTransform*>(
         CManagement::GetInstance()->Get_Component(ID_DYNAMIC,
-            LAYERTYPE::GAMELOGIC,
-            OBJTYPE::PLAYER,
-            COMPONENTTYPE::TRANSFORM));
+                                                  LAYERTYPE::GAMELOGIC,
+                                                  OBJTYPE::PLAYER,
+                                                  COMPONENTTYPE::TRANSFORM));
 
     NULL_CHECK(playerTransformCom);
 
@@ -76,9 +76,8 @@ void CHumanMonster::LateUpdate_GameObject(const _float& timeDelta)
 
     float distance = D3DXVec3Length(&vdistance);
 
-    if(distance<10.f)
-    m_TransformCom->Chase_Target(&vPlayerPos, timeDelta, 1.f);
-
+    if (distance < 10.f)
+        m_TransformCom->Chase_Target(&vPlayerPos, timeDelta, 1.f);
 }
 
 void CHumanMonster::Render_GameObject()
@@ -89,8 +88,8 @@ void CHumanMonster::Render_GameObject()
     Render_Setting();
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key = m_AnimatorCom->Get_CurKey();
-        _int frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key   = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
@@ -101,6 +100,7 @@ void CHumanMonster::Render_GameObject()
     Render_Reset();
     m_BoxColCom->Render();
 }
+
 void CHumanMonster::Render_Setting()
 {
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -140,7 +140,7 @@ void CHumanMonster::TempImGuiRender()
         {
             ImGui::Text("X :");
             ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterPosX", (float*)&pos.x,-1.f,1.f);
+            ImGui::SliderFloat("##MonsterPosX", (float*)&pos.x, -1.f, 1.f);
 
             ImGui::Text("Y :");
             ImGui::SameLine();
@@ -151,8 +151,6 @@ void CHumanMonster::TempImGuiRender()
             ImGui::SliderFloat("##MonsterPosZ", (float*)&pos.z, -1.f, 1.f);
 
             m_TransformCom->Set_Pos(pos);
-
-
 
             const _vec3& scale = m_TransformCom->Get_Scale();
 
@@ -169,9 +167,7 @@ void CHumanMonster::TempImGuiRender()
             ImGui::SliderFloat("##MonsterScaleZ", (float*)&scale.z, -1.f, 1.f);
 
             m_TransformCom->Set_Scale(scale);
-
         }
-
     }
 
     ImGui::End();
@@ -226,13 +222,10 @@ HRESULT CHumanMonster::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
 
     return S_OK;
-
-
 }
 
 CHumanMonster* CHumanMonster::Create(DEVICE graphicDev)
 {
-
     auto humanmonster = new CHumanMonster(graphicDev);
 
     if (FAILED(humanmonster->Ready_GameObject()))
@@ -243,7 +236,6 @@ CHumanMonster* CHumanMonster::Create(DEVICE graphicDev)
     }
 
     return humanmonster;
-
 }
 
 void CHumanMonster::Free()

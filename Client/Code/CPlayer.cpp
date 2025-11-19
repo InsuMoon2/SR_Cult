@@ -2,27 +2,26 @@
 #include "CPlayer.h"
 
 #include "CAnimator.h"
+#include "CBoxCollider.h"
+#include "CCombatStat.h"
 #include "CCreateHelper.h"
 #include "CDInputMgr.h"
 #include "CEnumHelper.h"
 #include "CRcTex.h"
-#include "CRectCollider.h"
-#include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CCombatStat.h"
-#include "CEnumHelper.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr)
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr),
+      m_CombatStatCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -102,7 +101,6 @@ void CPlayer::Render_Setting()
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
-
 }
 
 void CPlayer::Render_Reset()
@@ -169,11 +167,11 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
 
     // CombatStat
-    m_CombatStat = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
-    NULL_CHECK_RETURN(m_CombatStat, E_FAIL);
+    m_CombatStatCom = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
+    NULL_CHECK_RETURN(m_CombatStatCom, E_FAIL);
 
     //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStat });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStatCom });
 
     return S_OK;
 }
@@ -226,7 +224,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         inputMgr->Get_DIKeyState(DIK_D) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
-         m_TransformCom->Move_Pos(dir, timeDelta, speed);
+        m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
 
         m_StateCom->Change_Dir(ACTORDIR::RIGHT);
@@ -250,8 +248,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(ACTORSTATE::IDLE);
     }
-
-
 }
 
 void CPlayer::Render_ImGui()
@@ -288,11 +284,11 @@ void CPlayer::Render_ImGui()
         }
 
         // CombatStatComponent
-        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::Text("Hp : %.2f", m_CombatStat->Get_Hp());
-            ImGui::Text("Mp : %.2f", m_CombatStat->Get_Mp());
-            ImGui::Text("Attack : %.2f", m_CombatStat->Get_Attack());
+            ImGui::Text("Hp : %.2f", m_CombatStatCom->Get_Hp());
+            ImGui::Text("Mp : %.2f", m_CombatStatCom->Get_Mp());
+            ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
         }
     }
 

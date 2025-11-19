@@ -31,7 +31,7 @@ public:
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
-    DEVICE               m_GraphicDev;
+    DEVICE                          m_GraphicDev;
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);

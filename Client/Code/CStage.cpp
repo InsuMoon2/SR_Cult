@@ -3,13 +3,10 @@
 
 #include "CLayer.h"
 #include "CMainCamera.h"
-#include "CMonster.h"
 #include "CPersistentObjectHelper.h"
 #include "CPlayer.h"
 #include "CTestMonster.h"
 #include "CTransform.h"
-#include "CProtoMgr.h"
-#include "CTexture.h"
 #include "CUIPlayerPanel.h"
 #include "CHumanMonster.h"
 
@@ -78,12 +75,13 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         E_FAIL,
         L"CStage::Ready_GameLogic_Layer() failed: CLayer::Create() returned null");
 
-        Engine::CGameObject* gameObject = nullptr;
+    Engine::CGameObject* gameObject = nullptr;
 
     // -----------------------------
     // Player
     // -----------------------------
 
+    // 플레이어 생성
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CPlayer>(
             OBJTYPE::PLAYER,
@@ -92,6 +90,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
+    // 플레이어의 Transform 가져오기
     const auto playerTransform =
         dynamic_cast<CTransform*>(gameObject->Get_Component(
             ID_DYNAMIC,
@@ -101,6 +100,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Camera
     // -----------------------------
 
+    // 카메라 생성
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CMainCamera>(
             OBJTYPE::CAMERA,
@@ -109,6 +109,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
+    // 카메라 타겟을 플레이어로 설정
     dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
     // -----------------------------
@@ -124,7 +125,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     //if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
     //    return E_FAIL;
 
-   //  //testMonster
+    //  //testMonster
     gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
@@ -136,14 +137,13 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
         L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
 
-        //HumanMonster
-        gameObject = CHumanMonster::Create(m_GraphicDev);
+    //HumanMonster
+    gameObject = CHumanMonster::Create(m_GraphicDev);
     NULL_CHECK_RETURN_MSG(gameObject, E_FAIL, L"CStage::Ready_GameLogic_Layer() failed: CHumanMonster::Create() returned null")
 
-        FAILED_CHECK_MSG(
-            layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
-            L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
-
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
 
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CMainCamera>(
@@ -153,9 +153,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
-    dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
-
-        m_Layers.insert({ layerType, layer });
+    m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }

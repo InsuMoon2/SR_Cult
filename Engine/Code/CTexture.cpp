@@ -114,7 +114,6 @@ HRESULT CTexture::Add_Texture(const wstring& animKey, TEXTUREID texType, const w
                 return E_FAIL;
         }
         break;
-
         }
 
         frames.push_back(texture);

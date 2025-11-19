@@ -1,26 +1,23 @@
 ﻿#include "pch.h"
-#include "CCreateHelper.h"
 #include "CUIHeartBar.h"
+#include "CCreateHelper.h"
 #include "CRcTex.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CRenderer.h"
-#include "CAnimator.h"
 
-CUIHeartBar::CUIHeartBar(DEVICE graphicDev) : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
-                                              m_TransformCom(nullptr)
+CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
+    : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
+      m_TransformCom(nullptr)
 
-{
-}
+{}
 
-CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs) : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
-                                                   m_TransformCom(nullptr)
-{
-}
+CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
+    : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
+      m_TransformCom(nullptr)
+{}
 
 CUIHeartBar::~CUIHeartBar()
-{
-}
+{}
 
 HRESULT CUIHeartBar::Ready_GameObject()
 {
@@ -28,7 +25,7 @@ HRESULT CUIHeartBar::Ready_GameObject()
         return E_FAIL;
 
     m_TransformCom->Set_Pos(_vec3(-500.f, 300.f, 0.f));
-    m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));   
+    m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));
 
     return S_OK;
 }
@@ -45,7 +42,6 @@ _int CUIHeartBar::Update_GameObject(const _float& timeDelta)
 void CUIHeartBar::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUI::LateUpdate_GameObject(timeDelta);
-
 }
 
 void CUIHeartBar::Render_GameObject()
@@ -90,11 +86,10 @@ void CUIHeartBar::Render_GameObject()
 
 HRESULT CUIHeartBar::Add_Component()
 {
-  
     // buffer
     m_BufferCom = CreateProtoComponent<CRcTex>(this, COMPONENTTYPE::RC_TEX);
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
-  
+
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::RC_TEX, m_BufferCom });
 
     // transform
@@ -110,19 +105,17 @@ HRESULT CUIHeartBar::Add_Component()
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_UI_HEART, m_TextureCom });
 
     return S_OK;
-
 }
 
 CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 {
     auto heartbar = new CUIHeartBar(graphicDev);
     if (FAILED(heartbar->Ready_GameObject()))
-     {
+    {
         Safe_Release(heartbar);
         MSG_BOX("UIHeartBar Created Failed");
         return nullptr;
-     }
-
+    }
 
     return heartbar;
 }

@@ -35,8 +35,6 @@ _int CMainCamera::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_PRIORITY, this);
 
-    // TODO : 매 프레임 작업
-
     switch (m_CameraCom->Get_CamMode())
     {
     case CCameraCom::CAM_FREE:
@@ -66,9 +64,13 @@ void CMainCamera::Render_GameObject()
 
 HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
 {
-    NULL_CHECK_RETURN(targetTransform, E_FAIL)
-
-    m_TargetTransformCom = targetTransform;
+    if (nullptr == targetTransform)
+        m_CameraCom->Set_CamMode(CCameraCom::CAM_FREE);
+    else
+    {
+        m_TargetTransformCom = targetTransform;
+        m_CameraCom->Set_CamMode(CCameraCom::CAM_TARGET);
+    }
 
     return S_OK;
 }
@@ -99,40 +101,71 @@ void CMainCamera::Key_Input(const _float& timeDelta)
     _vec3 dir    = { 0.f, 0.f, 0.f };
     bool  moving = false;
 
-    // 앞뒤
-    m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_I) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_LSHIFT) & 0x80)
     {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
-        moving = true;
-    }
+        // Y축 회전
+        if (inputMgr->Get_DIKeyState(DIK_J) & 0x80)
+        {
+            m_TransformCom->Rotation(ROT_Y, D3DXToRadian(-180), timeDelta);
+            moving = true;
+        }
 
-    if (inputMgr->Get_DIKeyState(DIK_K) & 0x80)
-    {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, -speed);
-        moving = true;
-    }
+        if (inputMgr->Get_DIKeyState(DIK_L) & 0x80)
+        {
+            m_TransformCom->Rotation(ROT_Y, D3DXToRadian(180), timeDelta);
+            moving = true;
+        }
 
-    // 좌우
-    m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_L) & 0x80)
-    {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
-        moving = true;
-    }
+        // X축 회전
+        if (inputMgr->Get_DIKeyState(DIK_I) & 0x80)
+        {
+            m_TransformCom->Rotation_World(ROT_X, D3DXToRadian(-180), timeDelta);
+            moving = true;
+        }
 
-    if (inputMgr->Get_DIKeyState(DIK_J) & 0x80)
+        if (inputMgr->Get_DIKeyState(DIK_K) & 0x80)
+        {
+            m_TransformCom->Rotation_World(ROT_X, D3DXToRadian(180), timeDelta);
+            moving = true;
+        }
+    }
+    else
     {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, -speed);
-        moving = true;
+        // 앞뒤
+        dir = m_TransformCom->Get_Look();
+        if (inputMgr->Get_DIKeyState(DIK_I) & 0x80)
+        {
+            D3DXVec3Normalize(&dir, &dir);
+            m_TransformCom->Move_Pos(dir, timeDelta, speed);
+            moving = true;
+        }
+
+        if (inputMgr->Get_DIKeyState(DIK_K) & 0x80)
+        {
+            D3DXVec3Normalize(&dir, &dir);
+            m_TransformCom->Move_Pos(dir, timeDelta, -speed);
+            moving = true;
+        }
+
+        // 좌우
+        dir = m_TransformCom->Get_Right();
+        if (inputMgr->Get_DIKeyState(DIK_L) & 0x80)
+        {
+            D3DXVec3Normalize(&dir, &dir);
+            m_TransformCom->Move_Pos(dir, timeDelta, speed);
+            moving = true;
+        }
+
+        if (inputMgr->Get_DIKeyState(DIK_J) & 0x80)
+        {
+            D3DXVec3Normalize(&dir, &dir);
+            m_TransformCom->Move_Pos(dir, timeDelta, -speed);
+            moving = true;
+        }
     }
 
     // 상하
-    m_TransformCom->Get_Info(INFO_UP, &dir);
+    dir = m_TransformCom->Get_Up();
     if (inputMgr->Get_DIKeyState(DIK_P) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
@@ -162,7 +195,7 @@ void CMainCamera::Render_ImGui()
     if (ImGui::Begin("MainCam Inspector"))
     {
         ImGui::Text(u8"카메라 Free 모드 조작 :");
-        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하");
+        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하 | LShift+I 회전 상 | LShift+K 회전 하 | LShift+J 회전 좌 | LShift+L 회전 우");
 
         // ------------------------
         // CAM_MODE 편집

@@ -21,12 +21,12 @@ public:
     /// @param width            글자 폭
     /// @param height           글자 높이
     /// @param weight           글자 굵기
-    HRESULT Ready_Font(DEVICE graphicDev,
-                       const wstring&    fontTag,
-                       const wstring&    fontType,
-                       const _uint&      width,
-                       const _uint&      height,
-                       const _uint&      weight);
+    HRESULT Ready_Font(DEVICE         graphicDev,
+                       const wstring& fontTag,
+                       const wstring& fontType,
+                       const _uint&   width,
+                       const _uint&   height,
+                       const _uint&   weight);
 
     /// @brief 태그를 이용해 문자열을 화면에 출력
     /// @param fontTag          출력에 사용할 폰트의 태그

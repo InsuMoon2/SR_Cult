@@ -4,7 +4,6 @@
 #include "Engine_Define.h"
 
 BEGIN(Engine)
-
 class CAnimator;
 
 /**
@@ -15,7 +14,7 @@ class ENGINE_DLL CCombatStat : public CComponent
 private:
     explicit CCombatStat(DEVICE GraphicDev);
     explicit CCombatStat(const CCombatStat& rhs);
-    virtual  ~CCombatStat();
+    ~CCombatStat() override;
 
 public:
     HRESULT Ready_StateComponent(DEVICE GraphicDev);
@@ -33,7 +32,7 @@ public:
 
 public:
     static CCombatStat* Create(DEVICE GraphicDev);
-    CComponent* Clone() override;
+    CComponent*         Clone() override;
 
 protected:
     void Free() override;
@@ -43,8 +42,6 @@ private:
 
     _float m_Hp;
     _float m_Mp;
-
-
 };
 
 END

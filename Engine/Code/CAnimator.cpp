@@ -8,14 +8,12 @@
 CAnimator::CAnimator(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr), m_TextureType(COMPONENTTYPE::COMPONENT_END)
-{
-}
+{ }
 
 CAnimator::CAnimator(const CAnimator& rhs)
     : CComponent(rhs),
       m_CurAnimation(nullptr), m_Play(false), m_BufferCom(nullptr), m_Texture(nullptr), m_TextureType(rhs.m_TextureType)
-{
-}
+{ }
 
 CAnimator::~CAnimator()
 { }
@@ -105,24 +103,24 @@ HRESULT CAnimator::Create_Animation(const wstring& key, _uint frameCount, _float
 
 void CAnimator::Play_Animation(const wstring& key, ANIMSTATE state, bool reset)
 {
-	CSpriteAnimation* anim = Find_Animation(key);
-	if (anim == nullptr)
-		return;
+    CSpriteAnimation* anim = Find_Animation(key);
+    if (anim == nullptr)
+        return;
 
-	// 플레이 중에 같은 애니메이션, 상태가 같으면 변경 X
-	if (m_Play && m_CurAnimation == anim && anim->GetState() == state)
-		return;
+    // 플레이 중에 같은 애니메이션, 상태가 같으면 변경 X
+    if (m_Play && m_CurAnimation == anim && anim->GetState() == state)
+        return;
 
-	m_CurAnimation = anim;
-	m_CurKey = key;
+    m_CurAnimation = anim;
+    m_CurKey       = key;
 
-	m_CurAnimation->SetState(state);
+    m_CurAnimation->SetState(state);
 
-	if (reset)
-		m_CurAnimation->Reset();
+    if (reset)
+        m_CurAnimation->Reset();
 
-	// STOP이면 False, 나머지는 True값 세팅
-	m_Play = (state != ANIMSTATE::STOP);
+    // STOP이면 False, 나머지는 True값 세팅
+    m_Play = (state != ANIMSTATE::STOP);
 }
 
 void CAnimator::Stop_Animation()

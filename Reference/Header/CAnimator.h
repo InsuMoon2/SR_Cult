@@ -10,14 +10,12 @@ class CVIBuffer;
 
 class ENGINE_DLL CAnimator : public CComponent
 {
-
 private:
     explicit CAnimator(DEVICE graphicDev);
     explicit CAnimator(const CAnimator& rhs);
     ~CAnimator() override;
 
 public:
-
     _int Update_Component(const _float& timeDelta) override;
     void LateUpdate_Component() override;
     void Render_Component();
@@ -28,8 +26,8 @@ public:
     CSpriteAnimation* GetOrAdd_Animation(const wstring& key, CSpriteAnimation* animation);
 
     HRESULT Create_Animation(const wstring& key,
-                                _uint          frameCount,
-                                _float         interval); 
+                             _uint          frameCount,
+                             _float         interval);
 
     void Play_Animation(const wstring& key, ANIMSTATE state, bool reset = true);
     void Stop_Animation();
@@ -39,8 +37,7 @@ public:
     // 현재 재생중인 키값
     const wstring& Get_CurKey() { return m_CurKey; }
     // 현재 재생중인 프레임
-    _int           Get_CurFrame();
-
+    _int Get_CurFrame();
 
     // 주의! Object마다 Set_TextureType 설정 꼭 해줘야함
     void Set_TextureType(COMPONENTTYPE type);
@@ -49,7 +46,7 @@ public:
     CComponent*       Clone() override;
 
 private:
-    HRESULT Ready_Animator();
+    HRESULT           Ready_Animator();
     CSpriteAnimation* Find_Animation(const wstring& Key);
 
     void Free() override;
@@ -59,16 +56,15 @@ private:
     CSpriteAnimation*               m_CurAnimation;
     wstring                         m_CurKey;
 
-    _bool                           m_Play;
+    _bool m_Play;
 
     //Engine::CRcTex*   m_BufferCom;
     Engine::CVIBuffer*  m_BufferCom;
     Engine::CTexture*   m_Texture;
 
-    bool    m_Initialized = false;
+    bool m_Initialized = false;
 
     COMPONENTTYPE m_TextureType;
-
 };
 
 END

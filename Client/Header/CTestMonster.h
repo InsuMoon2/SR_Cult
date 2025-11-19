@@ -23,8 +23,8 @@ private:
 public:
     HRESULT Ready_GameObject() override;
     _int    Update_GameObject(const _float& timeDelta) override;
-    void LateUpdate_GameObject(const _float& timeDelta) override;
-    void Render_GameObject() override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
     void Render_Setting();
     void Render_Reset();
@@ -34,7 +34,7 @@ public:
 
 private:
     HRESULT Add_Component();
-    void Animation_Setting();
+    void    Animation_Setting();
 
 private:
     Engine::CRcTex*         m_BufferCom;
@@ -53,4 +53,3 @@ public:
 private:
     void Free() override;
 };
-

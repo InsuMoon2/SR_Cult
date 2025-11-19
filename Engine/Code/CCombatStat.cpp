@@ -1,19 +1,14 @@
 ﻿#include "CCombatStat.h"
 #include "CAnimator.h"
-#include "CGameObject.h"
 
 CCombatStat::CCombatStat(DEVICE GraphicDev)
     : CComponent(GraphicDev), m_Attack(0), m_Hp(0), m_Mp(0)
 
-{
-
-}
+{}
 
 CCombatStat::CCombatStat(const CCombatStat& rhs)
     : CComponent(rhs.m_GraphicDev), m_Attack(0), m_Hp(0), m_Mp(0)
-{
-
-}
+{}
 
 CCombatStat::~CCombatStat()
 {
@@ -33,16 +28,12 @@ _int CCombatStat::Update_Component(const _float& timeDelta)
 {
     _int exit = CComponent::Update_Component(timeDelta);
 
-
     return exit;
 }
 
 void CCombatStat::LateUpdate_Component()
 {
     CComponent::LateUpdate_Component();
-
-
-
 }
 
 CCombatStat* CCombatStat::Create(DEVICE GraphicDev)
@@ -67,6 +58,4 @@ CComponent* CCombatStat::Clone()
 void CCombatStat::Free()
 {
     CComponent::Free();
-
-
 }

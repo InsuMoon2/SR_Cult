@@ -6,20 +6,21 @@ BEGIN(Engine)
 class ENGINE_DLL CUI : public CGameObject
 {
 public:
-	explicit CUI(DEVICE pGraphicDev);
-	explicit CUI(const CUI& rhs);
-	virtual ~CUI();
+    explicit CUI(DEVICE pGraphicDev);
+    explicit CUI(const CUI& rhs);
+    ~CUI() override;
 
 public:
-    virtual HRESULT Ready_GameObject();
-    virtual _int    Update_GameObject(const _float& timeDelta);
-    virtual void    LateUpdate_GameObject(const _float& timeDelta);
-    virtual void    Render_GameObject();
+    HRESULT Ready_GameObject() override;
+    _int    Update_GameObject(const _float& timeDelta) override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
 protected:
-	DEVICE			m_GraphicDev;
+    DEVICE m_GraphicDev;
 
 protected:
-	virtual void				Free();
+    void Free() override;
 };
+
 END

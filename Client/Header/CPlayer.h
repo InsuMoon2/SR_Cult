@@ -46,14 +46,13 @@ private:
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
     Engine::CBoxCollider* m_BoxColCom;
-
-    Engine::CState*        m_StateCom;
-    Engine::CCombatStat*   m_CombatStat;
+    Engine::CState*       m_StateCom;
+    Engine::CCombatStat*  m_CombatStatCom;
 
     map<ACTORSTATE, wstring> m_StateAnim;
 
 public:
-    float m_Hp=100.f;
+    float m_Hp = 100.f;
 
 public:
     static CPlayer* Create(DEVICE graphicDev);
