@@ -5,6 +5,7 @@
 #include "CCreateHelper.h"
 #include "CRcTex.h"
 #include "CRectCollider.h"
+#include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
@@ -17,7 +18,7 @@ CTestMonster::CTestMonster(DEVICE graphicDev)
     m_TransformCom(nullptr),
     m_TextureCom(nullptr),
     m_AnimatorCom(nullptr),
-    m_RectColCom(nullptr),
+    m_BoxColCom(nullptr),
     m_StateCom(nullptr)
 {
 }
@@ -28,7 +29,7 @@ CTestMonster::CTestMonster(const CTestMonster& rhs)
     m_TransformCom(nullptr),
     m_TextureCom(nullptr),
     m_AnimatorCom(nullptr),
-    m_RectColCom(nullptr),
+    m_BoxColCom(nullptr),
     m_StateCom(nullptr)
 {
 }
@@ -44,8 +45,12 @@ HRESULT CTestMonster::Ready_GameObject()
 
     Animation_Setting();
 
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 50.f));
-    m_TransformCom->Set_Scale(_vec3(7.f, 5.f, 1.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 10.f));
+    m_TransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
+
+    //m_BoxColCom->Set_Size(_vec3(5.f, 5.f, 2.f));
+
+    m_TextureCom->Get_Transform()->Set_Scale(_vec3(10.f, 10.f, 1.f));
 
     return S_OK;
 }
@@ -82,7 +87,7 @@ void CTestMonster::Render_GameObject()
     TempImGuiRender();
     Render_Reset();
 
-    m_RectColCom->Render(); // Render Reset 이후 호출해야함
+    m_BoxColCom->Render(); // Render Reset 이후 호출해야함
 }
 
 void CTestMonster::Render_Setting()
@@ -146,11 +151,10 @@ HRESULT CTestMonster::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
     // RectCol Componet
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
-    NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
-    m_RectColCom->Set_Size(_vec2(2.f, 2.f));
-
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
+    m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
+    NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
+     
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
     NULL_CHECK_RETURN(m_StateCom, E_FAIL);
@@ -166,7 +170,7 @@ void CTestMonster::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"BossIdle", 400, 0.02f);
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
 }
 
 void CTestMonster::TempImGuiRender()
@@ -176,7 +180,7 @@ void CTestMonster::TempImGuiRender()
         // TransformComponent
         if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+            _vec3 pos = m_TransformCom->Get_Pos();
 
             ImGui::Text("Position");
 

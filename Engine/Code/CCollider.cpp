@@ -1,5 +1,6 @@
 ﻿#include "CCollider.h"
 
+#include "CBoxCollider.h"
 #include "CCollisionManager.h"
 #include "CRectCollider.h"
 #include "CSphereCollider.h"
@@ -64,7 +65,7 @@ void CCollider::RemoveOverlap(CCollider* other)
 }
 
 // AABB(Box) vs AABB(Box)
-bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
+bool CCollider::CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2)
 {
     if (b1 == nullptr || b2 == nullptr)
         return false;
@@ -75,10 +76,8 @@ bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
     if (t1 == nullptr || t2 == nullptr)
         return false;
 
-    // 중심 좌표 (Transform의 INFO_POS 기준, XY 평면에서만 충돌 체크)
-    _vec3 p1, p2;
-    t1->Get_Info(INFO_POS, &p1);
-    t2->Get_Info(INFO_POS, &p2);
+    _vec3 p1 = t1->Get_Pos();
+    _vec3 p2 = t2->Get_Pos();
 
     _vec2 s1 = b1->Get_Size();
     _vec2 s2 = b2->Get_Size();
@@ -88,17 +87,13 @@ bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
     _float halfW2 = s2.x * 0.5f;
     _float halfH2 = s2.y * 0.5f;
 
-    _float minX1 = p1.x - halfW1;
-    _float maxX1 = p1.x + halfW1;
-    _float minY1 = p1.y - halfH1;
-    _float maxY1 = p1.y + halfH1;
+    _float minX1 = p1.x - halfW1; _float maxX1 = p1.x + halfW1;
+    _float minY1 = p1.y - halfH1; _float maxY1 = p1.y + halfH1;
 
-    _float minX2 = p2.x - halfW2;
-    _float maxX2 = p2.x + halfW2;
-    _float minY2 = p2.y - halfH2;
-    _float maxY2 = p2.y + halfH2;
+    _float minX2 = p2.x - halfW2; _float maxX2 = p2.x + halfW2;
+    _float minY2 = p2.y - halfH2; _float maxY2 = p2.y + halfH2;
 
-    // 한 쪽이 완전히 왼쪽/오른쪽/위/아래에 있으면 비충돌
+    // 한 쪽이 완전히 왼쪽/오른쪽/위/아래에 있으면 충돌 ㄴㄴ
     if (maxX2 < minX1) return false;
     if (maxX1 < minX2) return false;
     if (maxY2 < minY1) return false;
@@ -107,8 +102,56 @@ bool CCollider::CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2)
     return true;
 }
 
+bool CCollider::CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2)
+{
+    NULL_CHECK_RETURN(b1, false);
+    NULL_CHECK_RETURN(b2, false);
+
+    CTransform* t1 = b1->Get_Transform();
+    CTransform* t2 = b2->Get_Transform();
+
+    NULL_CHECK_RETURN(t1, false);
+    NULL_CHECK_RETURN(t2, false);
+
+    _vec3 p1 = t1->Get_Pos();
+    _vec3 p2 = t2->Get_Pos();
+
+    _vec3 s1 = b1->Get_Size();
+    _vec3 s2 = b2->Get_Size();
+
+    _float halfW1 = s1.x * 0.5f;
+    _float halfH1 = s1.y * 0.5f;
+    _float halfD1 = s1.z * 0.5f;
+
+    _float halfW2 = s2.x * 0.5f;
+    _float halfH2 = s2.y * 0.5f;
+    _float halfD2 = s2.z * 0.5f;
+
+    _float minX1 = p1.x - halfW1; _float maxX1 = p1.x + halfW1;
+    _float minY1 = p1.y - halfH1; _float maxY1 = p1.y + halfH1;
+    _float minZ1 = p1.z - halfD1; _float maxZ1 = p1.z + halfD1;
+
+    _float minX2 = p2.x - halfW2; _float maxX2 = p2.x + halfW2;
+    _float minY2 = p2.y - halfH2; _float maxY2 = p2.y + halfH2;
+    _float minZ2 = p2.z - halfD2; _float maxZ2 = p2.z + halfD2;
+
+    // X축 분리
+    if (maxX2 < minX1) return false;
+    if (maxX1 < minX2) return false;
+
+    // Y축 분리
+    if (maxY2 < minY1) return false;
+    if (maxY1 < minY2) return false;
+
+    // Z축 분리
+    if (maxZ2 < minZ1) return false;
+    if (maxZ1 < minZ2) return false;
+
+    return true;
+}
+
 // Circle(Sphere) vs AABB(Box)
-bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
+bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CBoxCollider* b2)
 {
     if (s1 == nullptr || b2 == nullptr)
         return false;
@@ -124,7 +167,7 @@ bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2)
     tb->Get_Info(INFO_POS, &cb3);
 
     _float radius  = s1->Get_Radius();
-    _vec2  boxSize = b2->Get_Size();
+    _vec2  boxSize;// = b2->Get_Size();
 
     _float halfW = boxSize.x * 0.5f;
     _float halfH = boxSize.y * 0.5f;

@@ -11,6 +11,9 @@
 #include "CTransform.h"
 #include "CTriCol.h"
 #include "CRcTex.h"
+#include "CCombatStat.h"
+#include "CBoxCol.h"
+#include "CBoxCollider.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -59,6 +62,11 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::RC_COLOR, Engine::CRcCol::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Buffer : Box Color
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_COLOR, Engine::CBoxCol::Create(m_GraphicDev))))
+        return E_FAIL;
+
     //// Buffer : Rect UV
     //// CLogo 에서 이미 프로토타입 생성중이므로 비활성화
     //if (FAILED(pProtoMgr->Ready_Prototype(
@@ -103,6 +111,11 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
 
+    // item Test
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
+    //    return E_FAIL;
+    
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
@@ -121,9 +134,6 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
-
-
-
 
 #pragma endregion
 
@@ -149,9 +159,19 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::RECT_COLL, CRectCollider::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Box Collider
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_COLL, CBoxCollider::Create(m_GraphicDev))))
+        return E_FAIL;
+
     // State
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::STATE, CState::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // CombatStat
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";

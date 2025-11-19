@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="99. Header">
@@ -106,25 +106,23 @@
     <Filter Include="02. Prototype\03. Camera">
       <UniqueIdentifier>{2a24c0e1-3d74-4392-81ed-50675f58e78f}</UniqueIdentifier>
     </Filter>
-    <!-- HEAD 에서 추가된 UI 필터 -->
-    <Filter Include="04. UI">
-      <UniqueIdentifier>{9f16ce17-86aa-4294-9b30-f73d6b17bf09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\00. UIPanel">
-      <UniqueIdentifier>{bd6e1520-8dbf-4e4f-aaa1-d5976d52d9da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\01. UIButton">
-      <UniqueIdentifier>{50e2ee6d-a6e5-43e5-abeb-b5e6429b241a}</UniqueIdentifier>
-    </Filter>
-    <!-- main 에서 추가된 State / SceneMgr 필터 -->
     <Filter Include="02. Prototype\05. State">
       <UniqueIdentifier>{db0654d4-8fff-42b9-afe9-06d252ae2cd0}</UniqueIdentifier>
     </Filter>
     <Filter Include="00. Manager\10. SceneMgr">
       <UniqueIdentifier>{4d206c40-2a02-4585-82a7-34871e494d55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\02. UIText">
-      <UniqueIdentifier>{27088e1a-191e-4a09-ae66-8adb0412f419}</UniqueIdentifier>
+    <Filter Include="02. Prototype\06. CombatStat">
+      <UniqueIdentifier>{55ea3021-09c6-444c-b6db-ea5044d079b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\00. VIBuffer\03. BoxCol">
+      <UniqueIdentifier>{9b9793d6-2da8-4fed-956f-a19e85993f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\04. Collider\02. Box Collider">
+      <UniqueIdentifier>{a6dbfb3e-ff25-4d63-9b4f-885093b69017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\00. VIBuffer\04. BoxTex">
+      <UniqueIdentifier>{ba70ee2a-9a1b-4729-8fdd-9884817fdb6d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -242,25 +240,26 @@
     <ClInclude Include="..\header\CCameraCom.h">
       <Filter>02. Prototype\03. Camera</Filter>
     </ClInclude>
-    <!-- UI 관련 헤더 (HEAD) -->
-    <ClInclude Include="..\Header\CUI.h">
-      <Filter>04. UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CUIPanel.h">
-      <Filter>04. UI\00. UIPanel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CUIButton.h">
-      <Filter>04. UI\01. UIButton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CUIText.h">
-      <Filter>04. UI\02. UIText</Filter>
-    </ClInclude>
-    <!-- State / EnumHelper 헤더 (main) -->
     <ClInclude Include="..\Header\CState.h">
       <Filter>02. Prototype\05. State</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEnumHelper.h">
       <Filter>98. Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CPersistentObjectHelper.h">
+      <Filter>98. Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CCombatStat.h">
+      <Filter>02. Prototype\06. CombatStat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxCollider.h">
+      <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxTex.h">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxCol.h">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,22 +356,20 @@
     <ClCompile Include="..\code\CCameraCom.cpp">
       <Filter>02. Prototype\03. Camera</Filter>
     </ClCompile>
-    <!-- UI 관련 cpp (HEAD) -->
-    <ClCompile Include="..\Code\CUI.cpp">
-      <Filter>04. UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUIPanel.cpp">
-      <Filter>04. UI\00. UIPanel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUIButton.cpp">
-      <Filter>04. UI\01. UIButton</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CUIText.cpp">
-      <Filter>04. UI\02. UIText</Filter>
-    </ClCompile>
-    <!-- State cpp (main) -->
     <ClCompile Include="..\Code\CState.cpp">
       <Filter>02. Prototype\05. State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCombatStat.cpp">
+      <Filter>02. Prototype\06. CombatStat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxCollider.cpp">
+      <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxTex.cpp">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxCol.cpp">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -20,7 +20,7 @@ CImGuiManager::~CImGuiManager()
 	Free();
 }
 
-void CImGuiManager::InitImGui(HWND hWnd, DEVICE pGraphicDev)
+void CImGuiManager::InitImGui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	// Make process DPI aware and obtain main monitor scale
 	ImGui_ImplWin32_EnableDpiAwareness();
@@ -32,6 +32,13 @@ void CImGuiManager::InitImGui(HWND hWnd, DEVICE pGraphicDev)
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    // Setup Korean font
+    io.Fonts->AddFontFromFileTTF(
+        "../Bin/Resource/Font/malgun.ttf",
+        18.0f,
+        nullptr,
+        io.Fonts->GetGlyphRangesKorean());
 
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();

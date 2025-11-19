@@ -182,13 +182,18 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\CAnimator.h" />
+    <ClInclude Include="..\Header\CBoxCol.h" />
+    <ClInclude Include="..\Header\CBoxTex.h" />
+    <ClInclude Include="..\Header\CBoxCollider.h" />
     <ClInclude Include="..\header\CCameraCom.h" />
+    <ClInclude Include="..\Header\CCombatStat.h" />
     <ClInclude Include="..\header\CDInputMgr.h" />
     <ClInclude Include="..\Header\CEnumHelper.h" />
     <ClInclude Include="..\header\CFont.h" />
     <ClInclude Include="..\header\CFontMgr.h" />
     <ClInclude Include="..\header\CLight.h" />
     <ClInclude Include="..\header\CLightMgr.h" />
+    <ClInclude Include="..\Header\CPersistentObjectHelper.h" />
     <ClInclude Include="..\Header\CRectCollider.h" />
     <ClInclude Include="..\Header\CCollisionManager.h" />
     <ClInclude Include="..\Header\CCollider.h" />
@@ -228,7 +233,11 @@ xcopy /Y /I "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\"<
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CAnimator.cpp" />
+    <ClCompile Include="..\Code\CBoxCol.cpp" />
+    <ClCompile Include="..\Code\CBoxTex.cpp" />
+    <ClCompile Include="..\Code\CBoxCollider.cpp" />
     <ClCompile Include="..\code\CCameraCom.cpp" />
+    <ClCompile Include="..\Code\CCombatStat.cpp" />
     <ClCompile Include="..\code\CDInputMgr.cpp" />
     <ClCompile Include="..\code\CFont.cpp" />
     <ClCompile Include="..\code\CFontMgr.cpp" />

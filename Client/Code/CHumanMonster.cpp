@@ -4,7 +4,7 @@
 #include "CAnimator.h"
 #include "CRcTex.h"
 #include "CTexture.h"
-#include "CRectCollider.h"
+#include "CBoxCollider.h"
 #include "CState.h"
 #include "CRenderer.h"
 #include "CEnumHelper.h"
@@ -12,7 +12,7 @@
 #include "CManagement.h"
 
 CHumanMonster::CHumanMonster(DEVICE graphicDev): CGameObject(graphicDev), m_BufferCom(nullptr), m_TransformCom(nullptr),
-                                                 m_RectColCom(nullptr),
+                                                 m_BoxColCom(nullptr),
                                                  m_StateCom(nullptr),
                                                  m_TextureCom(nullptr),
                                                  m_AnimatorCom(nullptr)
@@ -20,7 +20,7 @@ CHumanMonster::CHumanMonster(DEVICE graphicDev): CGameObject(graphicDev), m_Buff
 }
 
 CHumanMonster::CHumanMonster(const CHumanMonster& rhs): CGameObject(rhs), m_BufferCom(nullptr), m_TransformCom(nullptr),
-                                                        m_RectColCom(nullptr),
+                                                        m_BoxColCom(nullptr),
                                                         m_StateCom(nullptr),
                                                         m_TextureCom(nullptr),
                                                         m_AnimatorCom(nullptr)
@@ -37,14 +37,14 @@ HRESULT CHumanMonster::Ready_GameObject()
         return E_FAIL;
 
 
-    m_StateCom->Change_State(PLAYERSTATE::IDLE);
-    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+    m_StateCom->Change_State(ACTORSTATE::IDLE);
+    m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
     Animation_Setting();
     //m_AnimatorCom->Play_Animation(L"HumanMonsterIdle", ANIMSTATE::LOOP);
 
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-    m_TransformCom->Set_Scale(_vec3(0.2f, 0.2f, 0.2f));
+    m_TransformCom->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
     return S_OK;
 }
 
@@ -100,7 +100,7 @@ void CHumanMonster::Render_GameObject()
 
     TempImGuiRender();
     Render_Reset();
-    m_RectColCom->Render();
+    m_BoxColCom->Render();
 }
 void CHumanMonster::Render_Setting()
 {
@@ -128,8 +128,8 @@ void CHumanMonster::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"HumanMonsterIdle", 34, 0.02f);
     m_AnimatorCom->Create_Animation(L"HumanMonsterRun", 18, 0.02f);
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"HumanMonsterIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"HumanMonsterRun", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"HumanMonsterIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"HumanMonsterRun", ANIMSTATE::LOOP);
 }
 
 void CHumanMonster::TempImGuiRender()
@@ -216,11 +216,10 @@ HRESULT CHumanMonster::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
     // RectCol Component
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
-    NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
-    m_RectColCom->Set_Size(_vec2(2.f, 2.f));
+    m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
+    NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
 
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
     NULL_CHECK_RETURN(m_StateCom, E_FAIL);
