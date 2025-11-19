@@ -124,6 +124,9 @@
     <Filter Include="02. Prototype\00. VIBuffer\04. BoxTex">
       <UniqueIdentifier>{ba70ee2a-9a1b-4729-8fdd-9884817fdb6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Logic\05. Tiled">
+      <UniqueIdentifier>{1e08cf3b-8a9b-415b-9274-78f77f8da805}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">

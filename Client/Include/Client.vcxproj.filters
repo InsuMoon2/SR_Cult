@@ -79,6 +79,9 @@
     <Filter Include="03. UI\00. Panel\00. UIPlayerPanel">
       <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\02. Editor">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -141,6 +144,12 @@
     <ClInclude Include="..\Header\CInventory.h">
       <Filter>04.Inventory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEdit.h">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTiled.h">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -193,6 +202,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CInventory.cpp">
       <Filter>04.Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEdit.cpp">
+      <Filter>01. Scene\02. Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTiled.cpp">
+      <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
