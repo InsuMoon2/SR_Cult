@@ -35,20 +35,20 @@ HRESULT CBoxCol::Ready_Buffer()
 
 	m_VB->Lock(0, 0, (void**)&pVertex, 0);
 
-    D3DXCOLOR color = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
-    //D3DXCOLOR color = D3DXCOLOR(0.f, 0.f, 0.f, 1.f);
+    D3DXCOLOR color = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+    //D3DXCOLOR color = D3DXCOLOR(0.f, 0.f, 0.f, 0.5f);
 
 	// 전면
-	pVertex[0].position = { -1.f, 1.f, -1.f };
-	pVertex[1].position = { 1.f, 1.f, -1.f };
-	pVertex[2].position = { 1.f, -1.f, -1.f };
-	pVertex[3].position = { -1.f, -1.f, -1.f };
+	pVertex[0].position = { -0.5f, 0.5f, -0.5f };
+	pVertex[1].position = { 0.5f, 0.5f, -0.5f };
+	pVertex[2].position = { 0.5f, -0.5f, -0.5f };
+	pVertex[3].position = { -0.5f, -0.5f, -0.5f };
 
 	// 후면
-	pVertex[4].position = { -1.f, 1.f, 1.f };
-	pVertex[5].position = { 1.f, 1.f, 1.f };
-	pVertex[6].position = { 1.f, -1.f, 1.f };
-	pVertex[7].position = { -1.f, -1.f, 1.f };
+	pVertex[4].position = { -0.5f, 0.5f, 0.5f };
+	pVertex[5].position = { 0.5f, 0.5f, 0.5f };
+	pVertex[6].position = { 0.5f, -0.5f, 0.5f };
+	pVertex[7].position = { -0.5f, -0.5f, 0.5f };
 
     for (_int i = 0; i < 8; i++)
     {

@@ -23,6 +23,7 @@ private:
 public:
     static CStage* Create(DEVICE graphicDev);
 
+
 private:
     void Free() override;
 };

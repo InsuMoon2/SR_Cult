@@ -47,6 +47,7 @@ HRESULT CPlayer::Ready_GameObject()
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
+    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     return S_OK;
 }
@@ -155,7 +156,7 @@ HRESULT CPlayer::Add_Component()
     // RectCol Componet
     m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
     NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
-    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
+    //m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
@@ -242,6 +243,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(PLAYERSTATE::IDLE);
     }
+
+
 }
 
 void CPlayer::TempImGuiRender()
@@ -251,7 +254,7 @@ void CPlayer::TempImGuiRender()
         // TransformComponent
         if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+            _vec3 pos = m_TransformCom->Get_Pos();
 
             ImGui::Text("Position");
 

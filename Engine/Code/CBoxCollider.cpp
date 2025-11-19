@@ -58,12 +58,21 @@ void CBoxCollider::Render()
     if (transform == nullptr)
         return;
 
-    _matrix matWorld = transform->Get_World();
+    _vec3 pos = transform->Get_Pos();
 
-    _matrix matScale;
-    D3DXMatrixScaling(&matScale, m_Size.x * 0.5f, m_Size.y * 0.5f, m_Size.z * 0.5f);
+    _vec3 worldSize = Get_Size();  
 
-    matWorld = matScale * matWorld;
+    _matrix matScale, matTrans, matWorld;
+
+    D3DXMatrixScaling(
+        &matScale,
+        worldSize.x,
+        worldSize.y,
+        worldSize.z);
+
+    D3DXMatrixTranslation(&matTrans, pos.x, pos.y, pos.z);
+
+    matWorld = matScale * matTrans;
 
     m_GraphicDev->SetTransform(D3DTS_WORLD, &matWorld);
 
@@ -96,9 +105,22 @@ bool CBoxCollider::CheckCollision(CCollider* other)
     return false;
 }
 
-_vec3& CBoxCollider::Get_Size()
+const _vec3 CBoxCollider::Get_Size() const
 {
-    return m_Size;
+    const CTransform* transform = Get_Transform();
+
+    _vec3 size = m_Size;  
+
+    if (transform)
+    {
+        _vec3 scale = transform->Get_Scale();
+
+        size.x *= scale.x;
+        size.y *= scale.y;
+        size.z *= scale.z;
+    }
+
+    return size; 
 }
 
 CBoxCollider* CBoxCollider::Create(DEVICE GraphicDev)

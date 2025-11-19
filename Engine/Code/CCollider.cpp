@@ -76,7 +76,6 @@ bool CCollider::CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2)
     if (t1 == nullptr || t2 == nullptr)
         return false;
 
-    // 중심 좌표 (Transform의 INFO_POS 기준, XY 평면에서만 충돌 체크)
     _vec3 p1 = t1->Get_Pos();
     _vec3 p2 = t2->Get_Pos();
 
@@ -88,17 +87,13 @@ bool CCollider::CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2)
     _float halfW2 = s2.x * 0.5f;
     _float halfH2 = s2.y * 0.5f;
 
-    _float minX1 = p1.x - halfW1;
-    _float maxX1 = p1.x + halfW1;
-    _float minY1 = p1.y - halfH1;
-    _float maxY1 = p1.y + halfH1;
+    _float minX1 = p1.x - halfW1; _float maxX1 = p1.x + halfW1;
+    _float minY1 = p1.y - halfH1; _float maxY1 = p1.y + halfH1;
 
-    _float minX2 = p2.x - halfW2;
-    _float maxX2 = p2.x + halfW2;
-    _float minY2 = p2.y - halfH2;
-    _float maxY2 = p2.y + halfH2;
+    _float minX2 = p2.x - halfW2; _float maxX2 = p2.x + halfW2;
+    _float minY2 = p2.y - halfH2; _float maxY2 = p2.y + halfH2;
 
-    // 한 쪽이 완전히 왼쪽/오른쪽/위/아래에 있으면 비충돌
+    // 한 쪽이 완전히 왼쪽/오른쪽/위/아래에 있으면 충돌 ㄴㄴ
     if (maxX2 < minX1) return false;
     if (maxX1 < minX2) return false;
     if (maxY2 < minY1) return false;

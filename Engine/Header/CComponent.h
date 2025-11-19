@@ -27,6 +27,7 @@ public:
     void         Set_Owner(CGameObject* owner);
 
     CTransform* Get_Transform() { return m_TransformCom; }
+    const CTransform* Get_Transform() const { return m_TransformCom; }
 
 protected:
     DEVICE m_GraphicDev;

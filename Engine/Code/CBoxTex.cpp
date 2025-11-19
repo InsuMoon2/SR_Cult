@@ -36,29 +36,29 @@ HRESULT CBoxTex::Ready_Buffer()
 	m_VB->Lock(0, 0, (void**)&pVertex, 0);
 
 	// 전면
-	pVertex[0].position = { -1.f, 1.f, -1.f };
+	pVertex[0].position = { -0.5f, 0.5f, -0.5f };
 	pVertex[0].texUV = pVertex[0].position;
 
-	pVertex[1].position = { 1.f, 1.f, -1.f };
+	pVertex[1].position = { 0.5f, 0.5f, -0.5f };
 	pVertex[1].texUV = pVertex[1].position;
 
-	pVertex[2].position = { 1.f, -1.f, -1.f };
+	pVertex[2].position = { 0.5f, -0.5f, -0.5f };
 	pVertex[2].texUV = pVertex[2].position;
 
-	pVertex[3].position = { -1.f, -1.f, -1.f };
+	pVertex[3].position = { -0.5f, -0.5f, -0.5f };
 	pVertex[3].texUV = pVertex[3].position;
 
 	// 후면
-	pVertex[4].position = { -1.f, 1.f, 1.f };
+	pVertex[4].position = { -0.5f, 0.5f, 0.5f };
 	pVertex[4].texUV = pVertex[4].position;
 
-	pVertex[5].position = { 1.f, 1.f, 1.f };
+	pVertex[5].position = { 0.5f, 0.5f, 0.5f };
 	pVertex[5].texUV = pVertex[5].position;
 
-	pVertex[6].position = { 1.f, -1.f, 1.f };
+	pVertex[6].position = { 0.5f, -0.5f, 0.5f };
 	pVertex[6].texUV = pVertex[6].position;
 
-	pVertex[7].position = { -1.f, -1.f, 1.f };
+	pVertex[7].position = { -0.5f, -0.5f, 0.5f };
 	pVertex[7].texUV = pVertex[7].position;
 
 	m_VB->Unlock();

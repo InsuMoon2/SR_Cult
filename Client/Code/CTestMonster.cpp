@@ -45,8 +45,12 @@ HRESULT CTestMonster::Ready_GameObject()
 
     Animation_Setting();
 
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 50.f));
-    m_TransformCom->Set_Scale(_vec3(7.f, 5.f, 1.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 10.f));
+    m_TransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
+
+    //m_BoxColCom->Set_Size(_vec3(5.f, 5.f, 2.f));
+
+    m_TextureCom->Get_Transform()->Set_Scale(_vec3(10.f, 10.f, 1.f));
 
     return S_OK;
 }
@@ -149,7 +153,6 @@ HRESULT CTestMonster::Add_Component()
     // RectCol Componet
     m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
     NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
-    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 10.f));
      
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
@@ -177,7 +180,7 @@ void CTestMonster::TempImGuiRender()
         // TransformComponent
         if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+            _vec3 pos = m_TransformCom->Get_Pos();
 
             ImGui::Text("Position");
 
