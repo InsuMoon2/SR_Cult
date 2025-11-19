@@ -56,7 +56,7 @@
 // DirectX data
 struct ImGui_ImplDX9_Data
 {
-    DEVICE           pd3dDevice;
+    LPDIRECT3DDEVICE9           pd3dDevice;
     LPDIRECT3DVERTEXBUFFER9     pVB;
     LPDIRECT3DINDEXBUFFER9      pIB;
     int                         VertexBufferSize;
@@ -100,7 +100,7 @@ static void ImGui_ImplDX9_SetupRenderState(ImDrawData* draw_data)
     vp.MinZ = 0.0f;
     vp.MaxZ = 1.0f;
 
-    DEVICE device = bd->pd3dDevice;
+    LPDIRECT3DDEVICE9 device = bd->pd3dDevice;
     device->SetViewport(&vp);
 
     // Setup render state: fixed-pipeline, alpha-blending, no face culling, no depth testing, shade mode (for gradient), bilinear sampling.
@@ -169,7 +169,7 @@ void ImGui_ImplDX9_RenderDrawData(ImDrawData* draw_data)
         return;
 
     ImGui_ImplDX9_Data* bd = ImGui_ImplDX9_GetBackendData();
-    DEVICE device = bd->pd3dDevice;
+    LPDIRECT3DDEVICE9 device = bd->pd3dDevice;
 
     // Catch up with texture updates. Most of the times, the list will have 1 element with an OK status, aka nothing to do.
     // (This almost always points to ImGui::GetPlatformIO().Textures[] but is part of ImDrawData to allow overriding or disabling texture updates).
@@ -306,7 +306,7 @@ void ImGui_ImplDX9_RenderDrawData(ImDrawData* draw_data)
     state_block->Release();
 }
 
-static bool ImGui_ImplDX9_CheckFormatSupport(DEVICE pDevice, D3DFORMAT format)
+static bool ImGui_ImplDX9_CheckFormatSupport(LPDIRECT3DDEVICE9 pDevice, D3DFORMAT format)
 {
     LPDIRECT3D9 pd3d = nullptr;
     if (pDevice->GetDirect3D(&pd3d) != D3D_OK)

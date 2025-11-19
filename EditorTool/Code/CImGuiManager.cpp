@@ -20,7 +20,7 @@ CImGuiManager::~CImGuiManager()
 	Free();
 }
 
-void CImGuiManager::InitImGui(HWND hWnd, DEVICE pGraphicDev)
+void CImGuiManager::InitImGui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	// Make process DPI aware and obtain main monitor scale
 	ImGui_ImplWin32_EnableDpiAwareness();
