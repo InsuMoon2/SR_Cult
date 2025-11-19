@@ -6,23 +6,21 @@
 #include "CDInputMgr.h"
 #include "CEnumHelper.h"
 #include "CRcTex.h"
-#include "CRectCollider.h"
 #include "CBoxCollider.h"
 #include "CRenderer.h"
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CCombatStat.h"
-#include "CEnumHelper.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr)
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -36,7 +34,6 @@ HRESULT CPlayer::Ready_GameObject()
 {
     if (FAILED(Add_Component()))
         return E_FAIL;
-
 
     // 플레이어 상태 초기값
     m_StateCom->Change_State(ACTORSTATE::IDLE);
@@ -99,12 +96,20 @@ void CPlayer::Render_Setting()
     // 후면 출력
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+    m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
 }
 
 void CPlayer::Render_Reset()
 {
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)
@@ -220,7 +225,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         inputMgr->Get_DIKeyState(DIK_D) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
-         m_TransformCom->Move_Pos(dir, timeDelta, speed);
+        m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
 
         m_StateCom->Change_Dir(ACTORDIR::RIGHT);
@@ -244,8 +249,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(ACTORSTATE::IDLE);
     }
-
-
 }
 
 void CPlayer::Render_ImGui()

@@ -1,26 +1,23 @@
 ﻿#include "pch.h"
 #include "CInventory.h"
+
 #include "CItemDB.h"
-#include "ItemData.h"
 #include "CPlayer.h"
+#include "ItemData.h"
 
+CInventory::CInventory(DEVICE graphicDev)
+    : CComponent(graphicDev), invenSlotNum(0)
+{}
 
-CInventory::CInventory(DEVICE graphicDev) : CComponent(graphicDev), invenSlotNum(0)
-{
-}
-
-CInventory::CInventory(const CInventory& rhs) : CComponent(rhs), invenSlotNum(0)
-{
-}
+CInventory::CInventory(const CInventory& rhs)
+    : CComponent(rhs), invenSlotNum(0)
+{}
 
 CInventory::~CInventory()
-{
-    
-}
+{ }
 
 HRESULT CInventory::Ready_Inventory()
 {
-
     return S_OK;
 }
 
@@ -28,8 +25,7 @@ void CInventory::SetInvenSlotNum(int slotNum)
 {
     //클론 한 뒤에 무조건 호출 해야합니다.
 
-   
-    if (dynamic_cast<CPlayer*>(m_Owner)!= nullptr)
+    if (dynamic_cast<CPlayer*>(m_Owner) != nullptr)
     {
         //플레이어인 경우
         invenSlotNum = 12;
@@ -37,12 +33,11 @@ void CInventory::SetInvenSlotNum(int slotNum)
 
         for (int i = 0; i < invenSlotNum; i++)
         {
-            if(i < invenSlotNum/2)
+            if (i < invenSlotNum / 2)
                 m_vecInven[i].SlotType = ItemType::Material;
             else
-                m_vecInven[i].SlotType =  ItemType::FoodMaterial;
+                m_vecInven[i].SlotType = ItemType::FoodMaterial;
         }
-
     }
     else
     {
@@ -50,11 +45,10 @@ void CInventory::SetInvenSlotNum(int slotNum)
         invenSlotNum = slotNum;
         m_vecInven.resize(slotNum);
 
-        for (int i = 0; i < invenSlotNum;i++)
+        for (int i = 0; i < invenSlotNum; i++)
         {
             m_vecInven[i].SlotType = ItemType::None;
         }
-
     }
 }
 
@@ -67,16 +61,10 @@ void CInventory::DropItem(int DropItemNum, _vec3 DropPos)
         size = m_vecInven.size();
 
         for (auto& item : m_vecInven)
-        {
-
-        }
-
+        { }
     }
     else
-    {
         size = DropItemNum;
-
-    }
 }
 
 bool CInventory::AddItem(ItemInstance itemInst)
@@ -88,7 +76,7 @@ bool CInventory::AddItem(ItemInstance itemInst)
     // 스택가능한지
     for (auto& slot : m_vecInven)
     {
-        if (slot.itemInst.itemId == itemInst.itemId && itemDate->stackable == true )
+        if (slot.itemInst.itemId == itemInst.itemId && itemDate->stackable == true)
         {
             if (itemDate->maxStack > slot.count)
             {
@@ -96,7 +84,6 @@ bool CInventory::AddItem(ItemInstance itemInst)
                 return true;
             }
         }
-        
     }
 
     if (dynamic_cast<CPlayer*>(m_Owner) != nullptr)
@@ -108,9 +95,7 @@ bool CInventory::AddItem(ItemInstance itemInst)
         case ItemType::FoodMaterial:
             slot = FindEmptySlot(ItemType::FoodMaterial);
             if (slot == -1)
-            {
                 break;
-            }
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
@@ -124,9 +109,7 @@ bool CInventory::AddItem(ItemInstance itemInst)
         case ItemType::Material:
             slot = FindEmptySlot(ItemType::Material);
             if (slot == -1)
-            {
                 break;
-            }
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
@@ -147,10 +130,8 @@ bool CInventory::AddItem(ItemInstance itemInst)
             m_vecInven[slot].itemInst = itemInst;
             return true;
         }
-        
     }
     return false;
-
 }
 
 int CInventory::FindEmptySlot(ItemType itemtype)
@@ -168,7 +149,6 @@ int CInventory::FindEmptySlot(ItemType itemtype)
     }
 
     return -1;
-
 }
 
 bool CInventory::RemoveItem(int itemID, int count)
@@ -180,10 +160,10 @@ bool CInventory::RemoveItem(int itemID, int count)
         {
             if (slot.count <= remainCount)
             {
-                slot.count = 0;
+                slot.count           = 0;
                 slot.itemInst.itemId = -1;
 
-                if(remainCount == 0)
+                if (remainCount == 0)
                     return true;
             }
             else //if (slot.count > count)
@@ -191,7 +171,7 @@ bool CInventory::RemoveItem(int itemID, int count)
                 slot.count -= remainCount;
                 remainCount = 0;
                 return true;
-            }  
+            }
         }
     }
 
@@ -217,9 +197,7 @@ CComponent* CInventory::Clone()
     return new CInventory(*this);
 }
 
-
 void CInventory::Free()
 {
-
     CComponent::Free();
 }

@@ -12,12 +12,12 @@ CFontMgr::~CFontMgr()
     CFontMgr::Free();
 }
 
-HRESULT CFontMgr::Ready_Font(DEVICE graphicDev,
-                             const wstring&    fontTag,
-                             const wstring&    fontType,
-                             const _uint&      width,
-                             const _uint&      height,
-                             const _uint&      weight)
+HRESULT CFontMgr::Ready_Font(DEVICE         graphicDev,
+                             const wstring& fontTag,
+                             const wstring& fontType,
+                             const _uint&   width,
+                             const _uint&   height,
+                             const _uint&   weight)
 {
     CFont* font = Find_Font(fontTag);
 

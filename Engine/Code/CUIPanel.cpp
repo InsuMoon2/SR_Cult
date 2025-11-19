@@ -1,18 +1,16 @@
 ﻿#include "CUIPanel.h"
 #include "CUI.h"
 
+CUIPanel::CUIPanel(DEVICE graphicDev)
+    : CUI(graphicDev)
+{}
 
-CUIPanel::CUIPanel(DEVICE graphicDev):CUI(graphicDev)
-{
-}
-
-CUIPanel::CUIPanel(const CUIPanel& rhs):CUI(rhs)
-{
-}
+CUIPanel::CUIPanel(const CUIPanel& rhs)
+    : CUI(rhs)
+{}
 
 CUIPanel::~CUIPanel()
-{
-}
+{}
 
 HRESULT CUIPanel::Ready_GameObject()
 {
@@ -25,12 +23,12 @@ _int CUIPanel::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CUI::Update_GameObject(timeDelta);
 
-	for (auto& child : m_Children)
-	{
-		child->Update_GameObject(timeDelta);
-	}
+    for (auto& child : m_Children)
+    {
+        child->Update_GameObject(timeDelta);
+    }
 
-	return exit;
+    return exit;
 }
 
 void CUIPanel::LateUpdate_GameObject(const _float& timeDelta)
@@ -45,28 +43,30 @@ void CUIPanel::LateUpdate_GameObject(const _float& timeDelta)
 
 void CUIPanel::AddChild(CUI* ui)
 {
-	if (ui == nullptr)
-		return;
+    if (ui == nullptr)
+        return;
 
-	m_Children.push_back(ui);
+    m_Children.push_back(ui);
 
     ui->AddRef();
 }
 
 void CUIPanel::Render_GameObject()
 {
-    
     for (auto& child : m_Children)
+    {
         child->Render_GameObject();
-
+    }
 }
 
 void CUIPanel::Free()
 {
     for (auto& child : m_Children)
+    {
         Safe_Release(child);
+    }
 
-    m_Children.clear();     
+    m_Children.clear();
 
-    CGameObject::Free();       
+    CGameObject::Free();
 }

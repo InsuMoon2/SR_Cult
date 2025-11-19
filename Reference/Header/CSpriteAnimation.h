@@ -12,8 +12,8 @@ private:
 
 public:
     HRESULT Ready_SpriteAnim(
-              _uint     frameCount,
-              _float    interval);
+        _uint  frameCount,
+        _float interval);
 
     void Reset();
     void Update(const _float& timeDelta);
@@ -33,8 +33,8 @@ public:
     _bool IsFinished() const { return m_State == ANIMSTATE::STOP; }
 
     static CSpriteAnimation* Create(
-        _uint     frameCount,
-        _float      interval);
+        _uint  frameCount,
+        _float interval);
 
 private:
     void Free() override;

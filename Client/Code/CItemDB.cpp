@@ -22,8 +22,7 @@
 IMPLEMENT_SINGLETON(CItemDB)
 
 CItemDB::CItemDB()
-{
-}
+{}
 
 CItemDB::~CItemDB()
 {
@@ -32,17 +31,15 @@ CItemDB::~CItemDB()
 
 HRESULT CItemDB::Ready_ItemDB()
 {
-
     return S_OK;
 }
 
 HRESULT CItemDB::LoadFromJson(const string& fileName)
 {
-
     // char buf[MAX_PATH]{};
     // GetCurrentDirectoryA(MAX_PATH, buf);
     // MessageBoxA(nullptr, buf, "Current Directory", MB_OK);
- 
+
     std::ifstream file(fileName, std::ios::in);
 
     if (!file.is_open())
@@ -57,7 +54,7 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
     char c;
     file.read(&c, 1);
 
-    if ((unsigned char)c != 0xEF) // BOM의 첫 바이트가 0xEF가 아니면
+    if (static_cast<unsigned char>(c) != 0xEF) // BOM의 첫 바이트가 0xEF가 아니면
     {
         // BOM 없음 → 다시 스트림 처음으로 이동
         file.seekg(0);
@@ -82,36 +79,35 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         return E_FAIL;
     }
 
-
-
     for (auto& node : j["items"])
     {
         Item item; // 구조체 지역으로 생성
 
-        item.id = node["id"];
-        item.type = StringToItemType(node["type"]);
-        item.name = node["name"];
-        item.desc = node["desc"];
+        item.id         = node["id"];
+        item.type       = StringToItemType(node["type"]);
+        item.name       = node["name"];
+        item.desc       = node["desc"];
         item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
-        item.UIPath = ToWString(node["UIPath"].get<std::string>());
+        item.UIPath     = ToWString(node["UIPath"].get<std::string>());
         //item.UIPath = node["UIPath"];
 
         item.additionalDesc = node["additionalDesc"];
-   
+
         //JSON에 해당 키가 없을 때 사용할 기본값을 지정 있으면 데이터
-        item.quality = node.value("quality", 0);
+        item.quality   = node.value("quality", 0);
         item.stackable = node.value("stackable", false);
-        item.maxStack = node.value("maxStack", 1);
-        item.price = node.value("price", 0);
+        item.maxStack  = node.value("maxStack", 1);
+        item.price     = node.value("price", 0);
         //map stat에 넣을 데이터
         if (node.contains("stats"))
         {
             for (auto& s : node["stats"].items())
+            {
                 item.stats[s.key()] = s.value();
+            }
         }
         m_vecItems.push_back(item);
         m_itemIndex[item.id] = m_vecItems.size() - 1;
-
     }
 
     return S_OK;
@@ -123,6 +119,7 @@ Item* CItemDB::GetItemById(int id)
     assert(it != m_itemIndex.end());
     return &m_vecItems[it->second];
 }
+
 ItemType CItemDB::StringToItemType(string s)
 {
     if (s == "FoodMaterial") return ItemType::FoodMaterial;
@@ -141,14 +138,20 @@ std::wstring CItemDB::Utf8ToWstring(const std::string& str)
 {
     if (str.empty()) return std::wstring();
 
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0,
-        str.c_str(), -1,
-        nullptr, 0);
+    int size_needed = MultiByteToWideChar(CP_UTF8,
+                                          0,
+                                          str.c_str(),
+                                          -1,
+                                          nullptr,
+                                          0);
 
     std::wstring result(size_needed, 0);
-    MultiByteToWideChar(CP_UTF8, 0,
-        str.c_str(), -1,
-        &result[0], size_needed);
+    MultiByteToWideChar(CP_UTF8,
+                        0,
+                        str.c_str(),
+                        -1,
+                        &result[0],
+                        size_needed);
 
     // 널문자 제거
     if (!result.empty() && result.back() == L'\0')
@@ -158,5 +161,4 @@ std::wstring CItemDB::Utf8ToWstring(const std::string& str)
 }
 
 void CItemDB::Free()
-{
-}
+{}
