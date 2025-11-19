@@ -22,7 +22,7 @@ HRESULT CTriCol::Ready_Buffer()
     m_FVF     = FVF_COL;
 
     m_IdxSize = sizeof(INDEX32);
-    m_IdxFmt    = D3DFMT_INDEX32;
+    m_IdxFmt  = D3DFMT_INDEX32;
 
     if (FAILED(CVIBuffer::Ready_Buffer()))
         return E_FAIL;

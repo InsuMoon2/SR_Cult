@@ -4,8 +4,6 @@
 BEGIN(Engine)
 class CUIText : public CUI
 
-{
+{};
 
-
-};
 END

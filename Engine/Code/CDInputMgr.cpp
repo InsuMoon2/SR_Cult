@@ -15,10 +15,10 @@ CDInputMgr::~CDInputMgr()
 HRESULT CDInputMgr::Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
     if (FAILED(DirectInput8Create(hInst,
-                                  DIRECTINPUT_VERSION,
-                                  IID_IDirectInput8,
-                                  (void**)&m_InputSDK,
-                                  nullptr)))
+        DIRECTINPUT_VERSION,
+        IID_IDirectInput8,
+        (void**)&m_InputSDK,
+        nullptr)))
         return E_FAIL;
 
     if (FAILED(m_InputSDK->CreateDevice(GUID_SysKeyboard, &m_KeyBoardDev, nullptr)))

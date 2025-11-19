@@ -23,8 +23,8 @@ private:
 public:
     HRESULT Ready_GameObject() override;
     _int    Update_GameObject(const _float& timeDelta) override;
-    void LateUpdate_GameObject(const _float& timeDelta) override;
-    void Render_GameObject() override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
     void Render_Setting();
     void Render_Reset();
@@ -34,16 +34,16 @@ public:
 
 private:
     HRESULT Add_Component();
-    void Animation_Setting();
+    void    Animation_Setting();
 
 private:
-    Engine::CRcTex*         m_BufferCom;
-    Engine::CTransform*     m_TransformCom;
-    Engine::CTexture*       m_TextureCom;
-    Engine::CAnimator*      m_AnimatorCom;
+    Engine::CRcTex*     m_BufferCom;
+    Engine::CTransform* m_TransformCom;
+    Engine::CTexture*   m_TextureCom;
+    Engine::CAnimator*  m_AnimatorCom;
     //Engine::CRectCollider*  m_BoxColCom;
-    Engine::CBoxCollider*  m_BoxColCom;
-    Engine::CState*         m_StateCom;
+    Engine::CBoxCollider* m_BoxColCom;
+    Engine::CState*       m_StateCom;
 
     void TempImGuiRender();
 
@@ -53,4 +53,3 @@ public:
 private:
     void Free() override;
 };
-

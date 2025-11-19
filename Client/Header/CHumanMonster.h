@@ -10,26 +10,23 @@ class CRcTex;
 class CBoxCollider;
 END
 
-
 class CHumanMonster : public CGameObject
 {
-
 private:
     explicit CHumanMonster(DEVICE graphicDev);
     explicit CHumanMonster(const CHumanMonster& rhs);
-    virtual ~CHumanMonster() override;
+    ~CHumanMonster() override;
 
 public:
     HRESULT Ready_GameObject() override;
-    _int Update_GameObject(const _float& timeDelta) override;
-    void LateUpdate_GameObject(const _float& timeDelta) override;
-    void Render_GameObject() override;
-
+    _int    Update_GameObject(const _float& timeDelta) override;
+    void    LateUpdate_GameObject(const _float& timeDelta) override;
+    void    Render_GameObject() override;
 
 private:
-    void Animation_Setting();
+    void    Animation_Setting();
     HRESULT Add_Component();
-    void TempImGuiRender();
+    void    TempImGuiRender();
 
     void Render_Setting();
     void Render_Reset();
@@ -38,14 +35,13 @@ public:
     void OnBeginOverlap(CCollider* self, CCollider* other) override;
     void OnEndOverlap(CCollider* self, CCollider* other) override;
 
-
 private:
-    CRcTex* m_BufferCom;
-    CTransform* m_TransformCom;
+    CRcTex*       m_BufferCom;
+    CTransform*   m_TransformCom;
     CBoxCollider* m_BoxColCom;
-    CState* m_StateCom;
-    CTexture* m_TextureCom;
-    CAnimator* m_AnimatorCom;
+    CState*       m_StateCom;
+    CTexture*     m_TextureCom;
+    CAnimator*    m_AnimatorCom;
 
 public:
     static CHumanMonster* Create(DEVICE graphicDev);
@@ -56,5 +52,3 @@ private:
 protected:
     void Free() override;
 };
-
-

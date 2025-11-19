@@ -87,11 +87,15 @@ bool CCollider::CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2)
     _float halfW2 = s2.x * 0.5f;
     _float halfH2 = s2.y * 0.5f;
 
-    _float minX1 = p1.x - halfW1; _float maxX1 = p1.x + halfW1;
-    _float minY1 = p1.y - halfH1; _float maxY1 = p1.y + halfH1;
+    _float minX1 = p1.x - halfW1;
+    _float maxX1 = p1.x + halfW1;
+    _float minY1 = p1.y - halfH1;
+    _float maxY1 = p1.y + halfH1;
 
-    _float minX2 = p2.x - halfW2; _float maxX2 = p2.x + halfW2;
-    _float minY2 = p2.y - halfH2; _float maxY2 = p2.y + halfH2;
+    _float minX2 = p2.x - halfW2;
+    _float maxX2 = p2.x + halfW2;
+    _float minY2 = p2.y - halfH2;
+    _float maxY2 = p2.y + halfH2;
 
     // 한 쪽이 완전히 왼쪽/오른쪽/위/아래에 있으면 충돌 ㄴㄴ
     if (maxX2 < minX1) return false;
@@ -127,13 +131,19 @@ bool CCollider::CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2)
     _float halfH2 = s2.y * 0.5f;
     _float halfD2 = s2.z * 0.5f;
 
-    _float minX1 = p1.x - halfW1; _float maxX1 = p1.x + halfW1;
-    _float minY1 = p1.y - halfH1; _float maxY1 = p1.y + halfH1;
-    _float minZ1 = p1.z - halfD1; _float maxZ1 = p1.z + halfD1;
+    _float minX1 = p1.x - halfW1;
+    _float maxX1 = p1.x + halfW1;
+    _float minY1 = p1.y - halfH1;
+    _float maxY1 = p1.y + halfH1;
+    _float minZ1 = p1.z - halfD1;
+    _float maxZ1 = p1.z + halfD1;
 
-    _float minX2 = p2.x - halfW2; _float maxX2 = p2.x + halfW2;
-    _float minY2 = p2.y - halfH2; _float maxY2 = p2.y + halfH2;
-    _float minZ2 = p2.z - halfD2; _float maxZ2 = p2.z + halfD2;
+    _float minX2 = p2.x - halfW2;
+    _float maxX2 = p2.x + halfW2;
+    _float minY2 = p2.y - halfH2;
+    _float maxY2 = p2.y + halfH2;
+    _float minZ2 = p2.z - halfD2;
+    _float maxZ2 = p2.z + halfD2;
 
     // X축 분리
     if (maxX2 < minX1) return false;
@@ -166,7 +176,7 @@ bool CCollider::CheckCollisionSphere2Box(CSphereCollider* s1, CBoxCollider* b2)
     ts->Get_Info(INFO_POS, &cs3);
     tb->Get_Info(INFO_POS, &cb3);
 
-    _float radius  = s1->Get_Radius();
+    _float radius = s1->Get_Radius();
     _vec2  boxSize;// = b2->Get_Size();
 
     _float halfW = boxSize.x * 0.5f;
