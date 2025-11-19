@@ -71,6 +71,7 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         // 이제 f는 JSON 본문 위치에 정확히 있음
     }
 
+    // 파일 읽기
     try
     {
         file >> j;  // 여기서 문법 이상하면 바로 예외 발생
@@ -88,7 +89,7 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         Item item; // 구조체 지역으로 생성
 
         item.id = node["id"];
-        item.type = node["type"];
+        item.type = StringToItemType(node["type"]);
         item.name = node["name"];
         item.desc = node["desc"];
         item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
@@ -122,12 +123,39 @@ Item* CItemDB::GetItemById(int id)
     assert(it != m_itemIndex.end());
     return &m_vecItems[it->second];
 }
+ItemType CItemDB::StringToItemType(string s)
+{
+    if (s == "FoodMaterial") return ItemType::FoodMaterial;
+    if (s == "Material") return ItemType::Material;
+    if (s == "Food") return ItemType::Food;
+    if (s == "Weapon") return ItemType::Weapon;
+    return ItemType::None;
+}
 
 std::wstring CItemDB::ToWString(const std::string& str)
 {
     return std::wstring(str.begin(), str.end());
 }
 
+std::wstring CItemDB::Utf8ToWstring(const std::string& str)
+{
+    if (str.empty()) return std::wstring();
+
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0,
+        str.c_str(), -1,
+        nullptr, 0);
+
+    std::wstring result(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0,
+        str.c_str(), -1,
+        &result[0], size_needed);
+
+    // 널문자 제거
+    if (!result.empty() && result.back() == L'\0')
+        result.pop_back();
+
+    return result;
+}
 
 void CItemDB::Free()
 {

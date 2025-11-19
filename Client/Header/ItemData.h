@@ -1,10 +1,17 @@
 ﻿#pragma once
 #include "pch.h"
-
+enum ItemType
+{
+    FoodMaterial,
+    Material,
+    Food,
+    Weapon,
+    None
+};
 struct Item
 {
     int id;
-    std::string type;
+    ItemType type;
     std::string name;
     std::string desc;
     std::wstring UIFileName;

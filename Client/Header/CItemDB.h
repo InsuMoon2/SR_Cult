@@ -15,7 +15,10 @@ public:
     HRESULT LoadFromJson(const string& fileName);
 
     Item* GetItemById(int id);
-std::wstring ToWString(const std::string& str);
+    ItemType StringToItemType(string s);
+    wstring ToWString(const std::string& str);
+
+    std::wstring Utf8ToWstring(const std::string& str);
 
 private:
     std::vector<Item> m_vecItems;

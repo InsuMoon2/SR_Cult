@@ -95,6 +95,12 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
 
+    // item Test
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
+    //    return E_FAIL;
+    //
+
 #pragma endregion
 
     m_LoadingText = L"Etc LOADING..........";

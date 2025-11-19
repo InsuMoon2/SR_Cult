@@ -2,7 +2,7 @@
   "items": [
     {
       "id": 1001,
-      "type": "material",
+      "type": "Material",
       "name": "동전",
       "desc": "모든 종류의 일에 사용되는 화폐.",
       "UIFileName": "Coin",
@@ -66,7 +66,7 @@
 
     {
       "id": 1005,
-      "type": "material",
+      "type": "Material",
       "name": "나무",
       "desc": "건축물을 짓는 데 사용되는 간단한 재료 .",
       "UIFileName": "Wood",
@@ -82,7 +82,7 @@
 
     {
       "id": 1006,
-      "type": "material",
+      "type": "Material",
       "name": "돌",
       "desc": "유용한 건축 자재.",
       "UIFileName": "Stone",
@@ -139,7 +139,10 @@
 
       "quality":1, 
       "stackable": false,
-      "price": 5
+      "price": 5,
+      "stats": {
+        "hungry": 10
+      }
     },
    {
       "id": 2002,
@@ -153,7 +156,10 @@
 
       "quality":1, 
       "stackable": false,
-      "price": 10
+      "price": 10,
+      "stats": {
+        "hungry": 5
+      }
     },
     {
       "id": 2003,
@@ -167,11 +173,14 @@
 
       "quality":2, 
       "stackable": false,
-      "price": 10
+      "price": 10,
+      "stats": {
+        "hungry": 20
+      }
     },
     {
       "id": 3001,
-      "type": "weapon",
+      "type": "Weapon",
       "name": "크루세이더의 칼날",
       "desc": "적당한 데미지를 입히는 균형 잡힌 칼날입니다.",
        "UIFileName": "Icon_Weapon_Sword",
@@ -192,7 +201,7 @@
 ,
     {
       "id": 3002,
-      "type": "weapon",
+      "type": "Weapon",
       "name": "경건한 망치",
       "desc": "필멸자의 무기보다 훨씬 더 큰 피해를 입힙니다.",
       "UIFileName": "Icon_Weapon_Hammer_Godly",
