@@ -4,25 +4,23 @@
 
 CState::CState(DEVICE GraphicDev)
     : CComponent(GraphicDev)
-    , m_State(PLAYERSTATE::IDLE)
-    , m_Dir(PLAYERDIR::LEFT)
-    , m_PrevState(PLAYERSTATE::PLAYERSTATE_END)
-    , m_Animator(nullptr)
-{
-}
+      , m_State(ACTORSTATE::IDLE)
+      , m_PrevState(ACTORSTATE::PLAYERSTATE_END)
+      , m_Dir(ACTORDIR::LEFT)
+      , m_Animator(nullptr)
+{}
 
 CState::CState(const CState& rhs)
     : CComponent(rhs.m_GraphicDev)
-    /*, m_State(rhs.m_State)
-    , m_Dir(rhs.m_Dir)
-    , m_PrevState(rhs.m_PrevState)
-    , m_Animator(rhs.m_Animator)*/
-    , m_State(PLAYERSTATE::IDLE)
-    , m_Dir(PLAYERDIR::LEFT)
-    , m_PrevState(PLAYERSTATE::PLAYERSTATE_END)
-    , m_Animator(nullptr)
-{
-}
+      /*, m_State(rhs.m_State)
+      , m_Dir(rhs.m_Dir)
+      , m_PrevState(rhs.m_PrevState)
+      , m_Animator(rhs.m_Animator)*/
+      , m_State(ACTORSTATE::IDLE)
+      , m_PrevState(ACTORSTATE::PLAYERSTATE_END)
+      , m_Dir(ACTORDIR::LEFT)
+      , m_Animator(nullptr)
+{}
 
 CState::~CState()
 {
@@ -31,10 +29,10 @@ CState::~CState()
 
 HRESULT CState::Ready_StateComponent(DEVICE GraphicDev)
 {
-    m_State = PLAYERSTATE::IDLE;
-    m_PrevState = PLAYERSTATE::PLAYERSTATE_END;
+    m_State     = ACTORSTATE::IDLE;
+    m_PrevState = ACTORSTATE::PLAYERSTATE_END;
 
-    m_Dir = PLAYERDIR::LEFT;
+    m_Dir = ACTORDIR::LEFT;
 
     return S_OK;
 }
@@ -51,9 +49,6 @@ _int CState::Update_Component(const _float& timeDelta)
 void CState::LateUpdate_Component()
 {
     CComponent::LateUpdate_Component();
-
-
-
 }
 
 void CState::Update_Animation()
@@ -86,7 +81,7 @@ void CState::Update_Animation()
     }
 }
 
-void CState::Change_State(PLAYERSTATE State)
+void CState::Change_State(ACTORSTATE State)
 {
     if (m_State == State)
         return;
@@ -94,7 +89,7 @@ void CState::Change_State(PLAYERSTATE State)
     m_State = State;
 }
 
-void CState::Change_Dir(PLAYERDIR Dir)
+void CState::Change_Dir(ACTORDIR Dir)
 {
     if (m_Dir == Dir)
         return;
@@ -102,10 +97,10 @@ void CState::Change_Dir(PLAYERDIR Dir)
     m_Dir = Dir;
 }
 
-void CState::Set_AnimInfo(PLAYERSTATE PlayerState, const wstring& Key, ANIMSTATE AnimState)
+void CState::Set_AnimInfo(ACTORSTATE PlayerState, const wstring& Key, ANIMSTATE AnimState)
 {
     m_PlayerStateMap[PlayerState] = Key;
-    m_AnimStateMap[PlayerState] = AnimState;
+    m_AnimStateMap[PlayerState]   = AnimState;
 }
 
 CState* CState::Create(DEVICE GraphicDev)
@@ -130,6 +125,4 @@ CComponent* CState::Clone()
 void CState::Free()
 {
     CComponent::Free();
-
-
 }

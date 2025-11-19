@@ -120,20 +120,11 @@
     <ClInclude Include="..\Header\CMainBG.h">
       <Filter>02. GameObject\03. BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTestMonster.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUIPlayerPanel.h">
       <Filter>03. UI\00. Panel\00. UIPlayerPanel</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUIHeartBar.h">
       <Filter>03. UI\01. UI\00. UIHeartBar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CHumanMonster.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="CHumanMonster.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CItemDB.h">
       <Filter>03. Item</Filter>
@@ -152,6 +143,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\CDropSystem.h">
       <Filter>03. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTestMonster.h">
+      <Filter>02. GameObject\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CHumanMonster.h">
+      <Filter>02. GameObject\02. Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,20 +182,11 @@
     <ClCompile Include="..\Code\CMainBG.cpp">
       <Filter>02. GameObject\03. BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTestMonster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp">
       <Filter>03. UI\00. Panel\00. UIPlayerPanel</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUIHeartBar.cpp">
       <Filter>03. UI\01. UI\00. UIHeartBar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CHumanMonster.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="CHumanMonster.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CItemDB.cpp">
       <Filter>03. Item</Filter>
@@ -211,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDropSystem.cpp">
       <Filter>03. Item</Filter>
+   </ClCompile>
+    <ClCompile Include="..\Code\CTestMonster.cpp">
+      <Filter>02. GameObject\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CHumanMonster.cpp">
+      <Filter>02. GameObject\02. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

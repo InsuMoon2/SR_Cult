@@ -21,11 +21,11 @@ public:
 public:
     bool CheckCollision(CCollider* other) override;
 
-    const _vec3     Get_Size() const;
-    void            Set_Size(_vec3 size) { m_Size = size; }
+    const _vec3 Get_Size() const;
+    void        Set_Size(_vec3 size) { m_Size = size; }
 
-    static CBoxCollider*  Create(DEVICE GraphicDev);
-    CComponent*           Clone() override;
+    static CBoxCollider* Create(DEVICE GraphicDev);
+    CComponent*          Clone() override;
 
 protected:
     void Free() override;

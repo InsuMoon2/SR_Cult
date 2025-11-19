@@ -7,6 +7,7 @@
 #include "CFrameMgr.h"
 #include "CGraphicDev.h"
 #include "CImGuiManager.h"
+#include "CItemDB.h"
 #include "CLightMgr.h"
 #include "CLogo.h"
 #include "CManagement.h"
@@ -33,7 +34,6 @@ HRESULT CMainApp::Ready_MainApp()
         return E_FAIL;
 
     CImGuiManager::GetInstance()->InitImGui(g_hWnd, m_GraphicDev);
-
 
 #pragma region 데이터 파싱 테스트
 

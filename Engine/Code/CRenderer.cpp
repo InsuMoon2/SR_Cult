@@ -60,9 +60,6 @@ void CRenderer::Render_Alpha(DEVICE& graphicDev)
 {
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-    graphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-    graphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
     for (auto& obj : m_RenderGroup[RENDER_ALPHA])
     {
         obj->Render_GameObject();
@@ -73,8 +70,6 @@ void CRenderer::Render_Alpha(DEVICE& graphicDev)
 
 void CRenderer::Render_UI(DEVICE& graphicDev)
 {
-    // TODO 석호: 일단 단순 구현해서, 나중에 가능하면 카메라 컴포넌트가 적은 부하로 관리 가능하게 만들자
-
     // 직교 투영
     if (m_RenderGroup[RENDER_UI].empty())
         return;
@@ -129,7 +124,6 @@ void CRenderer::Render_UI(DEVICE& graphicDev)
     graphicDev->SetTransform(D3DTS_VIEW, &prevView);
     graphicDev->SetTransform(D3DTS_PROJECTION, &prevProj);
     graphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-
 }
 
 void CRenderer::Free()

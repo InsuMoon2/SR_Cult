@@ -2,41 +2,37 @@
 #include "CTestMonster.h"
 
 #include "CAnimator.h"
-#include "CCreateHelper.h"
-#include "CRcTex.h"
-#include "CRectCollider.h"
 #include "CBoxCollider.h"
+#include "CCreateHelper.h"
+#include "CEnumHelper.h"
+#include "CRcTex.h"
 #include "CRenderer.h"
+#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CState.h"
-#include "CEnumHelper.h"
 
 CTestMonster::CTestMonster(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr)
-{
-}
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr)
+{}
 
 CTestMonster::CTestMonster(const CTestMonster& rhs)
     : CGameObject(rhs),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr)
-{
-}
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr)
+{}
 
 CTestMonster::~CTestMonster()
-{
-}
+{}
 
 HRESULT CTestMonster::Ready_GameObject()
 {
@@ -77,8 +73,8 @@ void CTestMonster::Render_GameObject()
 
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key = m_AnimatorCom->Get_CurKey();
-        _int frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key   = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
@@ -113,13 +109,11 @@ void CTestMonster::Render_Reset()
 void CTestMonster::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
-
 }
 
 void CTestMonster::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
-
 }
 
 HRESULT CTestMonster::Add_Component()
@@ -153,7 +147,7 @@ HRESULT CTestMonster::Add_Component()
     // RectCol Componet
     m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
     NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
-     
+
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
@@ -170,7 +164,7 @@ void CTestMonster::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"BossIdle", 40, 0.02f);
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
 }
 
 void CTestMonster::TempImGuiRender()

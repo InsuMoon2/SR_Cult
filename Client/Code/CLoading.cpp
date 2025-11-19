@@ -10,7 +10,6 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CRcTex.h"
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
@@ -49,8 +48,6 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 _uint CLoading::Loading_ForState()
 {
-    // TODO 석호: E_FAIL마다 경고 출력도 해야 할듯. 어디서 안되는건지 헷갈림
-
     auto pProtoMgr = CProtoMgr::GetInstance();
 
     m_LoadingText = L"Buffer LOADING..........";
@@ -94,7 +91,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_PLAYER, playerTex)))
         return E_FAIL;
-    
+
     //Texture : Player Heart
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
@@ -102,14 +99,14 @@ _uint CLoading::Loading_ForState()
                 L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
         return E_FAIL;
 
-   // // Boss2 Test
+    // // Boss2 Test
     CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(bossTex, E_FAIL);
-   
+
     if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
         L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 40)))
         return E_FAIL;
-   
+
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
@@ -120,16 +117,13 @@ _uint CLoading::Loading_ForState()
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
 
-
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterIdle", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Idle/Idle%d.png", 34)))
         return E_FAIL;
 
-
     if (FAILED(humanmonsterTex->Add_Texture(L"HumanMonsterRun", TEX_NORMAL,
         L"../Bin/Resource/Texture/Monster/Human/Run/Run%d.png", 18)))
         return E_FAIL;
-
 
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
