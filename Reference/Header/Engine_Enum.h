@@ -93,7 +93,8 @@ enum class COMPONENTTYPE
     TEX_MAINBG,
     TEX_MONSTER,
     TEX_HUMANMONSTER,
-    TEX_UI_HEART,
+    TEX_UI_HEART,    
+    TEX_ITEM,
 
     ANIMATOR,
     CAMERA,
@@ -106,7 +107,7 @@ enum class COMPONENTTYPE
     COMPONENT_END
 };
 
-enum class PLAYERSTATE
+enum class ACTORSTATE
 {
     IDLE,
     RUN,
@@ -117,7 +118,7 @@ enum class PLAYERSTATE
     PLAYERSTATE_END
 };
 
-enum class PLAYERDIR
+enum class ACTORDIR
 {
     UP,
     DOWN,

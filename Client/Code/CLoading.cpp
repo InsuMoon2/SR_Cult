@@ -111,6 +111,11 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_MONSTER, bossTex)))
         return E_FAIL;
 
+    // item Test
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
+    //    return E_FAIL;
+    
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
@@ -129,9 +134,6 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
-
-
-
 
 #pragma endregion
 

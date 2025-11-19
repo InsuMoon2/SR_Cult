@@ -63,11 +63,16 @@ void CRenderer::Render_Alpha(DEVICE& graphicDev)
     graphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     graphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
+    graphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    graphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    graphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
+
     for (auto& obj : m_RenderGroup[RENDER_ALPHA])
     {
         obj->Render_GameObject();
     }
 
+    graphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 

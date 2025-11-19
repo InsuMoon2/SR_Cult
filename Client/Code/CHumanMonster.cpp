@@ -37,8 +37,8 @@ HRESULT CHumanMonster::Ready_GameObject()
         return E_FAIL;
 
 
-    m_StateCom->Change_State(PLAYERSTATE::IDLE);
-    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+    m_StateCom->Change_State(ACTORSTATE::IDLE);
+    m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
     Animation_Setting();
     //m_AnimatorCom->Play_Animation(L"HumanMonsterIdle", ANIMSTATE::LOOP);
@@ -128,8 +128,8 @@ void CHumanMonster::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"HumanMonsterIdle", 34, 0.02f);
     m_AnimatorCom->Create_Animation(L"HumanMonsterRun", 18, 0.02f);
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"HumanMonsterIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"HumanMonsterRun", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"HumanMonsterIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"HumanMonsterRun", ANIMSTATE::LOOP);
 }
 
 void CHumanMonster::TempImGuiRender()

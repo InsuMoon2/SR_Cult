@@ -51,7 +51,7 @@ public:
     static CHumanMonster* Create(DEVICE graphicDev);
 
 private:
-    PLAYERSTATE m_State;
+    ACTORSTATE m_State;
 
 protected:
     void Free() override;

@@ -93,7 +93,9 @@ enum class COMPONENTTYPE
     TEX_MAINBG,
     TEX_MONSTER,
     TEX_HUMANMONSTER,
-    TEX_UI_HEART,
+    TEX_UI_HEART,    
+    TEX_ITEM,
+    // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
 
     ANIMATOR,
     CAMERA,
@@ -106,7 +108,7 @@ enum class COMPONENTTYPE
     COMPONENT_END
 };
 
-enum class PLAYERSTATE
+enum class ACTORSTATE
 {
     IDLE,
     RUN,
@@ -117,7 +119,7 @@ enum class PLAYERSTATE
     PLAYERSTATE_END
 };
 
-enum class PLAYERDIR
+enum class ACTORDIR
 {
     UP,
     DOWN,

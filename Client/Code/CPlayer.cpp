@@ -39,8 +39,8 @@ HRESULT CPlayer::Ready_GameObject()
 
 
     // 플레이어 상태 초기값
-    m_StateCom->Change_State(PLAYERSTATE::IDLE);
-    m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+    m_StateCom->Change_State(ACTORSTATE::IDLE);
+    m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
     m_CombatStat->Set_Hp(100.f);
     m_CombatStat->Set_Attack(10.f);
@@ -96,21 +96,14 @@ void CPlayer::Render_GameObject()
 
 void CPlayer::Render_Setting()
 {
+    // 후면 출력
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
-    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-    m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-    m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-    m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
 }
 
 void CPlayer::Render_Reset()
 {
-    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
@@ -186,8 +179,8 @@ void CPlayer::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 0.02f);
 
     // State -> Animation 연동
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
+    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
@@ -208,7 +201,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::UP);
+        m_StateCom->Change_Dir(ACTORDIR::UP);
     }
 
     if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80 ||
@@ -218,7 +211,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::DOWN);
+        m_StateCom->Change_Dir(ACTORDIR::DOWN);
     }
 
     // 좌 우
@@ -230,7 +223,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
          m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
+        m_StateCom->Change_Dir(ACTORDIR::RIGHT);
     }
 
     if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80 ||
@@ -240,16 +233,16 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
 
-        m_StateCom->Change_Dir(PLAYERDIR::LEFT);
+        m_StateCom->Change_Dir(ACTORDIR::LEFT);
     }
 
     if (m_StateCom)
     {
         if (moving)
-            m_StateCom->Change_State(PLAYERSTATE::RUN);
+            m_StateCom->Change_State(ACTORSTATE::RUN);
 
         else
-            m_StateCom->Change_State(PLAYERSTATE::IDLE);
+            m_StateCom->Change_State(ACTORSTATE::IDLE);
     }
 
 

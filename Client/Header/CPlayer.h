@@ -51,7 +51,7 @@ private:
     Engine::CState*        m_StateCom;
     Engine::CCombatStat*   m_CombatStat;
 
-    map<PLAYERSTATE, wstring> m_StateAnim;
+    map<ACTORSTATE, wstring> m_StateAnim;
 
 public:
     float m_Hp=100.f;
