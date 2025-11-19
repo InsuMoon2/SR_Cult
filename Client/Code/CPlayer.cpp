@@ -40,10 +40,10 @@ HRESULT CPlayer::Ready_GameObject()
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
-    m_CombatStat->Set_Hp(6.f);
-    m_CombatStat->Set_MaxHp(6.f);
-    m_CombatStat->Set_Attack(10.f);
-    m_CombatStat->Set_Mp(5.f);
+    m_CombatStatCom->Set_Hp(6.f);
+    m_CombatStatCom->Set_MaxHp(100.f);
+    m_CombatStatCom->Set_Attack(10.f);
+    m_CombatStatCom->Set_Mp(5.f);
     //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
@@ -292,15 +292,15 @@ void CPlayer::TempImGuiRender()
             ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
         }
 
-        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            const float hp = m_CombatStat->Get_Hp();
+            const float hp = m_CombatStatCom->Get_Hp();
 
             ImGui::Text("SetHp :");
             ImGui::SameLine();
             ImGui::InputFloat("##PlayerHp", (float*)&hp);
 
-            m_CombatStat->Set_Hp(hp);
+            m_CombatStatCom->Set_Hp(hp);
         }
 
     }

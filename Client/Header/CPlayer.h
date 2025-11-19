@@ -33,7 +33,7 @@ public:
     void OnBeginOverlap(CCollider* self, CCollider* other) override;
     void OnEndOverlap(CCollider* self, CCollider* other) override;
     void TempImGuiRender();
-    CCombatStat* Get_CombatStat() { return m_CombatStat; }
+    CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
 
 private:
     HRESULT Add_Component();

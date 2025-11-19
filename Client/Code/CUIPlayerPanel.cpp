@@ -52,17 +52,18 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
 
     float hp = stat->Get_Hp();
-    float maxHp = stat->Get_MaxHp();
-
-    int heartCount = maxHp;
 
     int i = 0;
 
     for(auto child : m_Children)
     {
         auto heartBar = dynamic_cast<CUIHeartBar*>(child);
-        float start = i * 1.0f;
-        float end = start + 1.0f;
+        float start = i * 2.0f;     //0,2,4
+        float end = start + 2.0f;   //2,4,6
+        //hp 2당 하트 하나
+        //0번 하트 : start = 0, end = 2 → HP 0~2
+        //1번 하트 : start = 2, end = 4 → HP 2~4
+        //2번 하트 : start = 4, end = 6 → HP 4~6
 
         HEARTSTATE state;
 
