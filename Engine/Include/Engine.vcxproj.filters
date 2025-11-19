@@ -112,6 +112,18 @@
     <Filter Include="00. Manager\10. SceneMgr">
       <UniqueIdentifier>{4d206c40-2a02-4585-82a7-34871e494d55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Prototype\06. CombatStat">
+      <UniqueIdentifier>{55ea3021-09c6-444c-b6db-ea5044d079b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\00. VIBuffer\03. BoxCol">
+      <UniqueIdentifier>{9b9793d6-2da8-4fed-956f-a19e85993f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\04. Collider\02. Box Collider">
+      <UniqueIdentifier>{a6dbfb3e-ff25-4d63-9b4f-885093b69017}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Prototype\00. VIBuffer\04. BoxTex">
+      <UniqueIdentifier>{ba70ee2a-9a1b-4729-8fdd-9884817fdb6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -237,6 +249,18 @@
     <ClInclude Include="..\Header\CPersistentObjectHelper.h">
       <Filter>98. Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CCombatStat.h">
+      <Filter>02. Prototype\06. CombatStat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxCollider.h">
+      <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxTex.h">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CBoxCol.h">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -334,6 +358,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\CState.cpp">
       <Filter>02. Prototype\05. State</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CCombatStat.cpp">
+      <Filter>02. Prototype\06. CombatStat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxCollider.cpp">
+      <Filter>02. Prototype\04. Collider\02. Box Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxTex.cpp">
+      <Filter>02. Prototype\00. VIBuffer\04. BoxTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CBoxCol.cpp">
+      <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

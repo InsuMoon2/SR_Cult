@@ -38,8 +38,8 @@ bool CSphereCollider::CheckCollision(CCollider* other)
 {
     switch (other->GetColliderType())
     {
-    case COLLIDERTYPE::RECT:
-        return CheckCollisionSphere2Box(this, static_cast<CRectCollider*>(other));
+    //case COLLIDERTYPE::RECT:
+        //return CheckCollisionSphere2Box(this, static_cast<CRectCollider*>(other));
 
     case COLLIDERTYPE::SPHERE:
         return CheckCollisionSphere2Sphere(this, static_cast<CSphereCollider*>(other));

@@ -104,7 +104,7 @@ void CManagement::LateUpdate_Scene(const _float& timeDelta)
     m_Scene->LateUpdate_Scene(timeDelta);
 }
 
-void CManagement::Render_Scene(LPDIRECT3DDEVICE9 graphicDev)
+void CManagement::Render_Scene(DEVICE graphicDev)
 {
     CRenderer::GetInstance()->Render_GameObject(graphicDev);
 

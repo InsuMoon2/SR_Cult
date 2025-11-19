@@ -13,6 +13,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CTimerMgr.h"
+#include "CLogo.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),

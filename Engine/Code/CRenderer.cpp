@@ -21,7 +21,7 @@ void CRenderer::Add_RenderGroup(RENDERID type, CGameObject* gameObject)
     gameObject->AddRef();
 }
 
-void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_GameObject(DEVICE& graphicDev)
 {
     Render_Priority(graphicDev);
     Render_NonAlpha(graphicDev);
@@ -40,7 +40,7 @@ void CRenderer::Clear_RenderGroup()
     }
 }
 
-void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_Priority(DEVICE& graphicDev)
 {
     for (auto& obj : m_RenderGroup[RENDER_PRIORITY])
     {
@@ -48,7 +48,7 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& graphicDev)
     }
 }
 
-void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_NonAlpha(DEVICE& graphicDev)
 {
     for (auto& obj : m_RenderGroup[RENDER_NONALPHA])
     {
@@ -56,7 +56,7 @@ void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& graphicDev)
     }
 }
 
-void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_Alpha(DEVICE& graphicDev)
 {
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
@@ -71,7 +71,7 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& graphicDev)
     graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
-void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
+void CRenderer::Render_UI(DEVICE& graphicDev)
 {
     // TODO 석호: 일단 단순 구현해서, 나중에 가능하면 카메라 컴포넌트가 적은 부하로 관리 가능하게 만들자
 
@@ -109,13 +109,27 @@ void CRenderer::Render_UI(LPDIRECT3DDEVICE9& graphicDev)
     graphicDev->SetTransform(D3DTS_VIEW, &uiView);
     graphicDev->SetTransform(D3DTS_PROJECTION, &uiProj);
 
+    // 깊이 끄기
+    graphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+
+    // 알파 블렌딩
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    graphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    graphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
     for (auto& obj : m_RenderGroup[RENDER_UI])
     {
         obj->Render_GameObject();
     }
 
+    // 상태 복구
+    graphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    graphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+
     graphicDev->SetTransform(D3DTS_VIEW, &prevView);
     graphicDev->SetTransform(D3DTS_PROJECTION, &prevProj);
+    graphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+
 }
 
 void CRenderer::Free()

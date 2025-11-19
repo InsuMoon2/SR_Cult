@@ -13,7 +13,7 @@ class CLayer;
 class ENGINE_DLL CScene : public CBase
 {
 protected:
-    explicit CScene(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CScene(DEVICE graphicDev);
     ~CScene() override;
 
 public:
@@ -30,7 +30,7 @@ public:
 
 protected:
     map<LAYERTYPE, CLayer*> m_Layers;
-    LPDIRECT3DDEVICE9       m_GraphicDev;
+    DEVICE       m_GraphicDev;
 
 protected:
     void Free() override;

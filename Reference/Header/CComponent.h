@@ -15,7 +15,7 @@ class ENGINE_DLL CComponent : public CBase
 {
 protected:
     explicit CComponent();
-    explicit CComponent(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CComponent(DEVICE graphicDev);
     explicit CComponent(const CComponent& rhs);
     ~CComponent() override;
 
@@ -27,6 +27,7 @@ public:
     void         Set_Owner(CGameObject* owner);
 
     CTransform* Get_Transform() { return m_TransformCom; }
+    const CTransform* Get_Transform() const { return m_TransformCom; }
 
 protected:
     DEVICE m_GraphicDev;

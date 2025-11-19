@@ -8,6 +8,10 @@
 #include "CPlayer.h"
 #include "CTestMonster.h"
 #include "CTransform.h"
+#include "CProtoMgr.h"
+#include "CTexture.h"
+#include "CUIPlayerPanel.h"
+#include "CHumanMonster.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -74,7 +78,7 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         E_FAIL,
         L"CStage::Ready_GameLogic_Layer() failed: CLayer::Create() returned null");
 
-    Engine::CGameObject* gameObject = nullptr;
+        Engine::CGameObject* gameObject = nullptr;
 
     // -----------------------------
     // Player
@@ -112,15 +116,15 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // -----------------------------
 
     // monster
-    /*gameObject = CMonster::Create(m_GraphicDev);
-    
-    if (nullptr == gameObject)
-        return E_FAIL;
-    
-    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
-        return E_FAIL;*/
+    //gameObject = CMonster::Create(m_GraphicDev);
+    //
+    //if (nullptr == gameObject)
+    //    return E_FAIL;
+    //
+    //if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+    //    return E_FAIL;
 
-    // testMonster
+   //  //testMonster
     gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
@@ -132,9 +136,14 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
         L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
 
-    // -----------------------------
-    // Camera
-    // -----------------------------
+        //HumanMonster
+        gameObject = CHumanMonster::Create(m_GraphicDev);
+    NULL_CHECK_RETURN_MSG(gameObject, E_FAIL, L"CStage::Ready_GameLogic_Layer() failed: CHumanMonster::Create() returned null")
+
+        FAILED_CHECK_MSG(
+            layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
+            L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
+
 
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CMainCamera>(
@@ -146,19 +155,26 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
     dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
-    m_Layers.insert({ layerType, layer });
+        m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }
 
 HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 {
-    Engine::CLayer* layer = Engine::CLayer::Create();
+    auto layer = Engine::CLayer::Create();
+    NULL_CHECK_RETURN(layer, E_FAIL);
 
-    if (nullptr == layer)
+    CGameObject* gameObject = nullptr;
+
+    gameObject = CUIPlayerPanel::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(gameObject, E_FAIL);
+
+    m_playerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
+    m_playerPanel->Set_Player(m_player);
+
+    if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
         return E_FAIL;
-
-    Engine::CGameObject* pGameObject = nullptr;
 
     m_Layers.insert({ layerType, layer });
 

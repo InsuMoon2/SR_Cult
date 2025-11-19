@@ -6,7 +6,7 @@ BEGIN(Engine)
 class ENGINE_DLL CTexture : public CComponent
 {
 private:
-    explicit CTexture(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CTexture(DEVICE graphicDev);
     explicit CTexture(const CTexture& rhs);
     ~CTexture() override;
 
@@ -27,7 +27,7 @@ private:
     map<wstring, vector<IDirect3DBaseTexture9*>> m_AnimTextures;
 
 public:
-    static CTexture* Create(LPDIRECT3DDEVICE9 graphicDev,
+    static CTexture* Create(DEVICE graphicDev,
                             TEXTUREID         texType,
                             const wstring&    filePath,
                             const _uint&      count);
