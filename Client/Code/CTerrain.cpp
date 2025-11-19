@@ -28,6 +28,9 @@ HRESULT CTerrain::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
+    // 타일 개수 세팅
+    m_TileIndices.resize(TILE_CNT_X * TILE_CNT_Z, 0);
+
     m_TransformCom->Set_Pos(_vec3(0.f, -1.f, 0.1f));
 
     return S_OK;
@@ -57,8 +60,15 @@ void CTerrain::Render_GameObject()
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+    int index = m_PaintZ * TILE_CNT_X + m_PaintX;
+    int tileIdx = 0;
 
-    m_TextureCom->Set_Texture(2);
+    if (index >= 0 && index < (int)m_TileIndices.size())
+        tileIdx = m_TileIndices[index];
+    else
+        tileIdx = 0; // 범위 밖이면 0으로 세팅
+
+    m_TextureCom->Set_Texture(tileIdx);
 
     m_BufferCom->Render_Buffer();         
 
@@ -134,19 +144,20 @@ void CTerrain::Render_TileImGui()
 
             ImGui::PushID(static_cast<int>(i));
 
-            // 선택된 타일 색 변경시켜주기
-            if (i == static_cast<_uint>(m_SelectedTile))
+            const _bool isSelected = (i == (_uint)m_SelectedTile);
+
+            if (isSelected)
             {
                 ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.7f, 0.7f, 0.2f, 1.f));
                 ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.8f, 0.8f, 0.3f, 1.0f));
             }
 
-            if (ImGui::ImageButton("버튼1", texID, tileSize))
+            if (ImGui::ImageButton("Tile", texID, tileSize))
             {
                 m_SelectedTile = static_cast<int>(i);
             }
 
-            if (i == m_SelectedTile)
+            if (isSelected)
             {
                 ImGui::PopStyleColor(2);
             }
@@ -156,7 +167,37 @@ void CTerrain::Render_TileImGui()
 
     }
 
+    ImGui::Separator();
+    ImGui::SliderInt("Cell X", &m_PaintX, 0, TILE_CNT_X - 2);
+    ImGui::SliderInt("Cell Z", &m_PaintZ, 0, TILE_CNT_Z - 2);
+
+    if (ImGui::Button(u8"전체 타일 변경"))
+    {
+        const int index = m_PaintZ * TILE_CNT_X + m_PaintX;
+
+        if (index >= 0 && index < (int)m_TileIndices.size())
+            m_TileIndices[index] = m_SelectedTile;
+    }
+
     ImGui::End();
+}
+
+_vec3 CTerrain::GetCellCenterWorld(_uint cellX, _uint cellZ) const
+{
+    const _float vtxItv = 1.f;
+
+    return _vec3(
+        cellX * vtxItv + vtxItv * 0.5f,
+        0.f,
+        cellZ * vtxItv + vtxItv * 0.5f);
+}
+
+void CTerrain::SelectPlaceObject(_uint cellX, _uint cellZ)
+{
+    const _vec3 pos = GetCellCenterWorld(cellX, cellZ);
+
+    // TODO : 배치할 건물 하나 만들어보기
+    //CGameObject* object = 건물 배치?
 }
 
 CTerrain* CTerrain::Create(DEVICE GraphicDev)

@@ -27,9 +27,9 @@ private:
 
 public:
     static CTerrainTex* Create(LPDIRECT3DDEVICE9 graphicDev,
-        const _ulong& dwCntX = VTXCNTX,
-        const _ulong& dwCntZ = VTXCNTZ,
-        const _ulong& dwVtxItv = VTXITV);
+        const _ulong& dwCntX = TILE_CNT_X,
+        const _ulong& dwCntZ = TILE_CNT_Z,
+        const _ulong& dwVtxItv = VTX_IV);
 
     virtual CComponent* Clone();
 private:
