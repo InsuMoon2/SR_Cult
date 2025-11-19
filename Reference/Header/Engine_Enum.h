@@ -43,12 +43,22 @@ namespace Engine
         ANIM_END
     };
 
-    enum class LAYERTYPE
-    {
-        ENVIRONMENT,
-        GAMELOGIC,
-        CAMERA,
-        UI,
+enum class ANIMDIR
+{
+    FRONT,          // 앞
+    BACK,           // 뒤
+    RIGHT,          // 오른쪽
+    RIGHT_UP,       // ↗
+    RIGHT_DOWN      // ↘
+    // TODO 석호: 일단 우측만 넣어서, 좌측은 스케일 반전으로 대체하는 것을 테스트해보겠다
+};
+
+enum class LAYERTYPE
+{
+    ENVIRONMENT,
+    GAMELOGIC,
+    CAMERA,
+    UI,
 
         LAYER_END
     };

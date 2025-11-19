@@ -246,6 +246,9 @@
     <ClInclude Include="..\Header\CEnumHelper.h">
       <Filter>98. Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPersistentObjectHelper.h">
+      <Filter>98. Utility</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CCombatStat.h">
       <Filter>02. Prototype\06. CombatStat</Filter>
     </ClInclude>

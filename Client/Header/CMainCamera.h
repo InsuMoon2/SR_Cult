@@ -2,8 +2,6 @@
 #include "CCameraCom.h"
 #include "CGameObject.h"
 
-// TODO : 미완성
-
 BEGIN(Engine)
 class CTransform;
 END
@@ -31,16 +29,16 @@ public: // TODO : 카메라 이동, 카메라 쉐이킹 등 기능 함수
 private:
     HRESULT Add_Component();
 
-    void Chase_CamTarget();
     void Key_Input(const _float& timeDelta);
+    void Chase_CamTarget(const _float& timeDelta);
 
+    void Render_ImGui();
 
 private:
     Engine::CCameraCom* m_CameraCom;
     Engine::CTransform* m_TransformCom;
 
     Engine::CTransform* m_TargetTransformCom;   // 따라가는 타겟의 Transform에 접근
-
 
 public:
     static CMainCamera* Create(DEVICE graphicDev);

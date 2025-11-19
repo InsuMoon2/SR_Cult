@@ -27,7 +27,6 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-
     void Render_Setting();
     void Render_Reset();
 
@@ -38,6 +37,8 @@ private:
     HRESULT Add_Component();
     void    Animation_Setting();
     void    Key_Input(const _float& timeDelta);
+
+    void Render_ImGui();
 
 private:
     Engine::CRcTex*        m_BufferCom;
@@ -51,8 +52,6 @@ private:
     Engine::CCombatStat*   m_CombatStat;
 
     map<PLAYERSTATE, wstring> m_StateAnim;
-
-    void TempImGuiRender();
 
 public:
     float m_Hp=100.f;

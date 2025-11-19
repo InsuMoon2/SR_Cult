@@ -55,8 +55,6 @@ HRESULT CCameraCom::Ready_Camera()
 
 _int CCameraCom::Update_Component(const _float& timeDelta)
 {
-    Key_Input();
-
     return 0;
 }
 
@@ -171,30 +169,12 @@ void CCameraCom::Compute_Proj_Perspective()
 
 void CCameraCom::Compute_Proj_Orthographic()
 {
-    D3DXMatrixOrthoOffCenterLH(
+    D3DXMatrixOrthoLH(
         &m_matProj,
-        0.f,
         static_cast<_float>(WINCX),
         static_cast<_float>(WINCY),
         0.f,
-        0.f,
         1.f);
-}
-
-void CCameraCom::Key_Input()
-{
-#pragma region debug : 키 입력으로 카메라 시점 전환
-
-    auto pInputMgr = CDInputMgr::GetInstance();
-
-    if (pInputMgr->Get_DIKeyState(DIK_8))
-        Set_ViewType(VIEW_FPS);
-    else if (pInputMgr->Get_DIKeyState(DIK_9))
-        Set_ViewType(VIEW_TPS);
-    else if (pInputMgr->Get_DIKeyState(DIK_0))
-        Set_ViewType(VIEW_QUARTER);
-
-#pragma endregion
 }
 
 CCameraCom* CCameraCom::Create(DEVICE pGraphicDev)

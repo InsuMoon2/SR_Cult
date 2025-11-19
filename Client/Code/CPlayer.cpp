@@ -3,13 +3,15 @@
 
 #include "CAnimator.h"
 #include "CCreateHelper.h"
+#include "CDInputMgr.h"
+#include "CEnumHelper.h"
 #include "CRcTex.h"
 #include "CRectCollider.h"
 #include "CBoxCollider.h"
 #include "CRenderer.h"
+#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CState.h"
 #include "CCombatStat.h"
 #include "CEnumHelper.h"
 
@@ -46,7 +48,7 @@ HRESULT CPlayer::Ready_GameObject()
     //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
     m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     Animation_Setting();
@@ -78,16 +80,15 @@ void CPlayer::Render_GameObject()
 
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key = m_AnimatorCom->Get_CurKey();
-        _int frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key   = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
 
-
     m_BufferCom->Render_Buffer();
 
-    TempImGuiRender();
+    Render_ImGui();
     Render_Reset();
 
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함
@@ -187,19 +188,21 @@ void CPlayer::Animation_Setting()
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
-
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
 {
+    auto inputMgr = CDInputMgr::GetInstance();
+
     const _float speed = 10.f;
 
-    _vec3 dir = { 0.f, 0.f, 0.f };
-    bool moving = false;
+    _vec3 dir    = { 0.f, 0.f, 0.f };
+    bool  moving = false;
 
     // 앞 뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (GetAsyncKeyState(VK_UP) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_UP) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_W) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
@@ -208,7 +211,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_StateCom->Change_Dir(PLAYERDIR::UP);
     }
 
-    if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_S) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -219,16 +223,18 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
     // 좌 우
     m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_D) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
          m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
-        
+
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
     }
 
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_A) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -249,7 +255,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
 }
 
-void CPlayer::TempImGuiRender()
+void CPlayer::Render_ImGui()
 {
     if (ImGui::Begin("Player Inspector"))
     {
