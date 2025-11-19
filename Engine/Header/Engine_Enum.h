@@ -43,6 +43,16 @@ enum class ANIMSTATE
     ANIM_END
 };
 
+enum class ANIMDIR
+{
+    FRONT,          // 앞
+    BACK,           // 뒤
+    RIGHT,          // 오른쪽
+    RIGHT_UP,       // ↗
+    RIGHT_DOWN      // ↘
+    // TODO 석호: 일단 우측만 넣어서, 좌측은 스케일 반전으로 대체하는 것을 테스트해보겠다
+};
+
 enum class LAYERTYPE
 {
     ENVIRONMENT,
@@ -59,7 +69,9 @@ enum class OBJTYPE
     MONSTER,
     CAMERA,
     /* 오브젝트 타입 종류 추가 */
+    UI,
     BOSS2,
+    HUMANMONSTER,
 
     OBJ_END
 };
@@ -69,14 +81,19 @@ enum class COMPONENTTYPE
 {
     TRI_COLOR,
     RC_COLOR,
+    BOX_COLOR,
     RC_TEX,
+    BOX_TEX,
     TRANSFORM,
     STATE,
+    COMBATSTAT,
 
     TEXTURE,
     TEX_PLAYER,
     TEX_MAINBG,
     TEX_MONSTER,
+    TEX_HUMANMONSTER,
+    TEX_UI_HEART,    
     TEX_ITEM,
     // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
 

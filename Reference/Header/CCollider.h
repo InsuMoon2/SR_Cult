@@ -4,6 +4,7 @@
 BEGIN(Engine)
 class CRectCollider;
 class CSphereCollider;
+class CBoxCollider;
 
 class ENGINE_DLL CCollider : public CComponent
 {
@@ -31,8 +32,10 @@ public:
     void RemoveOverlap(CCollider* other);   // 충돌 끝
 
 public:
-    static bool CheckCollisionBox2Box(CRectCollider* b1, CRectCollider* b2);
-    static bool CheckCollisionSphere2Box(CSphereCollider* s1, CRectCollider* b2);
+    static bool CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2);
+    static bool CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2);
+
+    static bool CheckCollisionSphere2Box(CSphereCollider* s1, CBoxCollider* b2);
     static bool CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider* s2);
 
 protected:

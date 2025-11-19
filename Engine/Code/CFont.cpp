@@ -1,6 +1,6 @@
 ﻿#include "CFont.h"
 
-CFont::CFont(LPDIRECT3DDEVICE9 graphicDev)
+CFont::CFont(DEVICE graphicDev)
     : m_GraphicDev(graphicDev), m_Sprite(nullptr), m_Font(nullptr)
 {
     m_GraphicDev->AddRef();
@@ -50,7 +50,7 @@ void CFont::Render_Font(const wstring& text, const _vec2* pos, D3DXCOLOR color)
     m_Sprite->End();
 }
 
-CFont* CFont::Create(LPDIRECT3DDEVICE9 graphicDev,
+CFont* CFont::Create(DEVICE graphicDev,
                      const wstring&    fontType,
                      const _uint&      width,
                      const _uint&      height,

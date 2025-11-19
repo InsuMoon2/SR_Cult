@@ -84,10 +84,10 @@ bool CRectCollider::CheckCollision(CCollider* other)
     switch (other->GetColliderType())
     {
     case COLLIDERTYPE::RECT:
-        return CheckCollisionBox2Box(this, static_cast<CRectCollider*>(other));
+        return CheckCollisionRect2Rect(this, static_cast<CRectCollider*>(other));
 
-    case COLLIDERTYPE::SPHERE:
-        return CheckCollisionSphere2Box(static_cast<CSphereCollider*>(other), this);
+    //case COLLIDERTYPE::SPHERE:
+    //    return CheckCollisionSphere2Box(static_cast<CSphereCollider*>(other), this);
 
     default:
         break;

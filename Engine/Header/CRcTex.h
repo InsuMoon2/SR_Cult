@@ -6,7 +6,7 @@ class ENGINE_DLL CRcTex : public CVIBuffer
 {
 private:
     explicit CRcTex();
-    explicit CRcTex(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CRcTex(DEVICE graphicDev);
     explicit CRcTex(const CRcTex& rhs);
     ~CRcTex() override;
 
@@ -17,7 +17,7 @@ public:
     void Set_UV(_float u0, _float v0, _float u1, _float v1);
 
 public:
-    static CRcTex* Create(LPDIRECT3DDEVICE9 graphicDev);
+    static CRcTex* Create(DEVICE graphicDev);
     CComponent*    Clone() override;
 private:
     void Free() override;

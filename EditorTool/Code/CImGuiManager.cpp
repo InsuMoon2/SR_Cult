@@ -33,6 +33,13 @@ void CImGuiManager::InitImGui(HWND hWnd, LPDIRECT3DDEVICE9 pGraphicDev)
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 
+    // Setup Korean font
+    io.Fonts->AddFontFromFileTTF(
+        "../Bin/Resource/Font/malgun.ttf",
+        18.0f,
+        nullptr,
+        io.Fonts->GetGlyphRangesKorean());
+
 	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsLight();

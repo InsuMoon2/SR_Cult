@@ -9,7 +9,9 @@ class CTexture;
 class CAnimator;
 class CProtoMgr;
 class CRectCollider;
+class CBoxCollider;
 class CState;
+class CCombatStat;
 END
 
 class CPlayer : public CGameObject
@@ -25,7 +27,6 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-
     void Render_Setting();
     void Render_Reset();
 
@@ -37,17 +38,23 @@ private:
     void    Animation_Setting();
     void    Key_Input(const _float& timeDelta);
 
+    void Render_ImGui();
+
 private:
     Engine::CRcTex*        m_BufferCom;
     Engine::CTransform*    m_TransformCom;
     Engine::CTexture*      m_TextureCom;
     Engine::CAnimator*     m_AnimatorCom;
-    Engine::CRectCollider* m_RectColCom;
+    //Engine::CRectCollider* m_BoxColCom;
+    Engine::CBoxCollider* m_BoxColCom;
+
     Engine::CState*        m_StateCom;
+    Engine::CCombatStat*   m_CombatStat;
 
     map<PLAYERSTATE, wstring> m_StateAnim;
 
-    void TempImGuiRender();
+public:
+    float m_Hp=100.f;
 
 public:
     static CPlayer* Create(DEVICE graphicDev);

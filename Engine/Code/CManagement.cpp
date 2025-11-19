@@ -1,13 +1,18 @@
 ﻿#include "CManagement.h"
 
 #include "CComponent.h"
+#include "CGameObject.h"
 #include "CRenderer.h"
 #include "CScene.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement()
-    : m_Scene(nullptr), m_NextScene(nullptr), m_ShouldChangeScene(false)
+    : m_Scene(nullptr),
+      m_NextScene(nullptr),
+      m_ShouldChangeScene(false),
+      m_PersistentPlayer(nullptr),
+      m_PersistentCamera(nullptr)
 { }
 
 CManagement::~CManagement()
@@ -24,6 +29,54 @@ CComponent* CManagement::Get_Component(COMPONENTID   componentID,
         return nullptr;
 
     return m_Scene->Get_Component(componentID, layerType, objType, componentType);
+}
+
+//TODO 석호: 지속해야 할 오브젝트가 필요할 경우 여기서도 경우 추가
+HRESULT CManagement::Get_PersistentObject(OBJTYPE objType, CGameObject** outObject)
+{
+    NULL_CHECK_RETURN(outObject, E_FAIL);
+
+    switch (objType)
+    {
+    case OBJTYPE::PLAYER:
+        *outObject = m_PersistentPlayer;
+        return S_OK;
+    case OBJTYPE::CAMERA:
+        *outObject = m_PersistentCamera;
+        return S_OK;
+    default:
+        MSG_BOX("CManagement::Get_PersistentObject() failed: invalid OBJTYPE value");
+        return E_FAIL;
+    }
+}
+
+HRESULT CManagement::Cache_PersistentObject(OBJTYPE objType, CGameObject* objectToCache)
+{
+    NULL_CHECK_RETURN(objectToCache, E_FAIL);
+
+    CGameObject** target = nullptr;
+
+    switch (objType)
+    {
+    case OBJTYPE::PLAYER:
+        target = &m_PersistentPlayer;
+        break;
+    case OBJTYPE::CAMERA:
+        target = &m_PersistentCamera;
+        break;
+    default:
+        return E_FAIL;
+    }
+
+    if (*target == objectToCache)
+        return S_OK;
+
+    Safe_Release(*target);
+
+    *target = objectToCache;
+    (*target)->AddRef();
+
+    return S_OK;
 }
 
 HRESULT CManagement::Set_Scene(CScene* scene)
@@ -51,7 +104,7 @@ void CManagement::LateUpdate_Scene(const _float& timeDelta)
     m_Scene->LateUpdate_Scene(timeDelta);
 }
 
-void CManagement::Render_Scene(LPDIRECT3DDEVICE9 graphicDev)
+void CManagement::Render_Scene(DEVICE graphicDev)
 {
     CRenderer::GetInstance()->Render_GameObject(graphicDev);
 
@@ -85,4 +138,6 @@ void CManagement::Commit_ChangeScene()
 void CManagement::Free()
 {
     Safe_Release(m_Scene);
+    Safe_Release(m_PersistentPlayer);
+    Safe_Release(m_PersistentCamera);
 }

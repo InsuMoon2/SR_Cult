@@ -8,7 +8,7 @@ CTransform::CTransform()
     D3DXMatrixIdentity(&m_matRot);
 }
 
-CTransform::CTransform(LPDIRECT3DDEVICE9 graphicDev)
+CTransform::CTransform(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_Info{}, m_Scale(1.f, 1.f, 1.f), m_Rotation(0.f, 0.f, 0.f, 1.f),
       m_PrevInfo{}, m_PrevScale(m_Scale), m_PrevRotation(m_Rotation), m_IsDirty(true)
@@ -378,7 +378,7 @@ bool CTransform::HasQuatChanged(const _quat& now, const _quat& prev, float eps)
     return angle > eps;
 }
 
-CTransform* CTransform::Create(LPDIRECT3DDEVICE9 graphicDev)
+CTransform* CTransform::Create(DEVICE graphicDev)
 {
     auto pTransform = new CTransform(graphicDev);
 

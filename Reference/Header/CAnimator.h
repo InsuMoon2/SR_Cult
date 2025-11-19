@@ -8,6 +8,7 @@ class CTexture;
 
 class ENGINE_DLL CAnimator : public CComponent
 {
+
 private:
     explicit CAnimator(DEVICE graphicDev);
     explicit CAnimator(const CAnimator& rhs);

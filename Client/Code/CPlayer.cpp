@@ -3,12 +3,16 @@
 
 #include "CAnimator.h"
 #include "CCreateHelper.h"
+#include "CDInputMgr.h"
+#include "CEnumHelper.h"
 #include "CRcTex.h"
 #include "CRectCollider.h"
+#include "CBoxCollider.h"
 #include "CRenderer.h"
+#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CState.h"
+#include "CCombatStat.h"
 #include "CEnumHelper.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
@@ -17,7 +21,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
     m_TransformCom(nullptr),
     m_TextureCom(nullptr),
     m_AnimatorCom(nullptr),
-    m_RectColCom(nullptr),
+    m_BoxColCom(nullptr),
     m_StateCom(nullptr)
 { }
 
@@ -33,13 +37,21 @@ HRESULT CPlayer::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-    Animation_Setting();
 
+    // 플레이어 상태 초기값
     m_StateCom->Change_State(PLAYERSTATE::IDLE);
     m_StateCom->Change_Dir(PLAYERDIR::LEFT);
 
+    m_CombatStat->Set_Hp(100.f);
+    m_CombatStat->Set_Attack(10.f);
+    m_CombatStat->Set_Mp(5.f);
+    //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
+
     // Transform 테스트
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
+    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
+
+    Animation_Setting();
 
     return S_OK;
 }
@@ -68,19 +80,18 @@ void CPlayer::Render_GameObject()
 
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key = m_AnimatorCom->Get_CurKey();
-        _int frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key   = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
 
-
     m_BufferCom->Render_Buffer();
 
-    TempImGuiRender();
+    Render_ImGui();
     Render_Reset();
 
-    m_RectColCom->Render(); // Render Reset 이후 호출해야함
+    m_BoxColCom->Render(); // Render Reset 이후 호출해야함
 }
 
 void CPlayer::Render_Setting()
@@ -113,6 +124,8 @@ void CPlayer::OnBeginOverlap(CCollider* self, CCollider* other)
 void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
+
+    cout << "Player HitOut" << endl;
 }
 
 HRESULT CPlayer::Add_Component()
@@ -144,16 +157,24 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
 
     // RectCol Componet
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
-    NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
-    m_RectColCom->Set_Size(_vec2(2.f, 2.f));
+    m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
+    NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
+    //m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::BOX_COLL, m_BoxColCom });
 
+    // Stat
     m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
     NULL_CHECK_RETURN(m_StateCom, E_FAIL);
 
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
+
+    // CombatStat
+    m_CombatStat = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
+    NULL_CHECK_RETURN(m_CombatStat, E_FAIL);
+
+    //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStat });
 
     return S_OK;
 }
@@ -167,19 +188,21 @@ void CPlayer::Animation_Setting()
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(PLAYERSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(PLAYERSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
-
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
 {
+    auto inputMgr = CDInputMgr::GetInstance();
+
     const _float speed = 10.f;
 
-    _vec3 dir = { 0.f, 0.f, 0.f };
-    bool moving = false;
+    _vec3 dir    = { 0.f, 0.f, 0.f };
+    bool  moving = false;
 
     // 앞 뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (GetAsyncKeyState(VK_UP) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_UP) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_W) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
@@ -188,7 +211,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_StateCom->Change_Dir(PLAYERDIR::UP);
     }
 
-    if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_S) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -199,16 +223,18 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
     // 좌 우
     m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_D) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
+         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
-        
+
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);
     }
 
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+    if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_A) & 0x80)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -225,16 +251,18 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(PLAYERSTATE::IDLE);
     }
+
+
 }
 
-void CPlayer::TempImGuiRender()
+void CPlayer::Render_ImGui()
 {
     if (ImGui::Begin("Player Inspector"))
     {
         // TransformComponent
         if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+            _vec3 pos = m_TransformCom->Get_Pos();
 
             ImGui::Text("Position");
 
@@ -258,6 +286,14 @@ void CPlayer::TempImGuiRender()
         {
             ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
             ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
+        }
+
+        // CombatStatComponent
+        if (m_CombatStat && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("Hp : %.2f", m_CombatStat->Get_Hp());
+            ImGui::Text("Mp : %.2f", m_CombatStat->Get_Mp());
+            ImGui::Text("Attack : %.2f", m_CombatStat->Get_Attack());
         }
     }
 

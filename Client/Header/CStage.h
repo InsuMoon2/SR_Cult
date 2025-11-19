@@ -1,8 +1,10 @@
 ﻿#pragma once
 #include "CScene.h"
+#include "CPlayer.h"
+#include "CUIPlayerPanel.h"
 
 class CStage : public CScene
-{
+{ 
 private:
     explicit CStage(DEVICE graphicDev);
     ~CStage() override;
@@ -23,6 +25,11 @@ private:
 public:
     static CStage* Create(DEVICE graphicDev);
 
+
 private:
     void Free() override;
+
+private:
+    CUIPlayerPanel* m_playerPanel;
+    CPlayer* m_player;
 };

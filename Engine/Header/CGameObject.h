@@ -13,7 +13,7 @@ class CCollider;
 class ENGINE_DLL CGameObject : public CBase
 {
 protected:
-    explicit CGameObject(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CGameObject(DEVICE graphicDev);
     explicit CGameObject(const CGameObject& rhs);
     ~CGameObject() override;
 
@@ -32,7 +32,7 @@ public:
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
-    LPDIRECT3DDEVICE9               m_GraphicDev;
+    DEVICE               m_GraphicDev;
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);
