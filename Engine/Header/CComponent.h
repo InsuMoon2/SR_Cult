@@ -15,7 +15,7 @@ class ENGINE_DLL CComponent : public CBase
 {
 protected:
     explicit CComponent();
-    explicit CComponent(LPDIRECT3DDEVICE9 graphicDev);
+    explicit CComponent(DEVICE graphicDev);
     explicit CComponent(const CComponent& rhs);
     ~CComponent() override;
 

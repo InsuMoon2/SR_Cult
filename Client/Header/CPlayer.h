@@ -55,6 +55,9 @@ private:
     void TempImGuiRender();
 
 public:
+    float m_Hp=100.f;
+
+public:
     static CPlayer* Create(DEVICE graphicDev);
 
 private:

@@ -44,6 +44,7 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStat->Set_Hp(100.f);
     m_CombatStat->Set_Attack(10.f);
     m_CombatStat->Set_Mp(5.f);
+    //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
@@ -220,7 +221,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
+         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
         
         m_StateCom->Change_Dir(PLAYERDIR::RIGHT);

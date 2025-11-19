@@ -12,7 +12,7 @@ CFontMgr::~CFontMgr()
     CFontMgr::Free();
 }
 
-HRESULT CFontMgr::Ready_Font(LPDIRECT3DDEVICE9 graphicDev,
+HRESULT CFontMgr::Ready_Font(DEVICE graphicDev,
                              const wstring&    fontTag,
                              const wstring&    fontType,
                              const _uint&      width,

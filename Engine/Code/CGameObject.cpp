@@ -2,7 +2,7 @@
 
 #include "CComponent.h"
 
-CGameObject::CGameObject(LPDIRECT3DDEVICE9 graphicDev)
+CGameObject::CGameObject(DEVICE graphicDev)
     : m_GraphicDev(graphicDev)
 {
     m_GraphicDev->AddRef();
