@@ -44,10 +44,10 @@ HRESULT CTestMonster::Ready_GameObject()
 
     Animation_Setting();
 
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 10.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 3.f, 10.f));
     m_TransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
 
-    //m_BoxColCom->Set_Size(_vec3(5.f, 5.f, 2.f));
+    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     m_TextureCom->Get_Transform()->Set_Scale(_vec3(3.f, 3.f, 1.f));
 

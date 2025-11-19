@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "CEdit.h"
 
+#include "CPersistentObjectHelper.h"
+
 #include "CLayer.h"
 #include "CMainCamera.h"
 #include "CMonster.h"
@@ -75,7 +77,7 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
     NULL_CHECK_RETURN_MSG(
         layer,
         E_FAIL,
-        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Create() returned null")
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Create() returned null");
 
     Engine::CGameObject* gameObject = nullptr;
 
@@ -83,81 +85,88 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
     // Player
     // -----------------------------
 
-    gameObject = CPlayer::Create(m_GraphicDev);
-
-    NULL_CHECK_RETURN_MSG(
-        gameObject,
-        E_FAIL,
-        L"CEdit::Ready_GameLogic_Layer() failed: CPlayer::Create() returned null")
-
+    // 플레이어 생성
     FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::PLAYER, gameObject),
-        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(PLAYER) failed")
+        Engine::AcquirePersistentObject<CPlayer>(
+            OBJTYPE::PLAYER,
+            m_GraphicDev,
+            layer,
+            &gameObject),
+        L"Persistent object setup failed");
 
-    auto playerTransform =
-        dynamic_cast<CTransform*>(gameObject->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
+    // 플레이어의 Transform 가져오기
+    const auto playerTransform =
+        dynamic_cast<CTransform*>(gameObject->Get_Component(
+            ID_DYNAMIC,
+            COMPONENTTYPE::TRANSFORM));
+
+    // -----------------------------
+    // Camera
+    // -----------------------------
+
+    // 카메라 생성
+    FAILED_CHECK_MSG(
+        Engine::AcquirePersistentObject<CMainCamera>(
+            OBJTYPE::CAMERA,
+            m_GraphicDev,
+            layer,
+            &gameObject),
+        L"Persistent object setup failed");
+
+    // 카메라 타겟을 플레이어로 설정
+    dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 
     // -----------------------------
     // Monster
     // -----------------------------
 
     // monster
-    /*gameObject = CMonster::Create(m_GraphicDev);
-    
-    if (nullptr == gameObject)
-        return E_FAIL;
-    
-    if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
-        return E_FAIL;*/
-
-    // testMonster
-    //gameObject = CTestMonster::Create(m_GraphicDev);
+    //gameObject = CMonster::Create(m_GraphicDev);
     //
-    //NULL_CHECK_RETURN_MSG(
-    //    gameObject,
-    //    E_FAIL,
-    //    L"CEdit::Ready_GameLogic_Layer() failed: CMonster::Create() returned null")
+    //if (nullptr == gameObject)
+    //    return E_FAIL;
     //
-    //FAILED_CHECK_MSG(
-    //    layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
-    //    L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed")
+    //if (FAILED(layer->Add_GameObject(OBJTYPE::MONSTER, gameObject)))
+    //    return E_FAIL;
 
-    // -----------------------------
-    // Camera
-    // -----------------------------
-
-    gameObject = CMainCamera::Create(m_GraphicDev);
+    //  //testMonster
+    gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
         gameObject,
         E_FAIL,
-        L"CEdit::Ready_GameLogic_Layer() failed: CMainCamera::Create() returned null");
+        L"CStage::Ready_GameLogic_Layer() failed: CMonster::Create() returned null");
 
     FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::CAMERA, gameObject),
-        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(CAMERA) failed");
+        layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
+
+    // -----------------------------
+    // Tile
+    // -----------------------------
+    gameObject = CTerrain::Create(m_GraphicDev);
+
+    NULL_CHECK_RETURN_MSG(
+        gameObject,
+        E_FAIL,
+        L"CEdit::Ready_GameLogic_Layer() failed: CTerrain::Create() returned null");
 
     FAILED_CHECK_MSG(
-        dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform),
-        L"CEdit::Ready_GameLogic_Layer() failed: CCMainCamera::Set_CamTarget() failed");
+        layer->Add_GameObject(OBJTYPE::TERRAIN, gameObject),
+        L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(Tile) failed");
 
-    //// -----------------------------
-    //// Tile
-    //// -----------------------------
-    //gameObject = CTerrain::Create(m_GraphicDev);
-
-    //NULL_CHECK_RETURN_MSG(
-    //    gameObject,
-    //    E_FAIL,
-    //    L"CEdit::Ready_GameLogic_Layer() failed: CTerrain::Create() returned null");
-
-    //FAILED_CHECK_MSG(
-    //    layer->Add_GameObject(OBJTYPE::TILE, gameObject),
-    //    L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(Tile) failed");
+    FAILED_CHECK_MSG(
+        Engine::AcquirePersistentObject<CMainCamera>(
+            OBJTYPE::CAMERA,
+            m_GraphicDev,
+            layer,
+            &gameObject),
+        L"Persistent object setup failed");
 
     m_Layers.insert({ layerType, layer });
 
     return S_OK;
+ 
 }
 
 HRESULT CEdit::Ready_UI_Layer(LAYERTYPE layerType)
@@ -176,7 +185,7 @@ HRESULT CEdit::Ready_UI_Layer(LAYERTYPE layerType)
 
 HRESULT CEdit::Ready_Prototype()
 {
-    
+    // Move Loading Scene
 
     return S_OK;
 }

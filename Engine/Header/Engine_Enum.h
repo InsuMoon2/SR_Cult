@@ -72,7 +72,7 @@ enum class OBJTYPE
     UI,
     BOSS2,
     HUMANMONSTER,
-    TILE,
+    TERRAIN,
 
     OBJ_END
 };
@@ -83,8 +83,11 @@ enum class COMPONENTTYPE
     TRI_COLOR,
     RC_COLOR,
     BOX_COLOR,
+    
     RC_TEX,
     BOX_TEX,
+    TERRAIN_TEX,
+
     TRANSFORM,
     STATE,
     COMBATSTAT,

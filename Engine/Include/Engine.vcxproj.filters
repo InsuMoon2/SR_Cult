@@ -271,7 +271,9 @@
     <ClInclude Include="..\Header\CUIButton.h" />
     <ClInclude Include="..\Header\CUIPanel.h" />
     <ClInclude Include="..\Header\CUIText.h" />
-    <ClInclude Include="CTerrainTex.h" />
+    <ClInclude Include="..\Header\CTerrainTex.h">
+      <Filter>02. Prototype\07. Terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -386,6 +388,8 @@
     <ClCompile Include="..\Code\CUIButton.cpp" />
     <ClCompile Include="..\Code\CUIPanel.cpp" />
     <ClCompile Include="..\Code\CUIText.cpp" />
-    <ClCompile Include="CTerrainTex.cpp" />
+    <ClCompile Include="..\Code\CTerrainTex.cpp">
+      <Filter>02. Prototype\07. Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

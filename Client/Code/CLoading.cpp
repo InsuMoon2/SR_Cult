@@ -1,7 +1,5 @@
 ﻿#include "pch.h"
 #include "CLoading.h"
-
-
 #include "CAnimator.h"
 #include "CCameraCom.h"
 #include "CProtoMgr.h"
@@ -16,6 +14,7 @@
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
 #include "CTerrain.h"
+#include "CTerrainTex.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -70,6 +69,11 @@ _uint CLoading::Loading_ForState()
     // Buffer : Box Tex
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::BOX_TEX, Engine::CBoxTex::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Buffer : Terrain Tex
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TERRAIN_TEX, Engine::CTerrainTex::Create(m_GraphicDev, 37, 37, 1))))
         return E_FAIL;
 
     //// Buffer : Rect UV

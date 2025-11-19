@@ -137,6 +137,19 @@ void CTexture::Set_Texture(const wstring& animKey, _uint frameIndex)
     m_GraphicDev->SetTexture(0, frames[frameIndex]);
 }
 
+IDirect3DBaseTexture9* CTexture::Get_BaseTexture(_uint index) const
+{
+    if (index >= m_Textures.size())
+        return nullptr;
+
+    return m_Textures[index];
+}
+
+_uint CTexture::Get_TextureIndex() const
+{
+    return static_cast<_uint>(m_Textures.size());
+}
+
 CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
                            TEXTUREID         texType,
                            const wstring&    filePath,

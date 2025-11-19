@@ -40,9 +40,9 @@ HRESULT CPlayer::Ready_GameObject()
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
-    m_CombatStat->Set_Hp(100.f);
-    m_CombatStat->Set_Attack(10.f);
-    m_CombatStat->Set_Mp(5.f);
+    m_CombatStatCom->Set_Hp(100.f);
+    m_CombatStatCom->Set_Attack(10.f);
+    m_CombatStatCom->Set_Mp(5.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
