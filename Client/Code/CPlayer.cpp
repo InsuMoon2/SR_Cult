@@ -66,8 +66,9 @@ _int CPlayer::Update_GameObject(const _float& timeDelta)
     if (inputMgr->Get_DIKeyState(DIK_1) & 0x80)
     {
         m_Inventory->DropItemfromSlot(0, { m_TransformCom->Get_Pos().x,m_TransformCom->Get_Pos().y ,m_TransformCom->Get_Pos() .z+5.f} );
-        // 플레이어가 지금 있는씬을 알수 있는 방법이 있나 ??
+
     }
+
 #pragma endregion
 
     _int exit = CGameObject::Update_GameObject(timeDelta);
