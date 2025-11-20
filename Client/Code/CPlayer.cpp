@@ -272,6 +272,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
         else
             m_StateCom->Change_State(ACTORSTATE::IDLE);
     }
+
+
 }
 
 void CPlayer::Render_ImGui()

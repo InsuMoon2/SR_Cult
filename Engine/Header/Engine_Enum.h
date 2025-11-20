@@ -43,16 +43,6 @@ enum class ANIMSTATE
     ANIM_END
 };
 
-enum class ANIMDIR
-{
-    FRONT,          // 앞
-    BACK,           // 뒤
-    RIGHT,          // 오른쪽
-    RIGHT_UP,       // ↗
-    RIGHT_DOWN      // ↘
-    // TODO 석호: 일단 우측만 넣어서, 좌측은 스케일 반전으로 대체하는 것을 테스트해보겠다
-};
-
 enum class LAYERTYPE
 {
     ENVIRONMENT,
@@ -86,7 +76,7 @@ enum class COMPONENTTYPE
     TRI_COLOR,
     RC_COLOR,
     BOX_COLOR,
-    
+
     RC_TEX,
     BOX_TEX,
     TERRAIN_TEX,
@@ -124,7 +114,6 @@ enum class COMPONENTTYPE
     TEX_GRASS,
     TEX_ROCK,
 
-
     COMPONENT_END
 };
 
@@ -145,6 +134,10 @@ enum class ACTORDIR
     DOWN,
     LEFT,
     RIGHT,
+    L_UP,
+    R_UP,
+    L_DOWN,
+    R_DOWN,
 
     PLAYERDIR_END
 };
