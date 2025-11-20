@@ -174,11 +174,11 @@
     <ClInclude Include="..\Header\CMapObject_Grass.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="D:\다운로드\CUICircle.h">
-      <Filter>03. UI\01. UI\01. UICircle</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUIMp.h">
       <Filter>03. UI\01. UI\02. UIMp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUICircle.h">
+      <Filter>03. UI\01. UI\01. UICircle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +229,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDropSystem.cpp">
       <Filter>03. Item</Filter>
-   </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CEdit.cpp">
       <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
@@ -248,11 +248,11 @@
     <ClCompile Include="..\Code\CMapObject_Grass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="D:\다운로드\CUICircle.cpp">
-      <Filter>03. UI\01. UI\01. UICircle</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUIMp.cpp">
       <Filter>03. UI\01. UI\02. UIMp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUICircle.cpp">
+      <Filter>03. UI\01. UI\01. UICircle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

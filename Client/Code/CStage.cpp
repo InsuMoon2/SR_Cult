@@ -251,12 +251,12 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIMp) failed");
     //? 석호: OBJTYPE::UI로 통일해서 오브젝트 이름이 겹칠텐데, 그게 정상인가?
 
-    //gameObject = CUICircle::Create(m_GraphicDev);
-    // TODO 석호: 나중에 진짜 만든 후에 활성화 하자!
+    gameObject = CUICircle::Create(m_GraphicDev);
+     //TODO 석호: 나중에 진짜 만든 후에 활성화 하자!
 
-    //FAILED_CHECK_MSG(
-    //    layer->Add_GameObject(OBJTYPE::UI, gameObject),
-    //    L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::UI, gameObject),
+        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
 
     m_Layers.insert({ layerType, layer });
 

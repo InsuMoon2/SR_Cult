@@ -50,13 +50,13 @@ _int CLogo::Update_Scene(const _float& timeDelta)
         if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_RETURN))
         {
 #pragma region Stage
-            /*CScene* pStage = CStage::Create(m_GraphicDev);
-            CManagement::GetInstance()->Request_ChangeScene(pStage);*/
+            CScene* pStage = CStage::Create(m_GraphicDev);
+            CManagement::GetInstance()->Request_ChangeScene(pStage);
 #pragma endregion
 
 #pragma region Editor
-            CScene* pEdit = CEdit::Create(m_GraphicDev);
-            CManagement::GetInstance()->Request_ChangeScene(pEdit);
+          /*  CScene* pEdit = CEdit::Create(m_GraphicDev);
+            CManagement::GetInstance()->Request_ChangeScene(pEdit);*/
 #pragma endregion
             
         }
