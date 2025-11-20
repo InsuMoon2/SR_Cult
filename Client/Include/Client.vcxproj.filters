@@ -91,6 +91,9 @@
     <Filter Include="03. UI\01. UI\02. UIMp">
       <UniqueIdentifier>{917c168c-0eae-404b-ae40-3ea31e9a924a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\02. Editor\00. MainEditor">
+      <UniqueIdentifier>{71c23e36-4c26-44b1-a9af-31a21ded4f9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,17 +171,20 @@
     <ClInclude Include="..\Header\CHumanMonster.h">
       <Filter>02. GameObject\02. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapObjectBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMapObject_Grass.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="D:\다운로드\CUICircle.h">
-      <Filter>03. UI\01. UI\01. UICircle</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUIMp.h">
       <Filter>03. UI\01. UI\02. UIMp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUICircle.h">
+      <Filter>03. UI\01. UI\01. UICircle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainEditorMgr.h">
+      <Filter>01. Scene\02. Editor\00. MainEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapObjectBase.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapObject_Grass.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +235,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\CDropSystem.cpp">
       <Filter>03. Item</Filter>
-   </ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\CEdit.cpp">
       <Filter>01. Scene\02. Editor</Filter>
     </ClCompile>
@@ -242,17 +248,20 @@
     <ClCompile Include="..\Code\CHumanMonster.cpp">
       <Filter>02. GameObject\02. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMapObjectBase.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="D:\다운로드\CUICircle.cpp">
-      <Filter>03. UI\01. UI\01. UICircle</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUIMp.cpp">
       <Filter>03. UI\01. UI\02. UIMp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUICircle.cpp">
+      <Filter>03. UI\01. UI\01. UICircle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainEditorMgr.cpp">
+      <Filter>01. Scene\02. Editor\00. MainEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

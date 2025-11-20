@@ -26,13 +26,28 @@ public:
     virtual void    LateUpdate_GameObject(const _float& timeDelta);
     virtual void    Render_GameObject() PURE;
 
+public:
     virtual void OnBeginOverlap(CCollider* self, CCollider* other) {}
     virtual void OnEndOverlap(CCollider* self, CCollider* other) {}
+
+    const map<COMPONENTTYPE, CComponent*>&
+        Get_DynamicComponents() const { return m_Components[ID_DYNAMIC]; }
+
+    const map<COMPONENTTYPE, CComponent*>&
+        Get_StaticComponents() const { return m_Components[ID_STATIC]; }
+
+    wstring Get_Name() { return m_Name; }
+
+    // Editor
+    virtual void OnEditor() { }
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
 
     DEVICE m_GraphicDev;
+
+    // TODO 기본 생성자에서 이름 세팅해주도록 구조 변경하기
+    wstring m_Name = L"NoName";
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);

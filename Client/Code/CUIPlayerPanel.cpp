@@ -47,6 +47,11 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
+    if (!m_Player)
+    {
+        return 0;
+    }
+
     auto stat = dynamic_cast<CCombatStat*>(m_Player->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::COMBATSTAT));  
 
     if (stat == nullptr)

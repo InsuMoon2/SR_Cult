@@ -47,18 +47,17 @@ _int CLogo::Update_Scene(const _float& timeDelta)
     // 로딩 작업 완료시 다음 스테이지 진행 가능
     if (true == m_Loading->Get_Finish())
     {
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_RETURN))
+        // Stage
+        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1) & 0x80)
         {
-#pragma region Stage
-            /*CScene* pStage = CStage::Create(m_GraphicDev);
-            CManagement::GetInstance()->Request_ChangeScene(pStage);*/
-#pragma endregion
-
-#pragma region Editor
+            CScene* pStage = CStage::Create(m_GraphicDev);
+            CManagement::GetInstance()->Request_ChangeScene(pStage);
+        }
+        // Editor
+        else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_2) & 0x80)
+        {
             CScene* pEdit = CEdit::Create(m_GraphicDev);
             CManagement::GetInstance()->Request_ChangeScene(pEdit);
-#pragma endregion
-            
         }
     }
 

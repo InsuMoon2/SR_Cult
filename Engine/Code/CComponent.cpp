@@ -1,6 +1,7 @@
 ﻿#include "CComponent.h"
 #include "CGameObject.h"
 #include "CTransform.h"
+#include "CEnumHelper.h"
 
 CComponent::CComponent()
     : m_GraphicDev(nullptr),
@@ -16,6 +17,7 @@ CComponent::CComponent(DEVICE graphicDev)
       m_TransformCom(nullptr)
 {
     m_GraphicDev->AddRef();
+
 }
 
 CComponent::CComponent(const CComponent& rhs)

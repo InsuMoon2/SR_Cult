@@ -304,6 +304,16 @@ void CTerrain::Render_TileImGui()
     ImGui::End();
 }
 
+void CTerrain::OnEditor()
+{
+    CGameObject::OnEditor();
+
+    ImGui::Text("=== Terrain ===");
+    //ImGui::DragInt("Width", &m_Width, 1, 1, 256);
+    //ImGui::DragInt("Height", &m_Height, 1, 1, 256);
+    //ImGui::DragFloat("TileWorldSize", &m_TileWorldSize, 0.1f, 0.1f, 10.f);
+}
+
 _vec3 CTerrain::GetCellCenterWorld(_uint cellX, _uint cellZ) const
 {
     const _float vtxItv = 1.f;

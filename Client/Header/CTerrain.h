@@ -29,12 +29,15 @@ public:
 
     void    Render_TileImGui();
 
+    virtual void OnEditor() override;
+
 public:
     // 셀 좌표 -> 월드 좌표로 변환
     _vec3 GetCellCenterWorld(_uint cellX, _uint cellZ) const;
     void  SelectPlaceObject(_uint cellX, _uint cellZ);
 
     bool  PickCellMousePos(_int& outX, _int& outZ);
+
 
 public:
     HRESULT SaveMap(const char* filePath);

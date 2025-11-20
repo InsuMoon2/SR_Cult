@@ -54,10 +54,11 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
     m_CombatStatCom->Set_Mp(5.f);
+    m_CombatStatCom->Set_Speed(5.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
-
+    
     Animation_Setting();
 
     return S_OK;
@@ -146,6 +147,32 @@ void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
     CGameObject::OnEndOverlap(self, other);
 
     cout << "Player HitOut" << endl;
+}
+
+void CPlayer::OnEditor()
+{
+    CGameObject::OnEditor();
+
+    ImGui::Text("=== Player ===");
+
+    CTransform* transform = m_TransformCom;
+    if (transform)
+    {
+        _vec3 pos = transform->Get_Pos();
+
+        if (ImGui::DragFloat3("Position", &pos.x, 0.1f))
+        {
+            transform->Set_Pos(pos);
+        }
+    }
+
+    _float hp = m_CombatStatCom->Get_Hp();
+    _float mp = m_CombatStatCom->Get_Mp();
+    _float speed = m_CombatStatCom->Get_Speed();
+
+    ImGui::DragFloat("Hp", &hp, 1, 0, 100);
+    ImGui::DragFloat("Mp", &mp, 1, 0, 100);
+    ImGui::DragFloat("Speed", &speed, 1, 0, 100);
 }
 
 HRESULT CPlayer::Add_Component()

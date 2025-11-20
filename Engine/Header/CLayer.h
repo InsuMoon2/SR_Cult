@@ -25,6 +25,9 @@ public:
     _int    Update_Layer(const _float& timeDelta);
     void    LateUpdate_Layer(const _float& timeDelta);
 
+    const map<OBJTYPE, vector<CGameObject*>>& const Get_Objects() { return m_Objects; }
+
+
 private:
     map<OBJTYPE, vector<CGameObject*>> m_Objects;
 

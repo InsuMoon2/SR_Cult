@@ -33,6 +33,8 @@ public:
     void         OnEndOverlap(CCollider* self, CCollider* other) override;
     CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
 
+    virtual void OnEditor() override;
+
 private:
     HRESULT Add_Component();
     void    Animation_Setting();

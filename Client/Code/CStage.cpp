@@ -13,6 +13,8 @@
 #include "CUICircle.h"
 #include "CUIMp.h"
 #include "CUIPlayerPanel.h"
+#include "CEditContext.h"
+#include "CMainEditorMgr.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),

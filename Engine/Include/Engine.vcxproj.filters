@@ -142,6 +142,9 @@
     <Filter Include="04. UI\02. UI Text">
       <UniqueIdentifier>{f65e2aba-0216-407d-81ba-ad5d86c150da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Logic\97. Editor">
+      <UniqueIdentifier>{6a2f84ff-26ab-4a31-bbd4-54e073962573}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Engine_Define.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="..\Header\CUIButton.h">
       <Filter>04. UI\01. UI Button</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CEditContext.h">
+      <Filter>01. Logic\97. Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\CGraphicDev.cpp">
@@ -418,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUIButton.cpp">
       <Filter>04. UI\01. UI Button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CEditContext.cpp">
+      <Filter>01. Logic\97. Editor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
