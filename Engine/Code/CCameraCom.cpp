@@ -48,7 +48,7 @@ CCameraCom::~CCameraCom()
 
 HRESULT CCameraCom::Ready_Camera()
 {
-    m_Offset = { 0.f, 3.f, -10.f };
+    m_Offset = { 0.f, 6.f, -10.f };
 
     return S_OK;
 }
@@ -176,10 +176,13 @@ void CCameraCom::Compute_Proj_Perspective()
 
 void CCameraCom::Compute_Proj_Orthographic()
 {
+    D3DVIEWPORT9 Viewport;
+    m_GraphicDev->GetViewport(&Viewport);
+
     D3DXMatrixOrthoLH(
         &m_matProj,
-        static_cast<_float>(WINCX),
-        static_cast<_float>(WINCY),
+        static_cast<_float>(Viewport.Width),  
+        static_cast<_float>(Viewport.Height), 
         0.f,
         1.f);
 }

@@ -46,11 +46,9 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
     m_CombatStatCom->Set_Mp(5.f);
-    //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
 
     Animation_Setting();
 
