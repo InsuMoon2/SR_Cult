@@ -110,6 +110,8 @@ void CCameraCom::Set_CamMode(CAM_MODE camMode)
     {
         if (camMode == CAM_FREE)
             m_ViewType = VIEW_FPS;
+        else if (camMode == CAM_TARGET)
+            m_ViewType = VIEW_QUARTER;
 
         m_CamMode = camMode;
     }

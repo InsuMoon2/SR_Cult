@@ -1,6 +1,11 @@
 ﻿#pragma once
 #include "CUI.h"
 
+
+enum class HEARTSTATE { EMPTY, HALF, FULL };
+
+class CPlayer;
+
 BEGIN(Engine)
 class CRcTex;
 class CTexture;
@@ -23,11 +28,21 @@ public:
 
 public:
     static CUIHeartBar* Create(DEVICE graphicDev);
+    int Get_ID() { return m_ID; }
+    void Set_State(HEARTSTATE state) { m_HeartState = state; }
+    float Set_Hp(float Hp, float maxHp) { m_Hp = Hp, m_maxHp = maxHp; }
 
 private:
-    CRcTex*             m_BufferCom;
-    CTexture*           m_TextureCom;
-    Engine::CTransform* m_TransformCom;
+   CRcTex*             m_BufferCom;
+   CTexture*           m_TextureCom;
+   CTransform*         m_TransformCom;
+   CPlayer*            m_Player;
+   float              m_Hp;
+   float               m_maxHp;
+
+   int                 m_ID;
+   static int          m_nextID;
+   HEARTSTATE         m_HeartState;
 
 protected:
     void Free() override;

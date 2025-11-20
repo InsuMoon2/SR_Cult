@@ -84,7 +84,7 @@ void CHumanMonster::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    //원래 Renderer에서 세팅 해주니까 안 해줘도 되는 거 아닌가?
+
     Render_Setting();
     if (m_TextureCom && m_AnimatorCom)
     {
