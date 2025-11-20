@@ -72,6 +72,7 @@ enum class OBJTYPE
     UI,
     BOSS2,
     HUMANMONSTER,
+    TERRAIN,
 
     OBJ_END
 };
@@ -79,11 +80,16 @@ enum class OBJTYPE
 // 만들어지는 컴포넌트마다 부여하는 고유 타입
 enum class COMPONENTTYPE
 {
+    // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
+
     TRI_COLOR,
     RC_COLOR,
     BOX_COLOR,
+    
     RC_TEX,
     BOX_TEX,
+    TERRAIN_TEX,
+
     TRANSFORM,
     STATE,
     COMBATSTAT,
@@ -98,6 +104,10 @@ enum class COMPONENTTYPE
     TEX_UI_HEART,
     TEX_ITEM,
 
+    // TODO : Test Tile -> 은수 Texture 버전이랑 합치면 고치기
+    TEX_TILE_284,
+    TEX_TILE_1024,
+
     ANIMATOR,
     CAMERA,
 
@@ -105,6 +115,13 @@ enum class COMPONENTTYPE
     CIRCLE_COLL,
     BOX_COLL,
     SPHERE_COLL,
+
+    ////////////////
+    // MapObject ///
+    ////////////////
+    TEX_GRASS,
+    TEX_ROCK,
+
 
     COMPONENT_END
 };

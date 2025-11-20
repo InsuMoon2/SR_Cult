@@ -10,9 +10,9 @@ namespace Engine
 #define	WINCX		            1280    // 기본 윈도우 가로 해상도
 #define	WINCY		            720     // 기본 윈도우 세로 해상도
 
-#define	VTXCNTX		            129     // 지형 격자의 X 축 정점 수
-#define VTXCNTZ		            129     // 지형 격자의 Z 축 정점 수
-#define VTXITV		            1       // 지형 격자 정점 간격
+#define	TILE_CNT_X		        37     // 지형 격자의 X 축 정점 수
+#define TILE_CNT_Z		        37     // 지형 격자의 Z 축 정점 수
+#define VTX_IV		            1       // 지형 격자 정점 간격
 
 // ========================================
 // 편의성 메시지 박스 매크로

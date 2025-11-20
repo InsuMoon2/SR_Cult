@@ -143,12 +143,12 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     //    L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
 
     //HumanMonster
-    gameObject = CHumanMonster::Create(m_GraphicDev);
-    NULL_CHECK_RETURN_MSG(gameObject, E_FAIL, L"CStage::Ready_GameLogic_Layer() failed: CHumanMonster::Create() returned null")
+    //gameObject = CHumanMonster::Create(m_GraphicDev);
+    //NULL_CHECK_RETURN_MSG(gameObject, E_FAIL, L"CStage::Ready_GameLogic_Layer() failed: CHumanMonster::Create() returned null")
 
-        FAILED_CHECK_MSG(
-            layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
-            L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
 
         FAILED_CHECK_MSG(
             Engine::AcquirePersistentObject<CMainCamera>(

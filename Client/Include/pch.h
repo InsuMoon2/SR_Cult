@@ -26,6 +26,7 @@
 #include <map>
 #include <vector>
 #include <process.h>
+#include <filesystem>
 
 #include "Engine_Enum.h"
 #include "Engine_Macro.h"
@@ -51,5 +52,6 @@ extern HWND      g_hWnd;
 
 using namespace std;
 using namespace Engine;
+using namespace std::filesystem;
 
 #endif //PCH_H

@@ -21,9 +21,13 @@ public:
     void Set_Texture(const _uint& index = 0);
     void Set_Texture(const wstring& animKey, _uint frameIndex);
 
+    // index 번째 텍스처 포인터 반환
+    IDirect3DBaseTexture9* Get_BaseTexture(_uint index = 0) const;
+    // 텍스처 개수
+    _uint Get_TextureIndex() const; 
+
 private:
     vector<IDirect3DBaseTexture9*> m_Textures;
-
     map<wstring, vector<IDirect3DBaseTexture9*>> m_AnimTextures;
 
 public:
