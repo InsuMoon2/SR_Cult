@@ -114,29 +114,38 @@ void CUIPlayerPanel::Render_GameObject()
             CTransform* m_HeartTransformCom = dynamic_cast<CTransform*>(heartBar->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
 
             // TransformComponent
-            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Player Heart UI " + to_string(heartBar->Get_ID())).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
             {
                 const _vec3& pos = m_HeartTransformCom->Get_Pos();
 
                 ImGui::Text("Position");
-
+                float itemWidth = 80.0f;
                 ImGui::Text("X :");
                 ImGui::SameLine();
+                ImGui::SetNextItemWidth(itemWidth);
                 ImGui::InputFloat("##HeartX", (float*)&pos.x);
+                ImGui::SameLine();
 
                 ImGui::Text("Y :");
                 ImGui::SameLine();
+                ImGui::SetNextItemWidth(itemWidth);
                 ImGui::InputFloat("##HeartY", (float*)&pos.y);
+                ImGui::SameLine();
 
                 ImGui::Text("Z :");
                 ImGui::SameLine();
+                ImGui::SetNextItemWidth(itemWidth);
                 ImGui::InputFloat("##HeartZ", (float*)&pos.z);
+            
 
                 m_HeartTransformCom->Set_Pos(pos);
 
                 const _vec3& scale = m_HeartTransformCom->Get_Scale();
 
+                ImGui::SetNextItemWidth(itemWidth);
                 ImGui::InputFloat("ScaleX", (float*)&scale.x);
+                ImGui::SameLine();
+                ImGui::SetNextItemWidth(itemWidth);
                 ImGui::InputFloat("ScaleY", (float*)&scale.y);
 
                 m_HeartTransformCom->Set_Scale(scale);

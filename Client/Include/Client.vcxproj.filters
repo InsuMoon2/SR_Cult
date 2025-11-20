@@ -79,6 +79,12 @@
     <Filter Include="03. UI\00. Panel\00. UIPlayerPanel">
       <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. UI\00. Panel\01. UIXpPanel">
+      <UniqueIdentifier>{0dfc5475-2c84-44fd-b288-f0c8833b514f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. UI\00. Panel\01. UIXpPanel\00. CUICircle">
+      <UniqueIdentifier>{2e7f6c0b-9ad1-4bee-a346-8c78cd8a8a9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -138,6 +144,12 @@
     <ClInclude Include="..\Header\CHumanMonster.h">
       <Filter>02. GameObject\02. Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUIXpPanel.h">
+      <Filter>03. UI\00. Panel\01. UIXpPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUICircle.h">
+      <Filter>03. UI\00. Panel\01. UIXpPanel\00. CUICircle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -187,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CHumanMonster.cpp">
       <Filter>02. GameObject\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIXpPanel.cpp">
+      <Filter>03. UI\00. Panel\01. UIXpPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUICircle.cpp">
+      <Filter>03. UI\00. Panel\01. UIXpPanel\00. CUICircle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

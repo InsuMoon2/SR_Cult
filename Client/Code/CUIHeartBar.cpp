@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "CUIHeartBar.h"
-
-#include <CCombatStat.h>
+#include "CCombatStat.h"
 
 #include "CCreateHelper.h"
 #include "CRcTex.h"
@@ -12,8 +11,7 @@
 int CUIHeartBar::m_nextID = 0;
 
 CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
-    : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
-      m_TransformCom(nullptr)
+    : Engine::CUI(graphicDev)
 {
 
     m_ID = ++m_nextID;
@@ -21,8 +19,7 @@ CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
 }
 
 CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
-    : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
-      m_TransformCom(nullptr)
+    : Engine::CUI(rhs)
 {
 
     m_ID = ++m_nextID;
@@ -52,7 +49,7 @@ HRESULT CUIHeartBar::Ready_GameObject()
 
     }
 
-m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));
+    m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));
 
 return S_OK;
 }
@@ -118,21 +115,22 @@ HRESULT CUIHeartBar::Add_Component()
 
 CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 {
-    auto heartbar = new CUIHeartBar(graphicDev);
-    if (FAILED(heartbar->Ready_GameObject()))
+    auto heartBar = new CUIHeartBar(graphicDev);
+    if (FAILED(heartBar->Ready_GameObject()))
     {
-        Safe_Release(heartbar);
+        Safe_Release(heartBar);
         MSG_BOX("UIHeartBar Created Failed");
         return nullptr;
     }
 
-    return heartbar;
+    return heartBar;
 }
 
 void CUIHeartBar::Free()
 {
     Safe_Release(m_BufferCom);
     Safe_Release(m_TextureCom);
+    Safe_Release(m_TransformCom);
 
     CUI::Free();
 }
