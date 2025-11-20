@@ -88,6 +88,7 @@ void CPlayer::Render_GameObject()
     m_BufferCom->Render_Buffer();
 
     Render_ImGui();
+
     Render_Reset();
 
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함

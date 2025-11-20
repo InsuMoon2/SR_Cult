@@ -4,7 +4,7 @@
 namespace Engine
 {
     class CTransform;
-    class CRectCollider;
+    class CBoxCollider;
     class CRcTex;
     class CTexture;
 }
@@ -34,7 +34,7 @@ private:
     Engine::CRcTex* m_BufferCom;
     Engine::CTransform* m_TransformCom;
     Engine::CTexture* m_TextureCom;
-    Engine::CRectCollider* m_RectColCom;
+    Engine::CBoxCollider* m_BoxColCom;
     // 지형 타는 컴포넌트 추가예정
     
 public:

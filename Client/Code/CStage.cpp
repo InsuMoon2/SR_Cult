@@ -32,8 +32,9 @@ HRESULT CStage::Ready_Scene()
 
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
+    // 안은수 test
     ItemInstance i = { 1001,-1,0 };
-    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10,10,10 }, this);
+    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10,0,10 }, this);
 
     return S_OK;
 }
