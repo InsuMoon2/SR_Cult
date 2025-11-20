@@ -15,8 +15,7 @@
 #include "CBoxCollider.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
-    : m_GraphicDev(pGraphicDev),
-      m_Thread(nullptr), m_Crt{}, m_LoadingID(LOADING_END), m_IsFinish(false)
+    : m_GraphicDev(pGraphicDev),m_Thread(nullptr), m_Crt{}, m_LoadingID(LOADING_END), m_IsFinish(false)
 {
     m_GraphicDev->AddRef();
 }
@@ -97,16 +96,16 @@ _uint CLoading::Loading_ForState()
         return E_FAIL;
 
     // // Boss2 Test
-    CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
-    NULL_CHECK_RETURN(bossTex, E_FAIL);
+    //CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
+    //NULL_CHECK_RETURN(bossTex, E_FAIL);
 
-    if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
-        return E_FAIL;
+    //if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
+    //    L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+    //    return E_FAIL;
 
-    if (FAILED(pProtoMgr->Ready_Prototype(
-        COMPONENTTYPE::TEX_MONSTER, bossTex)))
-        return E_FAIL;
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::TEX_MONSTER, bossTex)))
+    //    return E_FAIL;
 
     // item Test
     //if (FAILED(pProtoMgr->Ready_Prototype(
@@ -128,6 +127,22 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
+
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle0.png", 1))))
+        return E_FAIL;
+
+    //circleColorTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_COLOR,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle1.png", 1))))
+        return E_FAIL;
+
+
 
 #pragma endregion
 

@@ -1,17 +1,17 @@
 ﻿#include "pch.h"
 #include "CPlayer.h"
 
+#include "CEnumHelper.h"
 #include "CAnimator.h"
 #include "CBoxCollider.h"
 #include "CCombatStat.h"
 #include "CCreateHelper.h"
-#include "CDInputMgr.h"
-#include "CEnumHelper.h"
 #include "CRcTex.h"
 #include "CRenderer.h"
-#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CState.h"
+#include "CCombatStat.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
@@ -40,13 +40,14 @@ HRESULT CPlayer::Ready_GameObject()
     m_StateCom->Change_State(ACTORSTATE::IDLE);
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
-    m_CombatStatCom->Set_Hp(100.f);
+    m_CombatStatCom->Set_Hp(6.f);
+    m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
     m_CombatStatCom->Set_Mp(5.f);
     //m_AnimatorCom->Play_Animation(L"PlayerIdle", ANIMSTATE::LOOP);
 
     // Transform 테스트
-    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
     m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     Animation_Setting();
@@ -78,15 +79,16 @@ void CPlayer::Render_GameObject()
 
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key   = m_AnimatorCom->Get_CurKey();
-        _int           frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key = m_AnimatorCom->Get_CurKey();
+        _int frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
 
+
     m_BufferCom->Render_Buffer();
 
-    Render_ImGui();
+    TempImGuiRender();
     Render_Reset();
 
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함
@@ -94,9 +96,9 @@ void CPlayer::Render_GameObject()
 
 void CPlayer::Render_Setting()
 {
-    // 후면 출력
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
     m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
@@ -107,6 +109,8 @@ void CPlayer::Render_Setting()
 
 void CPlayer::Render_Reset()
 {
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
@@ -187,21 +191,19 @@ void CPlayer::Animation_Setting()
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
+
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
 {
-    auto inputMgr = CDInputMgr::GetInstance();
-
     const _float speed = 10.f;
 
-    _vec3 dir    = { 0.f, 0.f, 0.f };
-    bool  moving = false;
+    _vec3 dir = { 0.f, 0.f, 0.f };
+    bool moving = false;
 
     // 앞 뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_UP) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_W) & 0x80)
+    if (GetAsyncKeyState(VK_UP) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
@@ -210,8 +212,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         m_StateCom->Change_Dir(ACTORDIR::UP);
     }
 
-    if (inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_S) & 0x80)
+    if (GetAsyncKeyState(VK_DOWN) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -222,18 +223,16 @@ void CPlayer::Key_Input(const _float& timeDelta)
 
     // 좌 우
     m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_D) & 0x80)
+    if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
-
+        
         m_StateCom->Change_Dir(ACTORDIR::RIGHT);
     }
 
-    if (inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_A) & 0x80)
+    if (GetAsyncKeyState(VK_LEFT) & 0x8000)
     {
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
@@ -252,7 +251,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     }
 }
 
-void CPlayer::Render_ImGui()
+void CPlayer::TempImGuiRender()
 {
     if (ImGui::Begin("Player Inspector"))
     {
@@ -292,6 +291,18 @@ void CPlayer::Render_ImGui()
             ImGui::Text("Mp : %.2f", m_CombatStatCom->Get_Mp());
             ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
         }
+
+        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            const float hp = m_CombatStatCom->Get_Hp();
+
+            ImGui::Text("SetHp :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##PlayerHp", (float*)&hp);
+
+            m_CombatStatCom->Set_Hp(hp);
+        }
+
     }
 
     ImGui::End();
