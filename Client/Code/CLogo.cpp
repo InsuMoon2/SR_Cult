@@ -115,6 +115,8 @@ HRESULT CLogo::Ready_UI_Layer(LAYERTYPE layerType)
     // 
     //  if(FAILED(layer->Add_GameObject(OBJTYPE::UI,gameObject)))
 
+    m_Layers.insert({ layerType, layer });
+
     return S_OK;
 }
 

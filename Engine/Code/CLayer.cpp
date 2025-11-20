@@ -29,7 +29,7 @@ HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
     if (nullptr == gameObject)
         return E_FAIL;
 
-    m_Objects[objType].push_back( gameObject);
+    m_Objects[objType].push_back(gameObject);
 
     return S_OK;
 }
@@ -47,12 +47,10 @@ _int CLayer::Update_Layer(const _float& timeDelta)
     {
         for (auto* obj : pair.second)
         {
-
             result = obj->Update_GameObject(timeDelta);
 
             if (result & 0x80000000)
                 return result;
-
         }
     }
 
@@ -89,7 +87,9 @@ void CLayer::Free()
     for (auto& pair : m_Objects)
     {
         for (auto* obj : pair.second)
+        {
             Safe_Release(obj);
+        }
     }
     m_Objects.clear();
 }

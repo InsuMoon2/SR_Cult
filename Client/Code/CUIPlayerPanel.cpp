@@ -4,16 +4,18 @@
 #include "CCombatStat.h"
 #include "CPlayer.h" 
 #include "CRenderer.h"
+#include "CTransform.h"
 #include "CUIHeartBar.h"
 #include "CUIPanel.h"
-#include "CTransform.h"
 
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
-    : CUIPanel(graphicDev)
+    : CUIPanel(graphicDev),
+      m_Player(nullptr)
 {}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
-    : CUIPanel(rhs)
+    : CUIPanel(rhs),
+      m_Player(nullptr)
 {}
 
 CUIPlayerPanel::~CUIPlayerPanel()

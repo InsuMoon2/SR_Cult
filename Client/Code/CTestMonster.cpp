@@ -2,10 +2,8 @@
 #include "CTestMonster.h"
 
 #include "CAnimator.h"
-#include "CCreateHelper.h"
-#include "CRcTex.h"
-#include "CBoxTex.h"
 #include "CBoxCollider.h"
+#include "CBoxTex.h"
 #include "CCreateHelper.h"
 #include "CEnumHelper.h"
 #include "CRcTex.h"

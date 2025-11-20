@@ -21,7 +21,7 @@ CTexture::CTexture(const CTexture& rhs)
     // 깊은 복사
     for (const auto& keyValue : rhs.m_AnimTextures)
     {
-        const wstring& key = keyValue.first;
+        const wstring&                        key      = keyValue.first;
         const vector<IDirect3DBaseTexture9*>& textures = keyValue.second;
 
         vector<IDirect3DBaseTexture9*>& dstFrames = m_AnimTextures[key];
@@ -76,6 +76,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, cons
 
     return S_OK;
 }
+
 // 안은수 : 새로운 Ready_Texture_List 백터를 받아오는
 HRESULT CTexture::Ready_Texture_List(const vector<wstring>& fileList, TEXTUREID texType)
 {
@@ -86,7 +87,9 @@ HRESULT CTexture::Ready_Texture_List(const vector<wstring>& fileList, TEXTUREID 
         IDirect3DBaseTexture9* texture = nullptr;
 
         HRESULT hr = D3DXCreateTextureFromFile(
-            m_GraphicDev, file.c_str(), (LPDIRECT3DTEXTURE9*)&texture);
+            m_GraphicDev,
+            file.c_str(),
+            (LPDIRECT3DTEXTURE9*)&texture);
 
         if (FAILED(hr))
         {
@@ -175,6 +178,18 @@ void CTexture::Set_Texture(const wstring& animKey, _uint frameIndex)
     m_GraphicDev->SetTexture(0, frames[frameIndex]);
 }
 
+IDirect3DBaseTexture9* CTexture::Get_BaseTexture(_uint index) const
+{
+    if (index >= m_Textures.size())
+        return nullptr;
+
+    return m_Textures[index];
+}
+
+_uint CTexture::Get_TextureIndex() const
+{
+    return static_cast<_uint>(m_Textures.size());
+}
 
 CTexture* CTexture::Create(DEVICE graphicDev, TEXTUREID texType, const wstring& filePath, const _uint& count)
 {
@@ -191,9 +206,9 @@ CTexture* CTexture::Create(DEVICE graphicDev, TEXTUREID texType, const wstring& 
 }
 
 // 안은수 : 새로운 오버로드 create
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
-    TEXTUREID texType,
-    const vector<wstring>& fileList)
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9      graphicDev,
+                           TEXTUREID              texType,
+                           const vector<wstring>& fileList)
 {
     auto texture = new CTexture(graphicDev);
 
@@ -217,13 +232,14 @@ void CTexture::Free()
     for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());
     m_Textures.clear();
 
-    for_each(m_AnimTextures.begin(), m_AnimTextures.end(),
-        [](auto& keyValue)
-        {
-            for (auto*& tex : keyValue.second)
-            {
-                Safe_Release(tex);
-            }
-        });
+    for_each(m_AnimTextures.begin(),
+             m_AnimTextures.end(),
+             [](auto& keyValue)
+             {
+                 for (auto*& tex : keyValue.second)
+                 {
+                     Safe_Release(tex);
+                 }
+             });
     m_AnimTextures.clear();
 }

@@ -1,10 +1,10 @@
 ﻿#include "pch.h"
 #include "CTerrain.h"
 
-#include "CRenderer.h"
+#include "CCreateHelper.h"
 #include "CDInputMgr.h"
 #include "CEnumHelper.h"
-#include "CCreateHelper.h"
+#include "CRenderer.h"
 #include "CTerrainTex.h"
 #include "CTexture.h"
 #include "CTransform.h"

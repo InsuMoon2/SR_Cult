@@ -3,14 +3,14 @@
 
 CUIPanel::CUIPanel(DEVICE graphicDev)
     : CUI(graphicDev)
-{}
+{ }
 
 CUIPanel::CUIPanel(const CUIPanel& rhs)
     : CUI(rhs)
-{}
+{ }
 
 CUIPanel::~CUIPanel()
-{}
+{ }
 
 HRESULT CUIPanel::Ready_GameObject()
 {
@@ -47,8 +47,6 @@ void CUIPanel::AddChild(CUI* ui)
         return;
 
     m_Children.push_back(ui);
-
-    ui->AddRef();
 }
 
 void CUIPanel::Render_GameObject()

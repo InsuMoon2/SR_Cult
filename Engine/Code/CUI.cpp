@@ -1,19 +1,23 @@
 ﻿#include "CUI.h"
 
 CUI::CUI(DEVICE graphicDev)
-    : CGameObject(graphicDev)
-{
-
-}
+    : CGameObject(graphicDev),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_BufferCom(nullptr),
+      m_ID(0)
+{ }
 
 CUI::CUI(const CUI& rhs)
-    : CGameObject(rhs)
-{
- 
-}
+    : CGameObject(rhs),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_BufferCom(nullptr),
+      m_ID(0)
+{ }
 
 CUI::~CUI()
-{}
+{ }
 
 HRESULT CUI::Ready_GameObject()
 {
@@ -41,5 +45,5 @@ void CUI::Render_GameObject()
 
 void CUI::Free()
 {
-
+    CGameObject::Free();
 }

@@ -1,7 +1,6 @@
 ﻿#pragma once
-
-#include "Engine_Define.h"
 #include "CScene.h"
+#include "Engine_Define.h"
 
 class CEdit : public CScene
 {
