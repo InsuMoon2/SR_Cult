@@ -1,18 +1,19 @@
 ﻿#include"pch.h"
 #include"CDroppedItem.h"
+
+#include "CBoxCollider.h"
+#include "CComponent.h"
+#include "CCreateHelper.h"
+#include "CDropSystem.h"
+#include "CInventory.h"
+#include "CItemDB.h"
+#include "CPlayer.h"
+#include "CProtoMgr.h"
 #include "CRcTex.h"
+#include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CBoxCollider.h"
-#include "CCreateHelper.h"
-#include "CRenderer.h"
-#include "CProtoMgr.h"
-#include "CItemDB.h"
 #include "ItemData.h"
-#include "CPlayer.h"
-#include "CDropSystem.h"
-#include "CComponent.h"
-#include "CInventory.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
     : CGameObject(graphicDev), m_itemInst(itemInst),

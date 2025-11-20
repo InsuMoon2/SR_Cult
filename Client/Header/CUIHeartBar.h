@@ -28,9 +28,9 @@ public:
 
 public:
     static CUIHeartBar* Create(DEVICE graphicDev);
-    int Get_ID() { return m_ID; }
+    
     void Set_State(HEARTSTATE state) { m_HeartState = state; }
-    float Set_Hp(float Hp, float maxHp) { m_Hp = Hp, m_maxHp = maxHp; }
+    void Set_Hp(float Hp, float maxHp) { m_Hp = Hp, m_maxHp = maxHp; }
 
 private:
    CRcTex*             m_BufferCom;

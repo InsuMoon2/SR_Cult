@@ -1,11 +1,12 @@
 ﻿#include "pch.h"
 #include "CDropSystem.h"
-#include "CInventory.h"
-#include "CGameObject.h"
-#include "CTransform.h"
+
 #include "CDroppedItem.h"
+#include "CGameObject.h"
+#include "CInventory.h"
 #include "CManagement.h"
 #include "CStage.h"
+#include "CTransform.h"
 
 IMPLEMENT_SINGLETON(CDropSystem)
 

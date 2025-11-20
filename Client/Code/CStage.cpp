@@ -2,6 +2,7 @@
 #include "CStage.h"
 
 #include "CCombatStat.h"
+#include "CDropSystem.h"
 #include "CHumanMonster.h"
 #include "CLayer.h"
 #include "CMainCamera.h"
@@ -9,26 +10,23 @@
 #include "CPlayer.h"
 #include "CTestMonster.h"
 #include "CTransform.h"
-#include "CUIPlayerPanel.h"
-#include "CDropSystem.h"
 #include "CUICircle.h"
 #include "CUIMp.h"
+#include "CUIPlayerPanel.h"
 
 CStage::CStage(DEVICE graphicDev)
-    : Engine::CScene(graphicDev)
-{
-}
+    : Engine::CScene(graphicDev),
+      m_PlayerCombatStatCom(nullptr)
+{}
 
 CStage::~CStage()
-{
-}
+{}
 
 HRESULT CStage::Ready_Scene()
 {
     // 로딩 스레드로 역할 이동
     //if (FAILED(Ready_Prototype()))
     //    return E_FAIL;
-
 
     if (FAILED(Ready_Environment_Layer(LAYERTYPE::ENVIRONMENT)))
         return E_FAIL;
@@ -41,9 +39,8 @@ HRESULT CStage::Ready_Scene()
     // 안은수 test
     CDropSystem::GetInstance()->SetCurrentScene(this);
 
-
-    ItemInstance i = { 1001,-1,0 };
-    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10,0,10 });
+    ItemInstance i = { 1001, -1, 0 };
+    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10, 0, 10 });
 
     return S_OK;
 }
@@ -124,8 +121,6 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
             &gameObject),
         L"Persistent object setup failed");
 
-    m_Player = dynamic_cast<CPlayer*>(gameObject);
-
     // 플레이어의 Transform 가져오기
     const auto playerTransform =
         dynamic_cast<CTransform*>(gameObject->Get_Component(
@@ -196,8 +191,6 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     return S_OK;
 }
 
-
-
 HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 {
 #pragma region Legecy : 이전에 하던 방식
@@ -256,12 +249,14 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     FAILED_CHECK_MSG(
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIMp) failed");
+    //? 석호: OBJTYPE::UI로 통일해서 오브젝트 이름이 겹칠텐데, 그게 정상인가?
 
-    gameObject = CUICircle::Create(m_GraphicDev);
+    //gameObject = CUICircle::Create(m_GraphicDev);
+    // TODO 석호: 나중에 진짜 만든 후에 활성화 하자!
 
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::UI, gameObject),
-        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
+    //FAILED_CHECK_MSG(
+    //    layer->Add_GameObject(OBJTYPE::UI, gameObject),
+    //    L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
 
     m_Layers.insert({ layerType, layer });
 
@@ -292,6 +287,5 @@ CStage* CStage::Create(DEVICE graphicDev)
 
 void CStage::Free()
 {
-
     Engine::CScene::Free();
 }

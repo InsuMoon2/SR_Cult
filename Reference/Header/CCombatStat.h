@@ -34,6 +34,7 @@ public:
 
 public:
     static CCombatStat* Create(DEVICE GraphicDev);
+
     CComponent* Clone() override;
 
 protected:

@@ -1,19 +1,18 @@
 ﻿#include "pch.h"
 #include "CPlayer.h"
 
-#include "CEnumHelper.h"
 #include "CAnimator.h"
 #include "CBoxCollider.h"
 #include "CCombatStat.h"
 #include "CCreateHelper.h"
+#include "CDInputMgr.h"
+#include "CEnumHelper.h"
+#include "CInventory.h"
 #include "CRcTex.h"
 #include "CRenderer.h"
+#include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CInventory.h"
-
-#include "CState.h"
-#include "CCombatStat.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
@@ -23,7 +22,8 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_AnimatorCom(nullptr),
       m_BoxColCom(nullptr),
       m_StateCom(nullptr),
-      m_CombatStatCom(nullptr)
+      m_CombatStatCom(nullptr),
+      m_Inventory(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -34,7 +34,8 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_AnimatorCom(nullptr),
       m_BoxColCom(nullptr),
       m_StateCom(nullptr),
-      m_CombatStatCom(nullptr)
+      m_CombatStatCom(nullptr),
+      m_Inventory(nullptr)
 { }
 
 CPlayer::~CPlayer()
@@ -64,16 +65,12 @@ HRESULT CPlayer::Ready_GameObject()
 
 _int CPlayer::Update_GameObject(const _float& timeDelta)
 {
-
 #pragma region 안은수 테스트
 
     auto inputMgr = CDInputMgr::GetInstance();
 
     if (inputMgr->Get_DIKeyState(DIK_1) & 0x80)
-    {
-        m_Inventory->DropItemfromSlot(0, { m_TransformCom->Get_Pos().x,m_TransformCom->Get_Pos().y ,m_TransformCom->Get_Pos() .z+5.f} );
-
-    }
+        m_Inventory->DropItemfromSlot(0, { m_TransformCom->Get_Pos().x, m_TransformCom->Get_Pos().y, m_TransformCom->Get_Pos().z + 5.f });
 
 #pragma endregion
 
@@ -99,12 +96,11 @@ void CPlayer::Render_GameObject()
 
     if (m_TextureCom && m_AnimatorCom)
     {
-        const wstring& key = m_AnimatorCom->Get_CurKey();
-        _int frame = m_AnimatorCom->Get_CurFrame();
+        const wstring& key   = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
 
         m_TextureCom->Set_Texture(key, frame);
     }
-
 
     m_BufferCom->Render_Buffer();
 
@@ -200,7 +196,6 @@ HRESULT CPlayer::Add_Component()
     // TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStatCom });
 
-
     // inventory
     m_Inventory = CreateProtoComponent<CInventory>(this, COMPONENTTYPE::INVENTORY);
     NULL_CHECK_RETURN(m_Inventory, E_FAIL);
@@ -220,15 +215,14 @@ void CPlayer::Animation_Setting()
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
-
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
 {
     const _float speed = 10.f;
 
-    _vec3 dir = { 0.f, 0.f, 0.f };
-    bool moving = false;
+    _vec3 dir    = { 0.f, 0.f, 0.f };
+    bool  moving = false;
 
     // 앞 뒤
     m_TransformCom->Get_Info(INFO_LOOK, &dir);
@@ -257,7 +251,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
         D3DXVec3Normalize(&dir, &dir);
         m_TransformCom->Move_Pos(dir, timeDelta, speed);
         moving = true;
-        
+
         m_StateCom->Change_Dir(ACTORDIR::RIGHT);
     }
 
@@ -280,7 +274,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     }
 }
 
-void CPlayer::TempImGuiRender()
+void CPlayer::Render_ImGui()
 {
     if (ImGui::Begin("Player Inspector"))
     {
@@ -331,7 +325,6 @@ void CPlayer::TempImGuiRender()
 
             m_CombatStatCom->Set_Hp(hp);
         }
-
     }
 
     ImGui::End();

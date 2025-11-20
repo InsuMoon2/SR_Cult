@@ -1,6 +1,7 @@
 ﻿#include "CSphereCollider.h"
-#include "CRectCollider.h"
+
 #include "CBoxCollider.h"
+#include "CRectCollider.h"
 
 CSphereCollider::CSphereCollider(DEVICE graphicDev)
     : CCollider(graphicDev, COLLIDERTYPE::SPHERE)

@@ -1,10 +1,10 @@
 ﻿#include "pch.h"
 #include "CInventory.h"
 
+#include "CDropSystem.h"
 #include "CItemDB.h"
 #include "CPlayer.h"
 #include "ItemData.h"
-#include "CDropSystem.h"
 
 CInventory::CInventory(DEVICE graphicDev)
     : CComponent(graphicDev), invenSlotNum(0)

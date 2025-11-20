@@ -3,6 +3,7 @@
 
 #include "CCollisionManager.h"
 #include "CDInputMgr.h"
+#include "CDropSystem.h"
 #include "CFontMgr.h"
 #include "CFrameMgr.h"
 #include "CGraphicDev.h"
@@ -14,8 +15,6 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CTimerMgr.h"
-#include "CItemDB.h"
-#include "CDropSystem.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),

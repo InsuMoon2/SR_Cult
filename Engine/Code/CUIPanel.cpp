@@ -3,14 +3,14 @@
 
 CUIPanel::CUIPanel(DEVICE graphicDev)
     : CUI(graphicDev)
-{}
+{ }
 
 CUIPanel::CUIPanel(const CUIPanel& rhs)
     : CUI(rhs)
-{}
+{ }
 
 CUIPanel::~CUIPanel()
-{}
+{ }
 
 HRESULT CUIPanel::Ready_GameObject()
 {

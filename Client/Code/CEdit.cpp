@@ -1,18 +1,17 @@
 ﻿#include "pch.h"
 #include "CEdit.h"
 
-#include "CPersistentObjectHelper.h"
-
 #include "CLayer.h"
 #include "CMainCamera.h"
+#include "CManagement.h"
 #include "CMonster.h"
+#include "CPersistentObjectHelper.h"
 #include "CPlayer.h"
+#include "CState.h"
+#include "CTerrain.h"
+#include "CTestMonster.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CState.h"
-#include "CManagement.h"
-#include "CTestMonster.h"
-#include "CTerrain.h"
 
 CEdit::CEdit(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
