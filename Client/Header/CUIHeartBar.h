@@ -1,11 +1,17 @@
 ﻿#pragma once
 #include "CUI.h"
 
+
 enum class HEARTSTATE { EMPTY, HALF, FULL };
 
 class CPlayer;
 
-class CUIHeartBar : public Engine::CUI
+BEGIN(Engine)
+class CRcTex;
+class CTexture;
+class CTransform;
+
+class CUIHeartBar : public CUI
 {
 public:
     explicit CUIHeartBar(DEVICE graphicDev);
@@ -22,19 +28,24 @@ public:
 
 public:
     static CUIHeartBar* Create(DEVICE graphicDev);
+    int Get_ID() { return m_ID; }
     void Set_State(HEARTSTATE state) { m_HeartState = state; }
-    void Set_Hp(float Hp, float maxHp) { m_Hp = Hp, m_maxHp = maxHp; }
+    float Set_Hp(float Hp, float maxHp) { m_Hp = Hp, m_maxHp = maxHp; }
 
 private:
-   CPlayer*           m_Player;
+   CRcTex*             m_BufferCom;
+   CTexture*           m_TextureCom;
+   CTransform*         m_TransformCom;
+   CPlayer*            m_Player;
    float              m_Hp;
-   float              m_maxHp;
+   float               m_maxHp;
+
+   int                 m_ID;
+   static int          m_nextID;
    HEARTSTATE         m_HeartState;
-
-
-   static int         m_nextID;
 
 protected:
     void Free() override;
 };
 
+END

@@ -9,8 +9,6 @@
 #include "CTransform.h"
 #include "CUIPlayerPanel.h"
 #include "CHumanMonster.h"
-#include "CUICircle.h"
-#include "CUIXpPanel.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
@@ -178,15 +176,7 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
         return E_FAIL;
 
-    gameObject = CUIXpPanel::Create(m_GraphicDev);
-    NULL_CHECK_RETURN(gameObject, E_FAIL);
-
-    if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
-        return E_FAIL;
-
-
     m_Layers.insert({ layerType, layer });
-
 
     return S_OK;
 }

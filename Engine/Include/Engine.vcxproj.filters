@@ -234,6 +234,9 @@
     <ClInclude Include="..\Header\CRectCollider.h">
       <Filter>02. Prototype\04. Collider\00. Rect Collider</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSphereCollider.h">
+      <Filter>02. Prototype\04. Collider\01. Sphere Collider</Filter>
+    </ClInclude>
     <ClInclude Include="..\header\CCameraCom.h">
       <Filter>02. Prototype\03. Camera</Filter>
     </ClInclude>
@@ -257,13 +260,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\CBoxCol.h">
       <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CUI.h" />
-    <ClInclude Include="..\Header\CUIButton.h" />
-    <ClInclude Include="..\Header\CUIPanel.h" />
-    <ClInclude Include="..\Header\CUIText.h" />
-    <ClInclude Include="..\Header\CSphereCollider.h">
-      <Filter>02. Prototype\04. Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -375,9 +371,5 @@
     <ClCompile Include="..\Code\CBoxCol.cpp">
       <Filter>02. Prototype\00. VIBuffer\03. BoxCol</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CUI.cpp" />
-    <ClCompile Include="..\Code\CUIButton.cpp" />
-    <ClCompile Include="..\Code\CUIPanel.cpp" />
-    <ClCompile Include="..\Code\CUIText.cpp" />
   </ItemGroup>
 </Project>
