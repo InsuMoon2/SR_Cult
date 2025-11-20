@@ -43,16 +43,6 @@ enum class ANIMSTATE
     ANIM_END
 };
 
-enum class ANIMDIR
-{
-    FRONT,          // 앞
-    BACK,           // 뒤
-    RIGHT,          // 오른쪽
-    RIGHT_UP,       // ↗
-    RIGHT_DOWN      // ↘
-    // TODO 석호: 일단 우측만 넣어서, 좌측은 스케일 반전으로 대체하는 것을 테스트해보겠다
-};
-
 enum class LAYERTYPE
 {
     ENVIRONMENT,
@@ -81,12 +71,10 @@ enum class OBJTYPE
 // 만들어지는 컴포넌트마다 부여하는 고유 타입
 enum class COMPONENTTYPE
 {
-    // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
-
     TRI_COLOR,
     RC_COLOR,
     BOX_COLOR,
-    
+
     RC_TEX,
     BOX_TEX,
     TERRAIN_TEX,
@@ -124,7 +112,6 @@ enum class COMPONENTTYPE
     TEX_GRASS,
     TEX_ROCK,
 
-
     COMPONENT_END
 };
 
@@ -133,6 +120,7 @@ enum class ACTORSTATE
     IDLE,
     RUN,
     ATTACK,
+    ROLL,
     HIT,
     DEAD,
 
@@ -141,10 +129,14 @@ enum class ACTORSTATE
 
 enum class ACTORDIR
 {
-    UP,
-    DOWN,
     LEFT,
     RIGHT,
+    UP,
+    DOWN,
+    L_UP,
+    R_UP,
+    L_DOWN,
+    R_DOWN,
 
     PLAYERDIR_END
 };

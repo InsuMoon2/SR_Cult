@@ -101,8 +101,24 @@ _uint CLoading::Loading_ForState()
         L"../Bin/Resource/Texture/Player/Player_Idle/Lamb-idle%d.png", 150)))
         return E_FAIL;
 
-    if (FAILED(playerTex->Add_Texture(L"PlayerRunDown", TEX_NORMAL,
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LEFT", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Palyer_RunHorizontal/Lamb-run-horizontal%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_UP", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_RunUp/Lamb-run-up%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_DOWN", TEX_NORMAL,
         L"../Bin/Resource/Texture/Player/Player_RunDown/Lamb-run-down%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LUP", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_RunUpDiagonal/Lamb-run-up-diagonal%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LDOWN", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_Run/Lamb-run%d.png", 19)))
         return E_FAIL;
 
     if (FAILED(pProtoMgr->Ready_Prototype(
