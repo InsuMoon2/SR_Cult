@@ -70,7 +70,15 @@ _int CPlayer::Update_GameObject(const _float& timeDelta)
     auto inputMgr = CDInputMgr::GetInstance();
 
     if (inputMgr->Get_DIKeyState(DIK_1) & 0x80)
-        m_Inventory->DropItemfromSlot(0, { m_TransformCom->Get_Pos().x, m_TransformCom->Get_Pos().y, m_TransformCom->Get_Pos().z + 5.f });
+    {
+        m_Inventory->DropItemfromSlot(
+            0,
+            {
+                m_TransformCom->Get_Pos().x,
+                m_TransformCom->Get_Pos().y,
+                m_TransformCom->Get_Pos().z + 5.f
+            });
+    }
 
 #pragma endregion
 
@@ -209,71 +217,159 @@ HRESULT CPlayer::Add_Component()
 void CPlayer::Animation_Setting()
 {
     // 애니메이션 생성
+    // 여기서는 CLoading에서 만들어둔 텍스처 이름대로 가져온다
     m_AnimatorCom->Create_Animation(L"PlayerIdle", 150, 0.02f);
-    m_AnimatorCom->Create_Animation(L"PlayerRunDown", 19, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRun_LEFT", 19, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRun_UP", 19, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRun_DOWN", 19, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRun_LUP", 19, 0.02f);
+    m_AnimatorCom->Create_Animation(L"PlayerRun_LDOWN", 19, 0.02f);
+
 
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
-    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRunDown", ANIMSTATE::LOOP);
+    // CState쪽에는 PlayerRun이라는 앞쪽 이름(상태)만 적어주면,
+    // 자동으로 _LEFT 등 뒤쪽에 적어놓은 이름(방향)을 찾아준다
+    m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
 }
 
 void CPlayer::Key_Input(const _float& timeDelta)
 {
-    const _float speed = 10.f;
+    auto inputMgr = CDInputMgr::GetInstance();
 
-    _vec3 dir    = { 0.f, 0.f, 0.f };
-    bool  moving = false;
+    // ---------------------------------
+    // 1. 방향 입력 벡터 계산
+    // ---------------------------------
+    _vec3 look  = m_TransformCom->Get_Look();
+    _vec3 right = m_TransformCom->Get_Right();
 
-    // 앞 뒤
-    m_TransformCom->Get_Info(INFO_LOOK, &dir);
-    if (GetAsyncKeyState(VK_UP) & 0x8000)
+    look.y  = 0.f;
+    right.y = 0.f;
+
+    D3DXVec3Normalize(&look, &look);
+    D3DXVec3Normalize(&right, &right);
+
+    _vec3 moveDir = { 0.f, 0.f, 0.f };
+    int   axis_X{};
+    int   axis_Z{};
+
+    if (inputMgr->Get_DIKeyState(DIK_W) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
     {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
-        moving = true;
-
-        m_StateCom->Change_Dir(ACTORDIR::UP);
+        moveDir += look;
+        ++axis_Z;
+    }
+    if (inputMgr->Get_DIKeyState(DIK_S) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
+    {
+        moveDir -= look;
+        --axis_Z;
+    }
+    if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
+    {
+        moveDir -= right;
+        //! 애니메이션 자체 Transform이 없기에, Owner의 Transform(= 플레이어의 Transform) 을 반전시켜 애니메이션을 반전한다
+        // 따라서 이동 방향도 반대가 된다
+        ++axis_X;
+    }
+    if (inputMgr->Get_DIKeyState(DIK_A) & 0x80 ||
+        inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
+    {
+        moveDir -= right;
+        --axis_X;
     }
 
-    if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-    {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, -speed);
-        moving = true;
+    // ---------------------------------
+    // 2. 상태 및 속도 결정
+    // ---------------------------------
 
-        m_StateCom->Change_Dir(ACTORDIR::DOWN);
+    //bool isMoving{};
+    //
+    //if (D3DXVec3LengthSq(&moveDir) > 0.f)
+    //    isMoving = true;
+    //else
+    //    isMoving = false;
+
+    // ↓ ↓ ↓
+
+    bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
+
+    ACTORSTATE nextState;
+    _float     curSpeed{};
+
+    if (isMoving)
+    {
+        nextState = ACTORSTATE::RUN;
+        curSpeed  = 10.f;
+
+        // TODO 석호: 예시 코드. 상태 추가시 이런 식으로 변경
+        //if (GetAsyncKeyState('Z') & 0x8000) 
+        //{
+        //    eNextState = ACTORSTATE::ATTACK;
+        //    fCurrentSpeed = 5.f; // 공격 중 이동 속도 감소
+        //}
+    }
+    else
+    {
+        //if (GetAsyncKeyState('Z') & 0x8000) 
+        //{
+        //    eNextState = ACTORSTATE::ATTACK;
+        //}
+
+        nextState = ACTORSTATE::IDLE;
     }
 
-    // 좌 우
-    m_TransformCom->Get_Info(INFO_RIGHT, &dir);
-    if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+    // ---------------------------------
+    // 3. 실제 적용
+    // ---------------------------------
+
+    m_StateCom->Change_State(nextState);
+
+    if (isMoving)
     {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, speed);
-        moving = true;
+        D3DXVec3Normalize(&moveDir, &moveDir);
+        m_TransformCom->Move_Pos(moveDir, timeDelta, curSpeed);
 
-        m_StateCom->Change_Dir(ACTORDIR::RIGHT);
+        // 공격 중에는 방향 전환을 막고 싶다면 여기에 조건을 걸면 됨
+        // if (eNextState != ACTORSTATE::ATTACK) 
+        {
+            ACTORDIR newDir = ACTORDIR::LEFT;
+
+            if (axis_Z > 0) // 위
+            {
+                if (axis_X > 0)
+                    newDir = ACTORDIR::R_UP;
+
+                else if (axis_X < 0)
+                    newDir = ACTORDIR::L_UP;
+
+                else
+                    newDir = ACTORDIR::UP;
+            }
+            else if (axis_Z < 0) // 아래
+            {
+                if (axis_X > 0)
+                    newDir = ACTORDIR::R_DOWN;
+
+                else if (axis_X < 0)
+                    newDir = ACTORDIR::L_DOWN;
+
+                else
+                    newDir = ACTORDIR::DOWN;
+            }
+            else // Z축 입력 없음 (좌/우 만 입력)
+            {
+                if (axis_X > 0)
+                    newDir = ACTORDIR::RIGHT;
+
+                else if (axis_X < 0)
+                    newDir = ACTORDIR::LEFT;
+            }
+
+            m_StateCom->Change_Dir(newDir);
+        }
     }
-
-    if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-    {
-        D3DXVec3Normalize(&dir, &dir);
-        m_TransformCom->Move_Pos(dir, timeDelta, -speed);
-        moving = true;
-
-        m_StateCom->Change_Dir(ACTORDIR::LEFT);
-    }
-
-    if (m_StateCom)
-    {
-        if (moving)
-            m_StateCom->Change_State(ACTORSTATE::RUN);
-
-        else
-            m_StateCom->Change_State(ACTORSTATE::IDLE);
-    }
-
-
 }
 
 void CPlayer::Render_ImGui()

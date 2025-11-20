@@ -71,8 +71,6 @@ enum class OBJTYPE
 // 만들어지는 컴포넌트마다 부여하는 고유 타입
 enum class COMPONENTTYPE
 {
-    // TODO 석호: 현재 텍스처 프로토타입마다 다른 enum 값을 줘야 하기에, 텍스처마다 새로 추가되어야 함
-
     TRI_COLOR,
     RC_COLOR,
     BOX_COLOR,
@@ -122,6 +120,7 @@ enum class ACTORSTATE
     IDLE,
     RUN,
     ATTACK,
+    ROLL,
     HIT,
     DEAD,
 
@@ -130,10 +129,10 @@ enum class ACTORSTATE
 
 enum class ACTORDIR
 {
-    UP,
-    DOWN,
     LEFT,
     RIGHT,
+    UP,
+    DOWN,
     L_UP,
     R_UP,
     L_DOWN,
