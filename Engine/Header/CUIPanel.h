@@ -21,7 +21,7 @@ public:
 protected:
     void Free() override;
 
-private:
+protected:
     vector<CUI*> m_Children;
 };
 

@@ -31,6 +31,6 @@ private:
     void Free() override;
 
 private:
-    CUIPlayerPanel* m_playerPanel;
-    CPlayer*        m_player;
+    CUIPlayerPanel* m_PlayerPanel;
+    CPlayer*        m_Player;
 };

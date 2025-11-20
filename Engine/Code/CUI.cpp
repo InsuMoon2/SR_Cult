@@ -1,15 +1,15 @@
 ﻿#include "CUI.h"
 
 CUI::CUI(DEVICE graphicDev)
-    : CGameObject(graphicDev), m_GraphicDev(graphicDev)
+    : CGameObject(graphicDev)
 {
-    m_GraphicDev->AddRef();
+
 }
 
 CUI::CUI(const CUI& rhs)
     : CGameObject(rhs)
 {
-    m_GraphicDev->AddRef();
+ 
 }
 
 CUI::~CUI()
@@ -41,5 +41,5 @@ void CUI::Render_GameObject()
 
 void CUI::Free()
 {
-    Safe_Release(m_GraphicDev);
+
 }

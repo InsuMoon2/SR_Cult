@@ -18,7 +18,7 @@ CGameObject::~CGameObject()
 { }
 
 CComponent* CGameObject::Get_Component(COMPONENTID componentID, COMPONENTTYPE componentType)
-{
+ {
     CComponent* component = Find_Component(componentID, componentType);
 
     if (nullptr == component)
@@ -57,7 +57,8 @@ CComponent* CGameObject::Find_Component(COMPONENTID componentID, COMPONENTTYPE c
 {
     auto& componentMap = m_Components[componentID];
 
-    auto iter = componentMap.find(componentType);
+     auto iter = componentMap.find(componentType);
+
     if (iter == componentMap.end())
         return nullptr;
 
