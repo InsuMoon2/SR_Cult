@@ -88,6 +88,7 @@ enum class COMPONENTTYPE
     TRANSFORM,
     STATE,
     COMBATSTAT,
+    INVENTORY,
 
     TEXTURE,
     TEX_PLAYER,

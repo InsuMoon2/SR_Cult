@@ -9,6 +9,10 @@
 #include "CProtoMgr.h"
 #include "CItemDB.h"
 #include "ItemData.h"
+#include "CPlayer.h"
+#include "CDropSystem.h"
+#include "CComponent.h"
+#include "CInventory.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
     : CGameObject(graphicDev), m_itemInst(itemInst),
@@ -40,6 +44,7 @@ HRESULT CDroppedItem::Ready_GameObject(_vec3 pos)
         return E_FAIL;
 
     m_TransformCom->Set_Pos(pos);
+    m_TransformCom->Set_Scale({ 0.4f,0.4f,0.4f });
     m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     return S_OK;
@@ -83,13 +88,26 @@ void CDroppedItem::Render_GameObject()
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
+    //
+
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함
 }
 
 void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
-    
+    CPlayer* ply = dynamic_cast<CPlayer*>(other->Get_Owner());
+    if (ply != nullptr)
+    {
+        //CDropSystem::GetInstance()->
+        CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
+        dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
+
+        //*** 아이템 지우기 ***
+        //
+    }
+
+
     cout << "item Hit" << endl;
 }
 

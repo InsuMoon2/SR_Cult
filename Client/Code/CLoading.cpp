@@ -16,6 +16,7 @@
 #include "CItemDB.h"
 #include "ItemData.h"
 #include "ItemInstance.h"
+#include "CInventory.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -183,6 +184,11 @@ _uint CLoading::Loading_ForState()
     // CombatStat
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Inventory
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";

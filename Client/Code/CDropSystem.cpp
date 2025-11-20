@@ -18,13 +18,13 @@ CDropSystem::~CDropSystem()
     Free();
 }
 
-void CDropSystem::SpawnDrop(DEVICE pGraphicDev,const ItemInstance& itemInst, const _vec3& worldPos, CScene* nowScene)
+void CDropSystem::SpawnDrop(DEVICE pGraphicDev,const ItemInstance& itemInst, const _vec3& worldPos)
 {
     CDroppedItem* pDrop = CDroppedItem::Create(pGraphicDev, itemInst, worldPos);
-    dynamic_cast<CStage*>(nowScene)->AddObjectOnLayer(LAYERTYPE::GAMELOGIC, pDrop, OBJTYPE::ITEM);
+    dynamic_cast<CStage*>(m_nowScene)->AddObjectOnLayer(LAYERTYPE::GAMELOGIC, pDrop, OBJTYPE::ITEM);
 }
 
-void CDropSystem::SpawnAllFromInven(DEVICE pGraphicDev,CInventory& Inven, CScene* nowScene)
+void CDropSystem::SpawnAllFromInven(DEVICE pGraphicDev,CInventory& Inven)
 {
     CGameObject* obj = Inven.Get_Owner();
     if (obj == nullptr)
@@ -34,12 +34,16 @@ void CDropSystem::SpawnAllFromInven(DEVICE pGraphicDev,CInventory& Inven, CScene
    
     for (int i = 0; i < Inven.GetVector().size();i++)
     {
-        ItemInstance itemInst = Inven.GetVector()[i].itemInst;
+        const InventorySlot& slot = Inven.GetVector()[i];
+        ItemInstance itemInst = slot.itemInst;
+
         if (itemInst.itemId != -1 && Inven.GetVector()[i].count >= 1)
         {
-            for (int i = 0; i < Inven.GetVector()[i].count; i++)
+            int dropCount = slot.count;
+            for (int j = 0; j < dropCount; j++)
             {
-                SpawnDrop(pGraphicDev,itemInst, objPos, nowScene);
+                SpawnDrop(pGraphicDev,itemInst, objPos);
+                Inven.RemoveItem(itemInst.itemId, 1);
             }
         }
     }

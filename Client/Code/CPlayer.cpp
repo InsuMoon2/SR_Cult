@@ -12,6 +12,7 @@
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CInventory.h"
 
 
 CPlayer::CPlayer(DEVICE graphicDev)
@@ -57,6 +58,18 @@ HRESULT CPlayer::Ready_GameObject()
 
 _int CPlayer::Update_GameObject(const _float& timeDelta)
 {
+
+#pragma region 안은수 테스트
+
+    auto inputMgr = CDInputMgr::GetInstance();
+
+    if (inputMgr->Get_DIKeyState(DIK_1) & 0x80)
+    {
+        m_Inventory->DropItemfromSlot(0, { m_TransformCom->Get_Pos().x,m_TransformCom->Get_Pos().y ,m_TransformCom->Get_Pos() .z+5.f} );
+        // 플레이어가 지금 있는씬을 알수 있는 방법이 있나 ??
+    }
+#pragma endregion
+
     _int exit = CGameObject::Update_GameObject(timeDelta);
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
@@ -176,6 +189,14 @@ HRESULT CPlayer::Add_Component()
 
     //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStatCom });
+
+
+    // inventory
+    m_Inventory = CreateProtoComponent<CInventory>(this, COMPONENTTYPE::INVENTORY);
+    NULL_CHECK_RETURN(m_Inventory, E_FAIL);
+
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::INVENTORY, m_Inventory });
+    m_Inventory->SetInvenSlotNum(12);
 
     return S_OK;
 }

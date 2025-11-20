@@ -15,7 +15,7 @@ public:
     void    LateUpdate_Scene(const _float& timeDelta) override;
     void    Render_Scene() override;
 
-    void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
+   // void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
 
 private:
     HRESULT Ready_Environment_Layer(LAYERTYPE layerType);

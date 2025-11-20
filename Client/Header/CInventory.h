@@ -4,6 +4,11 @@
 #include "Engine_Define.h"
 #include "ItemInstance.h"
 
+namespace Engine
+{
+    class CScene;
+}
+
 struct InventorySlot
 {
     ItemType     SlotType;        // Material, Food, Weapon…
@@ -23,7 +28,9 @@ public:
     virtual HRESULT Ready_Inventory();
     void            SetInvenSlotNum(int slotNum); //무조건 만들어야함 
 
-    void DropItem(int DropItemNum, _vec3 DropPos);
+    void DropItemFromCount(int DropItemNum, _vec3 DropPos, CScene* nowScene);
+
+    void DropItemfromSlot(int slotNum, _vec3 DropPos);
 
     // void DropItem(int DropItemNum); // 오너가 죽엇을떄 이거 호출하면 드롭 아이템으로 -1 이면 전부
     bool AddItem(ItemInstance itemInst);

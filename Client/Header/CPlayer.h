@@ -14,6 +14,8 @@ class CState;
 class CCombatStat;
 END
 
+class CInventory; // 이건 클라에 있음
+
 class CPlayer : public CGameObject
 {
 private:
@@ -49,6 +51,8 @@ private:
     Engine::CBoxCollider* m_BoxColCom;
     Engine::CState*       m_StateCom;
     Engine::CCombatStat*  m_CombatStatCom;
+
+    CInventory* m_Inventory;
 
     map<ACTORSTATE, wstring> m_StateAnim;
 
