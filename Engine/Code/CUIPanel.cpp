@@ -47,8 +47,6 @@ void CUIPanel::AddChild(CUI* ui)
         return;
 
     m_Children.push_back(ui);
-
-    ui->AddRef();
 }
 
 void CUIPanel::Render_GameObject()

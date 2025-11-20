@@ -179,7 +179,7 @@ HRESULT CPlayer::Add_Component()
     m_CombatStatCom = CreateProtoComponent<CCombatStat>(this, COMPONENTTYPE::COMBATSTAT);
     NULL_CHECK_RETURN(m_CombatStatCom, E_FAIL);
 
-    //// TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
+    // TODO 인수) CombatStat 컴포넌트에서 Update쓸거면 Dynamic으로 변경하기
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::COMBATSTAT, m_CombatStatCom });
 
     return S_OK;

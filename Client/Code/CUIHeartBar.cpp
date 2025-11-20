@@ -6,13 +6,17 @@
 #include "CTransform.h"
 
 CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
-    : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
+    : CUI(graphicDev),
+      m_BufferCom(nullptr),
+      m_TextureCom(nullptr),
       m_TransformCom(nullptr)
 
 {}
 
 CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
-    : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
+    : CUI(rhs),
+      m_BufferCom(nullptr),
+      m_TextureCom(nullptr),
       m_TransformCom(nullptr)
 {}
 
@@ -122,8 +126,5 @@ CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 
 void CUIHeartBar::Free()
 {
-    Safe_Release(m_BufferCom);
-    Safe_Release(m_TextureCom);
-
     CUI::Free();
 }

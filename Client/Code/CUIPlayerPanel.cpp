@@ -7,11 +7,13 @@
 #include "CUIPanel.h"
 
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
-    : CUIPanel(graphicDev)
+    : CUIPanel(graphicDev),
+      m_player(nullptr)
 {}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
-    : CUIPanel(rhs)
+    : CUIPanel(rhs),
+      m_player(nullptr)
 {}
 
 CUIPlayerPanel::~CUIPlayerPanel()
