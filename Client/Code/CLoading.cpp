@@ -128,6 +128,19 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
 
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle0.png", 1))))
+        return E_FAIL;
+
+    //circleColorTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_COLOR,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle1.png", 1))))
+        return E_FAIL;
 
 
 

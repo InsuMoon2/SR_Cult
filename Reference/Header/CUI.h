@@ -3,7 +3,11 @@
 #include "CGameObject.h"
 
 BEGIN(Engine)
-class ENGINE_DLL CUI : public CGameObject
+    class CRcTex;
+    class CTexture;
+    class CTransform;
+
+    class ENGINE_DLL CUI : public CGameObject
 {
 public:
     explicit CUI(DEVICE pGraphicDev);
@@ -16,11 +20,21 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-protected:
-    DEVICE m_GraphicDev;
+    int Get_ID() { return m_ID; }
 
 protected:
     void Free() override;
+
+
+protected:
+
+    CTransform* m_TransformCom;
+    CTexture*   m_TextureCom;
+    CRcTex*      m_BufferCom;
+    int          m_ID;
+
+
+
 };
 
 END

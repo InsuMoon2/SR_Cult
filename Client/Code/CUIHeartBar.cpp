@@ -41,13 +41,13 @@ HRESULT CUIHeartBar::Ready_GameObject()
     switch(m_ID)
     {
     case 1:
-        m_TransformCom->Set_Pos(_vec3(-560.f, 300.f, 0.f));
+        m_TransformCom->Set_Pos(_vec3(-450.f, 280.f, 0.f));
         break;
     case 2:
-        m_TransformCom->Set_Pos(_vec3(-520.f, 300.f, 0.f));
+        m_TransformCom->Set_Pos(_vec3(-410.f, 280.f, 0.f));
         break;
     case 3:
-        m_TransformCom->Set_Pos(_vec3(-480.f, 300.f, 0.f));
+        m_TransformCom->Set_Pos(_vec3(-370.f, 280.f, 0.f));
         break;
 
     }

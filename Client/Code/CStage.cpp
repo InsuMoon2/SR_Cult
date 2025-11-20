@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "CStage.h"
-
 #include "CLayer.h"
 #include "CMainCamera.h"
 #include "CPersistentObjectHelper.h"
@@ -9,13 +8,17 @@
 #include "CTransform.h"
 #include "CUIPlayerPanel.h"
 #include "CHumanMonster.h"
+#include "CUICircle.h"
+#include "CUIMp.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
-{ }
+{
+}
 
 CStage::~CStage()
-{ }
+{
+}
 
 HRESULT CStage::Ready_Scene()
 {
@@ -143,17 +146,17 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
     gameObject = CHumanMonster::Create(m_GraphicDev);
     NULL_CHECK_RETURN_MSG(gameObject, E_FAIL, L"CStage::Ready_GameLogic_Layer() failed: CHumanMonster::Create() returned null")
 
-    FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
+        FAILED_CHECK_MSG(
+            layer->Add_GameObject(OBJTYPE::HUMANMONSTER, gameObject),
+            L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(HUMANMONSTER) failed")
 
-    FAILED_CHECK_MSG(
-        Engine::AcquirePersistentObject<CMainCamera>(
-            OBJTYPE::CAMERA,
-            m_GraphicDev,
-            layer,
-            &gameObject),
-        L"Persistent object setup failed");
+        FAILED_CHECK_MSG(
+            Engine::AcquirePersistentObject<CMainCamera>(
+                OBJTYPE::CAMERA,
+                m_GraphicDev,
+                layer,
+                &gameObject),
+            L"Persistent object setup failed");
 
     m_Layers.insert({ layerType, layer });
 
@@ -170,11 +173,25 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     gameObject = CUIPlayerPanel::Create(m_GraphicDev);
     NULL_CHECK_RETURN(gameObject, E_FAIL);
 
-   m_PlayerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
-   m_PlayerPanel->Set_Player(m_Player);
+    m_PlayerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
+    m_PlayerPanel->Set_Player(m_Player);
 
     if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
         return E_FAIL;
+    
+    gameObject = CUIMp::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(gameObject, E_FAIL);
+
+    if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
+
+        return E_FAIL;
+
+    gameObject = CUICircle::Create(m_GraphicDev);
+    NULL_CHECK_RETURN(gameObject, E_FAIL);
+
+    if (FAILED(layer->Add_GameObject(OBJTYPE::UI, gameObject)))
+        return E_FAIL;
+
 
     m_Layers.insert({ layerType, layer });
 
