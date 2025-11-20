@@ -73,7 +73,7 @@ _uint CLoading::Loading_ForState()
 
     // Buffer : Terrain Tex
     if (FAILED(pProtoMgr->Ready_Prototype(
-        COMPONENTTYPE::TERRAIN_TEX, Engine::CTerrainTex::Create(m_GraphicDev, 37, 37, 1))))
+        COMPONENTTYPE::TERRAIN_TEX, Engine::CTerrainTex::Create(m_GraphicDev, TILE_CNT_X, TILE_CNT_Z, 1))))
         return E_FAIL;
 
     //// Buffer : Rect UV
@@ -141,11 +141,17 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
 
+    // Terrain
     if (FAILED(pProtoMgr->Ready_Prototype(
-        COMPONENTTYPE::TEX_TILE, CTexture::Create(m_GraphicDev, TEX_NORMAL,
-            L"../Bin/Resource/Texture/Terrain/Tile%d.png", 15))))
+        COMPONENTTYPE::TEX_TILE_284, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/Terrain/TileAtlas_284.png", 1))))
         return E_FAIL;
 
+    // Grass
+    /*if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_GRASS, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/"))))
+        return E_FAIL;*/
 
 #pragma endregion
 
@@ -185,6 +191,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
         return E_FAIL;
+
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";
 

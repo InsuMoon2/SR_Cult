@@ -174,10 +174,13 @@ void CCameraCom::Compute_Proj_Perspective()
 
 void CCameraCom::Compute_Proj_Orthographic()
 {
+    D3DVIEWPORT9 Viewport;
+    m_GraphicDev->GetViewport(&Viewport);
+
     D3DXMatrixOrthoLH(
         &m_matProj,
-        static_cast<_float>(WINCX),
-        static_cast<_float>(WINCY),
+        static_cast<_float>(Viewport.Width),  
+        static_cast<_float>(Viewport.Height), 
         0.f,
         1.f);
 }

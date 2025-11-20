@@ -12,24 +12,32 @@ private:
     virtual  ~CTerrainTex();
 
 public:
-    virtual HRESULT Ready_Buffer(const _ulong& dwCntX, const _ulong& dwCntZ, const _ulong& dwVtxItv);
-    virtual void Render_Buffer() override;
+    virtual HRESULT Ready_Buffer(
+        const _ulong& CntX,
+        const _ulong& CntZ,
+        const _ulong& VtxItv);
+
+    virtual void    Render_Buffer() override;
 
 public:
-    const _vec3* Get_VtxPos() { return m_pPos; }
+    void ApplyTileSetting(const vector<_int>& tileIndices, _int atlasCols, _int atlasRows);
+
+    const _vec3* Get_VtxPos() { return m_Pos; }
 
 private:
-    HANDLE					m_hFile;
-    BITMAPFILEHEADER		m_fH;
-    BITMAPINFOHEADER		m_iH;
+    _vec3* m_Pos;
 
-    _vec3* m_pPos;
+    _uint m_CntX;
+    _uint m_CntZ;
+
+    _ulong m_CellX = 0;
+    _ulong m_CellZ = 0;
 
 public:
     static CTerrainTex* Create(LPDIRECT3DDEVICE9 graphicDev,
-        const _ulong& dwCntX = TILE_CNT_X,
-        const _ulong& dwCntZ = TILE_CNT_Z,
-        const _ulong& dwVtxItv = VTX_IV);
+        const _ulong& CntX = TILE_CNT_X,
+        const _ulong& CntZ = TILE_CNT_Z,
+        const _ulong& VtxItv = VTX_IV);
 
     virtual CComponent* Clone();
 private:

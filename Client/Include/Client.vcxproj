@@ -180,6 +180,8 @@
     <ClInclude Include="..\Header\CMainApp.h" />
     <ClInclude Include="..\Header\CMainBG.h" />
     <ClInclude Include="..\header\CMainCamera.h" />
+    <ClInclude Include="..\Header\CMapObjectBase.h" />
+    <ClInclude Include="..\Header\CMapObject_Grass.h" />
     <ClInclude Include="..\Header\CMonster.h" />
     <ClInclude Include="..\Header\CPlayer.h" />
     <ClInclude Include="..\Header\CStage.h" />
@@ -203,6 +205,8 @@
     <ClCompile Include="..\Code\CMainApp.cpp" />
     <ClCompile Include="..\Code\CMainBG.cpp" />
     <ClCompile Include="..\code\CMainCamera.cpp" />
+    <ClCompile Include="..\Code\CMapObjectBase.cpp" />
+    <ClCompile Include="..\Code\CMapObject_Grass.cpp" />
     <ClCompile Include="..\Code\CMonster.cpp" />
     <ClCompile Include="..\Code\CPlayer.cpp" />
     <ClCompile Include="..\Code\CStage.cpp" />

@@ -9,6 +9,11 @@ class CTransform;
 class CTexture;
 END
 
+enum class EDIT_MODE
+{
+    TILE, OBJECT, EDIT_MODE_END
+};
+
 class CTerrain : public CGameObject
 {
 private:
@@ -27,10 +32,17 @@ public:
 public:
     // 셀 좌표 -> 월드 좌표로 변환
     _vec3 GetCellCenterWorld(_uint cellX, _uint cellZ) const;
-    void SelectPlaceObject(_uint cellX, _uint cellZ);
+    void  SelectPlaceObject(_uint cellX, _uint cellZ);
+
+    bool  PickCellMousePos(_int& outX, _int& outZ);
+
+public:
+    HRESULT SaveMap(const char* filePath);
+    HRESULT LoadMap(const char* filePath);
 
 private:
     HRESULT Add_Component();
+    HRESULT Refresh_MapFileList();
 
 public:
     static CTerrain* Create(DEVICE GraphicDev);
@@ -50,6 +62,12 @@ private:
 
     _int m_PaintX = 0;
     _int m_PaintZ = 0;
+
+    // 맵 입력용 버퍼
+    char m_MapName[64] = "Terrain01";
+
+    vector<string> m_MapList;
+    _int m_SelectedMapIndex = -1;
 
 };
 

@@ -176,11 +176,13 @@ void CHumanMonster::TempImGuiRender()
 void CHumanMonster::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
+
 }
 
 void CHumanMonster::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
+
 }
 
 HRESULT CHumanMonster::Add_Component()

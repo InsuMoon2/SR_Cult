@@ -49,6 +49,8 @@ _int CEdit::Update_Scene(const _float& timeDelta)
 void CEdit::LateUpdate_Scene(const _float& timeDelta)
 {
     Engine::CScene::LateUpdate_Scene(timeDelta);
+
+
 }
 
 void CEdit::Render_Scene()
@@ -130,7 +132,7 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
     //    return E_FAIL;
 
     //  //testMonster
-    gameObject = CTestMonster::Create(m_GraphicDev);
+    /*gameObject = CTestMonster::Create(m_GraphicDev);
 
     NULL_CHECK_RETURN_MSG(
         gameObject,
@@ -139,7 +141,7 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
     FAILED_CHECK_MSG(
         layer->Add_GameObject(OBJTYPE::BOSS2, gameObject),
-        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");
+        L"CStage::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(BOSS2) failed");*/
 
     // -----------------------------
     // Tile
