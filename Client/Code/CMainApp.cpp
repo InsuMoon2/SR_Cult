@@ -3,6 +3,7 @@
 
 #include "CCollisionManager.h"
 #include "CDInputMgr.h"
+#include "CDropSystem.h"
 #include "CFontMgr.h"
 #include "CFrameMgr.h"
 #include "CGraphicDev.h"
@@ -167,6 +168,7 @@ void CMainApp::Free()
 #pragma region 데이터 파싱 테스트
 
     CItemDB::DestroyInstance();
+    CDropSystem::DestroyInstance();
 
 #pragma endregion
 }

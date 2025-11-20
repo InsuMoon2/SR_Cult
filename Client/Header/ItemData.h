@@ -14,8 +14,8 @@ struct Item
     ItemType type;
     std::string name;
     std::string desc;
-    std::wstring UIFileName;
-    std::wstring UIPath;
+    std::string UIFileName;
+    std::string UIPath;
 
 
     std::string additionalDesc;

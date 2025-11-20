@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "CUIPanel.h"
 #include "CPlayer.h"
+#include "CUIPanel.h"
 
 class CUIPlayerPanel : public CUIPanel
 {
@@ -17,6 +17,7 @@ public:
 
 public:
     static CUIPlayerPanel* Create(DEVICE graphicDev);
+
     void Set_Player(CPlayer* player) { m_Player = player; }
 
 protected:
@@ -24,5 +25,4 @@ protected:
 
 private:
     CPlayer* m_Player;
-
 };

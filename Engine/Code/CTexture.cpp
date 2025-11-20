@@ -18,7 +18,22 @@ CTexture::CTexture(const CTexture& rhs)
         m_Textures[i]->AddRef();
     }
 
-    m_AnimTextures = rhs.m_AnimTextures;
+    // 깊은 복사
+    for (const auto& keyValue : rhs.m_AnimTextures)
+    {
+        const wstring&                        key      = keyValue.first;
+        const vector<IDirect3DBaseTexture9*>& textures = keyValue.second;
+
+        vector<IDirect3DBaseTexture9*>& dstFrames = m_AnimTextures[key];
+        dstFrames.reserve(textures.size());
+
+        for (auto* tex : textures)
+        {
+            dstFrames.push_back(tex);
+            if (tex)
+                tex->AddRef();
+        }
+    }
 }
 
 CTexture::~CTexture()
@@ -54,6 +69,47 @@ HRESULT CTexture::Ready_Texture(TEXTUREID texType, const wstring& filePath, cons
         break;
         default:
             return E_FAIL;
+        }
+
+        m_Textures.push_back(texture);
+    }
+
+    return S_OK;
+}
+
+// 안은수 : 새로운 Ready_Texture_List 백터를 받아오는
+HRESULT CTexture::Ready_Texture_List(const vector<wstring>& fileList, TEXTUREID texType)
+{
+    m_Textures.reserve(fileList.size());
+
+    for (const auto& file : fileList)
+    {
+        IDirect3DBaseTexture9* texture = nullptr;
+
+        HRESULT hr = D3DXCreateTextureFromFile(
+            m_GraphicDev,
+            file.c_str(),
+            (LPDIRECT3DTEXTURE9*)&texture);
+
+        if (FAILED(hr))
+        {
+            OutputDebugStringW((L"[Texture Load Failed] " + file + L"\n").c_str());
+            return E_FAIL;
+        }
+
+        OutputDebugStringW((L"[Texture Loaded] " + file + L"\n").c_str());
+
+        if (texType == TEX_NORMAL)
+        {
+            if (FAILED(D3DXCreateTextureFromFile(
+                m_GraphicDev, file.c_str(), (LPDIRECT3DTEXTURE9*)&texture)))
+                return E_FAIL;
+        }
+        else if (texType == TEX_CUBE)
+        {
+            if (FAILED(D3DXCreateCubeTextureFromFile(
+                m_GraphicDev, file.c_str(), (LPDIRECT3DCUBETEXTURE9*)&texture)))
+                return E_FAIL;
         }
 
         m_Textures.push_back(texture);
@@ -122,10 +178,20 @@ void CTexture::Set_Texture(const wstring& animKey, _uint frameIndex)
     m_GraphicDev->SetTexture(0, frames[frameIndex]);
 }
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
-                           TEXTUREID         texType,
-                           const wstring&    filePath,
-                           const _uint&      count)
+IDirect3DBaseTexture9* CTexture::Get_BaseTexture(_uint index) const
+{
+    if (index >= m_Textures.size())
+        return nullptr;
+
+    return m_Textures[index];
+}
+
+_uint CTexture::Get_TextureIndex() const
+{
+    return static_cast<_uint>(m_Textures.size());
+}
+
+CTexture* CTexture::Create(DEVICE graphicDev, TEXTUREID texType, const wstring& filePath, const _uint& count)
 {
     auto texture = new CTexture(graphicDev);
 
@@ -133,6 +199,23 @@ CTexture* CTexture::Create(LPDIRECT3DDEVICE9 graphicDev,
     {
         Safe_Release(texture);
         MSG_BOX("Texture Create Failed");
+        return nullptr;
+    }
+
+    return texture;
+}
+
+// 안은수 : 새로운 오버로드 create
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9      graphicDev,
+                           TEXTUREID              texType,
+                           const vector<wstring>& fileList)
+{
+    auto texture = new CTexture(graphicDev);
+
+    if (FAILED(texture->Ready_Texture_List(fileList, texType)))
+    {
+        Safe_Release(texture);
+        MSG_BOX("Texture Create Failed (List)");
         return nullptr;
     }
 
@@ -148,4 +231,15 @@ void CTexture::Free()
 {
     for_each(m_Textures.begin(), m_Textures.end(), CDeleteObj());
     m_Textures.clear();
+
+    for_each(m_AnimTextures.begin(),
+             m_AnimTextures.end(),
+             [](auto& keyValue)
+             {
+                 for (auto*& tex : keyValue.second)
+                 {
+                     Safe_Release(tex);
+                 }
+             });
+    m_AnimTextures.clear();
 }

@@ -26,13 +26,13 @@ public:
     virtual void    LateUpdate_GameObject(const _float& timeDelta);
     virtual void    Render_GameObject() PURE;
 
-    // TODO 인수: 순수 가상함수로 바꿀지?
     virtual void OnBeginOverlap(CCollider* self, CCollider* other) {}
     virtual void OnEndOverlap(CCollider* self, CCollider* other) {}
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
-    DEVICE                          m_GraphicDev;
+
+    DEVICE m_GraphicDev;
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);

@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "CInventory.h"
 
+#include "CDropSystem.h"
 #include "CItemDB.h"
 #include "CPlayer.h"
 #include "ItemData.h"
@@ -52,20 +53,35 @@ void CInventory::SetInvenSlotNum(int slotNum)
     }
 }
 
-void CInventory::DropItem(int DropItemNum, _vec3 DropPos)
+void CInventory::DropItemFromCount(int DropItemNum, _vec3 DropPos, CScene* nowScene)
+{
+    //int size;
+    //
+    //if (DropItemNum == -1 || m_vecInven.size() <= DropItemNum)// 모든 아이템 드랍
+    //{
+    //    CDropSystem::GetInstance()->SpawnAllFromInven(m_GraphicDev, *this);
+    //}
+    //else
+    //    size = DropItemNum;
+    //m_vecInven
+}
+
+void CInventory::DropItemfromSlot(int slotNum, _vec3 DropPos)
 {
     int size;
+    
+    if (slotNum < 0 || slotNum >= m_vecInven.size())  // 범위 체크 먼저
+        return;
 
-    if (DropItemNum == -1 || m_vecInven.size() <= DropItemNum)// 모든 아이템 드랍
-    {
-        size = m_vecInven.size();
+    if (m_vecInven[slotNum].itemInst.itemId <= -1)     // 빈 슬롯 체크
+        return;
 
-        for (auto& item : m_vecInven)
-        { }
-    }
-    else
-        size = DropItemNum;
+        CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, m_vecInven[slotNum].itemInst, DropPos);
+        // 드롭한 뒤에는 무조건 인벤에서 삭제
+        RemoveItem(m_vecInven[slotNum].itemInst.itemId, 1);
+
 }
+
 
 bool CInventory::AddItem(ItemInstance itemInst)
 {
@@ -160,6 +176,7 @@ bool CInventory::RemoveItem(int itemID, int count)
         {
             if (slot.count <= remainCount)
             {
+                remainCount -= slot.count ;
                 slot.count           = 0;
                 slot.itemInst.itemId = -1;
 

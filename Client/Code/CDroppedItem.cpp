@@ -1,20 +1,29 @@
 ﻿#include"pch.h"
 #include"CDroppedItem.h"
+
+#include "CBoxCollider.h"
+#include "CComponent.h"
+#include "CCreateHelper.h"
+#include "CDropSystem.h"
+#include "CInventory.h"
+#include "CItemDB.h"
+#include "CPlayer.h"
+#include "CProtoMgr.h"
 #include "CRcTex.h"
+#include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CRectCollider.h"
-#include "CCreateHelper.h"
-#include "CRenderer.h"
+#include "ItemData.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
     : CGameObject(graphicDev), m_itemInst(itemInst),
-      m_BufferCom(nullptr),m_RectColCom(nullptr), m_TextureCom(nullptr), m_TransformCom(nullptr)
+      m_BufferCom(nullptr), m_BoxColCom(nullptr), m_TextureCom(nullptr), m_TransformCom(nullptr)
 {
+
 }
 
 CDroppedItem::CDroppedItem(const CDroppedItem& rhs) : CGameObject(rhs), m_itemInst(rhs.m_itemInst),
-m_BufferCom(rhs.m_BufferCom), m_RectColCom(rhs.m_RectColCom), m_TextureCom(rhs.m_TextureCom), m_TransformCom(rhs.m_TransformCom)
+m_BufferCom(rhs.m_BufferCom), m_BoxColCom(rhs.m_BoxColCom), m_TextureCom(rhs.m_TextureCom), m_TransformCom(rhs.m_TransformCom)
 {
 }
 
@@ -30,10 +39,14 @@ HRESULT CDroppedItem::Ready_GameObject()
 
 HRESULT CDroppedItem::Ready_GameObject(_vec3 pos)
 {
+    m_index = CItemDB::GetInstance()->GetIndexById(m_itemInst.itemId);
+
     if (FAILED(Add_Component()))
         return E_FAIL;
 
     m_TransformCom->Set_Pos(pos);
+    m_TransformCom->Set_Scale({ 0.4f,0.4f,0.4f });
+    m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     return S_OK;
 }
@@ -54,18 +67,47 @@ void CDroppedItem::LateUpdate_GameObject(const _float& timeDelta)
 
 void CDroppedItem::Render_GameObject()
 {
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+    m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
+    //
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
-
-
-   // m_TextureCom->Set_Texture(0);
+    
+    m_TextureCom->Set_Texture(m_index);
 
     m_BufferCom->Render_Buffer();
 
+    //
+
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
+    //
+
+    m_BoxColCom->Render(); // Render Reset 이후 호출해야함
 }
 
 void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
+    CPlayer* ply = dynamic_cast<CPlayer*>(other->Get_Owner());
+    if (ply != nullptr)
+    {
+        //CDropSystem::GetInstance()->
+        CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
+        dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
+
+        //*** 아이템 지우기 ***
+        //
+    }
+
 
     cout << "item Hit" << endl;
 }
@@ -98,13 +140,17 @@ HRESULT CDroppedItem::Add_Component()
 
 
     // RectCol Componet
-    m_RectColCom = CreateProtoComponent<CRectCollider>(this, COMPONENTTYPE::RECT_COLL);
-    NULL_CHECK_RETURN(m_RectColCom, E_FAIL);
-    m_RectColCom->Set_Size(_vec2(2.f, 2.f));
+    m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);
+    NULL_CHECK_RETURN(m_BoxColCom, E_FAIL);
 
-    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_RectColCom });
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::RECT_COLL, m_BoxColCom });
 
     return S_OK;
+}
+
+void CDroppedItem::PopDrop(float range, float height)
+{
+    // 추후 구현예정
 }
 
 CDroppedItem* CDroppedItem::Create(DEVICE graphicDev, ItemInstance itemInst, _vec3 pos)

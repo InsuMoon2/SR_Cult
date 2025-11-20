@@ -2,6 +2,7 @@
 #include "CLogo.h"
 
 #include "CDInputMgr.h"
+#include "CEdit.h"
 #include "CFontMgr.h"
 #include "CLayer.h"
 #include "CLoading.h"
@@ -48,9 +49,16 @@ _int CLogo::Update_Scene(const _float& timeDelta)
     {
         if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_RETURN))
         {
-            CScene* pStage = CStage::Create(m_GraphicDev);
+#pragma region Stage
+            /*CScene* pStage = CStage::Create(m_GraphicDev);
+            CManagement::GetInstance()->Request_ChangeScene(pStage);*/
+#pragma endregion
 
-            CManagement::GetInstance()->Request_ChangeScene(pStage);
+#pragma region Editor
+            CScene* pEdit = CEdit::Create(m_GraphicDev);
+            CManagement::GetInstance()->Request_ChangeScene(pEdit);
+#pragma endregion
+            
         }
     }
 
@@ -106,6 +114,8 @@ HRESULT CLogo::Ready_UI_Layer(LAYERTYPE layerType)
     //  NULL_CHECK_RETURN(gameObject, E_FAIL)
     // 
     //  if(FAILED(layer->Add_GameObject(OBJTYPE::UI,gameObject)))
+
+    m_Layers.insert({ layerType, layer });
 
     return S_OK;
 }

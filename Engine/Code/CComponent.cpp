@@ -3,22 +3,29 @@
 #include "CTransform.h"
 
 CComponent::CComponent()
-    : m_GraphicDev(nullptr), m_IsClone(false),
-      m_Owner(nullptr), m_TransformCom(nullptr)
+    : m_GraphicDev(nullptr),
+      m_IsClone(false),
+      m_Owner(nullptr),
+      m_TransformCom(nullptr)
 { }
 
 CComponent::CComponent(DEVICE graphicDev)
-    : m_GraphicDev(graphicDev), m_IsClone(false),
-      m_Owner(nullptr), m_TransformCom(nullptr)
+    : m_GraphicDev(graphicDev),
+      m_IsClone(false),
+      m_Owner(nullptr),
+      m_TransformCom(nullptr)
 {
     m_GraphicDev->AddRef();
 }
 
 CComponent::CComponent(const CComponent& rhs)
-    : m_GraphicDev(rhs.m_GraphicDev), m_IsClone(true),
-      m_Owner(nullptr), m_TransformCom(nullptr)
+    : m_GraphicDev(rhs.m_GraphicDev),
+      m_IsClone(true),
+      m_Owner(nullptr),
+      m_TransformCom(nullptr)
 {
-    m_GraphicDev->AddRef();
+    if (m_GraphicDev != nullptr)
+        m_GraphicDev->AddRef();
 }
 
 CComponent::~CComponent()

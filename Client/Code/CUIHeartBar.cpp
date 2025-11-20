@@ -1,18 +1,19 @@
 ﻿#include "pch.h"
 #include "CUIHeartBar.h"
 
-#include <CCombatStat.h>
-
+#include "CCombatStat.h"
 #include "CCreateHelper.h"
+#include "CPlayer.h"
 #include "CRcTex.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CPlayer.h"
 
 int CUIHeartBar::m_nextID = 0;
 
 CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
-    : CUI(graphicDev), m_BufferCom(nullptr), m_TextureCom(nullptr),
+    : CUI(graphicDev),
+      m_BufferCom(nullptr),
+      m_TextureCom(nullptr),
       m_TransformCom(nullptr)
 {
 
@@ -21,7 +22,9 @@ CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
 }
 
 CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
-    : CUI(rhs), m_BufferCom(nullptr), m_TextureCom(nullptr),
+    : CUI(rhs),
+      m_BufferCom(nullptr),
+      m_TextureCom(nullptr),
       m_TransformCom(nullptr)
 {
 
@@ -131,8 +134,5 @@ CUIHeartBar* CUIHeartBar::Create(DEVICE graphicDev)
 
 void CUIHeartBar::Free()
 {
-    Safe_Release(m_BufferCom);
-    Safe_Release(m_TextureCom);
-
     CUI::Free();
 }

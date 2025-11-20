@@ -3,8 +3,10 @@
 
 BEGIN(Engine)
 class CRcTex;
+class CBoxTex;
 class CSpriteAnimation;
 class CTexture;
+class CVIBuffer;
 
 class ENGINE_DLL CAnimator : public CComponent
 {
@@ -56,8 +58,9 @@ private:
 
     _bool m_Play;
 
-    Engine::CRcTex*   m_BufferCom;
-    Engine::CTexture* m_Texture;
+    //Engine::CRcTex*   m_BufferCom;
+    Engine::CVIBuffer*  m_BufferCom;
+    Engine::CTexture*   m_Texture;
 
     bool m_Initialized = false;
 

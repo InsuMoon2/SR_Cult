@@ -32,11 +32,16 @@ public:
     void RemoveOverlap(CCollider* other);   // 충돌 끝
 
 public:
+    // Rect vs Rect
     static bool CheckCollisionRect2Rect(CRectCollider* b1, CRectCollider* b2);
+    // Box vs Box
     static bool CheckCollisionBox2Box(CBoxCollider* b1, CBoxCollider* b2);
-
+    // Sphere vs Box
     static bool CheckCollisionSphere2Box(CSphereCollider* s1, CBoxCollider* b2);
+    // Sphere vs Sphere
     static bool CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider* s2);
+
+    // TODO : 충돌처리 조건 더 필요하면 추가하기
 
 protected:
     COLLIDERTYPE m_ColliderType;

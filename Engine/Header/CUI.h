@@ -1,13 +1,13 @@
 ﻿#pragma once
-#include "Engine_Define.h"
 #include "CGameObject.h"
+#include "Engine_Define.h"
 
 BEGIN(Engine)
-    class CRcTex;
-    class CTexture;
-    class CTransform;
+class CRcTex;
+class CTexture;
+class CTransform;
 
-    class ENGINE_DLL CUI : public CGameObject
+class ENGINE_DLL CUI : public CGameObject
 {
 public:
     explicit CUI(DEVICE pGraphicDev);
@@ -20,21 +20,18 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-    int Get_ID() { return m_ID; }
+    virtual int Get_ID() { return m_ID; }
+    //! 석호 : Get_ID를 CUI의 자식에서도 사용 가능하도록 가상함수(virtual) 로 바꿈
+    // ↑ 확인했으면 지우세요
 
 protected:
     void Free() override;
 
-
 protected:
-
     CTransform* m_TransformCom;
     CTexture*   m_TextureCom;
-    CRcTex*      m_BufferCom;
-    int          m_ID;
-
-
-
+    CRcTex*     m_BufferCom;
+    int         m_ID;
 };
 
 END

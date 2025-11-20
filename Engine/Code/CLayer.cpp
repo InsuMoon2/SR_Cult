@@ -15,7 +15,13 @@ CComponent* CLayer::Get_Component(COMPONENTID componentID, OBJTYPE objType, COMP
     if (iter == m_Objects.end())
         return nullptr;
 
-    return iter->second->Get_Component(componentID, componentType);
+    for (auto obj : iter->second)
+    {
+        CComponent* comp = obj->Get_Component(componentID, componentType);
+        if (comp) return comp;
+    }
+
+    return nullptr;
 }
 
 HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
@@ -23,7 +29,7 @@ HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
     if (nullptr == gameObject)
         return E_FAIL;
 
-    m_Objects.insert({ objType, gameObject });
+    m_Objects[objType].push_back(gameObject);
 
     return S_OK;
 }
@@ -37,12 +43,15 @@ _int CLayer::Update_Layer(const _float& timeDelta)
 {
     _int result = 0;
 
-    for (auto& obj : m_Objects)
+    for (auto& pair : m_Objects)
     {
-        result = obj.second->Update_GameObject(timeDelta);
+        for (auto* obj : pair.second)
+        {
+            result = obj->Update_GameObject(timeDelta);
 
-        if (result & 0x80000000)
-            return result;
+            if (result & 0x80000000)
+                return result;
+        }
     }
 
     return result;
@@ -50,9 +59,12 @@ _int CLayer::Update_Layer(const _float& timeDelta)
 
 void CLayer::LateUpdate_Layer(const _float& timeDelta)
 {
-    for (auto& obj : m_Objects)
+    for (auto& pair : m_Objects)
     {
-        obj.second->LateUpdate_GameObject(timeDelta);
+        for (auto* obj : pair.second)
+        {
+            obj->LateUpdate_GameObject(timeDelta);
+        }
     }
 }
 
@@ -72,6 +84,12 @@ CLayer* CLayer::Create()
 
 void CLayer::Free()
 {
-    for_each(m_Objects.begin(), m_Objects.end(), CDeleteMap());
+    for (auto& pair : m_Objects)
+    {
+        for (auto* obj : pair.second)
+        {
+            Safe_Release(obj);
+        }
+    }
     m_Objects.clear();
 }

@@ -2,20 +2,31 @@
 #include "CLoading.h"
 
 #include "CAnimator.h"
+#include "CBoxCol.h"
+#include "CBoxCollider.h"
+#include "CBoxTex.h"
 #include "CCameraCom.h"
+#include "CCombatStat.h"
+#include "CInventory.h"
+#include "CItemDB.h"
 #include "CProtoMgr.h"
 #include "CRcCol.h"
 #include "CRectCollider.h"
 #include "CState.h"
+#include "CTerrain.h"
+#include "CTerrainTex.h"
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CCombatStat.h"
-#include "CBoxCol.h"
-#include "CBoxCollider.h"
+#include "ItemData.h"
+#include "ItemInstance.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
-    : m_GraphicDev(pGraphicDev),m_Thread(nullptr), m_Crt{}, m_LoadingID(LOADING_END), m_IsFinish(false)
+    : m_GraphicDev(pGraphicDev),
+      m_Thread(nullptr),
+      m_Crt{},
+      m_LoadingID(LOADING_END),
+      m_IsFinish(false)
 {
     m_GraphicDev->AddRef();
 }
@@ -63,6 +74,16 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::BOX_COLOR, Engine::CBoxCol::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Buffer : Box Tex
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::BOX_TEX, Engine::CBoxTex::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Buffer : Terrain Tex
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TERRAIN_TEX, Engine::CTerrainTex::Create(m_GraphicDev, TILE_CNT_X, TILE_CNT_Z, 1))))
+        return E_FAIL;
+
     //// Buffer : Rect UV
     //// CLogo 에서 이미 프로토타입 생성중이므로 비활성화
     //if (FAILED(pProtoMgr->Ready_Prototype(
@@ -77,11 +98,11 @@ _uint CLoading::Loading_ForState()
     NULL_CHECK_RETURN(playerTex, E_FAIL);
 
     if (FAILED(playerTex->Add_Texture(L"PlayerIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Player_Idle/Lamb-idle%d.png", 150)))
+        L"../Bin/Resource/Texture/Player/Player_Idle/Lamb-idle%d.png", 150)))
         return E_FAIL;
 
     if (FAILED(playerTex->Add_Texture(L"PlayerRunDown", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.png", 19)))
+        L"../Bin/Resource/Texture/Player/Player_RunDown/Lamb-run-down%d.png", 19)))
         return E_FAIL;
 
     if (FAILED(pProtoMgr->Ready_Prototype(
@@ -95,22 +116,21 @@ _uint CLoading::Loading_ForState()
                 L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
         return E_FAIL;
 
-    // // Boss2 Test
+#pragma region 테스트로 보스 꺼놓음. 필요하면 다시 사용하시오
+
+    // Boss2 Test
     //CTexture* bossTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     //NULL_CHECK_RETURN(bossTex, E_FAIL);
-
+    //
     //if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
-    //    L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+    //    L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 40)))
     //    return E_FAIL;
-
+    //
     //if (FAILED(pProtoMgr->Ready_Prototype(
     //    COMPONENTTYPE::TEX_MONSTER, bossTex)))
     //    return E_FAIL;
 
-    // item Test
-    //if (FAILED(pProtoMgr->Ready_Prototype(
-    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
-    //    return E_FAIL;
+#pragma endregion
 
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
@@ -128,6 +148,31 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
 
+    //아이템
+    vector<Item>    item = CItemDB::GetInstance()->GetVector();
+    vector<wstring> pathVec;
+    for (int i = 0; i < item.size(); i++)
+    {
+        wstring path = CItemDB::GetInstance()->Utf8ToWstring(item[i].UIPath);
+        pathVec.push_back(path);
+    }
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
+        COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec))))
+        return E_FAIL;
+
+    // Terrain
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_TILE_284, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/Terrain/TileAtlas_284.png", 1))))
+        return E_FAIL;
+
+    // Grass
+    /*if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_GRASS, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/"))))
+        return E_FAIL;*/
+
     //circleTex
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
@@ -141,8 +186,6 @@ _uint CLoading::Loading_ForState()
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
                 L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle1.png", 1))))
         return E_FAIL;
-
-
 
 #pragma endregion
 
@@ -181,6 +224,11 @@ _uint CLoading::Loading_ForState()
     // CombatStat
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Inventory
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";
