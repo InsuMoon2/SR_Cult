@@ -26,7 +26,6 @@ public:
     virtual void    LateUpdate_GameObject(const _float& timeDelta);
     virtual void    Render_GameObject() PURE;
 
-    // TODO 인수: 순수 가상함수로 바꿀지?
     virtual void OnBeginOverlap(CCollider* self, CCollider* other) {}
     virtual void OnEndOverlap(CCollider* self, CCollider* other) {}
 

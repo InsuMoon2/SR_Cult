@@ -40,10 +40,10 @@ HRESULT CHumanMonster::Ready_GameObject()
     m_StateCom->Change_Dir(ACTORDIR::LEFT);
 
     Animation_Setting();
-    //m_AnimatorCom->Play_Animation(L"HumanMonsterIdle", ANIMSTATE::LOOP);
 
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
     m_TransformCom->Set_Scale(_vec3(1.2f, 1.2f, 1.2f));
+
     return S_OK;
 }
 
@@ -84,7 +84,7 @@ void CHumanMonster::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    //원래 Renderer에서 세팅 해주니까 안 해줘도 되는 거 아닌가?
+
     Render_Setting();
     if (m_TextureCom && m_AnimatorCom)
     {
@@ -176,11 +176,13 @@ void CHumanMonster::TempImGuiRender()
 void CHumanMonster::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
+
 }
 
 void CHumanMonster::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
+
 }
 
 HRESULT CHumanMonster::Add_Component()

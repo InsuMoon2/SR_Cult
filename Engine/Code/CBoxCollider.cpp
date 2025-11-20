@@ -1,6 +1,7 @@
 ﻿#include "CBoxCollider.h"
 #include "CBoxTex.h"
 #include "CBoxCol.h"
+#include "CRenderer.h"
 #include "CSphereCollider.h"
 #include "CTransform.h"
 

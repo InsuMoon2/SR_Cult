@@ -83,21 +83,23 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
     {
         Item item; // 구조체 지역으로 생성
 
-        item.id         = node["id"];
-        item.type       = StringToItemType(node["type"]);
-        item.name       = node["name"];
-        item.desc       = node["desc"];
-        item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
-        item.UIPath     = ToWString(node["UIPath"].get<std::string>());
-        //item.UIPath = node["UIPath"];
+        item.id = node["id"];
+        item.type = StringToItemType(node["type"]);
+        item.name = node["name"];
+        item.desc = node["desc"];
+       // item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
+       // item.UIPath = ToWString(node["UIPath"].get<std::string>());
+        item.UIFileName = node["UIFileName"];
+        item.UIPath = node["UIPath"];
 
         item.additionalDesc = node["additionalDesc"];
 
         //JSON에 해당 키가 없을 때 사용할 기본값을 지정 있으면 데이터
         item.quality   = node.value("quality", 0);
         item.stackable = node.value("stackable", false);
-        item.maxStack  = node.value("maxStack", 1);
-        item.price     = node.value("price", 0);
+        item.maxStack = node.value("maxStack", 1);
+        item.price = node.value("price", 0);
+
         //map stat에 넣을 데이터
         if (node.contains("stats"))
         {
@@ -112,7 +114,12 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
 
     return S_OK;
 }
-
+int CItemDB::GetIndexById(int id)
+{
+    auto it = m_itemIndex.find(id);
+    assert(it != m_itemIndex.end());
+    return m_itemIndex[it->second];
+}
 Item* CItemDB::GetItemById(int id)
 {
     auto it = m_itemIndex.find(id);

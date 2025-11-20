@@ -54,6 +54,7 @@ typedef struct tagSprite
     _uint  index;           // 스프라이트 인덱스
     _float duration;        // 프레임 전환 속도
 } SPRITE;
+
 }
 
 #endif // Engine_Struct_h__

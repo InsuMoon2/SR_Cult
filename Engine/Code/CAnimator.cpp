@@ -23,7 +23,6 @@ HRESULT CAnimator::Ready_Animator()
     if (m_Owner == nullptr)
         return E_FAIL;
 
-    // TODO : 인수) Loading-> Create -> ReadyAnimator 호출 시키에는 Owner Setting이 안돼있는데 어떻게 바꿀지?
     m_BufferCom = dynamic_cast<CRcTex*>(m_Owner->Get_Component(ID_STATIC, COMPONENTTYPE::RC_TEX));
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
@@ -44,7 +43,7 @@ _int CAnimator::Update_Component(const _float& timeDelta)
     _int exit = CComponent::Update_Component(timeDelta);
 
     // 애니메이션 업데이트
-    m_CurAnimation->Update(timeDelta);
+    m_CurAnimation->Update(timeDelta);                                                                                                                                                  
 
     return exit;
 }

@@ -14,6 +14,8 @@ class CState;
 class CCombatStat;
 END
 
+class CInventory; // 이건 클라에 있음
+
 class CPlayer : public CGameObject
 {
 private:
@@ -32,6 +34,8 @@ public:
 
     void OnBeginOverlap(CCollider* self, CCollider* other) override;
     void OnEndOverlap(CCollider* self, CCollider* other) override;
+    void TempImGuiRender();
+    CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
 
 private:
     HRESULT Add_Component();
@@ -40,20 +44,21 @@ private:
 
     void Render_ImGui();
 
+
+
 private:
-    Engine::CRcTex*     m_BufferCom;
-    Engine::CTransform* m_TransformCom;
-    Engine::CTexture*   m_TextureCom;
-    Engine::CAnimator*  m_AnimatorCom;
-    //Engine::CRectCollider* m_BoxColCom;
+    Engine::CRcTex*        m_BufferCom;
+    Engine::CTransform*    m_TransformCom;
+    Engine::CTexture*      m_TextureCom;
+    Engine::CAnimator*     m_AnimatorCom;
     Engine::CBoxCollider* m_BoxColCom;
     Engine::CState*       m_StateCom;
     Engine::CCombatStat*  m_CombatStatCom;
 
+    CInventory* m_Inventory;
+
     map<ACTORSTATE, wstring> m_StateAnim;
 
-public:
-    float m_Hp = 100.f;
 
 public:
     static CPlayer* Create(DEVICE graphicDev);

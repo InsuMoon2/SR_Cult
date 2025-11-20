@@ -4,8 +4,6 @@
 BEGIN(Engine)
 class CCombatStat;
 END
-//! CCombatStat* 라는 이름만 헤더에서 사용하므로, #include라는 내용물을 다 들춰보는 방식 대신
-//! class CCombatStat; 으로 전방선언을 해서 이름만 알도록 함
 
 class CPlayer;
 
@@ -13,13 +11,15 @@ class CStage : public CScene
 {
 private:
     explicit CStage(DEVICE graphicDev);
-    ~CStage() override;
+    virtual ~CStage() override;
 
 public:
     HRESULT Ready_Scene() override;
     _int    Update_Scene(const _float& timeDelta) override;
     void    LateUpdate_Scene(const _float& timeDelta) override;
     void    Render_Scene() override;
+
+   // void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
 
 private:
     HRESULT Ready_Environment_Layer(LAYERTYPE layerType);

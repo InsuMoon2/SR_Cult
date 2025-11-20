@@ -29,6 +29,27 @@ HRESULT CScene::Ready_Scene()
     return S_OK;
 }
 
+void CScene::AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType)
+{
+    Engine::CLayer* layer = nullptr;
+
+    auto it = m_Layers.find(layerType);
+    if (it != m_Layers.end())
+    {
+        layer = it->second;
+    }
+
+    if (layer == nullptr)
+        MSG_BOX("layerType wrong");
+
+    if (FAILED(layer->Add_GameObject(objType, obj)))
+    {
+        MSG_BOX("Add_GameObject failed");
+        return;
+    }
+
+}
+
 _int CScene::Update_Scene(const _float& timeDelta)
 {
     for (auto& pLayer : m_Layers)
