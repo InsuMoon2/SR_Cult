@@ -13,6 +13,10 @@
 #include "CCombatStat.h"
 #include "CBoxCol.h"
 #include "CBoxCollider.h"
+#include "CItemDB.h"
+#include "ItemData.h"
+#include "ItemInstance.h"
+#include "CInventory.h"
 #include "CTerrain.h"
 #include "CTerrainTex.h"
 
@@ -119,11 +123,8 @@ _uint CLoading::Loading_ForState()
     //    COMPONENTTYPE::TEX_MONSTER, bossTex)))
     //    return E_FAIL;
 
-    // item Test
-    //if (FAILED(pProtoMgr->Ready_Prototype(
-    //    COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Test/Item/Coin.png", 1))))
-    //    return E_FAIL;
 
+    
     //HumanMonster
     CTexture* humanmonsterTex = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
     NULL_CHECK_RETURN(humanmonsterTex, E_FAIL);
@@ -140,6 +141,22 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_HUMANMONSTER, humanmonsterTex)))
         return E_FAIL;
 
+
+    //아이템
+    vector<Item> item = CItemDB::GetInstance()->GetVector();
+    vector<wstring> pathVec;
+    for (int i = 0; i < item.size();i++)
+    {
+    wstring path = CItemDB::GetInstance()->Utf8ToWstring(item[i].UIPath);
+    pathVec.push_back(path);
+
+    }
+    
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
+        COMPONENTTYPE::TEX_ITEM, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec))))
+        return E_FAIL;
+    
+    
     // Terrain
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_TILE_284, CTexture::Create(m_GraphicDev, TEX_NORMAL,
@@ -207,6 +224,10 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::COMBATSTAT, CCombatStat::Create(m_GraphicDev))))
         return E_FAIL;
 
+    // Inventory
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
+        return E_FAIL;
 
     m_LoadingText = L"LOADING Complete! PRESS ENTER";
 

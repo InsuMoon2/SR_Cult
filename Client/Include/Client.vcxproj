@@ -171,6 +171,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CDroppedItem.h" />
+    <ClInclude Include="..\Header\CDropSystem.h" />
     <ClInclude Include="..\Header\CEdit.h" />
     <ClInclude Include="..\Header\CHumanMonster.h" />
     <ClInclude Include="..\Header\CInventory.h" />
@@ -189,15 +191,18 @@
     <ClInclude Include="..\Header\CTerrain.h" />
     <ClInclude Include="..\Header\CUIHeartBar.h" />
     <ClInclude Include="..\Header\CUIPlayerPanel.h" />
+    <ClInclude Include="..\Header\ItemData.h" />
+    <ClInclude Include="..\Header\ItemInstance.h" />
     <ClInclude Include="..\Header\CUIMp.h" />
     <ClInclude Include="Client.h" />
-    <ClInclude Include="D:\다운로드\CUICircle.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CDroppedItem.cpp" />
+    <ClCompile Include="..\Code\CDropSystem.cpp" />
     <ClCompile Include="..\Code\CEdit.cpp" />
     <ClCompile Include="..\Code\CHumanMonster.cpp" />
     <ClCompile Include="..\Code\CInventory.cpp" />

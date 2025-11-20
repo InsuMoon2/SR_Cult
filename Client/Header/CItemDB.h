@@ -14,11 +14,15 @@ public:
     HRESULT Ready_ItemDB();
     HRESULT LoadFromJson(const string& fileName);
 
-    Item*    GetItemById(int id);
+    int GetIndexById(int id);
+
+    Item* GetItemById(int id);
     ItemType StringToItemType(string s);
     wstring  ToWString(const std::string& str);
 
     std::wstring Utf8ToWstring(const std::string& str);
+
+    const vector<Item>& GetVector() const { return m_vecItems; }
 
 private:
     std::vector<Item>               m_vecItems;

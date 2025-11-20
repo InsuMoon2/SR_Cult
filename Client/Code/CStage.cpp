@@ -8,6 +8,7 @@
 #include "CTransform.h"
 #include "CUIPlayerPanel.h"
 #include "CHumanMonster.h"
+#include "CDropSystem.h"
 #include "CUICircle.h"
 #include "CUIMp.h"
 
@@ -26,6 +27,7 @@ HRESULT CStage::Ready_Scene()
     //if (FAILED(Ready_Prototype()))
     //    return E_FAIL;
 
+
     if (FAILED(Ready_Environment_Layer(LAYERTYPE::ENVIRONMENT)))
         return E_FAIL;
 
@@ -34,6 +36,12 @@ HRESULT CStage::Ready_Scene()
 
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
+    // 안은수 test
+    CDropSystem::GetInstance()->SetCurrentScene(this);
+
+
+    ItemInstance i = { 1001,-1,0 };
+    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10,0,10 });
 
     return S_OK;
 }
@@ -54,6 +62,27 @@ void CStage::Render_Scene()
 {
     // debug 용
 }
+
+//void CStage::AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType)
+//{
+//    Engine::CLayer* layer = nullptr;
+//
+//    auto it = m_Layers.find(layerType);
+//    if (it != m_Layers.end())
+//    {
+//        layer = it->second;
+//    }
+//
+//    if(layer == nullptr)
+//      MSG_BOX("layerType wrong");
+//
+//    if (FAILED(layer->Add_GameObject(objType, obj)))
+//    {
+//        MSG_BOX("Add_GameObject failed");
+//        return;
+//    }
+//
+//}
 
 HRESULT CStage::Ready_Environment_Layer(LAYERTYPE layerType)
 {
@@ -162,6 +191,8 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
 
     return S_OK;
 }
+
+
 
 HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 {

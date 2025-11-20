@@ -5,6 +5,7 @@
 BEGIN(Engine)
 class CComponent;
 class CLayer;
+class CGameObject;
 
 /// @brief 게임의 한 화면/상태를 표현하며 다수의 레이어를 관리하는 상위 클래스
 /// @details
@@ -28,6 +29,7 @@ public:
     virtual void    LateUpdate_Scene(const _float& timeDelta);
     virtual void    Render_Scene() PURE;
 
+    void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
 protected:
     map<LAYERTYPE, CLayer*> m_Layers;
     DEVICE                  m_GraphicDev;
