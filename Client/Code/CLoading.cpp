@@ -231,7 +231,7 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
         return E_FAIL;
 
-    m_LoadingText = L"LOADING Complete! PRESS ENTER";
+    m_LoadingText = L"COMPLETE: PRESS 1 -> Stage|PRESS 2 -> Editor";
 
     m_IsFinish = true;
 

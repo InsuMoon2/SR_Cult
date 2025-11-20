@@ -189,6 +189,7 @@
     <ClInclude Include="..\Header\CStage.h" />
     <ClInclude Include="..\Header\CTestMonster.h" />
     <ClInclude Include="..\Header\CTerrain.h" />
+    <ClInclude Include="..\Header\CUICircle.h" />
     <ClInclude Include="..\Header\CUIHeartBar.h" />
     <ClInclude Include="..\Header\CUIPlayerPanel.h" />
     <ClInclude Include="..\Header\ItemData.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="..\Code\CStage.cpp" />
     <ClCompile Include="..\Code\CTestMonster.cpp" />
     <ClCompile Include="..\Code\CTerrain.cpp" />
+    <ClCompile Include="..\Code\CUICircle.cpp" />
     <ClCompile Include="..\Code\CUIHeartBar.cpp" />
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp" />
     <ClCompile Include="..\Code\CUIMp.cpp" />
