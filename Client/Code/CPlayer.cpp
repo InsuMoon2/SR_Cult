@@ -25,7 +25,14 @@ CPlayer::CPlayer(DEVICE graphicDev)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
-    : CGameObject(rhs)
+    : CGameObject(rhs),
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr),
+      m_CombatStatCom(nullptr)
 { }
 
 CPlayer::~CPlayer()

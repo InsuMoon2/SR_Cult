@@ -2,7 +2,10 @@
 #include "CLoading.h"
 
 #include "CAnimator.h"
+#include "CBoxCol.h"
+#include "CBoxCollider.h"
 #include "CCameraCom.h"
+#include "CCombatStat.h"
 #include "CProtoMgr.h"
 #include "CRcCol.h"
 #include "CRectCollider.h"
@@ -10,9 +13,6 @@
 #include "CTexture.h"
 #include "CTransform.h"
 #include "CTriCol.h"
-#include "CCombatStat.h"
-#include "CBoxCol.h"
-#include "CBoxCollider.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -78,11 +78,11 @@ _uint CLoading::Loading_ForState()
     NULL_CHECK_RETURN(playerTex, E_FAIL);
 
     if (FAILED(playerTex->Add_Texture(L"PlayerIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Player_Idle/Lamb-idle%d.png", 150)))
+        L"../Bin/Resource/Texture/Player/Player_Idle/Lamb-idle%d.png", 150)))
         return E_FAIL;
 
     if (FAILED(playerTex->Add_Texture(L"PlayerRunDown", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Player_RunDown/Lamb-run-down%d.png", 19)))
+        L"../Bin/Resource/Texture/Player/Player_RunDown/Lamb-run-down%d.png", 19)))
         return E_FAIL;
 
     if (FAILED(pProtoMgr->Ready_Prototype(
@@ -101,7 +101,7 @@ _uint CLoading::Loading_ForState()
     NULL_CHECK_RETURN(bossTex, E_FAIL);
 
     if (FAILED(bossTex->Add_Texture(L"BossIdle", TEX_NORMAL,
-        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 400)))
+        L"../Bin/Resource/Texture/Test/Boss2_Idle/Boss2_Idle%d.png", 40)))
         return E_FAIL;
 
     if (FAILED(pProtoMgr->Ready_Prototype(
