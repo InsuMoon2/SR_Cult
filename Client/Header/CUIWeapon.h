@@ -1,18 +1,13 @@
 ﻿#pragma once
 #include "CUI.h"
 
-namespace Engine
-{
-    class CCombatStat;
-}
-
-class CUIMp : public CUI
+class CUIWeapon : public CUI
 {
 public:
 
-    explicit CUIMp(DEVICE pGraphicDev);
-    explicit CUIMp(const CUIMp& rhs);
-    ~CUIMp() override;
+    explicit CUIWeapon(DEVICE pGraphicDev);
+    explicit CUIWeapon(const CUIWeapon& rhs);
+    ~CUIWeapon() override;
 
     HRESULT Ready_GameObject() override;
     _int Update_GameObject(const _float& timeDelta) override;
@@ -20,9 +15,9 @@ public:
     void Render_GameObject() override;
 
     HRESULT Add_Component();
-    void Set_PlayerCombatStat(CCombatStat* combatstat) { m_CombatStatCom = combatstat; }
+
 public:
-    static CUIMp* Create(DEVICE graphicDev);
+    static CUIWeapon* Create(DEVICE graphicDev);
 
 private:
     static int         m_nextID;
@@ -30,7 +25,5 @@ private:
 protected:
     void Free() override;
 
-private:
-    CCombatStat* m_CombatStatCom;
 };
 

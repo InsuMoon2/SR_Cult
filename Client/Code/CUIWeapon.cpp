@@ -1,42 +1,38 @@
 ﻿#include "pch.h"
-#include "CUIMp.h"
-
-#include <CCombatStat.h>
-
-#include "CCreateHelper.h"
+#include "CUIWeapon.h"
 #include "CRcTex.h"
-#include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CCreateHelper.h"
+#include "CRenderer.h"
 
-int CUIMp::m_nextID = 0;
+int CUIWeapon::m_nextID = 0;
 
-CUIMp::CUIMp(DEVICE pGraphicDev) : CUI(pGraphicDev)
-{
-
-    m_ID = ++m_nextID;
-}
-
-CUIMp::CUIMp(const CUIMp& rhs) : CUI(rhs)
+CUIWeapon::CUIWeapon(DEVICE pGraphicDev) : CUI(pGraphicDev)
 {
     m_ID = ++m_nextID;
 }
 
-CUIMp::~CUIMp()
+CUIWeapon::CUIWeapon(const CUIWeapon& rhs) : CUI(rhs)
+{
+    m_ID = ++m_nextID;
+}
+
+CUIWeapon::~CUIWeapon()
 {
 }
 
-HRESULT CUIMp::Ready_GameObject()
+HRESULT CUIWeapon::Ready_GameObject()
 {
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-    m_TransformCom->Set_Pos(_vec3(-550.f, 260.f, 0.f));
-    m_TransformCom->Set_Scale(_vec3(54.f, 54.f, 0.f));
+    m_TransformCom->Set_Pos(_vec3(-500.f, 180.f, 0.f));
+    m_TransformCom->Set_Scale(_vec3(25.f, 25.f, 0.f));
     return S_OK;
 }
 
-_int CUIMp::Update_GameObject(const _float& timeDelta)
+_int CUIWeapon::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CUI::Update_GameObject(timeDelta);
 
@@ -45,28 +41,18 @@ _int CUIMp::Update_GameObject(const _float& timeDelta)
     return exit;
 }
 
-void CUIMp::LateUpdate_GameObject(const _float& timeDelta)
+void CUIWeapon::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUI::LateUpdate_GameObject(timeDelta);
 }
 
-void CUIMp::Render_GameObject()
+void CUIWeapon::Render_GameObject()
 {
     CUI::Render_GameObject();
 
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
     m_TextureCom->Set_Texture(0);
-
-    float currMp = m_CombatStatCom->Get_Mp();
-    float maxMp = m_CombatStatCom->Get_MaxMp();
-
-    float ratio = currMp / maxMp;
-    float vStart = 1.0f - ratio;
-
-
-    //m_BufferCom->Set_UV(0.f, vStart, 1.f, 1.f);
-
 
     m_BufferCom->Render_Buffer();
 
@@ -75,41 +61,41 @@ void CUIMp::Render_GameObject()
     {
 
         // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader(("Gauge")), ImGuiTreeNodeFlags_DefaultOpen)
+        if (m_TransformCom && ImGui::CollapsingHeader(("Weapon")), ImGuiTreeNodeFlags_DefaultOpen)
         {
-            _vec3 gaugePos = m_TransformCom->Get_Pos();
+            const _vec3& pos = m_TransformCom->Get_Pos();
 
-            ImGui::Text("Gauge Position");
+            ImGui::Text("Position");
             float itemWidth = 80.0f;
             ImGui::Text("X :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("## XP X", (float*)&gaugePos.x);
+            ImGui::InputFloat("##Weapon X", (float*)&pos.x);
             ImGui::SameLine();
 
             ImGui::Text("Y :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##XP Y", (float*)&gaugePos.y);
+            ImGui::InputFloat("##Weapon Y", (float*)&pos.y);
             ImGui::SameLine();
 
             ImGui::Text("Z :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##XP Z", (float*)&gaugePos.z);
+            ImGui::InputFloat("##Weapon Z", (float*)&pos.z);
 
 
-            m_TransformCom->Set_Pos(gaugePos);
+            m_TransformCom->Set_Pos(pos);
 
-            _vec3 gaugeScale = m_TransformCom->Get_Scale();
+            const _vec3& scale = m_TransformCom->Get_Scale();
 
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleX", (float*)&gaugeScale.x);
+            ImGui::InputFloat("Weapon ScaleX", (float*)&scale.x);
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleY", (float*)&gaugeScale.y);
+            ImGui::InputFloat("Weapon ScaleY", (float*)&scale.y);
 
-            m_TransformCom->Set_Scale(gaugeScale);
+            m_TransformCom->Set_Scale(scale);
         }
 
 
@@ -119,7 +105,7 @@ void CUIMp::Render_GameObject()
     ImGui::End();
 }
 
-HRESULT CUIMp::Add_Component()
+HRESULT CUIWeapon::Add_Component()
 {
 
     // buffer
@@ -135,28 +121,31 @@ HRESULT CUIMp::Add_Component()
     m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
 
     // texture
-    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_UI_COLOR);
+    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_UI_WEAPON);
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
-    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_UI_COLOR, m_TextureCom });
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_UI_WEAPON, m_TextureCom });
 
     return S_OK;
 }
 
-CUIMp* CUIMp::Create(DEVICE graphicDev)
+CUIWeapon* CUIWeapon::Create(DEVICE graphicDev)
 {
-    auto circle = new CUIMp(graphicDev);
+    auto circle = new CUIWeapon(graphicDev);
     if (FAILED(circle->Ready_GameObject()))
     {
         Safe_Release(circle);
-        MSG_BOX("UIXp Created Failed");
+        MSG_BOX("UIHeartBar Created Failed");
         return nullptr;
     }
     return circle;
 }
 
-void CUIMp::Free()
+void CUIWeapon::Free()
 {
+    Safe_Release(m_BufferCom);
+    Safe_Release(m_TextureCom);
+    Safe_Release(m_TransformCom);
 
     CUI::Free();
 }

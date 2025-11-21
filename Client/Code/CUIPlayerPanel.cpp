@@ -10,12 +10,12 @@
 
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev),
-      m_Player(nullptr)
+    m_CombatStatCom(nullptr)
 {}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
     : CUIPanel(rhs),
-      m_Player(nullptr)
+    m_CombatStatCom(nullptr)
 {}
 
 CUIPlayerPanel::~CUIPlayerPanel()
@@ -46,15 +46,14 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
-    if (!m_Player)
+    if (!m_CombatStatCom)
         return 0;
 
-    auto stat = dynamic_cast<CCombatStat*>(m_Player->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::COMBATSTAT));
 
-    if (stat == nullptr)
+    if (m_CombatStatCom == nullptr)
         return 0;
 
-    float hp = stat->Get_Hp();
+    float hp = m_CombatStatCom->Get_Hp();
 
     int i = 0;
 

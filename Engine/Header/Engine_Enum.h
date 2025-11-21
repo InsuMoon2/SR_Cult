@@ -92,6 +92,7 @@ enum class COMPONENTTYPE
     TEX_UI_CIRCLE,
     TEX_UI_COLOR,
     TEX_UI_HEART,
+    TEX_UI_WEAPON,
     TEX_ITEM,
 
     // TODO : Test Tile -> 은수 Texture 버전이랑 합치면 고치기
