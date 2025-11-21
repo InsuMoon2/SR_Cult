@@ -15,12 +15,7 @@ private:
     virtual ~CMainEditorMgr();
 
 public:
-    void Set_EditContext(CEditContext* ctx)
-    {
-        Safe_Release(m_Context);
-
-        m_Context = ctx;
-    }
+    void Set_EditContext(CEditContext* ctx);
 
     // 매 프레임 ImGui로 메인 에디터 창 그리는 부분
     void Render(); 

@@ -27,9 +27,10 @@ public:
 
     const map<OBJTYPE, vector<CGameObject*>>& const Get_Objects() { return m_Objects; }
 
-
 private:
     map<OBJTYPE, vector<CGameObject*>> m_Objects;
+
+    unordered_map<OBJTYPE, _uint> m_NameCounter;
 
 public:
     static CLayer* Create();

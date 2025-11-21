@@ -3,6 +3,58 @@
 #include "Engine_Define.h"
 
 BEGIN(Engine)
+
+// const char* -> wstring 변환
+static wstring CharToWString(const char* cstr)
+{
+    if (cstr == nullptr)
+        return L"";
+
+    int srcLen = static_cast<int>(strlen(cstr));
+    if (srcLen == 0)
+        return L"";
+
+    int required = MultiByteToWideChar(CP_UTF8, 0, cstr, srcLen, nullptr, 0);
+    if (required <= 0)
+        return L"";    // 변환 실패
+
+    std::wstring result;
+    result.resize(required);
+
+    // 실제 변환
+    int converted = MultiByteToWideChar(CP_UTF8, 0, cstr, srcLen,
+        &result[0], required);
+    if (converted <= 0)
+        return L"";    // 변환 실패
+
+    return result;
+}
+
+// wstring -> Utf8로 변환 [ImGui 띄울때 사용]
+static string WStringToUtf8(const wstring& wstr)
+{
+    if (wstr.empty())
+        return {};
+
+    int sizeNeeded = WideCharToMultiByte(
+        CP_UTF8, 0,
+        wstr.c_str(), (int)wstr.size(),
+        nullptr, 0, nullptr, nullptr);
+
+    if (sizeNeeded <= 0)
+        return {};
+
+    string result(sizeNeeded, 0);
+    WideCharToMultiByte(
+        CP_UTF8, 0,
+        wstr.c_str(), (int)wstr.size(),
+        result.data(), sizeNeeded,
+        nullptr, nullptr);
+
+    return result;
+}
+
+// ImGui와의 호환성때문에 기본적으로 const char*로 반환
 static const char* ToString(ACTORSTATE state)
 {
     switch (state)
@@ -129,29 +181,24 @@ static const char* ToString(LAYERTYPE type)
     }
 }
 
-static wstring CharToWString(const char* cstr)
+static const char* ToString(OBJTYPE type)
 {
-    if (cstr == nullptr)
-        return L"";
+    switch (type)
+    {
+    case OBJTYPE::PLAYER:       return "Player";
+    case OBJTYPE::MONSTER:      return "Monster";
+    case OBJTYPE::CAMERA:       return "Camera";
+    case OBJTYPE::ITEM:         return "Item";
+    case OBJTYPE::UI:           return "Ui";
+    case OBJTYPE::BOSS2:        return "Boss2";
+    case OBJTYPE::HUMANMONSTER: return "HumanMonster";
+    case OBJTYPE::TERRAIN:      return "Terrain";
 
-    int srcLen = static_cast<int>(strlen(cstr));
-    if (srcLen == 0)
-        return L"";
-
-    int required = MultiByteToWideChar(CP_UTF8, 0, cstr, srcLen, nullptr, 0);
-    if (required <= 0)
-        return L"";    // 변환 실패
-
-    std::wstring result;
-    result.resize(required);
-
-    // 실제 변환
-    int converted = MultiByteToWideChar(CP_UTF8, 0, cstr, srcLen,
-        &result[0], required);
-    if (converted <= 0)
-        return L"";    // 변환 실패
-
-    return result;
+    default:
+        return "UnknownObjectTyhpe";
+    }
 }
+
+
 
 END

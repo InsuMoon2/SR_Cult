@@ -29,7 +29,7 @@ public:
     const CTransform* Get_Transform() const { return m_TransformCom; }
 
     COMPONENTTYPE     Get_Type() const { return m_ComponentType; }
-    virtual wstring   Get_Name() { return L"Component"; }
+    virtual wstring   Get_Name() { return m_ComponentName; }
 
     void              Set_Owner(CGameObject* owner);
     void              Set_Type(COMPONENTTYPE type) { m_ComponentType = type; }

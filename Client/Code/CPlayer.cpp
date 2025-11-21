@@ -24,7 +24,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
       m_Inventory(nullptr)
-{ }
+{}
 
 CPlayer::CPlayer(const CPlayer& rhs)
     : CGameObject(rhs),
@@ -36,7 +36,7 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
       m_Inventory(nullptr)
-{ }
+{}
 
 CPlayer::~CPlayer()
 { }
@@ -163,24 +163,10 @@ void CPlayer::OnEditor()
 
     ImGui::Text("=== Player ===");
 
-    CTransform* transform = m_TransformCom;
-    if (transform)
-    {
-        _vec3 pos = transform->Get_Pos();
+    
 
-        if (ImGui::DragFloat3("Position", &pos.x, 0.1f))
-        {
-            transform->Set_Pos(pos);
-        }
-    }
-
-    _float hp = m_CombatStatCom->Get_Hp();
-    _float mp = m_CombatStatCom->Get_Mp();
-    _float speed = m_CombatStatCom->Get_Speed();
-
-    ImGui::DragFloat("Hp", &hp, 1, 0, 100);
-    ImGui::DragFloat("Mp", &mp, 1, 0, 100);
-    ImGui::DragFloat("Speed", &speed, 1, 0, 100);
+    // 이제 ImGui는 GameObject의 OnEditor를 상속받아서 Render하면 된다. 따로 호출해줄 필요도 없음.
+    // 추가로 띄우고 싶은거 있으면 추가하기
 }
 
 HRESULT CPlayer::Add_Component()

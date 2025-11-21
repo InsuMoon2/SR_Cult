@@ -79,9 +79,6 @@
     <Filter Include="03. UI\00. Panel\00. UIPlayerPanel">
       <UniqueIdentifier>{05d377a0-ce15-4f4b-a46c-092e9d3e8305}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. Editor">
-      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\09. MapObject">
       <UniqueIdentifier>{60f280a0-81b0-4b2f-8395-7dee795b2c80}</UniqueIdentifier>
     </Filter>
@@ -91,11 +88,23 @@
     <Filter Include="03. UI\01. UI\02. UIMp">
       <UniqueIdentifier>{917c168c-0eae-404b-ae40-3ea31e9a924a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\02. Editor\00. MainEditor">
-      <UniqueIdentifier>{71c23e36-4c26-44b1-a9af-31a21ded4f9b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. UI\01. UI\03. UIWeapon">
       <UniqueIdentifier>{aebde5dc-3c0e-447e-85ea-05deb7023a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor">
+      <UniqueIdentifier>{ae297ee4-6c1d-49d1-9257-6fa1219b5fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\00. MainEditor">
+      <UniqueIdentifier>{71c23e36-4c26-44b1-a9af-31a21ded4f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\01. EditorScript">
+      <UniqueIdentifier>{ed2d34f5-a5bc-478c-8152-8ce28467148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\02. EditorMap">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Utility">
+      <UniqueIdentifier>{6c679534-91b2-4e50-a8e7-3c3c107db823}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,10 +172,10 @@
       <Filter>03. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEdit.h">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTerrain.h">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestMonster.h">
       <Filter>02. GameObject\02. Monster</Filter>
@@ -187,7 +196,7 @@
       <Filter>03. UI\01. UI\01. UICircle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMainEditorMgr.h">
-      <Filter>01. Scene\02. Editor\00. MainEditor</Filter>
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMapObjectBase.h">
       <Filter>02. GameObject\09. MapObject</Filter>
@@ -197,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\CUIWeapon.h">
       <Filter>03. UI\01. UI\03. UIWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CComInspectors.h">
+      <Filter>98. Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -249,10 +261,10 @@
       <Filter>03. Item</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEdit.cpp">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain.cpp">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestMonster.cpp">
       <Filter>02. GameObject\02. Monster</Filter>
@@ -270,12 +282,9 @@
       <Filter>03. UI\01. UI\01. UICircle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMainEditorMgr.cpp">
-      <Filter>01. Scene\02. Editor\00. MainEditor</Filter>
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObject_Grass.cpp">
-      <Filter>02. GameObject\09. MapObject</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>02. GameObject\09. MapObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUIWeapon.cpp">
@@ -283,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -297,5 +309,8 @@
     <Image Include="Client.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

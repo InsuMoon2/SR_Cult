@@ -1,6 +1,7 @@
 ﻿#include "CLayer.h"
 
 #include "CGameObject.h"
+#include "CEnumhelper.h"
 
 CLayer::CLayer()
 { }
@@ -28,6 +29,24 @@ HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
 {
     if (nullptr == gameObject)
         return E_FAIL;
+
+    const char* baseName = ::ToString(objType);
+    wstring wBaseName = CharToWString(baseName);
+
+    // 타입별로 번호 세팅
+    // Ex) Monster, Monster2, Monster3..
+
+    _uint index = ++m_NameCounter[objType];
+
+    wstring finalName = L"";
+
+    if (index == 1)
+        finalName = wBaseName;
+
+    else
+        finalName = wBaseName + L"_" + to_wstring(index);
+
+    gameObject->Set_Name(finalName);
 
     m_Objects[objType].push_back(gameObject);
 

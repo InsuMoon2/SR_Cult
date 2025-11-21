@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CComInspectors.h" />
     <ClInclude Include="..\Header\CDroppedItem.h" />
     <ClInclude Include="..\Header\CDropSystem.h" />
     <ClInclude Include="..\Header\CEdit.h" />
@@ -242,6 +243,9 @@
   <ItemGroup>
     <Image Include="Client.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

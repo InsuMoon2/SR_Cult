@@ -7,6 +7,10 @@
 #include "CEnumHelper.h"
 #include "CManagement.h"
 #include "CScene.h"
+#include "CState.h"
+#include "CCombatStat.h"
+#include "CComInspectors.h"
+#include "CTransform.h"
 
 IMPLEMENT_SINGLETON(CMainEditorMgr)
 
@@ -18,6 +22,13 @@ CMainEditorMgr::CMainEditorMgr()
 CMainEditorMgr::~CMainEditorMgr()
 {
     Free();
+}
+
+void CMainEditorMgr::Set_EditContext(CEditContext* ctx)
+{
+    Safe_Release(m_Context);
+
+    m_Context = ctx;
 }
 
 void CMainEditorMgr::Render()
@@ -35,14 +46,14 @@ void CMainEditorMgr::Render()
     ImGui::Begin("MainEditor");
 
     // 왼쪽 Hierarchy (계층 구조)
-    ImGui::BeginChild(u8"계층 구조", ImVec2(250, 0), true);
+    ImGui::BeginChild(u8"Hierarchy", ImVec2(200, 0), true);
     Render_Hierarchy();
     ImGui::EndChild();
 
     ImGui::SameLine();
 
     // 오른쪽 Inspector (정보 및 설정)
-    ImGui::BeginChild(u8"정보", ImVec2(0, 0), true);
+    ImGui::BeginChild(u8"Inspector", ImVec2(0, 0), true);
     Render_Inspector();
     ImGui::EndChild();
 
@@ -155,14 +166,51 @@ void CMainEditorMgr::Render_Inspector()
     if (selectComponent)
     {
         ImGui::Separator();
-        ImGui::Text("Component : %s", selectComponent->Get_Name());
-        selectComponent->OnEditor();
+
+        string componentName = WStringToUtf8(selectComponent->Get_Name());
+
+#pragma region Legacy
+        //ImGui::Text(u8"Component : %s", componentName.c_str());
+        // selectComponent->OnEditor();
+
+#pragma endregion
+
+        switch (selectComponent->Get_Type())
+        {
+        case COMPONENTTYPE::TRANSFORM:
+        {
+            auto transform = dynamic_cast<CTransform*>(selectComponent);
+            Transform_Inspector(transform);
+            break;
+        }
+        case COMPONENTTYPE::STATE:
+        {
+            auto state = dynamic_cast<CState*>(selectComponent);
+            State_Inspector(state);
+        }
+        case COMPONENTTYPE::COMBATSTAT:
+        {
+            auto stat = dynamic_cast<CCombatStat*>(selectComponent);
+            CombatStat_Inspector(stat);
+            break;
+        }
+
+        case COMPONENTTYPE::CAMERA:
+            {
+            auto camera = dynamic_cast<CCameraCom*>(selectComponent);
+            Camera_Inspector(camera);
+            break;
+            }
+
+         // 다른 컴포넌트 타입 ImGui에 보여줄거 있으면 추가하기
+
+
+        }
+
+        // TODO 인수 : Static Component들도 보이게 세팅해야할지?
+        //const auto& staticComponents = obj->Get_StaticComponents();
+
     }
-
-    // TODO 인수 : Static Component들도 보이게 세팅하기
-    //const auto& staticComponents = obj->Get_StaticComponents();
-
-
 }
 
 void CMainEditorMgr::Free()
