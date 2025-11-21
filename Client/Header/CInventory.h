@@ -13,7 +13,7 @@ struct InventorySlot
 {
     ItemType     SlotType;        // Material, Food, Weapon…
     ItemInstance itemInst;    // 들어 있는 아이템 (없으면 id = -1)
-    int          count = 1;
+    int          count = 0;
 };
 
 class CInventory : public CComponent
@@ -36,6 +36,8 @@ public:
     bool AddItem(ItemInstance itemInst);
     int  FindEmptySlot(ItemType itemtype);
     bool RemoveItem(int itemID, int count);
+
+    bool RemoveItemBySlot(int slotNum, int count);
 
     const vector<InventorySlot>& GetVector() const { return m_vecInven; }
 public:

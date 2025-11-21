@@ -1,21 +1,24 @@
 ﻿#include "pch.h"
 #include "CInventory.h"
 
-#include "CDropSystem.h"
 #include "CItemDB.h"
 #include "CPlayer.h"
 #include "ItemData.h"
+#include "CDropSystem.h"
 
 CInventory::CInventory(DEVICE graphicDev)
     : CComponent(graphicDev), invenSlotNum(0)
-{}
+{
+}
 
 CInventory::CInventory(const CInventory& rhs)
     : CComponent(rhs), invenSlotNum(0)
-{}
+{
+}
 
 CInventory::~CInventory()
-{ }
+{
+}
 
 HRESULT CInventory::Ready_Inventory()
 {
@@ -30,7 +33,7 @@ void CInventory::SetInvenSlotNum(int slotNum)
     {
         //플레이어인 경우
         invenSlotNum = 12;
-        m_vecInven.resize(slotNum);
+        m_vecInven.resize(invenSlotNum);
 
         for (int i = 0; i < invenSlotNum; i++)
         {
@@ -44,7 +47,7 @@ void CInventory::SetInvenSlotNum(int slotNum)
     {
         //플레이어가 아닌경우 ex)몬스터
         invenSlotNum = slotNum;
-        m_vecInven.resize(slotNum);
+        m_vecInven.resize(invenSlotNum);
 
         for (int i = 0; i < invenSlotNum; i++)
         {
@@ -69,16 +72,16 @@ void CInventory::DropItemFromCount(int DropItemNum, _vec3 DropPos, CScene* nowSc
 void CInventory::DropItemfromSlot(int slotNum, _vec3 DropPos)
 {
     int size;
-    
+
     if (slotNum < 0 || slotNum >= m_vecInven.size())  // 범위 체크 먼저
         return;
 
     if (m_vecInven[slotNum].itemInst.itemId <= -1)     // 빈 슬롯 체크
         return;
 
-        CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, m_vecInven[slotNum].itemInst, DropPos);
-        // 드롭한 뒤에는 무조건 인벤에서 삭제
-        RemoveItem(m_vecInven[slotNum].itemInst.itemId, 1);
+    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, m_vecInven[slotNum].itemInst, DropPos);
+    // 드롭한 뒤에는 무조건 인벤에서 삭제
+    RemoveItemBySlot(slotNum, 1);
 
 }
 
@@ -111,7 +114,7 @@ bool CInventory::AddItem(ItemInstance itemInst)
         case ItemType::FoodMaterial:
             slot = FindEmptySlot(ItemType::FoodMaterial);
             if (slot == -1)
-                break;
+                return false;
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
@@ -125,10 +128,12 @@ bool CInventory::AddItem(ItemInstance itemInst)
         case ItemType::Material:
             slot = FindEmptySlot(ItemType::Material);
             if (slot == -1)
-                break;
+                return false;
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
+                m_vecInven[slot].count++;
+
                 return true;
             }
             break;
@@ -144,6 +149,8 @@ bool CInventory::AddItem(ItemInstance itemInst)
         if (slot != -1)
         {
             m_vecInven[slot].itemInst = itemInst;
+            m_vecInven[slot].count++;
+
             return true;
         }
     }
@@ -176,8 +183,8 @@ bool CInventory::RemoveItem(int itemID, int count)
         {
             if (slot.count <= remainCount)
             {
-                remainCount -= slot.count ;
-                slot.count           = 0;
+                remainCount -= slot.count;
+                slot.count = 0;
                 slot.itemInst.itemId = -1;
 
                 if (remainCount == 0)
@@ -193,6 +200,27 @@ bool CInventory::RemoveItem(int itemID, int count)
     }
 
     return false;
+}
+
+bool CInventory::RemoveItemBySlot(int slotNum, int count)
+{
+    if (slotNum < 0 || slotNum >= m_vecInven.size())
+        return false;
+
+    auto& slot = m_vecInven[slotNum];
+
+    if (slot.itemInst.itemId == -1)
+        return false;
+
+    if (slot.count < count)
+        return false;
+
+    slot.count -= count;
+
+    if (slot.count == 0)
+        slot.itemInst.itemId = -1;
+
+    return true;
 }
 
 CInventory* CInventory::Create(DEVICE graphicDev)
