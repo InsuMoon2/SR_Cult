@@ -14,6 +14,7 @@
 #include "CUIMp.h"
 #include "CUIPlayerPanel.h"
 #include "CUIWeapon.h"
+#include "CItemDB.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),
@@ -40,8 +41,13 @@ HRESULT CStage::Ready_Scene()
     // 안은수 test
     CDropSystem::GetInstance()->SetCurrentScene(this);
 
-    ItemInstance i = { 1001, -1, 0 };
-    CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10, 0, 10 });
+    for (int i = 0; i < CItemDB::GetInstance()->GetVector().size();i++)
+    {
+        int id = CItemDB::GetInstance()->GetVector()[i].id;
+        ItemInstance inst = { id, -1, 0 };
+        CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, inst, { 10.f, 0.f, 10.f + (i*3.f) });
+
+    }
 
     return S_OK;
 }

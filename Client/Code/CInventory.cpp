@@ -118,6 +118,8 @@ bool CInventory::AddItem(ItemInstance itemInst)
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
+                m_vecInven[slot].count++;
+
                 return true;
             }
             break;
@@ -166,6 +168,7 @@ int CInventory::FindEmptySlot(ItemType itemtype)
     {
         if (m_vecInven[i].SlotType == itemtype)
         {
+            if (m_vecInven[i].itemInst.itemId == -1)
             if (m_vecInven[i].itemInst.itemId == -1)
                 return static_cast<int>(i);
         }

@@ -118,7 +118,7 @@ int CItemDB::GetIndexById(int id)
 {
     auto it = m_itemIndex.find(id);
     assert(it != m_itemIndex.end());
-    return m_itemIndex[it->second];
+    return it->second;
 }
 Item* CItemDB::GetItemById(int id)
 {
