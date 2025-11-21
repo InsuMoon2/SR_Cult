@@ -18,7 +18,6 @@ CWeaponEquip::~CWeaponEquip()
 
 void CWeaponEquip::Equip_Weapon(ItemInstance itemInst)
 {
-
     if (m_iCurrentWeaponSlot.itemInst.itemId != -1)
     {
         Unequip_Weapon();
@@ -26,7 +25,6 @@ void CWeaponEquip::Equip_Weapon(ItemInstance itemInst)
 
     m_iCurrentWeaponSlot.itemInst = itemInst;
     m_iCurrentWeaponID=itemInst.itemId;
-
 
     Item* itemData = CItemDB::GetInstance()->GetItemById(m_iCurrentWeaponID);
 
@@ -47,7 +45,6 @@ void CWeaponEquip::Unequip_Weapon()
     RemoveWeaponStat();
 
     m_iCurrentWeaponID = -1;
-
 }
 
 void CWeaponEquip::ApplyWeaponStat(Item* item)
@@ -82,14 +79,10 @@ void CWeaponEquip::RemoveWeaponStat()
     Item* itemData = CItemDB::GetInstance()->GetItemById(m_iCurrentWeaponID);
 
     combatStat->Add_Attack(-(itemData->stats["attack1"]));
-
-
-    return;
 }
 
 CWeaponEquip* CWeaponEquip::Create(DEVICE graphicDev)
 {
-
     auto weaponEquip = new CWeaponEquip(graphicDev);
 
     if(weaponEquip ==nullptr)
