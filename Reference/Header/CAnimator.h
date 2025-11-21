@@ -8,6 +8,7 @@ class CSpriteAnimation;
 class CTexture;
 class CVIBuffer;
 
+/// @brief 여러 개의 애니메이션을 보관하고 있다가, CState의 명령에 따라 애니메이션을 변경해서 재생하는 "재생장치" 컴포넌트
 class ENGINE_DLL CAnimator : public CComponent
 {
 private:
@@ -59,8 +60,8 @@ private:
     _bool m_Play;
 
     //Engine::CRcTex*   m_BufferCom;
-    Engine::CVIBuffer*  m_BufferCom;
-    Engine::CTexture*   m_Texture;
+    Engine::CVIBuffer* m_BufferCom;
+    Engine::CTexture*  m_Texture;
 
     bool m_Initialized = false;
 

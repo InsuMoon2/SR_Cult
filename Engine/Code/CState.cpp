@@ -1,13 +1,15 @@
 ﻿#include "CState.h"
 #include "CAnimator.h"
 #include "CGameObject.h"
+#include "CTransform.h"
 
 CState::CState(DEVICE GraphicDev)
-    : CComponent(GraphicDev)
-      , m_State(ACTORSTATE::IDLE)
-      , m_PrevState(ACTORSTATE::PLAYERSTATE_END)
-      , m_Dir(ACTORDIR::LEFT)
-      , m_Animator(nullptr)
+    : CComponent(GraphicDev),
+      m_State(ACTORSTATE::IDLE),
+      m_PrevState(ACTORSTATE::PLAYERSTATE_END),
+      m_Dir(ACTORDIR::LEFT),
+      m_PrevDir(ACTORDIR::PLAYERDIR_END),
+      m_Animator(nullptr)
 {}
 
 CState::CState(const CState& rhs)
@@ -16,15 +18,17 @@ CState::CState(const CState& rhs)
       , m_Dir(rhs.m_Dir)
       , m_PrevState(rhs.m_PrevState)
       , m_Animator(rhs.m_Animator)*/
-      , m_State(ACTORSTATE::IDLE)
-      , m_PrevState(ACTORSTATE::PLAYERSTATE_END)
-      , m_Dir(ACTORDIR::LEFT)
-      , m_Animator(nullptr)
+      ,
+      m_State(ACTORSTATE::IDLE),
+      m_PrevState(ACTORSTATE::PLAYERSTATE_END),
+      m_Dir(ACTORDIR::LEFT),
+      m_PrevDir(ACTORDIR::PLAYERDIR_END),
+      m_Animator(nullptr)
 {}
 
 CState::~CState()
 {
-    Free();
+    CState::Free();
 }
 
 HRESULT CState::Ready_StateComponent(DEVICE GraphicDev)
@@ -32,7 +36,8 @@ HRESULT CState::Ready_StateComponent(DEVICE GraphicDev)
     m_State     = ACTORSTATE::IDLE;
     m_PrevState = ACTORSTATE::PLAYERSTATE_END;
 
-    m_Dir = ACTORDIR::LEFT;
+    m_Dir     = ACTORDIR::LEFT;
+    m_PrevDir = ACTORDIR::PLAYERDIR_END;
 
     return S_OK;
 }
@@ -62,22 +67,70 @@ void CState::Update_Animation()
         // Animator가 없으면 그냥 넘어감 Null 체크는 아래에서 진행
     }
 
+#pragma region Legacy: 이전 애니메이션 변경 방식
+    /*
     if (m_Animator != nullptr && m_State != m_PrevState)
     {
         auto iter = m_PlayerStateMap.find(m_State);
         if (iter != m_PlayerStateMap.end())
         {
             ANIMSTATE animState = ANIMSTATE::LOOP; // 기본 LOOP 로 세팅
-
+    
             auto animIter = m_AnimStateMap.find(m_State);
+    
+            if (animIter != m_AnimStateMap.end())
+                animState = animIter->second;
+    
+            m_Animator->Play_Animation(iter->second, animState);
+        }
+    
+        m_PrevState = m_State;
+    }
+    */
+#pragma endregion
+
+    // 상태 혹은 방향이 바뀌었을 때만 로직 수행
+    if (m_Animator != nullptr && m_TransformCom != nullptr &&
+        (m_State != m_PrevState || m_Dir != m_PrevDir))
+    {
+        auto iter = m_PlayerStateMap.find(m_State);
+
+        if (iter != m_PlayerStateMap.end())
+        {
+            wstring baseKey = iter->second;
+
+            // 방향 정보 가져오기
+            pair<wstring, bool> dirInfo = Get_AnimDirInfo(m_State, m_Dir);
+
+            // 최종 키 생성 (예: "PlayerRun" + "_LEFT" -> "PlayerRun_LEFT")
+            // "PLAYER_IDLE" + "" -> "PLAYER_IDLE"
+            wstring finalKey = baseKey + dirInfo.first;
+
+            // 애니메이션 상태(LOOP/ONCE) 가져오기
+            ANIMSTATE animState = ANIMSTATE::LOOP;
+            auto      animIter  = m_AnimStateMap.find(m_State);
 
             if (animIter != m_AnimStateMap.end())
                 animState = animIter->second;
 
-            m_Animator->Play_Animation(iter->second, animState);
+            // 상태가 바뀌었다면 무조건 리셋, 방향만 바뀌었다면 리셋하지 않음(자연스러운 연결)
+            bool reset = (m_State != m_PrevState);
+            m_Animator->Play_Animation(finalKey, animState, reset);
+
+            // 스케일 반전 처리
+            _vec3 vScale = m_TransformCom->Get_Scale();
+
+            // 절대값을 씌워서 기존 스케일 크기는 유지하되 부호만 정리 (기존에 -였을 수도 있으므로)
+            vScale.x = abs(vScale.x);
+
+            if (dirInfo.second == true) // 반전 필요 (Right 계열)
+                vScale.x *= -1.f;
+
+            m_TransformCom->Set_Scale(vScale.x, vScale.y, vScale.z);
         }
 
         m_PrevState = m_State;
+        m_PrevDir   = m_Dir;
     }
 }
 
@@ -120,6 +173,98 @@ CState* CState::Create(DEVICE GraphicDev)
 CComponent* CState::Clone()
 {
     return new CState(*this);
+}
+
+pair<wstring, bool> CState::Get_AnimDirInfo(ACTORSTATE state, ACTORDIR dir)
+{
+    wstring suffix = L"";
+    bool    bFlip  = false;
+
+    switch (state)
+    {
+    // TODO 석호: ACTORSTATE중 애니메이션 방향을 바꿔야 하는 경우, 여기에서 수동으로 추가할 것
+    case ACTORSTATE::RUN: // 8방향 (UP, DOWN, LEFT, L_UP, L_DOWN 애니메이션 보유)
+        switch (dir)
+        {
+        case ACTORDIR::LEFT:
+            suffix = L"_LEFT";
+            break;
+        case ACTORDIR::RIGHT:
+            suffix = L"_LEFT";
+            bFlip = true;
+            break; // 반전
+        case ACTORDIR::UP:
+            suffix = L"_UP";
+            break;
+        case ACTORDIR::DOWN:
+            suffix = L"_DOWN";
+            break;
+        case ACTORDIR::L_UP:
+            suffix = L"_LUP";
+            break;
+        case ACTORDIR::R_UP:
+            suffix = L"_LUP";
+            bFlip = true; // 반전
+            break;
+        case ACTORDIR::L_DOWN:
+            suffix = L"_LDOWN";
+            break;
+        case ACTORDIR::R_DOWN:
+            suffix = L"_LDOWN";
+            bFlip = true; // 반전
+            break;
+        default:
+            suffix = L"_LDOWN";
+            break;
+        }
+        break;
+
+    case ACTORSTATE::ROLL: // 4방향 (UP, DOWN, LEFT 애니메이션 보유)
+        switch (dir)
+        {
+        case ACTORDIR::UP:
+        case ACTORDIR::L_UP:
+        case ACTORDIR::R_UP:
+            suffix = L"_UP";
+            break;
+        case ACTORDIR::DOWN:
+        case ACTORDIR::L_DOWN:
+        case ACTORDIR::R_DOWN:
+            suffix = L"_DOWN";
+            break;
+        case ACTORDIR::LEFT:
+            suffix = L"_LEFT";
+            break;
+        case ACTORDIR::RIGHT:
+            suffix = L"_LEFT";
+            bFlip = true;
+            break;
+        default:
+            suffix = L"_DOWN";
+            break;
+        }
+        break;
+
+    default: // 나머지 (IDLE, ATTACK, HIT, DEAD) -> LEFT만 보유 (2방향)
+        // 보통 위/아래를 보고 있어도 IDLE은 옆모습을 보여주거나 함.
+        // 만약 위/아래 별도 리소스가 없다면 좌/우 로직만 적용
+        switch (dir)
+        {
+        case ACTORDIR::RIGHT:
+        case ACTORDIR::R_UP:
+        case ACTORDIR::R_DOWN:
+            suffix = L"";
+            bFlip = true;
+            break;
+        default: // LEFT, UP, DOWN 등 나머지는 원본(LEFT) 출력
+            suffix = L"";
+            bFlip = false;
+            break;
+        }
+        break;
+    }
+
+    return { suffix, bFlip };
 }
 
 void CState::Free()
