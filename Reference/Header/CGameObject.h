@@ -37,6 +37,7 @@ public:
         Get_StaticComponents() const { return m_Components[ID_STATIC]; }
 
     wstring Get_Name() { return m_Name; }
+    void Set_Name(wstring name) { m_Name = name; }
 
     // Editor
     virtual void OnEditor() { }
@@ -46,7 +47,7 @@ protected:
 
     DEVICE m_GraphicDev;
 
-    // TODO 기본 생성자에서 이름 세팅해주도록 구조 변경하기
+    // TODO 기본 생성자에서 이름 세팅해주도록 구조 변경하기 -> Editor와 연동을 위해
     wstring m_Name = L"NoName";
 
 private:
