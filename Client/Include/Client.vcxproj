@@ -193,6 +193,7 @@
     <ClInclude Include="..\Header\CUICircle.h" />
     <ClInclude Include="..\Header\CUIHeartBar.h" />
     <ClInclude Include="..\Header\CUIPlayerPanel.h" />
+    <ClInclude Include="..\Header\CUIWeapon.h" />
     <ClInclude Include="..\Header\ItemData.h" />
     <ClInclude Include="..\Header\ItemInstance.h" />
     <ClInclude Include="..\Header\CUIMp.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="..\Code\CUIHeartBar.cpp" />
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp" />
     <ClCompile Include="..\Code\CUIMp.cpp" />
+    <ClCompile Include="..\Code\CUIWeapon.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -32,19 +32,29 @@ static const char* ToString(ACTORDIR dir)
 {
     switch (dir)
     {
-    case ACTORDIR::UP:
-        return "Up";
-
-    case ACTORDIR::DOWN:
-        return "Down";
-
     case ACTORDIR::LEFT:
         return "Left";
 
     case ACTORDIR::RIGHT:
         return "Right";
 
-    case ACTORDIR::PLAYERDIR_END:
+    case ACTORDIR::UP:
+        return "Up";
+
+    case ACTORDIR::DOWN:
+        return "Down";
+
+    case ACTORDIR::L_UP:
+        return "Left Up";
+
+    case ACTORDIR::R_UP:
+        return "Right Up";
+
+    case ACTORDIR::L_DOWN:
+        return "Left Down";
+
+    case ACTORDIR::R_DOWN:
+        return "Right Down";
 
     default:
         return "UnknownDir";

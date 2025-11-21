@@ -2,7 +2,7 @@
 #include "CUIPlayerPanel.h"
 
 #include "CCombatStat.h"
-#include "CPlayer.h" 
+#include "CPlayer.h"
 #include "CRenderer.h"
 #include "CTransform.h"
 #include "CUIHeartBar.h"
@@ -10,12 +10,12 @@
 
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev),
-      m_Player(nullptr)
+    m_CombatStatCom(nullptr)
 {}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
     : CUIPanel(rhs),
-      m_Player(nullptr)
+    m_CombatStatCom(nullptr)
 {}
 
 CUIPlayerPanel::~CUIPlayerPanel()
@@ -31,12 +31,11 @@ HRESULT CUIPlayerPanel::Ready_GameObject()
 
     auto heart2 = CUIHeartBar::Create(m_GraphicDev);
     NULL_CHECK_RETURN(heart2, E_FAIL)
-        AddChild(heart2);
+    AddChild(heart2);
 
     auto heart3 = CUIHeartBar::Create(m_GraphicDev);
     NULL_CHECK_RETURN(heart3, E_FAIL)
-        AddChild(heart3);
-
+    AddChild(heart3);
 
     return S_OK;
 }
@@ -47,26 +46,22 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_UI, this);
 
-    if (!m_Player)
-    {
-        return 0;
-    }
-
-    auto stat = dynamic_cast<CCombatStat*>(m_Player->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::COMBATSTAT));  
-
-    if (stat == nullptr)
+    if (!m_CombatStatCom)
         return 0;
 
 
-    float hp = stat->Get_Hp();
+    if (m_CombatStatCom == nullptr)
+        return 0;
+
+    float hp = m_CombatStatCom->Get_Hp();
 
     int i = 0;
 
-    for(auto child : m_Children)
+    for (auto child : m_Children)
     {
-        auto heartBar = dynamic_cast<CUIHeartBar*>(child);
-        float start = i * 2.0f;     //0,2,4
-        float end = start + 2.0f;   //2,4,6
+        auto  heartBar = dynamic_cast<CUIHeartBar*>(child);
+        float start    = i * 2.0f;     //0,2,4
+        float end      = start + 2.0f;   //2,4,6
         //hp 2당 하트 하나
         //0번 하트 : start = 0, end = 2 → HP 0~2
         //1번 하트 : start = 2, end = 4 → HP 2~4
@@ -88,40 +83,34 @@ _int CUIPlayerPanel::Update_GameObject(const _float& timeDelta)
         i++;
     }
 
-
-
     return exit;
 }
 
 void CUIPlayerPanel::LateUpdate_GameObject(const _float& timeDelta)
 {
     CUIPanel::LateUpdate_GameObject(timeDelta);
-
 }
+
 void CUIPlayerPanel::Render_GameObject()
 {
     CUIPanel::Render_GameObject();
 
     if (ImGui::Begin("UI_Heart Inspector"))
     {
-
         for (auto child : m_Children)
         {
-
             CUIHeartBar* heartBar = dynamic_cast<CUIHeartBar*>(child);
 
             if (!heartBar)
-            {
                 continue;
-            }
 
             ImGui::PushID(heartBar->Get_ID());
-
 
             CTransform* m_HeartTransformCom = dynamic_cast<CTransform*>(heartBar->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
 
             // TransformComponent
-            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(),
+                                                               ImGuiTreeNodeFlags_DefaultOpen))
             {
                 const _vec3& pos = m_HeartTransformCom->Get_Pos();
 
@@ -148,11 +137,9 @@ void CUIPlayerPanel::Render_GameObject()
 
                 m_HeartTransformCom->Set_Scale(scale);
             }
-        
 
             ImGui::PopID();
         }
-      
     }
     ImGui::End();
 }
@@ -169,7 +156,6 @@ CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)
     }
 
     return mainmenuPanel;
-         
 }
 
 void CUIPlayerPanel::Free()

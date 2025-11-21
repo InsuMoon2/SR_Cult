@@ -26,6 +26,8 @@ public:
     _float Get_Hp() { return m_Hp; }
     _float Get_MaxHp() { return m_maxHp; }
     _float Get_Mp() { return m_Mp; }
+    _float Get_MaxMp() { return m_maxMp; }
+    
     _float Get_Speed() { return m_Speed; }
 
     void Set_Attack(_float attack) { m_Attack = attack; }
@@ -46,9 +48,11 @@ private:
     _float m_Attack;
 
     _float m_Hp;
-    _float m_maxHp;
+    _float m_maxHp =6.f;
     _float m_Mp;
+    _float m_maxMp = 10.f;
     _float m_Speed;
+
 };
 
 END

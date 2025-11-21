@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "CUIMp.h"
 
+#include <CCombatStat.h>
+
 #include "CCreateHelper.h"
 #include "CRcTex.h"
 #include "CRenderer.h"
@@ -56,48 +58,58 @@ void CUIMp::Render_GameObject()
 
     m_TextureCom->Set_Texture(0);
 
+    float currMp = m_CombatStatCom->Get_Mp();
+    float maxMp = m_CombatStatCom->Get_MaxMp();
+
+    float ratio = currMp / maxMp;
+    float vStart = 1.0f - ratio;
+
+
+    //m_BufferCom->Set_UV(0.f, vStart, 1.f, 1.f);
+
+
     m_BufferCom->Render_Buffer();
 
 
-    if (ImGui::Begin("Player XP UI"))
+    if (ImGui::Begin("Player UI"))
     {
 
         // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader(("Gauge UI")), ImGuiTreeNodeFlags_DefaultOpen)
+        if (m_TransformCom && ImGui::CollapsingHeader(("Gauge")), ImGuiTreeNodeFlags_DefaultOpen)
         {
-            const _vec3& pos = m_TransformCom->Get_Pos();
+            _vec3 gaugePos = m_TransformCom->Get_Pos();
 
-            ImGui::Text("Position");
+            ImGui::Text("Gauge Position");
             float itemWidth = 80.0f;
-            ImGui::Text("XP X :");
+            ImGui::Text("X :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##X", (float*)&pos.x);
+            ImGui::InputFloat("## XP X", (float*)&gaugePos.x);
             ImGui::SameLine();
 
-            ImGui::Text("XP Y :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Y", (float*)&pos.y);
-            ImGui::SameLine();
-
-            ImGui::Text("XP Z :");
+            ImGui::Text("Y :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Z", (float*)&pos.z);
+            ImGui::InputFloat("##XP Y", (float*)&gaugePos.y);
+            ImGui::SameLine();
 
-
-            m_TransformCom->Set_Pos(pos);
-
-            const _vec3& scale = m_TransformCom->Get_Scale();
-
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleX", (float*)&scale.x);
+            ImGui::Text("Z :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleY", (float*)&scale.y);
+            ImGui::InputFloat("##XP Z", (float*)&gaugePos.z);
 
-            m_TransformCom->Set_Scale(scale);
+
+            m_TransformCom->Set_Pos(gaugePos);
+
+            _vec3 gaugeScale = m_TransformCom->Get_Scale();
+
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("XP ScaleX", (float*)&gaugeScale.x);
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("XP ScaleY", (float*)&gaugeScale.y);
+
+            m_TransformCom->Set_Scale(gaugeScale);
         }
 
 

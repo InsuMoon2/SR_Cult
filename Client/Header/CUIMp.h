@@ -1,6 +1,11 @@
 ﻿#pragma once
 #include "CUI.h"
 
+namespace Engine
+{
+    class CCombatStat;
+}
+
 class CUIMp : public CUI
 {
 public:
@@ -15,7 +20,7 @@ public:
     void Render_GameObject() override;
 
     HRESULT Add_Component();
-
+    void Set_PlayerCombatStat(CCombatStat* combatstat) { m_CombatStatCom = combatstat; }
 public:
     static CUIMp* Create(DEVICE graphicDev);
 
@@ -25,6 +30,7 @@ private:
 protected:
     void Free() override;
 
-
+private:
+    CCombatStat* m_CombatStatCom;
 };
 

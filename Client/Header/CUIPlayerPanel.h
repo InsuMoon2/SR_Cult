@@ -1,6 +1,10 @@
 ﻿#pragma once
-#include "CPlayer.h"
 #include "CUIPanel.h"
+
+namespace Engine
+{
+    class CCombatStat;
+}
 
 class CUIPlayerPanel : public CUIPanel
 {
@@ -18,11 +22,11 @@ public:
 public:
     static CUIPlayerPanel* Create(DEVICE graphicDev);
 
-    void Set_Player(CPlayer* player) { m_Player = player; }
+    void Set_PlayerCombatStat(CCombatStat* combatstat) { m_CombatStatCom = combatstat; }
 
 protected:
     void Free() override;
 
 private:
-    CPlayer* m_Player;
+    CCombatStat* m_CombatStatCom;
 };

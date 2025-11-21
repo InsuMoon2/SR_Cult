@@ -15,7 +15,8 @@
 #include "CTexture.h"
 
 CLogo::CLogo(DEVICE graphicDev)
-    : Engine::CScene(graphicDev), m_Loading(nullptr)
+    : Engine::CScene(graphicDev),
+      m_Loading(nullptr)
 { }
 
 CLogo::~CLogo()

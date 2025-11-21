@@ -3,6 +3,7 @@
 #include "Engine_Define.h"
 
 BEGIN(Engine)
+/// @brief 하나의 동작(예: 걷기, 숨쉬기)에 대한 구체적인 프레임 정보를 담고 있는, CAnimator의 부품 역할 클래스
 class ENGINE_DLL CSpriteAnimation : public CBase
 {
 private:

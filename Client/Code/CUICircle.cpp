@@ -27,8 +27,8 @@ HRESULT CUICircle::Ready_GameObject()
     if (FAILED(Add_Component()))
         return E_FAIL;
 
-    m_TransformCom->Set_Pos(_vec3(-550.f, 260.f, 0.f));
-    m_TransformCom->Set_Scale(_vec3(60.f, 60.f, 0.f));
+    m_TransformCom->Set_Pos(_vec3(-550.f, 270.f, 0.f));
+    m_TransformCom->Set_Scale(_vec3(95.f, 90.f, 0.f));
     return S_OK;
 }
 
@@ -57,32 +57,32 @@ void CUICircle::Render_GameObject()
     m_BufferCom->Render_Buffer();
 
 
-    if (ImGui::Begin("Player XP UI"))
+    if (ImGui::Begin("Player UI"))
     {
 
         // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader(("Transform Component")), ImGuiTreeNodeFlags_DefaultOpen)
+        if (m_TransformCom && ImGui::CollapsingHeader(("Circle")), ImGuiTreeNodeFlags_DefaultOpen)
         {
             const _vec3& pos = m_TransformCom->Get_Pos();
 
-            ImGui::Text("Position");
+            ImGui::Text("Circle Position");
             float itemWidth = 80.0f;
             ImGui::Text("X :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##X", (float*)&pos.x);
+            ImGui::InputFloat("##Circle X", (float*)&pos.x);
             ImGui::SameLine();
 
             ImGui::Text("Y :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Y", (float*)&pos.y);
+            ImGui::InputFloat("##Circle Y", (float*)&pos.y);
             ImGui::SameLine();
 
             ImGui::Text("Z :");
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Z", (float*)&pos.z);
+            ImGui::InputFloat("##Circle Z", (float*)&pos.z);
 
 
             m_TransformCom->Set_Pos(pos);
@@ -90,10 +90,10 @@ void CUICircle::Render_GameObject()
             const _vec3& scale = m_TransformCom->Get_Scale();
 
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("ScaleX", (float*)&scale.x);
+            ImGui::InputFloat("Circle ScaleX", (float*)&scale.x);
             ImGui::SameLine();
             ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("ScaleY", (float*)&scale.y);
+            ImGui::InputFloat("Circle ScaleY", (float*)&scale.y);
 
             m_TransformCom->Set_Scale(scale);
         }

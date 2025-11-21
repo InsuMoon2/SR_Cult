@@ -15,6 +15,7 @@
 #include "CUIPlayerPanel.h"
 #include "CEditContext.h"
 #include "CMainEditorMgr.h"
+#include "CUIWeapon.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),
@@ -244,7 +245,7 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     CUIPlayerPanel* playerPanel = dynamic_cast<CUIPlayerPanel*>(gameObject);
 
     // TODO : 예시. Set_Player 라는 오브젝트 가져오기 함수 대신 아래와 같은 컴포넌트 가져오기 함수를 만들어보자
-    //playerPanel->Set_PlayerCombatStat(m_PlayerCombatStatCom);
+    playerPanel->Set_PlayerCombatStat(m_PlayerCombatStatCom);
 
     gameObject = CUIMp::Create(m_GraphicDev);
 
@@ -253,12 +254,22 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIMp) failed");
     //? 석호: OBJTYPE::UI로 통일해서 오브젝트 이름이 겹칠텐데, 그게 정상인가?
 
-    //gameObject = CUICircle::Create(m_GraphicDev);
-    // TODO 석호: 나중에 진짜 만든 후에 활성화 하자!
+    CUIMp* uiMp = dynamic_cast<CUIMp*>(gameObject);
+    uiMp->Set_PlayerCombatStat(m_PlayerCombatStatCom);
 
-    //FAILED_CHECK_MSG(
-    //    layer->Add_GameObject(OBJTYPE::UI, gameObject),
-    //    L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
+    gameObject = CUICircle::Create(m_GraphicDev);
+     //TODO 석호: 나중에 진짜 만든 후에 활성화 하자!
+
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::UI, gameObject),
+        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
+
+
+    gameObject = CUIWeapon::Create(m_GraphicDev);
+
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::UI, gameObject),
+        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIWeapon) failed");
 
     m_Layers.insert({ layerType, layer });
 

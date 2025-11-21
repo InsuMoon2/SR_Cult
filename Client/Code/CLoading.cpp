@@ -101,8 +101,24 @@ _uint CLoading::Loading_ForState()
         L"../Bin/Resource/Texture/Player/Player_Idle/Lamb-idle%d.png", 150)))
         return E_FAIL;
 
-    if (FAILED(playerTex->Add_Texture(L"PlayerRunDown", TEX_NORMAL,
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LEFT", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Palyer_RunHorizontal/Lamb-run-horizontal%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_UP", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_RunUp/Lamb-run-up%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_DOWN", TEX_NORMAL,
         L"../Bin/Resource/Texture/Player/Player_RunDown/Lamb-run-down%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LUP", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_RunUpDiagonal/Lamb-run-up-diagonal%d.png", 19)))
+        return E_FAIL;
+
+    if (FAILED(playerTex->Add_Texture(L"PlayerRun_LDOWN", TEX_NORMAL,
+        L"../Bin/Resource/Texture/Player/Player_Run/Lamb-run%d.png", 19)))
         return E_FAIL;
 
     if (FAILED(pProtoMgr->Ready_Prototype(
@@ -113,7 +129,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
+                L"../Bin/Resource/Texture/UI/PlayerState/Hp/Hp%d.png", 3))))
         return E_FAIL;
 
 #pragma region 테스트로 보스 꺼놓음. 필요하면 다시 사용하시오
@@ -173,19 +189,28 @@ _uint CLoading::Loading_ForState()
             L"../Bin/Resource/Texture/"))))
         return E_FAIL;*/
 
-    //circleTex
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
-            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle0.png", 1))))
-        return E_FAIL;
 
-    //circleColorTex
+
+        //circleColorTex
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_COLOR,
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
                 L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle1.png", 1))))
         return E_FAIL;
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle_Red.png", 1))))
+        return E_FAIL;
+
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_WEAPON,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Icon/Weapon_Sword.png", 1))))
+        return E_FAIL;
+
 
 #pragma endregion
 
@@ -231,7 +256,7 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
         return E_FAIL;
 
-    m_LoadingText = L"LOADING Complete! PRESS ENTER";
+    m_LoadingText = L"COMPLETE: PRESS 1 -> Stage|PRESS 2 -> Editor";
 
     m_IsFinish = true;
 
