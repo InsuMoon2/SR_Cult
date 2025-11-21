@@ -10,28 +10,27 @@ class CAnimator;
 class ENGINE_DLL CState : public CComponent
 {
 private:
-    explicit CState(DEVICE GraphicDev);
+    explicit CState(DEVICE graphicDev);
     explicit CState(const CState& rhs);
     ~CState() override;
 
 public:
-    HRESULT Ready_StateComponent(DEVICE GraphicDev);
+    HRESULT Ready_StateComponent(DEVICE graphicDev);
     _int    Update_Component(const _float& timeDelta) override;
     void    LateUpdate_Component() override;
 
 public:
     void Update_Animation();
 
-    void Change_State(ACTORSTATE State);
-    void Change_Dir(ACTORDIR Dir);
+    void Change_State(ACTORSTATE state);
+    void Change_Dir(ACTORDIR dir);
 
     ACTORSTATE Get_State() const { return m_State; }
     ACTORDIR   Get_Dir() const { return m_Dir; }
 
+    void Set_AnimInfo(ACTORSTATE playerState, const wstring& key, ANIMSTATE animState);
 
-    void Set_AnimInfo(ACTORSTATE PlayerState, const wstring& Key, ANIMSTATE AnimState);
-
-    static CState* Create(DEVICE GraphicDev);
+    static CState* Create(DEVICE graphicDev);
     CComponent*    Clone() override;
 
 private:

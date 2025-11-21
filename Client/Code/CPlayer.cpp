@@ -240,14 +240,11 @@ void CPlayer::Key_Input(const _float& timeDelta)
     // ---------------------------------
     // 1. 방향 입력 벡터 계산
     // ---------------------------------
-    _vec3 look  = m_TransformCom->Get_Look();
-    _vec3 right = m_TransformCom->Get_Right();
+    _vec3 look = g_WorldLook;
+    _vec3 right = g_WorldRight;
 
-    look.y  = 0.f;
-    right.y = 0.f;
-
-    D3DXVec3Normalize(&look, &look);
-    D3DXVec3Normalize(&right, &right);
+    //D3DXVec3Normalize(&look, &look);
+    //D3DXVec3Normalize(&right, &right);
 
     _vec3 moveDir = { 0.f, 0.f, 0.f };
     int   axis_X{};
@@ -268,7 +265,7 @@ void CPlayer::Key_Input(const _float& timeDelta)
     if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 ||
         inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
     {
-        moveDir -= right;
+        moveDir += right;
         //! 애니메이션 자체 Transform이 없기에, Owner의 Transform(= 플레이어의 Transform) 을 반전시켜 애니메이션을 반전한다
         // 따라서 이동 방향도 반대가 된다
         ++axis_X;
@@ -283,16 +280,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
     // ---------------------------------
     // 2. 상태 및 속도 결정
     // ---------------------------------
-
-    //bool isMoving{};
-    //
-    //if (D3DXVec3LengthSq(&moveDir) > 0.f)
-    //    isMoving = true;
-    //else
-    //    isMoving = false;
-
-    // ↓ ↓ ↓
-
     bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
 
     ACTORSTATE nextState;
@@ -323,7 +310,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
     // ---------------------------------
     // 3. 실제 적용
     // ---------------------------------
-
     m_StateCom->Change_State(nextState);
 
     if (isMoving)
@@ -340,10 +326,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
             {
                 if (axis_X > 0)
                     newDir = ACTORDIR::R_UP;
-
                 else if (axis_X < 0)
                     newDir = ACTORDIR::L_UP;
-
                 else
                     newDir = ACTORDIR::UP;
             }
@@ -351,10 +335,8 @@ void CPlayer::Key_Input(const _float& timeDelta)
             {
                 if (axis_X > 0)
                     newDir = ACTORDIR::R_DOWN;
-
                 else if (axis_X < 0)
                     newDir = ACTORDIR::L_DOWN;
-
                 else
                     newDir = ACTORDIR::DOWN;
             }
@@ -362,7 +344,6 @@ void CPlayer::Key_Input(const _float& timeDelta)
             {
                 if (axis_X > 0)
                     newDir = ACTORDIR::RIGHT;
-
                 else if (axis_X < 0)
                     newDir = ACTORDIR::LEFT;
             }

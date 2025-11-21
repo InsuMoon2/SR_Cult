@@ -20,6 +20,9 @@ protected:
 public:
     CComponent* Get_Component(COMPONENTID componentID, COMPONENTTYPE componentType);
 
+    _bool Get_IsActive() { return m_Active; }
+    void  Set_IsActive(_bool setActive) { m_Active = setActive; }
+
 public:
     virtual HRESULT Ready_GameObject();
     virtual _int    Update_GameObject(const _float& timeDelta);
@@ -33,6 +36,8 @@ protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
 
     DEVICE m_GraphicDev;
+
+    _bool m_Active;       // 오브젝트의 업데이트와 렌더를 하면 true, 안할거면 false로 바꾸면 되는 스위치
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);
