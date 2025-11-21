@@ -65,7 +65,7 @@ void CUIMp::Render_GameObject()
     float vStart = 1.0f - ratio;
 
 
-    //m_BufferCom->Set_UV(0.f, vStart, 1.f, 1.f);
+    m_BufferCom->Set_UV(0.f, vStart, 1.f, 1.f);
 
 
     m_BufferCom->Render_Buffer();

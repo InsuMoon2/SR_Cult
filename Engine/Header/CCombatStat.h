@@ -48,7 +48,7 @@ private:
     _float m_Hp;
     _float m_maxHp =6.f;
     _float m_Mp;
-    _float m_maxMp = 10.f;
+    _float m_maxMp = 5.f;
 };
 
 END
