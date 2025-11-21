@@ -124,9 +124,6 @@
     <Filter Include="02. Prototype\00. VIBuffer\04. BoxTex">
       <UniqueIdentifier>{ba70ee2a-9a1b-4729-8fdd-9884817fdb6d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Logic\05. Tiled">
-      <UniqueIdentifier>{1e08cf3b-8a9b-415b-9274-78f77f8da805}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Prototype\07. Terrain">
       <UniqueIdentifier>{6385a333-0774-40fa-9831-fac802a49437}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,9 @@
     </Filter>
     <Filter Include="01. Logic\97. Editor">
       <UniqueIdentifier>{6a2f84ff-26ab-4a31-bbd4-54e073962573}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Logic\05. Tiled">
+      <UniqueIdentifier>{1e08cf3b-8a9b-415b-9274-78f77f8da805}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

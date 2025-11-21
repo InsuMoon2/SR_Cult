@@ -33,7 +33,7 @@ public:
     void         OnEndOverlap(CCollider* self, CCollider* other) override;
     CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
 
-    virtual void OnEditor() override;
+    virtual void Render_Editor() override;
 
 private:
     HRESULT Add_Component();
@@ -42,7 +42,6 @@ private:
 
     void Render_Setting();
     void Render_Reset();
-    void Render_ImGui();
 
 private:
     Engine::CRcTex*       m_BufferCom;

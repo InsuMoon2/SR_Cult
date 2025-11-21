@@ -10,6 +10,7 @@
 #include "CState.h"
 #include "CCombatStat.h"
 #include "CComInspectors.h"
+#include "CTerrainRenderer.h"
 #include "CTransform.h"
 
 IMPLEMENT_SINGLETON(CMainEditorMgr)
@@ -46,14 +47,14 @@ void CMainEditorMgr::Render()
     ImGui::Begin("MainEditor");
 
     // 왼쪽 Hierarchy (계층 구조)
-    ImGui::BeginChild(u8"Hierarchy", ImVec2(200, 0), true);
+    ImGui::BeginChild(u8"[ Hierarchy ]", ImVec2(170, 0), true);
     Render_Hierarchy();
     ImGui::EndChild();
 
     ImGui::SameLine();
 
     // 오른쪽 Inspector (정보 및 설정)
-    ImGui::BeginChild(u8"Inspector", ImVec2(0, 0), true);
+    ImGui::BeginChild(u8"[ Inspector ]", ImVec2(0, 0), true);
     Render_Inspector();
     ImGui::EndChild();
 
@@ -103,7 +104,7 @@ void CMainEditorMgr::Render_Hierarchy()
 
                         if (ImGui::Selectable(name.c_str(), isSelected))
                         {
-                            m_Context->SelectObject(obj);
+                            m_Context->Select_Object(obj);
                         }
                     }
                 }
@@ -122,7 +123,7 @@ void CMainEditorMgr::Render_Inspector()
 
     if (obj == nullptr)
     {
-        ImGui::Text("No Object Selected");
+        ImGui::Text("Not Object Selected");
         return;
     }
 
@@ -134,7 +135,7 @@ void CMainEditorMgr::Render_Inspector()
     }
 
     ImGui::Separator();
-    ImGui::Text("Components : ");
+    ImGui::Text("[ Components ]");
 
     // Component 전체 맵 순회
     const auto& dynamicComponents = obj->Get_DynamicComponents();
@@ -153,13 +154,13 @@ void CMainEditorMgr::Render_Inspector()
 
         if (ImGui::Selectable(typeName.c_str(), isSelected))
         {
-            m_Context->SelectComponent(com);
+            m_Context->Select_Component(com);
         }
     }
 
     ImGui::Separator();
 
-    obj->OnEditor();
+    obj->Render_Editor();
 
     // 선택된 컴포넌트의 인스펙터
     CComponent* selectComponent = m_Context->Get_SelectedComponent();
@@ -171,7 +172,7 @@ void CMainEditorMgr::Render_Inspector()
 
 #pragma region Legacy
         //ImGui::Text(u8"Component : %s", componentName.c_str());
-        // selectComponent->OnEditor();
+        // selectComponent->Render_Editor();
 
 #pragma endregion
 
@@ -196,20 +197,27 @@ void CMainEditorMgr::Render_Inspector()
         }
 
         case COMPONENTTYPE::CAMERA:
-            {
+        {
             auto camera = dynamic_cast<CCameraCom*>(selectComponent);
             Camera_Inspector(camera);
             break;
-            }
+        }
 
-         // 다른 컴포넌트 타입 ImGui에 보여줄거 있으면 추가하기
+        case COMPONENTTYPE::TERRAIN_RENDER:
+        {
+            auto terrain = dynamic_cast<CTerrainRenderer*>(selectComponent);
+            Terrain_Inspector(terrain);
+        }
+
+        // 다른 컴포넌트 타입 ImGui에 보여줄거 있으면 추가하기
 
 
         }
 
         // TODO 인수 : Static Component들도 보이게 세팅해야할지?
+        // Update 하지 않을 컴포넌트들이라 실시간으로 툴에서 값 변경이 필요한가?
         //const auto& staticComponents = obj->Get_StaticComponents();
-
+        
     }
 }
 

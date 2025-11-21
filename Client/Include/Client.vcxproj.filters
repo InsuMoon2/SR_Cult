@@ -106,6 +106,9 @@
     <Filter Include="98. Utility">
       <UniqueIdentifier>{6c679534-91b2-4e50-a8e7-3c3c107db823}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97. Component">
+      <UniqueIdentifier>{9095604f-165d-433a-a8a8-f4b8f34e6c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -210,6 +213,9 @@
     <ClInclude Include="..\Header\CComInspectors.h">
       <Filter>98. Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CTerrainRenderer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -295,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>02. GameObject\09. MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTerrainRenderer.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -132,6 +132,7 @@ static const char* ToString(COMPONENTTYPE type)
     case COMPONENTTYPE::INVENTORY: return "Inventory";
     case COMPONENTTYPE::ANIMATOR: return "Animator";
     case COMPONENTTYPE::CAMERA: return "Camera";
+    case COMPONENTTYPE::TERRAIN_RENDER: return "TerrainRender";
 
     // Texture Components (General & Specific)
     case COMPONENTTYPE::TEXTURE: return "Texture";

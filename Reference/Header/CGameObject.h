@@ -40,7 +40,7 @@ public:
     void Set_Name(wstring name) { m_Name = name; }
 
     // Editor
-    virtual void OnEditor() { }
+    virtual void Render_Editor() { }
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];

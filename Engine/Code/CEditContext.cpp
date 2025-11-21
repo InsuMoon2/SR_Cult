@@ -11,13 +11,13 @@ CEditContext::~CEditContext()
     
 }
 
-void CEditContext::SelectObject(CGameObject* obj)
+void CEditContext::Select_Object(CGameObject* obj)
 {
     m_SelectedObject = obj;
     m_SelectedComponent = nullptr;
 }
 
-void CEditContext::SelectComponent(CComponent* comp)
+void CEditContext::Select_Component(CComponent* comp)
 {
     m_SelectedComponent = comp;
 }

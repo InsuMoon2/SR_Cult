@@ -22,8 +22,8 @@ public:
 
 public:
     void Set_ActiveScene(CScene* scene) { m_ActiveScene = scene; }
-    void SelectObject(CGameObject* obj);
-    void SelectComponent(CComponent* comp);
+    void Select_Object(CGameObject* obj);
+    void Select_Component(CComponent* comp);
 
     static CEditContext* Create();
 

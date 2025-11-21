@@ -62,7 +62,13 @@ void CMainCamera::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    Render_ImGui();
+}
+
+void CMainCamera::Render_Editor()
+{
+    CGameObject::Render_Editor();
+
+    ImGui::Text("=== Main Camera === ");
 }
 
 HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
@@ -203,43 +209,6 @@ void CMainCamera::Key_Input(const _float& timeDelta)
 void CMainCamera::Chase_CamTarget(const _float& timeDelta)
 {
     m_TransformCom->Set_Pos(m_TargetTransformCom->Get_Pos());
-}
-
-void CMainCamera::Render_ImGui()
-{
-    if (m_CameraCom == nullptr)
-        return;
-
-    if (ImGui::Begin("MainCam Inspector"))
-    {
-        ImGui::Text(u8"카메라 Free 모드 조작 :");
-        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하 | LShift+I 회전 상 | LShift+K 회전 하 | LShift+J 회전 좌 | LShift+L 회전 우");
-
-        // ------------------------
-        // CAM_MODE 편집
-        // ------------------------
-        const char* camModeItems[] = { "Free", "Target" };
-        int         camMode        = static_cast<int>(m_CameraCom->Get_CamMode());
-        if (ImGui::Combo("Camera Mode", &camMode, camModeItems, IM_ARRAYSIZE(camModeItems)))
-            m_CameraCom->Set_CamMode(static_cast<CCameraCom::CAM_MODE>(camMode));
-
-        // ------------------------
-        // VIEW_TYPE 편집
-        // ------------------------
-        const char* viewTypeItems[] = { "FPS", "TPS", "Quarter" };
-        int         viewType        = static_cast<int>(m_CameraCom->Get_ViewType());
-        if (ImGui::Combo("View Type", &viewType, viewTypeItems, IM_ARRAYSIZE(viewTypeItems)))
-            m_CameraCom->Set_ViewType(static_cast<CCameraCom::VIEW_TYPE>(viewType));
-
-        // ------------------------
-        // PROJ_TYPE 편집
-        // ------------------------
-        const char* projTypeItems[] = { "Perspective", "Orthographic" };
-        int         projType        = static_cast<int>(m_CameraCom->Get_ProjType());
-        if (ImGui::Combo("Projection Type", &projType, projTypeItems, IM_ARRAYSIZE(projTypeItems)))
-            m_CameraCom->Set_ProjType(static_cast<CCameraCom::PROJ_TYPE>(projType));
-    }
-    ImGui::End();
 }
 
 CMainCamera* CMainCamera::Create(DEVICE graphicDev)
