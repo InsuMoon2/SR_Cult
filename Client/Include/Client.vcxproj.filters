@@ -91,6 +91,9 @@
     <Filter Include="03. UI\01. UI\02. UIMp">
       <UniqueIdentifier>{917c168c-0eae-404b-ae40-3ea31e9a924a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. UI\01. UI\03. UIWeapon">
+      <UniqueIdentifier>{aebde5dc-3c0e-447e-85ea-05deb7023a1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -180,6 +183,9 @@
     <ClInclude Include="..\Header\CUICircle.h">
       <Filter>03. UI\01. UI\01. UICircle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUIWeapon.h">
+      <Filter>03. UI\01. UI\03. UIWeapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -242,9 +248,6 @@
     <ClCompile Include="..\Code\CHumanMonster.cpp">
       <Filter>02. GameObject\02. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMapObjectBase.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CMapObject_Grass.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -253,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUICircle.cpp">
       <Filter>03. UI\01. UI\01. UICircle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIWeapon.cpp">
+      <Filter>03. UI\01. UI\03. UIWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

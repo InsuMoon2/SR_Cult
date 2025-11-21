@@ -315,16 +315,26 @@ void CPlayer::Render_ImGui()
             ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
         }
 
-        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
+        if (m_CombatStatCom && ImGui::CollapsingHeader("Set Stat", ImGuiTreeNodeFlags_DefaultOpen))
         {
             const float hp = m_CombatStatCom->Get_Hp();
 
-            ImGui::Text("SetHp :");
+            ImGui::Text("Set Hp :");
             ImGui::SameLine();
-            ImGui::InputFloat("##PlayerHp", (float*)&hp);
+            ImGui::InputFloat("##Player Hp", (float*)&hp);
 
             m_CombatStatCom->Set_Hp(hp);
+
+            const float mp = m_CombatStatCom->Get_Mp();
+
+            ImGui::Text("Set Mp :");
+            ImGui::SameLine();
+            ImGui::InputFloat("##Player Mp", (float*)&mp);
+
+            m_CombatStatCom->Set_Mp(mp);
         }
+        
+
     }
 
     ImGui::End();

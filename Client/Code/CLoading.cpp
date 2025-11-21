@@ -113,7 +113,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_HEART,
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/Player/HP%d.png", 4))))
+                L"../Bin/Resource/Texture/UI/PlayerState/Hp/Hp%d.png", 3))))
         return E_FAIL;
 
 #pragma region 테스트로 보스 꺼놓음. 필요하면 다시 사용하시오
@@ -173,19 +173,28 @@ _uint CLoading::Loading_ForState()
             L"../Bin/Resource/Texture/"))))
         return E_FAIL;*/
 
-    //circleTex
-    if (FAILED(CProtoMgr::GetInstance()
-        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
-            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle0.png", 1))))
-        return E_FAIL;
 
-    //circleColorTex
+
+        //circleColorTex
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_COLOR,
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
                 L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle1.png", 1))))
         return E_FAIL;
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_CIRCLE,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Circle_Red.png", 1))))
+        return E_FAIL;
+
+    //circleTex
+    if (FAILED(CProtoMgr::GetInstance()
+        ->Ready_Prototype(COMPONENTTYPE::TEX_UI_WEAPON,
+            Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
+                L"../Bin/Resource/Texture/UI/PlayerState/Icon/Weapon_Sword.png", 1))))
+        return E_FAIL;
+
 
 #pragma endregion
 
