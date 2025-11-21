@@ -8,6 +8,8 @@
 #include "CCameraCom.h"
 #include "CTerrain.h"
 #include "CTerrainRenderer.h"
+#include "CBoxCol.h"
+#include "CBoxCollider.h"
 
 USING(Engine)
 
@@ -16,11 +18,11 @@ static void Transform_Inspector(CTransform* transform)
     if (!transform)
         return;
 
-    _vec3 pos = transform->Get_Pos();
-    ImGui::Text("Position : ");
-    ImGui::SameLine();
+    ImGui::Text("[ Transform ]");
     ImGui::PushID("TransformPos");
     {
+        _vec3 pos = transform->Get_Pos();
+
         if (ImGui::DragFloat3("##PositionDrag", &pos.x, 0.1f))
             transform->Set_Pos(pos);
     }
@@ -69,6 +71,19 @@ static void Transform_Inspector(CTransform* transform)
         }
     }
     ImGui::PopID();
+
+    ImGui::NewLine();
+
+    ImGui::Text("[ Scale ]");
+    ImGui::PushID("TransformScale");
+    {
+        _vec3 scale = transform->Get_Scale();
+
+        if (ImGui::DragFloat3("##PositionDrag", &scale.x, 0.1f))
+            transform->Set_Scale(scale);
+    }
+    ImGui::PopID();
+
 }
 
 static void State_Inspector(CState* state)
@@ -271,7 +286,27 @@ static void Camera_Inspector(CCameraCom* camera)
     ImGui::PopID();
 }
 
-static void Terrain_Inspector(CTerrainRenderer* terrain)
+static void Terrain_Inspector(CTerrainRenderer* renderer)
 {
+    if (renderer)
+    {
+        renderer->Render_Editor();
+    }
+}
+
+static void BoxColl_Inspector(CBoxCollider* collider)
+{
+    if (collider == nullptr)
+        return;
+
+    ImGui::Text("[ Scale ]");
+    ImGui::PushID("BoxScale");
+    {
+        _vec3 scale = collider->Get_Size();
+
+        if (ImGui::DragFloat3("##PositionDrag", &scale.x, 0.1f))
+            collider->Set_Size(scale);
+    }
+    ImGui::PopID();
     
 }

@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "CUIPlayerPanel.h"
-
+#include "CEnumHelper.h"
 #include "CCombatStat.h"
 #include "CPlayer.h"
 #include "CRenderer.h"
@@ -11,12 +11,16 @@
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev),
     m_CombatStatCom(nullptr)
-{}
+{
+    
+}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
     : CUIPanel(rhs),
     m_CombatStatCom(nullptr)
-{}
+{
+    
+}
 
 CUIPlayerPanel::~CUIPlayerPanel()
 {}
@@ -95,53 +99,53 @@ void CUIPlayerPanel::Render_GameObject()
 {
     CUIPanel::Render_GameObject();
 
-    if (ImGui::Begin("UI_Heart Inspector"))
-    {
-        for (auto child : m_Children)
-        {
-            CUIHeartBar* heartBar = dynamic_cast<CUIHeartBar*>(child);
+    //if (ImGui::Begin("UI_Heart Inspector"))
+    //{
+    //    for (auto child : m_Children)
+    //    {
+    //        CUIHeartBar* heartBar = dynamic_cast<CUIHeartBar*>(child);
 
-            if (!heartBar)
-                continue;
+    //        if (!heartBar)
+    //            continue;
 
-            ImGui::PushID(heartBar->Get_ID());
+    //        ImGui::PushID(heartBar->Get_ID());
 
-            CTransform* m_HeartTransformCom = dynamic_cast<CTransform*>(heartBar->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
+    //        CTransform* m_HeartTransformCom = dynamic_cast<CTransform*>(heartBar->Get_Component(COMPONENTID::ID_DYNAMIC, COMPONENTTYPE::TRANSFORM));
 
-            // TransformComponent
-            if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(),
-                                                               ImGuiTreeNodeFlags_DefaultOpen))
-            {
-                const _vec3& pos = m_HeartTransformCom->Get_Pos();
+    //        // TransformComponent
+    //        if (m_HeartTransformCom && ImGui::CollapsingHeader(("Transform Component" + to_string(heartBar->Get_ID())).c_str(),
+    //                                                           ImGuiTreeNodeFlags_DefaultOpen))
+    //        {
+    //            const _vec3& pos = m_HeartTransformCom->Get_Pos();
 
-                ImGui::Text("Position");
+    //            ImGui::Text("Position");
 
-                ImGui::Text("X :");
-                ImGui::SameLine();
-                ImGui::InputFloat("##HeartX", (float*)&pos.x);
+    //            ImGui::Text("X :");
+    //            ImGui::SameLine();
+    //            ImGui::InputFloat("##HeartX", (float*)&pos.x);
 
-                ImGui::Text("Y :");
-                ImGui::SameLine();
-                ImGui::InputFloat("##HeartY", (float*)&pos.y);
+    //            ImGui::Text("Y :");
+    //            ImGui::SameLine();
+    //            ImGui::InputFloat("##HeartY", (float*)&pos.y);
 
-                ImGui::Text("Z :");
-                ImGui::SameLine();
-                ImGui::InputFloat("##HeartZ", (float*)&pos.z);
+    //            ImGui::Text("Z :");
+    //            ImGui::SameLine();
+    //            ImGui::InputFloat("##HeartZ", (float*)&pos.z);
 
-                m_HeartTransformCom->Set_Pos(pos);
+    //            m_HeartTransformCom->Set_Pos(pos);
 
-                const _vec3& scale = m_HeartTransformCom->Get_Scale();
+    //            const _vec3& scale = m_HeartTransformCom->Get_Scale();
 
-                ImGui::InputFloat("ScaleX", (float*)&scale.x);
-                ImGui::InputFloat("ScaleY", (float*)&scale.y);
+    //            ImGui::InputFloat("ScaleX", (float*)&scale.x);
+    //            ImGui::InputFloat("ScaleY", (float*)&scale.y);
 
-                m_HeartTransformCom->Set_Scale(scale);
-            }
+    //            m_HeartTransformCom->Set_Scale(scale);
+    //        }
 
-            ImGui::PopID();
-        }
-    }
-    ImGui::End();
+    //        ImGui::PopID();
+    //    }
+    //}
+    //ImGui::End();
 }
 
 CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)

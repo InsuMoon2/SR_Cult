@@ -196,10 +196,19 @@ static const char* ToString(OBJTYPE type)
     case OBJTYPE::TERRAIN:      return "Terrain";
 
     default:
-        return "UnknownObjectTyhpe";
+        return "UnknownObjectType";
     }
 }
 
+static void SetNameFromComponentType(CGameObject* obj, COMPONENTTYPE type)
+{
+    if (!obj) return;
+
+    const char* base = ToString(type);   
+    wstring wBase = CharToWString(base);
+
+    obj->Set_Name(wBase);  
+}
 
 
 END

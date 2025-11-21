@@ -56,53 +56,6 @@ void CUIWeapon::Render_GameObject()
 
     m_BufferCom->Render_Buffer();
 
-
-    if (ImGui::Begin("Player UI"))
-    {
-
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader(("Weapon")), ImGuiTreeNodeFlags_DefaultOpen)
-        {
-            const _vec3& pos = m_TransformCom->Get_Pos();
-
-            ImGui::Text("Position");
-            float itemWidth = 80.0f;
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Weapon X", (float*)&pos.x);
-            ImGui::SameLine();
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Weapon Y", (float*)&pos.y);
-            ImGui::SameLine();
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##Weapon Z", (float*)&pos.z);
-
-
-            m_TransformCom->Set_Pos(pos);
-
-            const _vec3& scale = m_TransformCom->Get_Scale();
-
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("Weapon ScaleX", (float*)&scale.x);
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("Weapon ScaleY", (float*)&scale.y);
-
-            m_TransformCom->Set_Scale(scale);
-        }
-
-
-
-
-    }
-    ImGui::End();
 }
 
 HRESULT CUIWeapon::Add_Component()

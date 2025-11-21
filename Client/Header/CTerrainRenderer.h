@@ -51,11 +51,11 @@ private:
     CTexture*       m_TextureCom;
 
     // 타일 데이터
-    vector<_int>    m_TileIndices;
+    vector<_int>    m_TileIndices{};
     _int            m_SelectedTile;
     _int            m_PaintX, m_PaintZ;
 
-    vector<string>  m_MapList;
+    vector<string>  m_MapList{};
     char            m_MapName[64];
     _int            m_SelectedMapIndex;
 };

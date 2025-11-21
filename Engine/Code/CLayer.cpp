@@ -76,6 +76,13 @@ void CLayer::Object_NameSetting(OBJTYPE objType, CGameObject* gameObject)
     // 타입별로 번호 세팅
     // Ex) Monster, Monster2, Monster3..
 
+    if (!gameObject)
+        return;
+
+    // UI는 번호로 이름 세팅하는거 스킵, 타입으로 세팅
+    //if (objType == OBJTYPE::UI)
+    //    return;
+
     const char* baseName = ::ToString(objType);
     wstring wBaseName = CharToWString(baseName);
 

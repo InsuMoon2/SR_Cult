@@ -264,7 +264,6 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
 
-
     gameObject = CUIWeapon::Create(m_GraphicDev);
 
     FAILED_CHECK_MSG(

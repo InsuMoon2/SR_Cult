@@ -12,6 +12,7 @@
 #include "CComInspectors.h"
 #include "CTerrainRenderer.h"
 #include "CTransform.h"
+#include "CBOxCollider.h"
 
 IMPLEMENT_SINGLETON(CMainEditorMgr)
 
@@ -127,7 +128,16 @@ void CMainEditorMgr::Render_Inspector()
         return;
     }
 
-    // Object 이름
+    // 기본값 Transform으로 시작
+    if (m_Context->Get_SelectedComponent() == nullptr)
+    {
+        CComponent* transformCom = obj->Get_Component(ID_DYNAMIC, COMPONENTTYPE::TRANSFORM);
+
+        if (transformCom)
+            m_Context->Select_Component(transformCom);
+    }
+
+    // Object 이름 세팅
     {
         wstring wName = obj->Get_Name();
         string name(wName.begin(), wName.end());
@@ -170,12 +180,6 @@ void CMainEditorMgr::Render_Inspector()
 
         string componentName = WStringToUtf8(selectComponent->Get_Name());
 
-#pragma region Legacy
-        //ImGui::Text(u8"Component : %s", componentName.c_str());
-        // selectComponent->Render_Editor();
-
-#pragma endregion
-
         switch (selectComponent->Get_Type())
         {
         case COMPONENTTYPE::TRANSFORM:
@@ -188,6 +192,7 @@ void CMainEditorMgr::Render_Inspector()
         {
             auto state = dynamic_cast<CState*>(selectComponent);
             State_Inspector(state);
+            break;
         }
         case COMPONENTTYPE::COMBATSTAT:
         {
@@ -207,6 +212,14 @@ void CMainEditorMgr::Render_Inspector()
         {
             auto terrain = dynamic_cast<CTerrainRenderer*>(selectComponent);
             Terrain_Inspector(terrain);
+            break;
+        }
+
+        case COMPONENTTYPE::BOX_COLL:
+        {
+            auto collider = dynamic_cast<CBoxCollider*>(selectComponent);
+            BoxColl_Inspector(collider);
+            break;
         }
 
         // 다른 컴포넌트 타입 ImGui에 보여줄거 있으면 추가하기
@@ -217,7 +230,7 @@ void CMainEditorMgr::Render_Inspector()
         // TODO 인수 : Static Component들도 보이게 세팅해야할지?
         // Update 하지 않을 컴포넌트들이라 실시간으로 툴에서 값 변경이 필요한가?
         //const auto& staticComponents = obj->Get_StaticComponents();
-        
+
     }
 }
 

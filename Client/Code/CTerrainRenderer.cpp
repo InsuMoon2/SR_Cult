@@ -10,15 +10,36 @@ static const int ATLAS_COLS_284 = 5;  // 가로 5칸
 static const int ATLAS_ROWS_284 = 1;  // 세로 1칸
 
 CTerrainRenderer::CTerrainRenderer(DEVICE graphicDev)
-    : CComponent(graphicDev)
-{ }
+    : CComponent(graphicDev),
+    m_TransformCom(nullptr),
+    m_BufferCom(nullptr),
+    m_TextureCom(nullptr),
+    m_SelectedTile(0),
+    m_PaintX(0),
+    m_PaintZ(0),
+    m_MapName{"Terrain_"},
+    m_SelectedMapIndex(0)
+{
+}
 
 CTerrainRenderer::CTerrainRenderer(const CTerrainRenderer& rhs)
-    : CComponent(rhs)
-{ }
+    : CComponent(rhs),
+    m_TransformCom(nullptr),
+    m_BufferCom(nullptr),
+    m_TextureCom(nullptr),
+    m_TileIndices(rhs.m_TileIndices),
+    m_SelectedTile(rhs.m_SelectedTile),
+    m_PaintX(rhs.m_PaintX),
+    m_PaintZ(rhs.m_PaintZ),
+    m_SelectedMapIndex(rhs.m_SelectedMapIndex),
+    m_MapList(rhs.m_MapList)
+{
+    memcpy(m_MapName, rhs.m_MapName, sizeof(m_MapName));
+}
 
 CTerrainRenderer::~CTerrainRenderer()
-{ }
+{
+}
 
 HRESULT CTerrainRenderer::Ready_TerrainRenderer()
 {
@@ -48,7 +69,6 @@ HRESULT CTerrainRenderer::Ready_TerrainRenderer()
 
     return S_OK;
 }
-
 
 _int CTerrainRenderer::Update_Component(const _float& timeDelta)
 {
@@ -106,81 +126,17 @@ void CTerrainRenderer::Render_Editor()
 {
     CComponent::Render_Editor();
 
-    ImGui::Begin("Map Editor", NULL, ImGuiWindowFlags_MenuBar);
-
-    // 메뉴바
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            // --- Save ---
-            ImGui::Text(u8"저장할 맵 이름 : ");
-            ImGui::InputText("##MapName", m_MapName, IM_ARRAYSIZE(m_MapName));
-
-            if (ImGui::MenuItem(u8"현재 이름으로 저장(Save)", "Ctrl + S"))
-            {
-                // 풀 경로 만들기
-                string fullPath = "../Bin/Resource/Texture/Terrain/";
-                fullPath += m_MapName;
-                fullPath += ".map";
-
-                if (SUCCEEDED(SaveMap(fullPath.c_str())))
-                {
-                    // 저장 후 새로고침
-                    Refresh_MapFileList();
-                }
-
-            }
-
-            ImGui::Separator();
-
-            // --- Load ---
-            ImGui::Text(u8"저장된 맵 리스트 : ");
-
-            // 맵 선택
-            if (!m_MapList.empty())
-            {
-                for (_int i = 0; i < (_int)m_MapList.size(); ++i)
-                {
-                    bool isSelected = (m_SelectedMapIndex == i);
-
-                    if (ImGui::MenuItem(m_MapList[i].c_str(), nullptr, isSelected))
-                    {
-                        m_SelectedMapIndex = i;
-
-                        // 선택하고 바로 로드
-                        string fullPath = "../Bin/Resource/Texture/Terrain/";
-                        fullPath += m_MapList[i];
-
-                        LoadMap(fullPath.c_str());
-                    }
-                }
-            }
-            else
-            {
-                ImGui::TextDisabled(u8"[맵 파일 없음])");
-            }
-
-
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndMenuBar();
-    }
-
-    // 선택된 타일 인덱스 표시용
     ImGui::Text(u8"선택된 타일 : %d", m_SelectedTile + 1);
     ImGui::Separator();
 
-    // 타일 이미지들 보여주기
+    // --- 타일 버튼들 ---
     if (m_TextureCom)
     {
-        const _uint tileCount = 5;
-        const _uint tilePerRow = 5;
+        const _uint  tileCount = 5;
+        const _uint  tilePerRow = 5;
         const ImVec2 tileSize(32.f, 32.f);
 
         IDirect3DBaseTexture9* baseTexture = m_TextureCom->Get_BaseTexture(0);
-
         if (baseTexture)
         {
             ImTextureID texID = (ImTextureID)baseTexture;
@@ -190,7 +146,6 @@ void CTerrainRenderer::Render_Editor()
                 if (i > 0 && (i % tilePerRow) != 0)
                     ImGui::SameLine();
 
-                // UV 계산
                 _int tileX = i;
                 _int tileY = 0;
 
@@ -200,7 +155,7 @@ void CTerrainRenderer::Render_Editor()
                 ImVec2 uv0(tileX * du, tileY * dv);
                 ImVec2 uv1((tileX + 1) * du, (tileY + 1) * dv);
 
-                ImGui::PushID(static_cast<int>(i));
+                ImGui::PushID((int)i);
 
                 const _bool isSelected = (i == (_uint)m_SelectedTile);
 
@@ -212,13 +167,11 @@ void CTerrainRenderer::Render_Editor()
 
                 if (ImGui::ImageButton("Tile", texID, tileSize, uv0, uv1))
                 {
-                    m_SelectedTile = static_cast<int>(i);
+                    m_SelectedTile = (int)i;
                 }
 
                 if (isSelected)
-                {
                     ImGui::PopStyleColor(2);
-                }
 
                 ImGui::PopID();
             }
@@ -226,14 +179,58 @@ void CTerrainRenderer::Render_Editor()
     }
 
     ImGui::Separator();
-
     if (ImGui::Button(u8"전체 타일을 선택된 타일로"))
     {
         for (size_t i = 0; i < m_TileIndices.size(); ++i)
             m_TileIndices[i] = m_SelectedTile;
     }
 
-    ImGui::End();
+    ImGui::NewLine();
+    // --- Save / Load ---
+    ImGui::Text(u8"저장할 맵 이름 : ");
+    ImGui::SameLine();
+
+    ImGui::SetNextItemWidth(120.0f);
+    ImGui::InputText("##MapName", m_MapName, IM_ARRAYSIZE(m_MapName));
+
+    ImGui::SameLine();
+    if (ImGui::Button(u8"Save"))
+    {
+        string fullPath = "../Bin/Resource/Texture/Terrain/";
+        fullPath += m_MapName;
+        fullPath += ".map";
+
+        if (SUCCEEDED(SaveMap(fullPath.c_str())))
+            Refresh_MapFileList();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::CollapsingHeader(u8"저장된 맵 리스트", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        if (!m_MapList.empty())
+        {
+            for (_int i = 0; i < (_int)m_MapList.size(); ++i)
+            {
+                bool isSelected = (m_SelectedMapIndex == i);
+
+                if (ImGui::Selectable(m_MapList[i].c_str(), isSelected))
+                {
+                    m_SelectedMapIndex = i;
+
+                    string fullPath = "../Bin/Resource/Texture/Terrain/";
+                    fullPath += m_MapList[i];
+
+                    LoadMap(fullPath.c_str());
+                }
+            }
+        }
+        else
+        {
+            ImGui::TextDisabled(u8"[맵 파일 없음]");
+        }
+    }
+    
 }
 
 HRESULT CTerrainRenderer::SaveMap(const char* filePath)
@@ -242,7 +239,6 @@ HRESULT CTerrainRenderer::SaveMap(const char* filePath)
     if (!ofs.is_open())
         return E_FAIL;
 
-    // 간단한 헤더(나중에 버전 바꿀 때 대비)
     uint32_t magic = 0x54494C45; // 'TILE'
     uint32_t version = 1;
 
@@ -333,7 +329,7 @@ bool CTerrainRenderer::PickCellMousePos(_int& outX, _int& outZ)
     GetCursorPos(&mousePos);
     ScreenToClient(g_hWnd, &mousePos);
 
-    // 1. 뷰포트 & 클라이언트 크기 보정
+    // 1. 뷰포트, 클라이언트 크기 보정
     RECT rcClient;
     GetClientRect(g_hWnd, &rcClient);
     D3DVIEWPORT9 viewport;

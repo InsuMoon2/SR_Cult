@@ -58,7 +58,7 @@ HRESULT CPlayer::Ready_GameObject()
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
-    
+
     Animation_Setting();
 
     return S_OK;
