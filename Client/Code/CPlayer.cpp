@@ -13,17 +13,19 @@
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CWeaponEquip.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
-      m_BufferCom(nullptr),
-      m_TransformCom(nullptr),
-      m_TextureCom(nullptr),
-      m_AnimatorCom(nullptr),
-      m_BoxColCom(nullptr),
-      m_StateCom(nullptr),
-      m_CombatStatCom(nullptr),
-      m_Inventory(nullptr)
+    m_BufferCom(nullptr),
+    m_TransformCom(nullptr),
+    m_TextureCom(nullptr),
+    m_AnimatorCom(nullptr),
+    m_BoxColCom(nullptr),
+    m_StateCom(nullptr),
+    m_CombatStatCom(nullptr),
+    m_Inventory(nullptr),
+    m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -35,11 +37,16 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_BoxColCom(nullptr),
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
-      m_Inventory(nullptr)
+      m_Inventory(nullptr),
+    m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::~CPlayer()
-{ }
+{
+
+
+
+}
 
 HRESULT CPlayer::Ready_GameObject()
 {
@@ -210,6 +217,13 @@ HRESULT CPlayer::Add_Component()
 
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::INVENTORY, m_Inventory });
     m_Inventory->SetInvenSlotNum(12);
+
+    // weaponequip
+
+    m_WeaponEquipCom = CreateProtoComponent<CWeaponEquip>(this, COMPONENTTYPE::WEAPON_EQUIP);
+    NULL_CHECK_RETURN(m_WeaponEquipCom, E_FAIL);
+
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::WEAPON_EQUIP, m_WeaponEquipCom });
 
     return S_OK;
 }

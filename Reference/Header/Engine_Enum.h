@@ -83,6 +83,7 @@ enum class COMPONENTTYPE
     STATE,
     COMBATSTAT,
     INVENTORY,
+    WEAPON_EQUIP,
 
     TEXTURE,
     TEX_PLAYER,

@@ -40,7 +40,7 @@ HRESULT CStage::Ready_Scene()
     // 안은수 test
     CDropSystem::GetInstance()->SetCurrentScene(this);
 
-    ItemInstance i = { 1001, -1, 0 };
+    ItemInstance i = { 3001, -1, 0 };
     CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, i, { 10, 0, 10 });
 
     return S_OK;

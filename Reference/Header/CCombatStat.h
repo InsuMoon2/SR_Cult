@@ -33,6 +33,7 @@ public:
     void Set_MaxHp(float maxHp) { m_maxHp = maxHp; }
     void Set_Mp(float mp) { m_Mp = mp; }
 
+    void Add_Attack(float attack) { m_Attack += attack; }
 public:
     static CCombatStat* Create(DEVICE GraphicDev);
 

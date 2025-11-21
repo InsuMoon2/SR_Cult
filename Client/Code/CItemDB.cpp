@@ -44,10 +44,10 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
 
     if (!file.is_open())
     {
-        //MSG_BOX("itemJson Load Failed");
+        //MSG_BOX("itemJson Load Failed");w
         return E_FAIL;
     }
-
+    
     nlohmann::json j;
 
     // BOM 제거 처리
