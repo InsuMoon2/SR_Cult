@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include "CClient_EnumHelper.h"
 
 #ifdef _DEBUG
 #ifdef new
@@ -84,7 +85,7 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
         Item item; // 구조체 지역으로 생성
 
         item.id   = node["id"];
-        item.type = StringToItemType(node["type"]);
+        item.type = ::CItemDB::GetInstance()->StringToItemType(node["type"]);
         item.name = node["name"];
         item.desc = node["desc"];
         // item.UIFileName = ToWString(node["UIFileName"].get<string>());

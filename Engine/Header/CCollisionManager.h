@@ -16,7 +16,6 @@ private:
     ~CCollisionManager() override;
 
 public:
-    void Ready_Collision();
     void Update();
 
     void AddCollider(CCollider* collider);

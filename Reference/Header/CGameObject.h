@@ -45,6 +45,11 @@ public:
     // Editor
     virtual void Render_Editor() { }
 
+    // PendingKill -> 다음 프레임에서 제거할 대상 마크
+    // CLayer -> LateUpdate에서 세팅 중
+    void Mark_As_PendingKill() { m_PendingKill = true; }
+    bool Is_PendingDestroy() { return m_PendingKill; }
+
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
 
@@ -53,6 +58,8 @@ protected:
     // TODO 기본 생성자에서 이름 세팅해주도록 구조 변경하기 -> Editor와 연동을 위해
     wstring m_Name = L"Default_GameObject";
     _bool m_Active;       // 오브젝트의 업데이트와 렌더를 하면 true, 안할거면 false로 바꾸면 되는 스위치
+
+    _bool m_PendingKill;
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);

@@ -4,14 +4,14 @@
 
 CGameObject::CGameObject(DEVICE graphicDev)
     : m_GraphicDev(graphicDev),
-      m_Active(true)
+      m_Active(true), m_PendingKill(false)
 {
     m_GraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
     : m_GraphicDev(rhs.m_GraphicDev),
-      m_Active(true)
+      m_Active(true), m_PendingKill(false)
 {
     m_GraphicDev->AddRef();
 }

@@ -145,9 +145,12 @@ static const char* ToString(COMPONENTTYPE type)
     case COMPONENTTYPE::TEX_ROCK: return "TexRock";
 
     // UI Texture Components
-    case COMPONENTTYPE::TEX_UI_CIRCLE: return "TexUiCircle";
-    case COMPONENTTYPE::TEX_UI_COLOR: return "TexUiColor";
-    case COMPONENTTYPE::TEX_UI_HEART: return "TexUiHeart";
+    case COMPONENTTYPE::TEX_UI_CIRCLE: return "UI_Circle";
+    case COMPONENTTYPE::TEX_UI_COLOR: return "UI_Color";
+    case COMPONENTTYPE::TEX_UI_HEART: return "UI_Heart";
+    case COMPONENTTYPE::TEX_UI_WEAPON: return "UI_Weapon";
+    case COMPONENTTYPE::TEX_MANUCHAR: return "UI_ManuChaR";
+    case COMPONENTTYPE::TEX_UIICON: return "UI_Icon";
 
     // Tile Texture Components
     case COMPONENTTYPE::TEX_TILE_284: return "TexTile284";
@@ -161,6 +164,9 @@ static const char* ToString(COMPONENTTYPE type)
 
     // End Marker
     case COMPONENTTYPE::COMPONENT_END: return "ComponentEnd";
+
+    case COMPONENTTYPE::CONTROLLER_PLAYER: return "PlayerController";
+    case COMPONENTTYPE::WEAPON_EQUIP: return "WeaponEquip";
 
     default:
         return "UnknownComponent";
