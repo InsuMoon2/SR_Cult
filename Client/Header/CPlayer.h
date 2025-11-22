@@ -46,6 +46,7 @@ private:
     void Render_ImGui();
 
 private:
+    // Engine Components    /////////////////
     Engine::CRcTex*            m_BufferCom;
     Engine::CTransform*        m_TransformCom;
     Engine::CTexture*          m_TextureCom;
@@ -54,8 +55,9 @@ private:
     Engine::CState*            m_StateCom;
     Engine::CCombatStat*       m_CombatStatCom;
     Engine::CPlayerController* m_PlayerControllerCom;
-    Engine::CWeaponEquip* m_WeaponEquipCom;
 
+    // Client Components    /////////////////
+    CWeaponEquip* m_WeaponEquipCom;
 
     CInventory* m_Inventory;
 

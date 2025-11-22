@@ -1,27 +1,27 @@
 ﻿#include "pch.h"
 #include "CUIIcon.h"
+#include "CCreateHelper.h"
 #include "CRcTex.h"
+#include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
-#include "CCreateHelper.h"
-#include "CRenderer.h"
 
 int CUIIcon::m_nextID = 0;
 
-CUIIcon::CUIIcon(DEVICE pGraphicDev) : CUI(pGraphicDev)
+CUIIcon::CUIIcon(DEVICE pGraphicDev)
+    : CUI(pGraphicDev)
 {
     m_ID = ++m_nextID;
 }
 
-CUIIcon::CUIIcon(const CUIIcon& rhs) : CUI(rhs)
+CUIIcon::CUIIcon(const CUIIcon& rhs)
+    : CUI(rhs)
 {
     m_ID = ++m_nextID;
-
 }
 
 CUIIcon::~CUIIcon()
-{
-}
+{}
 
 HRESULT CUIIcon::Ready_GameObject()
 {
@@ -50,7 +50,6 @@ void CUIIcon::LateUpdate_GameObject(const _float& timeDelta)
 void CUIIcon::Render_GameObject()
 {
     CUI::Render_GameObject();
-
 
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 

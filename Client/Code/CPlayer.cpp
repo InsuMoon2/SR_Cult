@@ -26,8 +26,8 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
       m_PlayerControllerCom(nullptr),
+      m_WeaponEquipCom(nullptr),
       m_Inventory(nullptr)
-      m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -40,16 +40,12 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
       m_PlayerControllerCom(nullptr),
+      m_WeaponEquipCom(nullptr),
       m_Inventory(nullptr)
-      m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::~CPlayer()
-{
-
-
-
-}
+{ }
 
 HRESULT CPlayer::Ready_GameObject()
 {
@@ -223,7 +219,7 @@ HRESULT CPlayer::Add_Component()
     m_PlayerControllerCom =
         CreateProtoComponent<CPlayerController>(this, COMPONENTTYPE::CONTROLLER_PLAYER);
     NULL_CHECK_RETURN(m_PlayerControllerCom, E_FAIL);
-    
+
     m_Components[ID_DYNAMIC].insert(
         { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
     // weaponequip
