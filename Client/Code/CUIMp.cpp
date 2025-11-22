@@ -52,28 +52,43 @@ void CUIMp::LateUpdate_GameObject(const _float& timeDelta)
 
 void CUIMp::Render_GameObject()
 {
-    CUI::Render_GameObject();
-
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
-
     m_TextureCom->Set_Texture(0);
+
+    _vec3 vPos;
+    m_TransformCom->Get_Info(INFO_POS, &vPos);
+
+    //UI 좌표계와 스크린 좌표계가 다르므로 전환
+    float sx = vPos.x + WINCX / 2.f;
+    float sy = WINCY / 2.f - vPos.y;
+
+    _vec3 vSize = m_TransformCom->Get_Scale();
+
+    RECT rcFull;
+    rcFull.left    = LONG(sx - vSize.x);
+    rcFull.top     = LONG(sy - vSize.y);          // RcTex 기본 크기가 2이기 때문에 Transform Scale은 반 사이즈
+    rcFull.right   = LONG(sx + vSize.x);          // 따라서 여기서  vSize *0.5 하면 실제 크기가 반으로 줄어듦
+    rcFull.bottom  = LONG(sy + vSize.y);
 
     float currMp = m_CombatStatCom->Get_Mp();
     float maxMp = m_CombatStatCom->Get_MaxMp();
 
-    float ratio = currMp / maxMp;
-    float vStart = 1.0f - ratio;
+    float ratio = currMp / maxMp;                //현재 MP의 비율
 
+    int fullHeight = rcFull.bottom - rcFull.top; //MP가 가득 찼을 때의 높이
+    int fillHeight = int(fullHeight * ratio);    //높이는 MP에 비례
 
-    //m_BufferCom->Set_UV(0.f, vStart, 1.f, 1.f);
+    rcFull.top = rcFull.bottom - fillHeight;     //MP가 늘어날수록 화면에 그려지는 rcFull의 top은 점점 작아진다
 
+    m_GraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+    m_GraphicDev->SetScissorRect(&rcFull);      //ScissorRect 안에 들어오는 픽셀만 그리고 나머지는 자르겠다는 뜻 
 
     m_BufferCom->Render_Buffer();
 
+    m_GraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
 
     if (ImGui::Begin("Player UI"))
     {
-
         // TransformComponent
         if (m_TransformCom && ImGui::CollapsingHeader(("Gauge")), ImGuiTreeNodeFlags_DefaultOpen)
         {
@@ -98,7 +113,6 @@ void CUIMp::Render_GameObject()
             ImGui::SetNextItemWidth(itemWidth);
             ImGui::InputFloat("##XP Z", (float*)&gaugePos.z);
 
-
             m_TransformCom->Set_Pos(gaugePos);
 
             _vec3 gaugeScale = m_TransformCom->Get_Scale();
@@ -111,10 +125,6 @@ void CUIMp::Render_GameObject()
 
             m_TransformCom->Set_Scale(gaugeScale);
         }
-
-
-
-
     }
     ImGui::End();
 }

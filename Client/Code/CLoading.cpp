@@ -20,6 +20,7 @@
 #include "CTriCol.h"
 #include "ItemData.h"
 #include "ItemInstance.h"
+#include "CWeaponEquip.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -277,6 +278,11 @@ _uint CLoading::Loading_ForState()
     // Inventory
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // weapon equip
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::WEAPON_EQUIP, CWeaponEquip::Create(m_GraphicDev))))
         return E_FAIL;
 
     m_LoadingText = L"COMPLETE: PRESS 1 -> Stage|PRESS 2 -> Editor";

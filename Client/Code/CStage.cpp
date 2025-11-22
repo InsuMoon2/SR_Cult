@@ -255,6 +255,8 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIWeapon) failed");
 
+    CUIWeapon* uiweapon = dynamic_cast<CUIWeapon*>(gameObject);
+
     m_Layers.insert({ layerType, layer });
 
     //! 일반적으로는 Free() 에서 지우지만, 우리는 사용 후 바로 버리고 싶으므로 여기서 지우도록 하겠다

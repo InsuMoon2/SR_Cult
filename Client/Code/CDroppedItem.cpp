@@ -13,6 +13,7 @@
 #include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CWeaponEquip.h"
 #include "ItemData.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
@@ -106,8 +107,18 @@ void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
     if (ply != nullptr)
     {
         //CDropSystem::GetInstance()->
+
+        if (CItemDB::GetInstance()->GetItemById(m_itemInst.itemId)->type == ItemType::Weapon)
+        {
+            ply->Get_WeaponEquip()->Equip_Weapon(m_itemInst);
+        }
+        else
+        {
         CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
         dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
+            
+        }
+
 
         //*** 아이템 지우기 ***
         //
@@ -164,7 +175,7 @@ CDroppedItem* CDroppedItem::Create(DEVICE graphicDev, ItemInstance itemInst, _ve
 
     if (FAILED(DroppedItem->Ready_GameObject(pos)))
     {
-        MSG_BOX("pPlayer Create Failed");
+        MSG_BOX("DroppedItem Create Failed");
         Safe_Release(DroppedItem);
         return nullptr;
     }
