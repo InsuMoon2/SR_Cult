@@ -6,18 +6,18 @@
 CState::CState(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_State(ACTORSTATE::IDLE),
-      m_PrevState(ACTORSTATE::PLAYERSTATE_END),
+      m_PrevState(ACTORSTATE::STATE_END),
       m_Dir(ACTORDIR::LEFT),
-      m_PrevDir(ACTORDIR::PLAYERDIR_END),
+      m_PrevDir(ACTORDIR::DIR_END),
       m_Animator(nullptr)
 { }
 
 CState::CState(const CState& rhs)
     : CComponent(rhs),
       m_State(ACTORSTATE::IDLE),
-      m_PrevState(ACTORSTATE::PLAYERSTATE_END),
+      m_PrevState(ACTORSTATE::STATE_END),
       m_Dir(ACTORDIR::LEFT),
-      m_PrevDir(ACTORDIR::PLAYERDIR_END),
+      m_PrevDir(ACTORDIR::DIR_END),
       m_Animator(nullptr)
 { }
 
@@ -27,10 +27,10 @@ CState::~CState()
 HRESULT CState::Ready_StateComponent(DEVICE graphicDev)
 {
     m_State     = ACTORSTATE::IDLE;
-    m_PrevState = ACTORSTATE::PLAYERSTATE_END;
+    m_PrevState = ACTORSTATE::STATE_END;
 
     m_Dir     = ACTORDIR::LEFT;
-    m_PrevDir = ACTORDIR::PLAYERDIR_END;
+    m_PrevDir = ACTORDIR::DIR_END;
 
     return S_OK;
 }

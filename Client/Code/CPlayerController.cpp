@@ -60,112 +60,140 @@ HRESULT CPlayerController::Init_OwnerComponent()
 
 void CPlayerController::Key_Input(const _float& timeDelta)
 {
+    KeyInputData inputData;
+
+    // 1. 입력 데이터 수집
+    Calc_InputVector(inputData);
+
+    // 2. 상태(State) 결정
+    Determine_State(inputData);
+
+    // 3. 방향(Direction) 결정 - 이동 여부와 관계없이 입력이 있다면 바라봄
+    Apply_Direction(inputData);
+
+    // 4. 이동(Position) 적용
+    Apply_Movement(inputData, timeDelta);
+}
+
+void CPlayerController::Calc_InputVector(KeyInputData& inputData)
+{
     const auto inputMgr = CDInputMgr::GetInstance();
 
-    // ---------------------------------
-    // 1. 방향 입력 벡터 계산
-    // ---------------------------------
-    _vec3 moveDir = { 0.f, 0.f, 0.f };
-    int   axis_X{};
-    int   axis_Z{};
-
-    if (inputMgr->Get_DIKeyState(DIK_W) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
+    // Z축
+    if (inputMgr->Get_DIKeyState(DIK_W) & 0x80 || inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
     {
-        moveDir += g_WorldLook;
-        ++axis_Z;
+        inputData.moveDir += g_WorldLook;
+        ++inputData.axisZ;
     }
-    if (inputMgr->Get_DIKeyState(DIK_S) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
+    if (inputMgr->Get_DIKeyState(DIK_S) & 0x80 || inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
     {
-        moveDir -= g_WorldLook;
-        --axis_Z;
-    }
-    if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
-    {
-        moveDir += g_WorldRight;
-        ++axis_X;
-    }
-    if (inputMgr->Get_DIKeyState(DIK_A) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
-    {
-        moveDir -= g_WorldRight;
-        --axis_X;
+        inputData.moveDir -= g_WorldLook;
+        --inputData.axisZ;
     }
 
-    // ---------------------------------
-    // 2. 상태 및 속도 결정
-    // ---------------------------------
-    const bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
-    const auto speed    = m_OwnerCombatStat->Get_Speed();
-    ACTORSTATE nextState;
-
-    if (isMoving)
+    // X축
+    if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 || inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
     {
+        inputData.moveDir += g_WorldRight;
+        ++inputData.axisX;
+    }
+    if (inputMgr->Get_DIKeyState(DIK_A) & 0x80 || inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
+    {
+        inputData.moveDir -= g_WorldRight;
+        --inputData.axisX;
+    }
+
+    inputData.isMove = (D3DXVec3LengthSq(&inputData.moveDir) > 0.f);
+}
+
+void CPlayerController::Determine_State(KeyInputData& inputData)
+{
+    if (nullptr == m_OwnerStateCom)
+        return;
+
+    ACTORSTATE nextState = ACTORSTATE::IDLE;
+
+    //!! 현재 우선순위: ATTACK > ROLL > RUN > IDLE
+    // TODO (여기서는 간단히 RUN/IDLE만 처리, 추후 확장)
+
+    if (inputData.isMove)
         nextState = ACTORSTATE::RUN;
-
-        // TODO 석호: 예시 코드. 상태 추가시 이런 식으로 변경
-        //if (GetAsyncKeyState('Z') & 0x8000) 
-        //{
-        //    eNextState = ACTORSTATE::ATTACK;
-        //    fCurrentSpeed = 5.f; // 공격 중 이동 속도 감소
-        //}
-    }
     else
-    {
-        //if (GetAsyncKeyState('Z') & 0x8000) 
-        //{
-        //    eNextState = ACTORSTATE::ATTACK;
-        //}
-
         nextState = ACTORSTATE::IDLE;
-    }
 
-    // ---------------------------------
-    // 3. 실제 적용
-    // ---------------------------------
+    // 상태 변경 요청
     m_OwnerStateCom->Change_State(nextState);
+}
 
-    if (isMoving)
+void CPlayerController::Apply_Direction(KeyInputData& inputData)
+{
+    if (nullptr == m_OwnerStateCom)
+        return;
+
+    // 입력이 아예 없으면 방향을 바꾸지 않음 (이전 방향 유지)
+    if (inputData.axisX == 0 && inputData.axisZ == 0)
+        return;
+
+    ACTORDIR newDir = ACTORDIR::DOWN; // 기본값
+
+    if (inputData.axisZ > 0) // 상단
     {
-        D3DXVec3Normalize(&moveDir, &moveDir);
-        m_TransformCom->Move_Pos(moveDir, timeDelta, speed);
-
-        // 공격 중에는 방향 전환을 막고 싶다면 여기에 조건을 걸면 됨
-        // if (eNextState != ACTORSTATE::ATTACK) 
-        {
-            ACTORDIR newDir = ACTORDIR::LEFT;
-
-            if (axis_Z > 0) // 위
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::R_UP;
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::L_UP;
-                else
-                    newDir = ACTORDIR::UP;
-            }
-            else if (axis_Z < 0) // 아래
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::R_DOWN;
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::L_DOWN;
-                else
-                    newDir = ACTORDIR::DOWN;
-            }
-            else // Z축 입력 없음 (좌/우 만 입력)
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::RIGHT;
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::LEFT;
-            }
-
-            m_OwnerStateCom->Change_Dir(newDir);
-        }
+        if (inputData.axisX > 0)
+            newDir = ACTORDIR::R_UP;
+        else if (inputData.axisX < 0)
+            newDir = ACTORDIR::L_UP;
+        else
+            newDir = ACTORDIR::UP;
     }
+    else if (inputData.axisZ < 0) // 하단
+    {
+        if (inputData.axisX > 0)
+            newDir = ACTORDIR::R_DOWN;
+        else if (inputData.axisX < 0)
+            newDir = ACTORDIR::L_DOWN;
+        else
+            newDir = ACTORDIR::DOWN;
+    }
+    else // 중단 (Z축 입력 없음)
+    {
+        if (inputData.axisX > 0)
+            newDir = ACTORDIR::RIGHT;
+        else if (inputData.axisX < 0)
+            newDir = ACTORDIR::LEFT;
+    }
+
+    m_OwnerStateCom->Change_Dir(newDir);
+}
+
+void CPlayerController::Apply_Movement(KeyInputData& inputData, const _float& timeDelta)
+{
+    if (!inputData.isMove)
+        return;
+
+    if (nullptr == m_TransformCom ||
+        nullptr == m_OwnerCombatStat ||
+        nullptr == m_OwnerStateCom)
+        return;
+
+    ACTORSTATE curState   = m_OwnerStateCom->Get_State();
+    float      finalSpeed = m_OwnerCombatStat->Get_Speed();
+
+    // 상태에 따라 이동 속도 제한
+    switch (curState)
+    {
+    case ACTORSTATE::ATTACK:
+        finalSpeed *= 0.5f;
+        break;
+    case ACTORSTATE::ROLL:
+        finalSpeed *= 1.5f;
+        break;
+    default:
+        break;
+    }
+
+    D3DXVec3Normalize(&inputData.moveDir, &inputData.moveDir);
+
+    m_TransformCom->Move_Pos(inputData.moveDir, timeDelta, finalSpeed);
 }
 
 CPlayerController* CPlayerController::Create(DEVICE graphicDev)

@@ -10,6 +10,15 @@ END
 class CPlayerController : public CComponent
 {
 private:
+    struct KeyInputData
+    {
+        _vec3 moveDir = { 0.f, 0.f, 0.f };
+        int   axisX{};
+        int   axisZ{};
+        bool  isMove{};
+    };
+
+private:
     explicit CPlayerController(DEVICE graphicDev);
     explicit CPlayerController(const CPlayerController& rhs);
     ~CPlayerController() override;
@@ -25,9 +34,13 @@ public:
 
 private:
     void Key_Input(const _float& timeDelta);
+    void Calc_InputVector(KeyInputData& inputData); // 입력 벡터 및 축 값 계산
+    void Determine_State(KeyInputData& inputData); // 입력을 바탕으로 State에 상태 변경 요청
+    void Apply_Direction(KeyInputData& inputData); // 입력을 바탕으로 애니메이션 방향 설정
+    void Apply_Movement(KeyInputData& inputData, const _float& timeDelta); // 입력을 바탕으로 이동
 
 private:
-#pragma region Caching owner's components
+#pragma region Caching owner components 가나다라
 
     Engine::CState*      m_OwnerStateCom;
     Engine::CCombatStat* m_OwnerCombatStat;

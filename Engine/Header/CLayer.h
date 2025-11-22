@@ -22,13 +22,10 @@ public:
 
     const map<OBJTYPE, vector<CGameObject*>>& Get_Objects() const { return m_Objects; }
 
-
 public:
     HRESULT Ready_Layer();
     _int    Update_Layer(const _float& timeDelta);
     void    LateUpdate_Layer(const _float& timeDelta);
-
-
 
 private:
     void Object_NameSetting(OBJTYPE objType, CGameObject* gameObject);
