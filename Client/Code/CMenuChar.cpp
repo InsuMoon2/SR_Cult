@@ -70,10 +70,7 @@ void CMenuChar::Render_GameObject()
 
     m_BufferCom->Render_Buffer();
 
-    TempImGuiRender();
     Render_Reset();
-
-
 }
 
 void CMenuChar::Animation_Setting()
@@ -121,48 +118,6 @@ HRESULT CMenuChar::Add_Component()
 
 
     return S_OK;
-}
-
-void CMenuChar::TempImGuiRender()
-{
-    if (ImGui::Begin("HumanMonster Inspector"))
-    {
-        const _vec3& pos = m_TransformCom->Get_Pos();
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##px", (float*)&pos.x, -1.f, 1.f);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##py", (float*)&pos.y, -1.f, 1.f);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##pz", (float*)&pos.z, -1.f, 1.f);
-
-            m_TransformCom->Set_Pos(pos);
-
-            const _vec3& scale = m_TransformCom->Get_Scale();
-
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##cx", (float*)&scale.x, -1.f, 1.f);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##cy", (float*)&scale.y, -1.f, 1.f);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##cz", (float*)&scale.z, -1.f, 1.f);
-
-            m_TransformCom->Set_Scale(scale);
-        }
-    }
-
-    ImGui::End();
 }
 
 void CMenuChar::Render_Setting()

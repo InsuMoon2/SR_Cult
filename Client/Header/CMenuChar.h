@@ -29,7 +29,6 @@ public:
 private:
     void    Animation_Setting();
     HRESULT Add_Component();
-    void    TempImGuiRender();
 
     void Render_Setting();
     void Render_Reset();

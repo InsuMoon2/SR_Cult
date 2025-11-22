@@ -36,6 +36,7 @@ public:
     void Set_MaxMp(_float maxMp) { m_MaxMp = maxMp; }
     void Set_Speed(_float speed) { m_Speed = speed; }
 
+    void Add_Attack(float attack) { m_Attack += attack; }
 public:
     static CCombatStat* Create(DEVICE GraphicDev);
 
