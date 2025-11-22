@@ -1,0 +1,215 @@
+﻿#include "pch.h"
+#include "CMenuChar.h"
+#include "CTransform.h"
+#include "CRenderer.h"
+#include "CTexture.h"
+#include "CTransform.h"
+#include "CAnimator.h"
+#include "CRcTex.h"
+#include "CProtoMgr.h"
+#include "CCreateHelper.h"
+#include "CState.h"
+
+
+CMenuChar::CMenuChar(DEVICE graphicDev) : CGameObject(graphicDev)
+{
+}
+
+CMenuChar::CMenuChar(const CMenuChar& rhs) : CGameObject(rhs)
+{
+}
+
+CMenuChar::~CMenuChar()
+{
+
+}
+
+HRESULT CMenuChar::Ready_GameObject()
+{
+    if (FAILED(Add_Component()))
+        return E_FAIL;
+
+
+    Animation_Setting();
+
+    m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 10.f));
+    m_TransformCom->Set_Scale(_vec3(4.f, 4.f, 1.f));
+
+    return S_OK;
+}
+
+_int CMenuChar::Update_GameObject(const _float& timeDelta)
+{
+    _int exit = CGameObject::Update_GameObject(timeDelta);
+    CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
+
+    return exit;
+}
+
+void CMenuChar::LateUpdate_GameObject(const _float& timeDelta)
+{
+    CGameObject::LateUpdate_GameObject(timeDelta);
+
+}
+
+void CMenuChar::Render_GameObject()
+{
+
+    m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
+
+
+    Render_Setting();
+
+    if (m_TextureCom && m_AnimatorCom)
+    {
+        const wstring& key = m_AnimatorCom->Get_CurKey();
+        _int           frame = m_AnimatorCom->Get_CurFrame();
+
+        m_TextureCom->Set_Texture(key, frame);
+    }
+
+    m_BufferCom->Render_Buffer();
+
+    TempImGuiRender();
+    Render_Reset();
+
+
+}
+
+void CMenuChar::Animation_Setting()
+{
+    // 애니메이션 생성
+    m_AnimatorCom->Create_Animation(L"MenuChar", 100, 0.02f);
+    
+    // State -> Animation 연동
+    m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"MenuChar", ANIMSTATE::LOOP);
+    
+}
+
+HRESULT CMenuChar::Add_Component()
+{
+    //buffer
+    m_BufferCom = CreateProtoComponent<CRcTex>(this, COMPONENTTYPE::RC_TEX);
+    NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::RC_TEX, m_BufferCom });
+
+    //transform
+    m_TransformCom = CreateProtoComponent<CTransform>(this, COMPONENTTYPE::TRANSFORM);
+    NULL_CHECK_RETURN(m_TransformCom, E_FAIL);
+
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::TRANSFORM, m_TransformCom });
+
+    // texture
+    m_TextureCom = CreateProtoComponent<CTexture>(this, COMPONENTTYPE::TEX_MANUCHAR);
+    NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
+
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_MANUCHAR, m_TextureCom });
+
+    // Animator
+    m_AnimatorCom = CreateProtoComponent<CAnimator>(this, COMPONENTTYPE::ANIMATOR);
+    NULL_CHECK_RETURN(m_AnimatorCom, E_FAIL);
+
+    m_AnimatorCom->Set_TextureType(COMPONENTTYPE::TEX_MANUCHAR);
+
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::ANIMATOR, m_AnimatorCom });
+
+
+    m_StateCom = CreateProtoComponent<CState>(this, COMPONENTTYPE::STATE);
+    NULL_CHECK_RETURN(m_StateCom, E_FAIL);
+
+    m_Components[ID_DYNAMIC].insert({ COMPONENTTYPE::STATE, m_StateCom });
+
+
+    return S_OK;
+}
+
+void CMenuChar::TempImGuiRender()
+{
+    if (ImGui::Begin("HumanMonster Inspector"))
+    {
+        const _vec3& pos = m_TransformCom->Get_Pos();
+        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
+        {
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##px", (float*)&pos.x, -1.f, 1.f);
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##py", (float*)&pos.y, -1.f, 1.f);
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##pz", (float*)&pos.z, -1.f, 1.f);
+
+            m_TransformCom->Set_Pos(pos);
+
+            const _vec3& scale = m_TransformCom->Get_Scale();
+
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##cx", (float*)&scale.x, -1.f, 1.f);
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##cy", (float*)&scale.y, -1.f, 1.f);
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::SliderFloat("##cz", (float*)&scale.z, -1.f, 1.f);
+
+            m_TransformCom->Set_Scale(scale);
+        }
+    }
+
+    ImGui::End();
+}
+
+void CMenuChar::Render_Setting()
+{
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+    m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
+}
+
+void CMenuChar::Render_Reset()
+{
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+void CMenuChar::OnBeginOverlap(CCollider* self, CCollider* other)
+{
+}
+
+void CMenuChar::OnEndOverlap(CCollider* self, CCollider* other)
+{
+}
+
+CMenuChar* CMenuChar::Create(DEVICE graphicDev)
+{
+    auto MenuChar = new CMenuChar(graphicDev);
+
+    if (FAILED(MenuChar->Ready_GameObject()))
+    {
+        MSG_BOX("MenuChar Create Failed");
+        Safe_Release(MenuChar);
+        return nullptr;
+    }
+
+    return MenuChar;
+    //return nullptr;
+}
+
+void CMenuChar::Free()
+{
+    CGameObject::Free();
+
+}

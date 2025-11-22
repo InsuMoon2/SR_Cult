@@ -213,6 +213,29 @@ _uint CLoading::Loading_ForState()
         return E_FAIL;
 
 
+    // 메인 메뉴 이미지
+
+    CTexture* menuChar = CTexture::Create(m_GraphicDev, TEX_NORMAL, L"", 0);
+    NULL_CHECK_RETURN(menuChar, E_FAIL);
+    
+    if (FAILED(menuChar->Add_Texture(L"MenuChar", TEX_NORMAL,
+        L"../Bin/Resource/Texture/MainMenu/MenuChar/Main menu-animation%d.png", 100)))
+        return E_FAIL;
+    
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_MANUCHAR, menuChar)))
+        return E_FAIL;
+
+    //UIICON 텍스쳐
+    
+    vector<wstring> pathVec1;
+    pathVec1.push_back(L"../Bin/Resource/Texture/UI/MainMenu/Title0.png");
+
+
+    if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
+        COMPONENTTYPE::TEX_UIICON, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec1))))
+        return E_FAIL;
+
 #pragma endregion
 
     m_LoadingText = L"Etc LOADING..........";

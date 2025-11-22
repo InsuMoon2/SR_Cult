@@ -15,6 +15,7 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CTimerMgr.h"
+#include "CSceneMgr.h"
 
 CMainApp::CMainApp()
     : m_ManagementClass(CManagement::GetInstance()),
@@ -120,7 +121,7 @@ HRESULT CMainApp::Ready_DefaultSetting(DEVICE* graphicDev)
 
 HRESULT CMainApp::Ready_Scene(DEVICE graphicDev)
 {
-    Engine::CScene* logo = CLogo::Create(graphicDev);
+   /* Engine::CScene* logo = CLogo::Create(graphicDev);
 
     if (nullptr == logo)
         return E_FAIL;
@@ -131,7 +132,9 @@ HRESULT CMainApp::Ready_Scene(DEVICE graphicDev)
         return E_FAIL;
     }
 
-    return S_OK;
+    return S_OK;*/
+
+    return CSceneMgr::GetInstance()->Ready_SceneMgr(graphicDev);
 }
 
 CMainApp* CMainApp::Create()
@@ -164,6 +167,7 @@ void CMainApp::Free()
     CImGuiManager::DestroyInstance();
     CManagement::DestroyInstance();
     CGraphicDev::DestroyInstance();
+    CSceneMgr::DestroyInstance();
 
 #pragma region 데이터 파싱 테스트
 
