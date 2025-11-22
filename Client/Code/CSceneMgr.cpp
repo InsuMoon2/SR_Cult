@@ -1,13 +1,14 @@
 ﻿#include "pch.h"
 #include "CSceneMgr.h"
-#include "CStage.h"
+
 #include "CEdit.h"
-#include "CMainMenu.h"
-#include "Engine_Enum.h"
 #include "CLogo.h"
+#include "CMainMenu.h"
+#include "CManagement.h"
+#include "CStage.h"
+#include "Engine_Enum.h"
 
 IMPLEMENT_SINGLETON(CSceneMgr)
-
 
 CSceneMgr::CSceneMgr()
 {
@@ -16,7 +17,7 @@ CSceneMgr::CSceneMgr()
 
 CSceneMgr::~CSceneMgr()
 {
-    Free();
+    CSceneMgr::Free();
 }
 
 HRESULT CSceneMgr::Ready_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -36,40 +37,29 @@ HRESULT CSceneMgr::Ready_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev)
     }
 
     return S_OK;
-
-
-
 }
 
 void CSceneMgr::Render_SceneMgr()
-{
-    
-}
+{ }
 
 void CSceneMgr::Change_SceneMgr(SCENETYPE typeInput)
 {
-    _bool bFailed = false;
-    SCENETYPE type = typeInput;
+    _bool     bFailed = false;
+    SCENETYPE type    = typeInput;
     switch (type)
     {
     case SCENETYPE::SC_MAINMENU:
         if (FAILED(CManagement::GetInstance()
             ->Request_ChangeScene(CMainMenu::Create(m_pGraphicDev))))
-        {
             bFailed = true;
-        }
         break;
     case SCENETYPE::SC_STAGE:
         if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CStage::Create(m_pGraphicDev))))
-        {
             bFailed = true;
-        }
         break;
     case SCENETYPE::SC_EDIT:
         if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CEdit::Create(m_pGraphicDev))))
-        {
             bFailed = true;
-        }
         break;
     //case SC_STAGE1:
     //    if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CMonsterTestScene::Create(m_pGraphicDev))))
@@ -88,9 +78,6 @@ void CSceneMgr::Change_SceneMgr(SCENETYPE typeInput)
     default:
         break;
     }
-
-
-
 }
 
 void CSceneMgr::Free()

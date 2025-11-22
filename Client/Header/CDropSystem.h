@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CBase.h"
-#include "Engine_Define.h"
-#include "ItemInstance.h"
+
+struct ItemInstance;
 
 BEGIN(Engine)
 class CScene;
@@ -15,11 +15,13 @@ class CDropSystem : public CBase
 private:
     explicit CDropSystem();
     ~CDropSystem() override;
+
 public:
     void SpawnDrop(DEVICE pGraphicDev, const ItemInstance& item, const _vec3& worldPos);
     void SpawnAllFromInven(DEVICE pGraphicDev, CInventory& Inven);
 
     void SetCurrentScene(CScene* nowScene) { m_nowScene = nowScene; } // 이거 무조건 씬 셋팅 시 해줘야함
+
 private:
     CScene* m_nowScene = nullptr;
 

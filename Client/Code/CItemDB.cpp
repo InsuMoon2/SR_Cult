@@ -22,11 +22,11 @@
 IMPLEMENT_SINGLETON(CItemDB)
 
 CItemDB::CItemDB()
-{}
+{ }
 
 CItemDB::~CItemDB()
 {
-    Free();
+    CItemDB::Free();
 }
 
 HRESULT CItemDB::Ready_ItemDB()
@@ -40,14 +40,14 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
     // GetCurrentDirectoryA(MAX_PATH, buf);
     // MessageBoxA(nullptr, buf, "Current Directory", MB_OK);
 
-    std::ifstream file(fileName, std::ios::in);
+    ifstream file(fileName, ios_base::in);
 
     if (!file.is_open())
     {
         //MSG_BOX("itemJson Load Failed");w
         return E_FAIL;
     }
-    
+
     nlohmann::json j;
 
     // BOM 제거 처리
@@ -83,22 +83,22 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
     {
         Item item; // 구조체 지역으로 생성
 
-        item.id = node["id"];
+        item.id   = node["id"];
         item.type = StringToItemType(node["type"]);
         item.name = node["name"];
         item.desc = node["desc"];
-       // item.UIFileName = ToWString(node["UIFileName"].get<std::string>());
-       // item.UIPath = ToWString(node["UIPath"].get<std::string>());
+        // item.UIFileName = ToWString(node["UIFileName"].get<string>());
+        // item.UIPath = ToWString(node["UIPath"].get<string>());
         item.UIFileName = node["UIFileName"];
-        item.UIPath = node["UIPath"];
+        item.UIPath     = node["UIPath"];
 
         item.additionalDesc = node["additionalDesc"];
 
         //JSON에 해당 키가 없을 때 사용할 기본값을 지정 있으면 데이터
         item.quality   = node.value("quality", 0);
         item.stackable = node.value("stackable", false);
-        item.maxStack = node.value("maxStack", 1);
-        item.price = node.value("price", 0);
+        item.maxStack  = node.value("maxStack", 1);
+        item.price     = node.value("price", 0);
 
         //map stat에 넣을 데이터
         if (node.contains("stats"))
@@ -114,12 +114,14 @@ HRESULT CItemDB::LoadFromJson(const string& fileName)
 
     return S_OK;
 }
+
 int CItemDB::GetIndexById(int id)
 {
     auto it = m_itemIndex.find(id);
     assert(it != m_itemIndex.end());
     return it->second;
 }
+
 Item* CItemDB::GetItemById(int id)
 {
     auto it = m_itemIndex.find(id);
@@ -136,14 +138,14 @@ ItemType CItemDB::StringToItemType(string s)
     return ItemType::None;
 }
 
-std::wstring CItemDB::ToWString(const std::string& str)
+wstring CItemDB::ToWString(const string& str)
 {
-    return std::wstring(str.begin(), str.end());
+    return wstring(str.begin(), str.end());
 }
 
-std::wstring CItemDB::Utf8ToWstring(const std::string& str)
+wstring CItemDB::Utf8ToWstring(const string& str)
 {
-    if (str.empty()) return std::wstring();
+    if (str.empty()) return wstring();
 
     int size_needed = MultiByteToWideChar(CP_UTF8,
                                           0,
@@ -152,7 +154,7 @@ std::wstring CItemDB::Utf8ToWstring(const std::string& str)
                                           nullptr,
                                           0);
 
-    std::wstring result(size_needed, 0);
+    wstring result(size_needed, 0);
     MultiByteToWideChar(CP_UTF8,
                         0,
                         str.c_str(),
@@ -168,4 +170,4 @@ std::wstring CItemDB::Utf8ToWstring(const std::string& str)
 }
 
 void CItemDB::Free()
-{}
+{ }

@@ -1,15 +1,13 @@
 ﻿#pragma once
 #include "CBase.h"
-#include "Engine_Define.h"
-#include "CManagement.h"
-class CSceneMgr :   public CBase
-{
 
+class CSceneMgr : public CBase
+{
     DECLARE_SINGLETON(CSceneMgr)
 
 private:
     explicit CSceneMgr();
-    virtual ~CSceneMgr();
+    ~CSceneMgr() override;
 
 public:
     virtual HRESULT Ready_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -20,8 +18,5 @@ private:
     LPDIRECT3DDEVICE9 m_pGraphicDev;
 
 private:
-    virtual void    Free();
-
-
+    void Free() override;
 };
-

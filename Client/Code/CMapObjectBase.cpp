@@ -9,32 +9,29 @@
 
 CMapObjectBase::CMapObjectBase(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AttachTerrain(false),
-    m_Terrain(nullptr)
-{
-}
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AttachTerrain(false),
+      m_Terrain(nullptr)
+{ }
 
 CMapObjectBase::CMapObjectBase(const CMapObjectBase& rhs)
     : CGameObject(rhs),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AttachTerrain(rhs.m_AttachTerrain),
-    m_Terrain(rhs.m_Terrain),
-    m_CellX(rhs.m_CellX), m_CellZ(rhs.m_CellZ)
-{
-}
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AttachTerrain(rhs.m_AttachTerrain),
+      m_CellX(rhs.m_CellX),
+      m_CellZ(rhs.m_CellZ),
+      m_Terrain(rhs.m_Terrain)
+{ }
 
 CMapObjectBase::~CMapObjectBase()
-{
-}
+{ }
 
 HRESULT CMapObjectBase::Ready_GameObject()
 {
-
     return S_OK;
 }
 
@@ -42,15 +39,12 @@ _int CMapObjectBase::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CGameObject::Update_GameObject(timeDelta);
 
-
-
     return exit;
 }
 
 void CMapObjectBase::LateUpdate_GameObject(const _float& timeDelta)
 {
     CGameObject::LateUpdate_GameObject(timeDelta);
-
 }
 
 void CMapObjectBase::Render_GameObject()
@@ -65,24 +59,23 @@ void CMapObjectBase::Render_GameObject()
 
 void CMapObjectBase::Set_WorldPos(const _vec3& pos)
 {
-    if(m_TransformCom)
+    if (m_TransformCom)
         m_TransformCom->Set_Pos(pos);
 }
-
 
 HRESULT CMapObjectBase::Add_BaseComponent(COMPONENTTYPE InType)
 {
     COMPONENTTYPE type = COMPONENTTYPE::COMPONENT_END;
 
     // RcTex
-    type = COMPONENTTYPE::RC_TEX;
+    type        = COMPONENTTYPE::RC_TEX;
     m_BufferCom = CreateProtoComponent<CRcTex>(this, type);
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ type, m_BufferCom });
 
     // Transform
-    type = COMPONENTTYPE::TRANSFORM;
+    type           = COMPONENTTYPE::TRANSFORM;
     m_TransformCom = CreateProtoComponent<CTransform>(this, type);
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
@@ -93,11 +86,9 @@ HRESULT CMapObjectBase::Add_BaseComponent(COMPONENTTYPE InType)
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ InType, m_TextureCom });
-
 }
 
 void CMapObjectBase::Free()
 {
     CGameObject::Free();
-
 }
