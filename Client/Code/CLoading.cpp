@@ -23,6 +23,7 @@
 #include "ItemData.h"
 #include "ItemInstance.h"
 #include "CWeaponEquip.h"
+#include "CClient_EnumHelper.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),

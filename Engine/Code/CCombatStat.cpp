@@ -7,12 +7,12 @@ CCombatStat::CCombatStat(DEVICE GraphicDev)
 {}
 
 CCombatStat::CCombatStat(const CCombatStat& rhs)
-    : CComponent(rhs.m_GraphicDev), m_Attack(0), m_Hp(0), m_Mp(0)
+    : CComponent(rhs), m_Attack(0), m_Hp(0), m_Mp(0)
 {}
 
 CCombatStat::~CCombatStat()
 {
-    Free();
+    
 }
 
 HRESULT CCombatStat::Ready_StateComponent(DEVICE GraphicDev)
