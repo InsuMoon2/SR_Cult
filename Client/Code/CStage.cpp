@@ -220,7 +220,7 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     CUIIcon* pgameObject = CUIIcon::Create(m_GraphicDev);
     pgameObject->Set_TextureIndex(1);
     pgameObject->Get_Transform()->Set_Pos(-535.f, 260.f, 0.f);
-    pgameObject->Get_Transform()->Set_Scale(13.5f, 15.f, 0.f);
+    pgameObject->Get_Transform()->Set_Scale(9.5f, 11.f, 0.f);
 
     FAILED_CHECK_MSG(
     layer->Add_GameObject(OBJTYPE::UI, pgameObject),

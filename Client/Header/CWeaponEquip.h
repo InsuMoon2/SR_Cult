@@ -5,7 +5,7 @@
 
 struct Item;
 
-class CWeaponEquip : public CComponent
+class CWeaponEquip : public Engine::CComponent
 {
 private:
     explicit CWeaponEquip(DEVICE graphicDev);
@@ -18,7 +18,7 @@ public:
     void ApplyWeaponStat(Item* item);
     void RemoveWeaponStat();
     bool Get_WeaponEquipped() { return m_WeaponEquipped; }
-    int             Get_CurrentWeaponID() { return m_iCurrentWeaponID; }
+    int             Get_CurrentWeaponID() { return m_CurrentWeaponID; }
 
     static CWeaponEquip* Create(DEVICE graphicDev);
     CComponent*          Clone() override;
@@ -26,7 +26,7 @@ public:
 protected:
     void Free() override;
 public:
-    int           m_iCurrentWeaponID;
-    InventorySlot m_iCurrentWeaponSlot;
+    int           m_CurrentWeaponID;
+    InventorySlot m_CurrentWeaponSlot;
     bool          m_WeaponEquipped;
 };
