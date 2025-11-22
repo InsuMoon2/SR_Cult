@@ -1,6 +1,11 @@
 ﻿#pragma once
 #include "CUI.h"
 
+namespace Engine
+{
+    class CCombatStat;
+}
+
 class CUIWeapon : public CUI
 {
 public:
@@ -13,17 +18,18 @@ public:
     _int Update_GameObject(const _float& timeDelta) override;
     void LateUpdate_GameObject(const _float& timeDelta) override;
     void Render_GameObject() override;
-
+    void Set_PlayerCombatStat(CCombatStat* combatStat) { m_CombatStatCom = combatStat; }
     HRESULT Add_Component();
 
 public:
     static CUIWeapon* Create(DEVICE graphicDev);
 
-private:
-    static int         m_nextID;
-
 protected:
     void Free() override;
+
+private:
+    static int         m_nextID;
+    CCombatStat* m_CombatStatCom;
 
 };
 
