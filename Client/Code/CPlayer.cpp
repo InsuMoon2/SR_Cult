@@ -8,6 +8,7 @@
 #include "CDInputMgr.h"
 #include "CEnumHelper.h"
 #include "CInventory.h"
+#include "CPlayerController.h"
 #include "CRcTex.h"
 #include "CRenderer.h"
 #include "CState.h"
@@ -17,16 +18,17 @@
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
-    m_BufferCom(nullptr),
-    m_TransformCom(nullptr),
-    m_TextureCom(nullptr),
-    m_AnimatorCom(nullptr),
-    m_BoxColCom(nullptr),
-    m_StateCom(nullptr),
-    m_CombatStatCom(nullptr),
-    m_Inventory(nullptr),
-    m_WeaponEquipCom(nullptr)
-{ }
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_AnimatorCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_StateCom(nullptr),
+      m_CombatStatCom(nullptr),
+      m_PlayerControllerCom(nullptr),
+      m_WeaponEquipCom(nullptr),
+      m_Inventory(nullptr)
+{}
 
 CPlayer::CPlayer(const CPlayer& rhs)
     : CGameObject(rhs),
@@ -37,16 +39,13 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_BoxColCom(nullptr),
       m_StateCom(nullptr),
       m_CombatStatCom(nullptr),
-      m_Inventory(nullptr),
-    m_WeaponEquipCom(nullptr)
-{ }
+      m_PlayerControllerCom(nullptr),
+      m_WeaponEquipCom(nullptr),
+      m_Inventory(nullptr)
+{}
 
 CPlayer::~CPlayer()
-{
-
-
-
-}
+{ }
 
 HRESULT CPlayer::Ready_GameObject()
 {
@@ -60,7 +59,8 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_Hp(6.f);
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
-    m_CombatStatCom->Set_Mp(100.f);
+    m_CombatStatCom->Set_Mp(5.f);
+    m_CombatStatCom->Set_Speed(5.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
@@ -93,8 +93,6 @@ _int CPlayer::Update_GameObject(const _float& timeDelta)
 
     CRenderer::GetInstance()->Add_RenderGroup(RENDER_ALPHA, this);
 
-    Key_Input(timeDelta);
-
     return exit;
 }
 
@@ -118,8 +116,6 @@ void CPlayer::Render_GameObject()
     }
 
     m_BufferCom->Render_Buffer();
-
-    Render_ImGui();
 
     Render_Reset();
 
@@ -161,6 +157,16 @@ void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
     CGameObject::OnEndOverlap(self, other);
 
     cout << "Player HitOut" << endl;
+}
+
+void CPlayer::Render_Editor()
+{
+    CGameObject::Render_Editor();
+
+    ImGui::Text("=== Player ===");
+
+    // 이제 ImGui는 GameObject의 OnEditor를 상속받아서 Render하면 된다. 따로 호출해줄 필요도 없음.
+    // 추가로 띄우고 싶은거 있으면 추가하기
 }
 
 HRESULT CPlayer::Add_Component()
@@ -218,6 +224,13 @@ HRESULT CPlayer::Add_Component()
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::INVENTORY, m_Inventory });
     m_Inventory->SetInvenSlotNum(12);
 
+    // Player Controller
+    m_PlayerControllerCom =
+        CreateProtoComponent<CPlayerController>(this, COMPONENTTYPE::CONTROLLER_PLAYER);
+    NULL_CHECK_RETURN(m_PlayerControllerCom, E_FAIL);
+
+    m_Components[ID_DYNAMIC].insert(
+        { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
     // weaponequip
 
     m_WeaponEquipCom = CreateProtoComponent<CWeaponEquip>(this, COMPONENTTYPE::WEAPON_EQUIP);
@@ -239,217 +252,11 @@ void CPlayer::Animation_Setting()
     m_AnimatorCom->Create_Animation(L"PlayerRun_LUP", 19, 0.02f);
     m_AnimatorCom->Create_Animation(L"PlayerRun_LDOWN", 19, 0.02f);
 
-
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"PlayerIdle", ANIMSTATE::LOOP);
     // CState쪽에는 PlayerRun이라는 앞쪽 이름(상태)만 적어주면,
     // 자동으로 _LEFT 등 뒤쪽에 적어놓은 이름(방향)을 찾아준다
     m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
-}
-
-void CPlayer::Key_Input(const _float& timeDelta)
-{
-    auto inputMgr = CDInputMgr::GetInstance();
-
-    // ---------------------------------
-    // 1. 방향 입력 벡터 계산
-    // ---------------------------------
-    _vec3 look  = m_TransformCom->Get_Look();
-    _vec3 right = m_TransformCom->Get_Right();
-
-    look.y  = 0.f;
-    right.y = 0.f;
-
-    D3DXVec3Normalize(&look, &look);
-    D3DXVec3Normalize(&right, &right);
-
-    _vec3 moveDir = { 0.f, 0.f, 0.f };
-    int   axis_X{};
-    int   axis_Z{};
-
-    if (inputMgr->Get_DIKeyState(DIK_W) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
-    {
-        moveDir += look;
-        ++axis_Z;
-    }
-    if (inputMgr->Get_DIKeyState(DIK_S) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
-    {
-        moveDir -= look;
-        --axis_Z;
-    }
-    if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
-    {
-        moveDir -= right;
-        //! 애니메이션 자체 Transform이 없기에, Owner의 Transform(= 플레이어의 Transform) 을 반전시켜 애니메이션을 반전한다
-        // 따라서 이동 방향도 반대가 된다
-        ++axis_X;
-    }
-    if (inputMgr->Get_DIKeyState(DIK_A) & 0x80 ||
-        inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
-    {
-        moveDir -= right;
-        --axis_X;
-    }
-
-    // ---------------------------------
-    // 2. 상태 및 속도 결정
-    // ---------------------------------
-
-    //bool isMoving{};
-    //
-    //if (D3DXVec3LengthSq(&moveDir) > 0.f)
-    //    isMoving = true;
-    //else
-    //    isMoving = false;
-
-    // ↓ ↓ ↓
-
-    bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
-
-    ACTORSTATE nextState;
-    _float     curSpeed{};
-
-    if (isMoving)
-    {
-        nextState = ACTORSTATE::RUN;
-        curSpeed  = 10.f;
-
-        // TODO 석호: 예시 코드. 상태 추가시 이런 식으로 변경
-        //if (GetAsyncKeyState('Z') & 0x8000) 
-        //{
-        //    eNextState = ACTORSTATE::ATTACK;
-        //    fCurrentSpeed = 5.f; // 공격 중 이동 속도 감소
-        //}
-    }
-    else
-    {
-        //if (GetAsyncKeyState('Z') & 0x8000) 
-        //{
-        //    eNextState = ACTORSTATE::ATTACK;
-        //}
-
-        nextState = ACTORSTATE::IDLE;
-    }
-
-    // ---------------------------------
-    // 3. 실제 적용
-    // ---------------------------------
-
-    m_StateCom->Change_State(nextState);
-
-    if (isMoving)
-    {
-        D3DXVec3Normalize(&moveDir, &moveDir);
-        m_TransformCom->Move_Pos(moveDir, timeDelta, curSpeed);
-
-        // 공격 중에는 방향 전환을 막고 싶다면 여기에 조건을 걸면 됨
-        // if (eNextState != ACTORSTATE::ATTACK) 
-        {
-            ACTORDIR newDir = ACTORDIR::LEFT;
-
-            if (axis_Z > 0) // 위
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::R_UP;
-
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::L_UP;
-
-                else
-                    newDir = ACTORDIR::UP;
-            }
-            else if (axis_Z < 0) // 아래
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::R_DOWN;
-
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::L_DOWN;
-
-                else
-                    newDir = ACTORDIR::DOWN;
-            }
-            else // Z축 입력 없음 (좌/우 만 입력)
-            {
-                if (axis_X > 0)
-                    newDir = ACTORDIR::RIGHT;
-
-                else if (axis_X < 0)
-                    newDir = ACTORDIR::LEFT;
-            }
-
-            m_StateCom->Change_Dir(newDir);
-        }
-    }
-}
-
-void CPlayer::Render_ImGui()
-{
-    if (ImGui::Begin("Player Inspector"))
-    {
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            _vec3 pos = m_TransformCom->Get_Pos();
-
-            ImGui::Text("Position");
-
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosX", (float*)&pos.x);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosY", (float*)&pos.y);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosZ", (float*)&pos.z);
-
-            m_TransformCom->Set_Pos(pos);
-        }
-
-        // StateComponent
-        if (m_StateCom && ImGui::CollapsingHeader("State Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
-            ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
-        }
-
-        // CombatStatComponent
-        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("Hp : %.2f", m_CombatStatCom->Get_Hp());
-            ImGui::Text("Mp : %.2f", m_CombatStatCom->Get_Mp());
-            ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
-        }
-
-        if (m_CombatStatCom && ImGui::CollapsingHeader("Set Stat", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            const float hp = m_CombatStatCom->Get_Hp();
-
-            ImGui::Text("Set Hp :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##Player Hp", (float*)&hp);
-
-            m_CombatStatCom->Set_Hp(hp);
-
-            const float mp = m_CombatStatCom->Get_Mp();
-
-            ImGui::Text("Set Mp :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##Player Mp", (float*)&mp);
-
-            m_CombatStatCom->Set_Mp(mp);
-        }
-        
-
-    }
-
-    ImGui::End();
 }
 
 CPlayer* CPlayer::Create(DEVICE graphicDev)
@@ -458,7 +265,7 @@ CPlayer* CPlayer::Create(DEVICE graphicDev)
 
     if (FAILED(player->Ready_GameObject()))
     {
-        MSG_BOX("pPlayer Create Failed");
+        MSG_BOX("Player Create Failed");
         Safe_Release(player);
         return nullptr;
     }

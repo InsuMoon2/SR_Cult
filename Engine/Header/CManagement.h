@@ -43,7 +43,9 @@ public: // Persistent Object 관리 함수
     HRESULT Cache_PersistentObject(OBJTYPE objType, CGameObject* objectToCache);
 
 public:
+    CScene* Get_Scene() const { return m_Scene; }
     HRESULT Set_Scene(CScene* scene);   // 강제 씬 전환. 게임 시작시에만 사용중
+
     _int    Update_Scene(const _float& timeDelta);
     void    LateUpdate_Scene(const _float& timeDelta);
     void    Render_Scene(DEVICE graphicDev);

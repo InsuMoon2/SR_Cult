@@ -81,7 +81,6 @@ void CTestMonster::Render_GameObject()
     }
 
     m_BufferCom->Render_Buffer();
-    TempImGuiRender();
     Render_Reset();
 
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함
@@ -166,43 +165,6 @@ void CTestMonster::Animation_Setting()
 
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"BossIdle", ANIMSTATE::LOOP);
-}
-
-void CTestMonster::TempImGuiRender()
-{
-    if (ImGui::Begin("Monster Inspector"))
-    {
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            _vec3 pos = m_TransformCom->Get_Pos();
-
-            ImGui::Text("Position");
-
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##MonsterPosX", (float*)&pos.x);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##MonsterPosY", (float*)&pos.y);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##MonsterPosZ", (float*)&pos.z);
-
-            m_TransformCom->Set_Pos(pos);
-        }
-
-        // StateComponent
-        if (m_StateCom && ImGui::CollapsingHeader("State Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
-            ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
-        }
-    }
-
-    ImGui::End();
 }
 
 CTestMonster* CTestMonster::Create(DEVICE graphicDev)

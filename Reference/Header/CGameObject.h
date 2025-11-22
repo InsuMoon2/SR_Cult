@@ -20,19 +20,39 @@ protected:
 public:
     CComponent* Get_Component(COMPONENTID componentID, COMPONENTTYPE componentType);
 
+    _bool Get_IsActive() { return m_Active; }
+    void  Set_IsActive(_bool setActive) { m_Active = setActive; }
+
 public:
     virtual HRESULT Ready_GameObject();
     virtual _int    Update_GameObject(const _float& timeDelta);
     virtual void    LateUpdate_GameObject(const _float& timeDelta);
     virtual void    Render_GameObject() PURE;
 
+public:
     virtual void OnBeginOverlap(CCollider* self, CCollider* other) {}
     virtual void OnEndOverlap(CCollider* self, CCollider* other) {}
+
+    const map<COMPONENTTYPE, CComponent*>&
+        Get_DynamicComponents() const { return m_Components[ID_DYNAMIC]; }
+
+    const map<COMPONENTTYPE, CComponent*>&
+        Get_StaticComponents() const { return m_Components[ID_STATIC]; }
+
+    virtual wstring Get_Name() { return m_Name; }
+    void Set_Name(wstring name) { m_Name = name; }
+
+    // Editor
+    virtual void Render_Editor() { }
 
 protected:
     map<COMPONENTTYPE, CComponent*> m_Components[ID_END];
 
     DEVICE m_GraphicDev;
+
+    // TODO 기본 생성자에서 이름 세팅해주도록 구조 변경하기 -> Editor와 연동을 위해
+    wstring m_Name = L"Default_GameObject";
+    _bool m_Active;       // 오브젝트의 업데이트와 렌더를 하면 true, 안할거면 false로 바꾸면 되는 스위치
 
 private:
     CComponent* Find_Component(COMPONENTID componentID, COMPONENTTYPE componentType);

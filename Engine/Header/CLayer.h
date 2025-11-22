@@ -25,8 +25,15 @@ public:
     _int    Update_Layer(const _float& timeDelta);
     void    LateUpdate_Layer(const _float& timeDelta);
 
+    const map<OBJTYPE, vector<CGameObject*>>& const Get_Objects() { return m_Objects; }
+
+private:
+    void Object_NameSetting(OBJTYPE objType, CGameObject* gameObject);
+
 private:
     map<OBJTYPE, vector<CGameObject*>> m_Objects;
+
+    unordered_map<OBJTYPE, _uint> m_NameCounter;
 
 public:
     static CLayer* Create();

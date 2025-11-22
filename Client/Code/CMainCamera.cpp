@@ -62,7 +62,13 @@ void CMainCamera::Render_GameObject()
 {
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    Render_ImGui();
+}
+
+void CMainCamera::Render_Editor()
+{
+    CGameObject::Render_Editor();
+
+    ImGui::Text("=== Main Camera === ");
 }
 
 HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
@@ -71,24 +77,13 @@ HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
     if (m_TargetTransformCom == targetTransform)
         return S_OK;
 
-    // 기존 타겟이 있다면 해제 (RefCnt 감소)
-    Safe_Release(m_TargetTransformCom);
-
     // 새 타겟 설정
     m_TargetTransformCom = targetTransform;
 
     if (nullptr == m_TargetTransformCom)
-    {
         m_CameraCom->Set_CamMode(CCameraCom::CAM_FREE);
-    }
     else
-    {
-        // 새 타겟 참조 (RefCnt 증가)
-        // 다른 오브젝트의 컴포넌트를 가져와서 오랫동안 참조해야 한다면
-        // AddRef()를 통해 수명을 연장시켜야 안전합니다.
-        m_TargetTransformCom->AddRef();
         m_CameraCom->Set_CamMode(CCameraCom::CAM_TARGET);
-    }
 
     return S_OK;
 }
@@ -197,49 +192,11 @@ void CMainCamera::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
     }
-
 }
 
 void CMainCamera::Chase_CamTarget(const _float& timeDelta)
 {
     m_TransformCom->Set_Pos(m_TargetTransformCom->Get_Pos());
-}
-
-void CMainCamera::Render_ImGui()
-{
-    if (m_CameraCom == nullptr)
-        return;
-
-    if (ImGui::Begin("MainCam Inspector"))
-    {
-        ImGui::Text(u8"카메라 Free 모드 조작 :");
-        ImGui::TextWrapped(u8"I 앞 | K 뒤 | J 좌 | L 우 | P 상 | ; 하 | LShift+I 회전 상 | LShift+K 회전 하 | LShift+J 회전 좌 | LShift+L 회전 우");
-
-        // ------------------------
-        // CAM_MODE 편집
-        // ------------------------
-        const char* camModeItems[] = { "Free", "Target" };
-        int         camMode        = static_cast<int>(m_CameraCom->Get_CamMode());
-        if (ImGui::Combo("Camera Mode", &camMode, camModeItems, IM_ARRAYSIZE(camModeItems)))
-            m_CameraCom->Set_CamMode(static_cast<CCameraCom::CAM_MODE>(camMode));
-
-        // ------------------------
-        // VIEW_TYPE 편집
-        // ------------------------
-        const char* viewTypeItems[] = { "FPS", "TPS", "Quarter" };
-        int         viewType        = static_cast<int>(m_CameraCom->Get_ViewType());
-        if (ImGui::Combo("View Type", &viewType, viewTypeItems, IM_ARRAYSIZE(viewTypeItems)))
-            m_CameraCom->Set_ViewType(static_cast<CCameraCom::VIEW_TYPE>(viewType));
-
-        // ------------------------
-        // PROJ_TYPE 편집
-        // ------------------------
-        const char* projTypeItems[] = { "Perspective", "Orthographic" };
-        int         projType        = static_cast<int>(m_CameraCom->Get_ProjType());
-        if (ImGui::Combo("Projection Type", &projType, projTypeItems, IM_ARRAYSIZE(projTypeItems)))
-            m_CameraCom->Set_ProjType(static_cast<CCameraCom::PROJ_TYPE>(projType));
-    }
-    ImGui::End();
 }
 
 CMainCamera* CMainCamera::Create(DEVICE graphicDev)
@@ -258,8 +215,5 @@ CMainCamera* CMainCamera::Create(DEVICE graphicDev)
 
 void CMainCamera::Free()
 {
-    // 가지고 있던 타겟의 참조를 해제해야 메모리 누수가 발생하지 않습니다.
-    Safe_Release(m_TargetTransformCom);
-
     CGameObject::Free();
 }

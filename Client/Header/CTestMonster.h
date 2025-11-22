@@ -45,8 +45,6 @@ private:
     Engine::CBoxCollider*   m_BoxColCom;
     Engine::CState*         m_StateCom;
 
-    void TempImGuiRender();
-
 public:
     static CTestMonster* Create(DEVICE graphicDev);
 

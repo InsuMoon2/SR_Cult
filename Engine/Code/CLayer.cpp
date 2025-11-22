@@ -1,6 +1,8 @@
 ﻿#include "CLayer.h"
 
 #include "CGameObject.h"
+#include "CEnumhelper.h"
+#include "CUI.h"
 
 CLayer::CLayer()
 { }
@@ -28,6 +30,8 @@ HRESULT CLayer::Add_GameObject(OBJTYPE objType, CGameObject* gameObject)
 {
     if (nullptr == gameObject)
         return E_FAIL;
+
+    Object_NameSetting(objType, gameObject);
 
     m_Objects[objType].push_back(gameObject);
 
@@ -66,6 +70,35 @@ void CLayer::LateUpdate_Layer(const _float& timeDelta)
             obj->LateUpdate_GameObject(timeDelta);
         }
     }
+}
+
+void CLayer::Object_NameSetting(OBJTYPE objType, CGameObject* gameObject)
+{
+    // 타입별로 번호 세팅
+    // Ex) Monster, Monster2, Monster3..
+
+    if (!gameObject)
+        return;
+
+    // UI용 예외처리. UI는 생성자에서 직접 세팅을 해줘야함
+    // PlayerPanel 생성자 참고하기
+    if (gameObject->Get_Name() != L"Default_GameObject")
+        return;
+
+    const char* baseName = ::ToString(objType);
+    wstring wBaseName = CharToWString(baseName);
+
+    _uint index = ++m_NameCounter[objType];
+
+    wstring finalName = L"";
+
+    if (index == 1)
+        finalName = wBaseName;
+
+    else
+        finalName = wBaseName + L"_" + to_wstring(index);
+
+    gameObject->Set_Name(finalName);
 }
 
 CLayer* CLayer::Create()

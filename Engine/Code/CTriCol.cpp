@@ -1,15 +1,21 @@
 ﻿#include "CTriCol.h"
 
 CTriCol::CTriCol()
-{ }
+{
+    m_ComponentName = L"TriCol";
+}
 
 CTriCol::CTriCol(DEVICE graphicDev)
     : CVIBuffer(graphicDev)
-{ }
+{
+    m_ComponentName = L"TriCol";
+}
 
 CTriCol::CTriCol(const CTriCol& rhs)
     : CVIBuffer(rhs)
-{ }
+{
+    m_ComponentName = L"TriCol";
+}
 
 CTriCol::~CTriCol()
 { }

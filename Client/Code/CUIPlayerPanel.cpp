@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "CUIPlayerPanel.h"
-
+#include "CEnumHelper.h"
 #include "CCombatStat.h"
 #include "CPlayer.h"
 #include "CRenderer.h"
@@ -11,12 +11,16 @@
 CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev),
     m_CombatStatCom(nullptr)
-{}
+{
+    this->Set_Name(L"PlayerPanel");
+}
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
     : CUIPanel(rhs),
     m_CombatStatCom(nullptr)
-{}
+{
+    this->Set_Name(L"PlayerPanel");
+}
 
 CUIPlayerPanel::~CUIPlayerPanel()
 {}
@@ -142,6 +146,13 @@ void CUIPlayerPanel::Render_GameObject()
         }
     }
     ImGui::End();
+}
+
+void CUIPlayerPanel::Render_Editor()
+{
+    CUIPanel::Render_Editor();
+
+    ImGui::Text("Player Panel ~");
 }
 
 CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)

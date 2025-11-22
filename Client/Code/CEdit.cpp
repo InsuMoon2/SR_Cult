@@ -168,14 +168,6 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::TERRAIN, gameObject),
         L"CEdit::Ready_GameLogic_Layer() failed: CLayer::Add_GameObject(Tile) failed");
 
-    //FAILED_CHECK_MSG(
-    //    Engine::AcquirePersistentObject<CMainCamera>(
-    //        OBJTYPE::CAMERA,
-    //        m_GraphicDev,
-    //        layer,
-    //        &gameObject),
-    //    L"Persistent object setup failed");
-
     m_Layers.insert({ layerType, layer });
 
     return S_OK;

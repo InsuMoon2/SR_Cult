@@ -1,6 +1,6 @@
 ﻿#include "pch.h"
 #include "CUIHeartBar.h"
-
+#include "CEnumHelper.h"
 #include "CCombatStat.h"
 #include "CCreateHelper.h"
 #include "CPlayer.h"
@@ -12,9 +12,9 @@ int CUIHeartBar::m_nextID = 0;
 
 CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
     : CUI(graphicDev),
-      m_BufferCom(nullptr),
-      m_TextureCom(nullptr),
-      m_TransformCom(nullptr)
+    m_BufferCom(nullptr),
+    m_TextureCom(nullptr),
+    m_TransformCom(nullptr)
 {
 
     m_ID = ++m_nextID;
@@ -23,9 +23,9 @@ CUIHeartBar::CUIHeartBar(DEVICE graphicDev)
 
 CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
     : CUI(rhs),
-      m_BufferCom(nullptr),
-      m_TextureCom(nullptr),
-      m_TransformCom(nullptr)
+    m_BufferCom(nullptr),
+    m_TextureCom(nullptr),
+    m_TransformCom(nullptr)
 {
 
     m_ID = ++m_nextID;
@@ -33,15 +33,16 @@ CUIHeartBar::CUIHeartBar(const CUIHeartBar& rhs)
 }
 
 CUIHeartBar::~CUIHeartBar()
-{}
+{
+}
 
 HRESULT CUIHeartBar::Ready_GameObject()
 {
     if (FAILED(Add_Component()))
-    return E_FAIL;
+        return E_FAIL;
 
 
-    switch(m_ID)
+    switch (m_ID)
     {
     case 1:
         m_TransformCom->Set_Pos(_vec3(-450.f, 280.f, 0.f));
@@ -55,9 +56,9 @@ HRESULT CUIHeartBar::Ready_GameObject()
 
     }
 
-m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));
+    m_TransformCom->Set_Scale(_vec3(16.f, 16.f, 1.f));
 
-return S_OK;
+    return S_OK;
 }
 
 _int CUIHeartBar::Update_GameObject(const _float& timeDelta)
@@ -77,23 +78,26 @@ void CUIHeartBar::Render_GameObject()
     // 월드 행렬 세팅
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
 
-    switch(m_HeartState)
+    switch (m_HeartState)
     {
-    case HEARTSTATE::EMPTY:   m_TextureCom->Set_Texture(0);
+    case HEARTSTATE::EMPTY:
+        m_TextureCom->Set_Texture(0);
         break;
 
-    case HEARTSTATE::HALF:    m_TextureCom->Set_Texture(1);
+    case HEARTSTATE::HALF:
+        m_TextureCom->Set_Texture(1);
         break;
 
-    case HEARTSTATE::FULL:    m_TextureCom->Set_Texture(2);
+    case HEARTSTATE::FULL:
+        m_TextureCom->Set_Texture(2);
         break;
     }
 
-  
+
     m_BufferCom->Render_Buffer();
 
 
-   
+
 }
 
 HRESULT CUIHeartBar::Add_Component()

@@ -97,7 +97,6 @@ void CHumanMonster::Render_GameObject()
 
     m_BufferCom->Render_Buffer();
 
-    TempImGuiRender();
     Render_Reset();
     m_BoxColCom->Render();
 }
@@ -130,48 +129,6 @@ void CHumanMonster::Animation_Setting()
     // State -> Animation 연동
     m_StateCom->Set_AnimInfo(ACTORSTATE::IDLE, L"HumanMonsterIdle", ANIMSTATE::LOOP);
     m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"HumanMonsterRun", ANIMSTATE::LOOP);
-}
-
-void CHumanMonster::TempImGuiRender()
-{
-    if (ImGui::Begin("HumanMonster Inspector"))
-    {
-        const _vec3& pos = m_TransformCom->Get_Pos();
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterPosX", (float*)&pos.x, -1.f, 1.f);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterPosY", (float*)&pos.y, -1.f, 1.f);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterPosZ", (float*)&pos.z, -1.f, 1.f);
-
-            m_TransformCom->Set_Pos(pos);
-
-            const _vec3& scale = m_TransformCom->Get_Scale();
-
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterScaleX", (float*)&scale.x, -1.f, 1.f);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterScaleY", (float*)&scale.y, -1.f, 1.f);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SliderFloat("##MonsterScaleZ", (float*)&scale.z, -1.f, 1.f);
-
-            m_TransformCom->Set_Scale(scale);
-        }
-    }
-
-    ImGui::End();
 }
 
 void CHumanMonster::OnBeginOverlap(CCollider* self, CCollider* other)

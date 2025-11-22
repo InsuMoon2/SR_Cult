@@ -9,11 +9,13 @@
 #include "CCombatStat.h"
 #include "CInventory.h"
 #include "CItemDB.h"
+#include "CPlayerController.h"
 #include "CProtoMgr.h"
 #include "CRcCol.h"
 #include "CRectCollider.h"
 #include "CState.h"
 #include "CTerrain.h"
+#include "CTerrainRenderer.h"
 #include "CTerrainTex.h"
 #include "CTexture.h"
 #include "CTransform.h"
@@ -278,6 +280,16 @@ _uint CLoading::Loading_ForState()
     // Inventory
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // TerrainRenderer
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TERRAIN_RENDER, CTerrainRenderer::Create(m_GraphicDev))))
+        return E_FAIL;
+
+    // Player Controller
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::CONTROLLER_PLAYER, CPlayerController::Create(m_GraphicDev))))
         return E_FAIL;
 
     // weapon equip

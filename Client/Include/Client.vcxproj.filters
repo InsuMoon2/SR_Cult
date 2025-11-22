@@ -16,56 +16,8 @@
     <Filter Include="00. MainApp">
       <UniqueIdentifier>{1d15c077-e92b-4745-a1bb-28c686c8bf97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene">
-      <UniqueIdentifier>{3f93eee2-8a00-49f0-b535-bb50e2584051}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo">
-      <UniqueIdentifier>{a66a8110-ef7c-4e32-a8ca-7b6a1c7b60d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\01. Stage">
-      <UniqueIdentifier>{982909c2-5b2d-4da7-b63f-cebeb47f8fd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject">
-      <UniqueIdentifier>{610f594c-7bf8-47b8-a70b-40e3d1e32fa3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player">
-      <UniqueIdentifier>{c6da518a-d00a-4925-a45b-15b8ebecceb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster">
-      <UniqueIdentifier>{6f01c3c0-bd94-4864-a1cb-3dc64219e5ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Item">
       <UniqueIdentifier>{32cd9222-0684-4801-b832-d8f9219a290b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\03. Item">
-      <UniqueIdentifier>{07fe71d1-18f6-439f-9326-1c275bbac5fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Camera">
-      <UniqueIdentifier>{88744360-a492-4ab2-91a8-d0d1222dea90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\00. Camera\00. Main Camera">
-      <UniqueIdentifier>{398fce45-a108-419d-a30d-e54b730f2c37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\00. Logo\Loading">
-      <UniqueIdentifier>{9a642b08-e705-4aea-b661-ffd283950929}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\03. BackGround">
-      <UniqueIdentifier>{3bd3b899-a893-4ae5-b3f5-5248eddfadd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\04. Boss">
-      <UniqueIdentifier>{979b02f0-f254-474f-a682-57df5e0a4ac4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\04. Boss\01. Boss1">
-      <UniqueIdentifier>{194c3abf-b1d9-4b89-81c1-dac24568f8b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\04. Boss\02. Boss2">
-      <UniqueIdentifier>{57866705-26b9-4ce7-9286-c9966a40a2a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. Scene\02. Editor">
-      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\09. MapObject">
-      <UniqueIdentifier>{60f280a0-81b0-4b2f-8395-7dee795b2c80}</UniqueIdentifier>
     </Filter>
     <Filter Include="05. UI">
       <UniqueIdentifier>{2c329504-b509-4cd3-9c28-9acdb3fad354}</UniqueIdentifier>
@@ -91,6 +43,24 @@
     <Filter Include="05. UI\01. UI\03. UIWeapon">
       <UniqueIdentifier>{aebde5dc-3c0e-447e-85ea-05deb7023a1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99. ImGui_Editor">
+      <UniqueIdentifier>{ae297ee4-6c1d-49d1-9257-6fa1219b5fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\00. MainEditor">
+      <UniqueIdentifier>{71c23e36-4c26-44b1-a9af-31a21ded4f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\01. EditorScript">
+      <UniqueIdentifier>{ed2d34f5-a5bc-478c-8152-8ce28467148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\02. EditorMap">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Utility">
+      <UniqueIdentifier>{6c679534-91b2-4e50-a8e7-3c3c107db823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Component">
+      <UniqueIdentifier>{9095604f-165d-433a-a8a8-f4b8f34e6c89}</UniqueIdentifier>
+    </Filter>
     <Filter Include="05. UI\01. UI\04. UI">
       <UniqueIdentifier>{f5ba0def-b59a-4d45-9d5e-3212b4671db6}</UniqueIdentifier>
     </Filter>
@@ -100,8 +70,59 @@
     <Filter Include="05. WeaponEquip">
       <UniqueIdentifier>{5101c023-1c97-43e5-9bc5-7e7e08c1f0d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Scene\03.MainMenu">
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{3f93eee2-8a00-49f0-b535-bb50e2584051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. Logo">
+      <UniqueIdentifier>{a66a8110-ef7c-4e32-a8ca-7b6a1c7b60d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. Logo\Loading">
+      <UniqueIdentifier>{9a642b08-e705-4aea-b661-ffd283950929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\01. Stage">
+      <UniqueIdentifier>{982909c2-5b2d-4da7-b63f-cebeb47f8fd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\02. Editor">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\03.MainMenu">
       <UniqueIdentifier>{d480312a-efaf-4078-93cf-c7487930aaa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject">
+      <UniqueIdentifier>{610f594c-7bf8-47b8-a70b-40e3d1e32fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\01. Player">
+      <UniqueIdentifier>{c6da518a-d00a-4925-a45b-15b8ebecceb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\02. Monster">
+      <UniqueIdentifier>{6f01c3c0-bd94-4864-a1cb-3dc64219e5ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\03. Item">
+      <UniqueIdentifier>{07fe71d1-18f6-439f-9326-1c275bbac5fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\00. Camera">
+      <UniqueIdentifier>{88744360-a492-4ab2-91a8-d0d1222dea90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\00. Camera\00. Main Camera">
+      <UniqueIdentifier>{398fce45-a108-419d-a30d-e54b730f2c37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\03. BackGround">
+      <UniqueIdentifier>{3bd3b899-a893-4ae5-b3f5-5248eddfadd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\04. Boss">
+      <UniqueIdentifier>{979b02f0-f254-474f-a682-57df5e0a4ac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\04. Boss\01. Boss1">
+      <UniqueIdentifier>{194c3abf-b1d9-4b89-81c1-dac24568f8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\04. Boss\02. Boss2">
+      <UniqueIdentifier>{57866705-26b9-4ce7-9286-c9966a40a2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObject\09. MapObject">
+      <UniqueIdentifier>{60f280a0-81b0-4b2f-8395-7dee795b2c80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Manager">
+      <UniqueIdentifier>{58c808c6-fb36-4533-b7c9-5fe4324476c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,25 +145,25 @@
       <Filter>00. MainApp</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CLogo.h">
-      <Filter>01. Scene\00. Logo</Filter>
+      <Filter>02. Scene\00. Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CPlayer.h">
-      <Filter>02. GameObject\01. Player</Filter>
+      <Filter>03. GameObject\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMonster.h">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CStage.h">
-      <Filter>01. Scene\01. Stage</Filter>
+      <Filter>02. Scene\01. Stage</Filter>
     </ClInclude>
     <ClInclude Include="..\header\CMainCamera.h">
-      <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
+      <Filter>03. GameObject\00. Camera\00. Main Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\header\CLoading.h">
-      <Filter>01. Scene\00. Logo\Loading</Filter>
+      <Filter>02. Scene\00. Logo\Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMainBG.h">
-      <Filter>02. GameObject\03. BackGround</Filter>
+      <Filter>03. GameObject\03. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUIPlayerPanel.h">
       <Filter>05. UI\00. Panel\00. UIPlayerPanel</Filter>
@@ -163,22 +184,22 @@
       <Filter>03. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDroppedItem.h">
-      <Filter>02. GameObject\03. Item</Filter>
+      <Filter>03. GameObject\03. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CDropSystem.h">
       <Filter>03. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEdit.h">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTerrain.h">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestMonster.h">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CHumanMonster.h">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMapObjectBase.h">
       <Filter>헤더 파일</Filter>
@@ -192,23 +213,38 @@
     <ClInclude Include="..\Header\CUICircle.h">
       <Filter>05. UI\01. UI\01. UICircle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMapObjectBase.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapObject_Grass.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CUIWeapon.h">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CWeaponEquip.h">
       <Filter>05. WeaponEquip</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CSceneMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMenuChar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CMainMenu.h">
-      <Filter>01. Scene\03.MainMenu</Filter>
+      <Filter>02. Scene\03.MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CUIIcon.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CSceneMgr.h">
+      <Filter>01. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTerrainRenderer.h">
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainEditorMgr.h">
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CComInspectors.h">
+      <Filter>99. ImGui_Editor\01. EditorScript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -222,25 +258,25 @@
       <Filter>00. MainApp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CLogo.cpp">
-      <Filter>01. Scene\00. Logo</Filter>
+      <Filter>02. Scene\00. Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayer.cpp">
-      <Filter>02. GameObject\01. Player</Filter>
+      <Filter>03. GameObject\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMonster.cpp">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CStage.cpp">
-      <Filter>01. Scene\01. Stage</Filter>
+      <Filter>02. Scene\01. Stage</Filter>
     </ClCompile>
     <ClCompile Include="..\code\CMainCamera.cpp">
-      <Filter>02. GameObject\00. Camera\00. Main Camera</Filter>
+      <Filter>03. GameObject\00. Camera\00. Main Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\code\CLoading.cpp">
-      <Filter>01. Scene\00. Logo\Loading</Filter>
+      <Filter>02. Scene\00. Logo\Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMainBG.cpp">
-      <Filter>02. GameObject\03. BackGround</Filter>
+      <Filter>03. GameObject\03. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp">
       <Filter>05. UI\00. Panel\00. UIPlayerPanel</Filter>
@@ -255,22 +291,22 @@
       <Filter>04. Inventory</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDroppedItem.cpp">
-      <Filter>02. GameObject\03. Item</Filter>
+      <Filter>03. GameObject\03. Item</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CDropSystem.cpp">
       <Filter>03. Item</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEdit.cpp">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain.cpp">
-      <Filter>01. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestMonster.cpp">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CHumanMonster.cpp">
-      <Filter>02. GameObject\02. Monster</Filter>
+      <Filter>03. GameObject\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObject_Grass.cpp">
       <Filter>소스 파일</Filter>
@@ -281,26 +317,38 @@
     <ClCompile Include="..\Code\CUICircle.cpp">
       <Filter>05. UI\01. UI\01. UICircle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CUIWeapon.cpp">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CWeaponEquip.cpp">
       <Filter>05. WeaponEquip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CSceneMgr.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMenuChar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMainMenu.cpp">
-      <Filter>01. Scene\03.MainMenu</Filter>
+      <Filter>02. Scene\03.MainMenu</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CUIIcon.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSceneMgr.cpp">
+      <Filter>01. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTerrainRenderer.cpp">
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainEditorMgr.cpp">
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
