@@ -247,7 +247,6 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     FAILED_CHECK_MSG(
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIMp) failed");
-    //? 석호: OBJTYPE::UI로 통일해서 오브젝트 이름이 겹칠텐데, 그게 정상인가?
 
     CUIMp* uiMp = dynamic_cast<CUIMp*>(gameObject);
     uiMp->Set_PlayerCombatStat(m_PlayerCombatStatCom);
@@ -267,9 +266,6 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIWeapon) failed");
 
     m_Layers.insert({ layerType, layer });
-
-    //! 일반적으로는 Free() 에서 지우지만, 우리는 사용 후 바로 버리고 싶으므로 여기서 지우도록 하겠다
-    Safe_Release(m_PlayerCombatStatCom);
 
     return S_OK;
 }

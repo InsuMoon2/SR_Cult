@@ -213,12 +213,12 @@ HRESULT CPlayer::Add_Component()
     m_Inventory->SetInvenSlotNum(12);
 
     // Player Controller
-    //m_PlayerControllerCom =
-    //    CreateProtoComponent<CPlayerController>(this, COMPONENTTYPE::CONTROLLER_PLAYER);
-    //NULL_CHECK_RETURN(m_PlayerControllerCom, E_FAIL);
-    //
-    //m_Components[ID_DYNAMIC].insert(
-    //    { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
+    m_PlayerControllerCom =
+        CreateProtoComponent<CPlayerController>(this, COMPONENTTYPE::CONTROLLER_PLAYER);
+    NULL_CHECK_RETURN(m_PlayerControllerCom, E_FAIL);
+    
+    m_Components[ID_DYNAMIC].insert(
+        { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
 
     return S_OK;
 }
