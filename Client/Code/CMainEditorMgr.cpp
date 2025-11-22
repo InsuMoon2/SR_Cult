@@ -147,7 +147,7 @@ void CMainEditorMgr::Render_Inspector()
     ImGui::Separator();
     ImGui::Text("[ Components ]");
 
-    // Component 전체 맵 순회
+    // Dynamic Component 전체 맵 순회 -> 지금은 Dynamic 컴포넌트만 보여주기
     const auto& dynamicComponents = obj->Get_DynamicComponents();
 
     for (const auto& typePair : dynamicComponents)
@@ -227,9 +227,6 @@ void CMainEditorMgr::Render_Inspector()
 
         }
 
-        // TODO 인수 : Static Component들도 보이게 세팅해야할지?
-        // Update 하지 않을 컴포넌트들이라 실시간으로 툴에서 값 변경이 필요한가?
-        //const auto& staticComponents = obj->Get_StaticComponents();
 
     }
 }

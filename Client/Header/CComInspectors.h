@@ -304,7 +304,7 @@ static void BoxColl_Inspector(CBoxCollider* collider)
     {
         _vec3 scale = collider->Get_Size();
 
-        if (ImGui::DragFloat3("##PositionDrag", &scale.x, 0.1f))
+        if (ImGui::DragFloat3("##PositionDrag", &scale.x, 0.01f))
             collider->Set_Size(scale);
     }
     ImGui::PopID();

@@ -2,6 +2,7 @@
 
 #include "CGameObject.h"
 #include "CEnumhelper.h"
+#include "CUI.h"
 
 CLayer::CLayer()
 { }
@@ -79,9 +80,10 @@ void CLayer::Object_NameSetting(OBJTYPE objType, CGameObject* gameObject)
     if (!gameObject)
         return;
 
-    // UI는 번호로 이름 세팅하는거 스킵, 타입으로 세팅
-    //if (objType == OBJTYPE::UI)
-    //    return;
+    // UI용 예외처리. UI는 생성자에서 직접 세팅을 해줘야함
+    // PlayerPanel 생성자 참고하기
+    if (gameObject->Get_Name() != L"Default_GameObject")
+        return;
 
     const char* baseName = ::ToString(objType);
     wstring wBaseName = CharToWString(baseName);

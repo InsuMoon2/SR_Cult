@@ -12,14 +12,14 @@ CUIPlayerPanel::CUIPlayerPanel(DEVICE graphicDev)
     : CUIPanel(graphicDev),
     m_CombatStatCom(nullptr)
 {
-    
+    this->Set_Name(L"PlayerPanel");
 }
 
 CUIPlayerPanel::CUIPlayerPanel(const CUIPlayerPanel& rhs)
     : CUIPanel(rhs),
     m_CombatStatCom(nullptr)
 {
-    
+    this->Set_Name(L"PlayerPanel");
 }
 
 CUIPlayerPanel::~CUIPlayerPanel()
