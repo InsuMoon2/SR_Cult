@@ -118,8 +118,8 @@ HRESULT CManagement::Request_ChangeScene(CScene* nextScene)
 
     if (m_NextScene != nullptr)
         Safe_Release(m_NextScene);
-
     m_NextScene         = nextScene;
+ 
     m_ShouldChangeScene = true;
 
     return S_OK;
@@ -140,4 +140,5 @@ void CManagement::Free()
     Safe_Release(m_Scene);
     Safe_Release(m_PersistentPlayer);
     Safe_Release(m_PersistentCamera);
+    Safe_Release(m_NextScene);
 }

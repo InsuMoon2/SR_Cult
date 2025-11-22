@@ -94,6 +94,9 @@
     <Filter Include="03. UI\01. UI\03. UIWeapon">
       <UniqueIdentifier>{aebde5dc-3c0e-447e-85ea-05deb7023a1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Scene\03.MainMenu">
+      <UniqueIdentifier>{d480312a-efaf-4078-93cf-c7487930aaa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -186,6 +189,18 @@
     <ClInclude Include="..\Header\CUIWeapon.h">
       <Filter>03. UI\01. UI\03. UIWeapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CSceneMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMenuChar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainMenu.h">
+      <Filter>01. Scene\03.MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIIcon.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -261,6 +276,18 @@
       <Filter>03. UI\01. UI\03. UIWeapon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CSceneMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMenuChar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainMenu.cpp">
+      <Filter>01. Scene\03.MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIIcon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

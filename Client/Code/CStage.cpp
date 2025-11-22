@@ -69,26 +69,6 @@ void CStage::Render_Scene()
     // debug 용
 }
 
-//void CStage::AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType)
-//{
-//    Engine::CLayer* layer = nullptr;
-//
-//    auto it = m_Layers.find(layerType);
-//    if (it != m_Layers.end())
-//    {
-//        layer = it->second;
-//    }
-//
-//    if(layer == nullptr)
-//      MSG_BOX("layerType wrong");
-//
-//    if (FAILED(layer->Add_GameObject(objType, obj)))
-//    {
-//        MSG_BOX("Add_GameObject failed");
-//        return;
-//    }
-//
-//}
 
 HRESULT CStage::Ready_Environment_Layer(LAYERTYPE layerType)
 {

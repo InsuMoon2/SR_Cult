@@ -13,6 +13,7 @@
 #include "CRcTex.h"
 #include "CStage.h"
 #include "CTexture.h"
+#include "CMainMenu.h"
 
 CLogo::CLogo(DEVICE graphicDev)
     : Engine::CScene(graphicDev),
@@ -46,20 +47,26 @@ _int CLogo::Update_Scene(const _float& timeDelta)
     _int exit = Engine::CScene::Update_Scene(timeDelta);
 
     // 로딩 작업 완료시 다음 스테이지 진행 가능
-    if (true == m_Loading->Get_Finish())
+    //if (true == m_Loading->Get_Finish())
+    //{
+    //    // Stage
+    //    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1) & 0x80)
+    //    {
+    //        CScene* pStage = CStage::Create(m_GraphicDev);
+    //        CManagement::GetInstance()->Request_ChangeScene(pStage);
+    //    }
+    //    // Editor
+    //    else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_2) & 0x80)
+    //    {
+    //        CScene* pEdit = CEdit::Create(m_GraphicDev);
+    //        CManagement::GetInstance()->Request_ChangeScene(pEdit);
+    //    }
+    //}
+     if (true == m_Loading->Get_Finish())
+    //if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1) & 0x80)
     {
-        // Stage
-        if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_1) & 0x80)
-        {
-            CScene* pStage = CStage::Create(m_GraphicDev);
-            CManagement::GetInstance()->Request_ChangeScene(pStage);
-        }
-        // Editor
-        else if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_2) & 0x80)
-        {
-            CScene* pEdit = CEdit::Create(m_GraphicDev);
-            CManagement::GetInstance()->Request_ChangeScene(pEdit);
-        }
+        CScene* menu = CMainMenu::Create(m_GraphicDev);
+        CManagement::GetInstance()->Request_ChangeScene(menu);
     }
 
     return exit;
