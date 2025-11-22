@@ -60,7 +60,7 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_Hp(6.f);
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
-    m_CombatStatCom->Set_Mp(5.f);
+    m_CombatStatCom->Set_Mp(100.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
