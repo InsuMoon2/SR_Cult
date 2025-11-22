@@ -4,10 +4,9 @@
 #include "Engine_Define.h"
 #include "ItemInstance.h"
 
-namespace Engine
-{
-    class CScene;
-}
+BEGIN(Engine)
+class CScene;
+END
 
 struct InventorySlot
 {

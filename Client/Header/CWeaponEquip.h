@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CComponent.h"
-#include "ItemInstance.h"
 #include "CInventory.h"
+#include "ItemInstance.h"
 
 struct Item;
 
@@ -13,18 +13,18 @@ private:
     ~CWeaponEquip() override;
 
 public:
-    void            Equip_Weapon(ItemInstance itemInst);
-    void            Unequip_Weapon();
-    void            ApplyWeaponStat(Item* item);
-    void             RemoveWeaponStat();
+    void Equip_Weapon(ItemInstance itemInst);
+    void Unequip_Weapon();
+    void ApplyWeaponStat(Item* item);
+    void RemoveWeaponStat();
     //int             Get_CurrentWeaponID() { return m_iCurrentWeaponID; }
 
     static CWeaponEquip* Create(DEVICE graphicDev);
-    CComponent* Clone() override;
+    CComponent*          Clone() override;
 
 protected:
     void Free() override;
 public:
-    int             m_iCurrentWeaponID;
-    InventorySlot    m_iCurrentWeaponSlot;
+    int           m_iCurrentWeaponID;
+    InventorySlot m_iCurrentWeaponSlot;
 };

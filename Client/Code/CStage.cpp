@@ -3,9 +3,12 @@
 
 #include "CCombatStat.h"
 #include "CDropSystem.h"
+#include "CEditContext.h"
 #include "CHumanMonster.h"
+#include "CItemDB.h"
 #include "CLayer.h"
 #include "CMainCamera.h"
+#include "CMainEditorMgr.h"
 #include "CPersistentObjectHelper.h"
 #include "CPlayer.h"
 #include "CTestMonster.h"
@@ -13,10 +16,8 @@
 #include "CUICircle.h"
 #include "CUIMp.h"
 #include "CUIPlayerPanel.h"
-#include "CEditContext.h"
-#include "CMainEditorMgr.h"
 #include "CUIWeapon.h"
-#include "CItemDB.h"
+#include "ItemInstance.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),

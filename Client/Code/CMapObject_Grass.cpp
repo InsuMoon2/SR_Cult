@@ -5,17 +5,14 @@
 
 CMapObject_Grass::CMapObject_Grass(DEVICE graphicDev)
     : CMapObjectBase(graphicDev)
-{
-}
+{ }
 
 CMapObject_Grass::CMapObject_Grass(const CMapObjectBase& rhs)
     : CMapObjectBase(rhs)
-{
-}
+{ }
 
 CMapObject_Grass::~CMapObject_Grass()
-{
-}
+{ }
 
 HRESULT CMapObject_Grass::Ready_GameObject()
 {
@@ -32,20 +29,17 @@ _int CMapObject_Grass::Update_GameObject(const _float& timeDelta)
 {
     _int exit = CMapObjectBase::Update_GameObject(timeDelta);
 
-
     return exit;
 }
 
 void CMapObject_Grass::LateUpdate_GameObject(const _float& timeDelta)
 {
     CMapObjectBase::LateUpdate_GameObject(timeDelta);
-
 }
 
 void CMapObject_Grass::Render_GameObject()
 {
     CMapObjectBase::Render_GameObject();
-
 }
 
 MAPOBJTYPE CMapObject_Grass::Get_Type()

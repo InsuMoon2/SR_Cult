@@ -1,24 +1,23 @@
 ﻿#include "pch.h"
 #include "CInventory.h"
 
+#include "CDropSystem.h"
 #include "CItemDB.h"
 #include "CPlayer.h"
 #include "ItemData.h"
-#include "CDropSystem.h"
 
 CInventory::CInventory(DEVICE graphicDev)
-    : CComponent(graphicDev), invenSlotNum(0)
-{
-}
+    : CComponent(graphicDev),
+      invenSlotNum(0)
+{ }
 
 CInventory::CInventory(const CInventory& rhs)
-    : CComponent(rhs), invenSlotNum(0)
-{
-}
+    : CComponent(rhs),
+      invenSlotNum(0)
+{ }
 
 CInventory::~CInventory()
-{
-}
+{ }
 
 HRESULT CInventory::Ready_Inventory()
 {
@@ -82,9 +81,7 @@ void CInventory::DropItemfromSlot(int slotNum, _vec3 DropPos)
     CDropSystem::GetInstance()->SpawnDrop(m_GraphicDev, m_vecInven[slotNum].itemInst, DropPos);
     // 드롭한 뒤에는 무조건 인벤에서 삭제
     RemoveItemBySlot(slotNum, 1);
-
 }
-
 
 bool CInventory::AddItem(ItemInstance itemInst)
 {
@@ -169,8 +166,10 @@ int CInventory::FindEmptySlot(ItemType itemtype)
         if (m_vecInven[i].SlotType == itemtype)
         {
             if (m_vecInven[i].itemInst.itemId == -1)
-            if (m_vecInven[i].itemInst.itemId == -1)
-                return static_cast<int>(i);
+            {
+                if (m_vecInven[i].itemInst.itemId == -1)
+                    return static_cast<int>(i);
+            }
         }
     }
 
@@ -187,7 +186,7 @@ bool CInventory::RemoveItem(int itemID, int count)
             if (slot.count <= remainCount)
             {
                 remainCount -= slot.count;
-                slot.count = 0;
+                slot.count           = 0;
                 slot.itemInst.itemId = -1;
 
                 if (remainCount == 0)

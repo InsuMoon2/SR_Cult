@@ -4,43 +4,40 @@
 #include "CItemDB.h"
 #include "CPlayer.h"
 
-CWeaponEquip::CWeaponEquip(DEVICE graphicDev) :m_iCurrentWeaponSlot{}
-{
-}
+CWeaponEquip::CWeaponEquip(DEVICE graphicDev)
+    : CComponent(graphicDev),
+      m_iCurrentWeaponID(0),
+      m_iCurrentWeaponSlot{}
+{ }
 
-CWeaponEquip::CWeaponEquip(const CWeaponEquip& rhs) :m_iCurrentWeaponSlot{}
-{
-}
+CWeaponEquip::CWeaponEquip(const CWeaponEquip& rhs)
+    : CComponent(rhs),
+      m_iCurrentWeaponID(0),
+      m_iCurrentWeaponSlot{}
+{ }
 
 CWeaponEquip::~CWeaponEquip()
-{
-}
+{ }
 
 void CWeaponEquip::Equip_Weapon(ItemInstance itemInst)
 {
     if (m_iCurrentWeaponSlot.itemInst.itemId != -1)
-    {
         Unequip_Weapon();
-    }
 
     m_iCurrentWeaponSlot.itemInst = itemInst;
-    m_iCurrentWeaponID=itemInst.itemId;
+    m_iCurrentWeaponID            = itemInst.itemId;
 
     Item* itemData = CItemDB::GetInstance()->GetItemById(m_iCurrentWeaponID);
 
-    if(itemData)
-    {
+    if (itemData)
         ApplyWeaponStat(itemData);
-    }
     cout << "Weapon Equipped" << endl;
 }
 
 void CWeaponEquip::Unequip_Weapon()
 {
-    if(m_iCurrentWeaponID==-1)
-    {
+    if (m_iCurrentWeaponID == -1)
         return;
-    }
 
     RemoveWeaponStat();
 
@@ -85,12 +82,11 @@ CWeaponEquip* CWeaponEquip::Create(DEVICE graphicDev)
 {
     auto weaponEquip = new CWeaponEquip(graphicDev);
 
-    if(weaponEquip ==nullptr)
+    if (weaponEquip == nullptr)
     {
         MSG_BOX("weaponEquip Create Failed");
         Safe_Release(weaponEquip);
         return nullptr;
-        
     }
     return weaponEquip;
 }

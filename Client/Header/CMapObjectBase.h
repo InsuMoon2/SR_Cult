@@ -1,14 +1,11 @@
 ﻿#pragma once
-
 #include "CGameObject.h"
-#include "Engine_Define.h"
 
 BEGIN(Engine)
 class CRcTex;
 class CTransform;
 class CTexture;
 class CTerrain;
-
 END
 
 enum class MAPOBJTYPE
