@@ -33,6 +33,21 @@ public:
         return *(reinterpret_cast<_long*>(&m_MouseState) + mouseMoveState);
     }
 
+    bool KeyDown(_ubyte key)
+    {
+        return  (m_KeyState[key] & 0x80) && !(m_PrevKeyState[key] & 0x80);
+    }
+
+    bool KeyPress(_ubyte key)
+    {
+        return (m_KeyState[key] & 0x80) != 0;
+    }
+
+    bool KeyUp(_ubyte key)
+    {
+        return !(m_KeyState[key] & 0x80) && (m_PrevKeyState[key] & 0x80);
+    }
+
 public:
     HRESULT Ready_InputDev(HINSTANCE hInst, HWND hWnd);
     void    Update_InputDev();
@@ -43,7 +58,8 @@ private:
     LPDIRECTINPUTDEVICE8 m_KeyBoardDev;
     LPDIRECTINPUTDEVICE8 m_MouseDev;
 
-    _ubyte m_KeyState[256];       // 키보드에 있는 모든 키값을 저장하기 위한 변수
+    _ubyte m_KeyState[256];
+    _ubyte m_PrevKeyState[256];
 
     DIMOUSESTATE m_MouseState;
 

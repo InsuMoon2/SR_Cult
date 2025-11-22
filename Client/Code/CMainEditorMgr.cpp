@@ -315,8 +315,13 @@ void CMainEditorMgr::Update_MapObjectPlacement(const _float& timeDelta)
         m_PreviewMapObject->Set_WorldPos(worldPos);
     }
 
+    m_PreviewMapObject->Update_GameObject(timeDelta);
+    m_PreviewMapObject->LateUpdate_GameObject(timeDelta);
+
     // 좌클릭 하면 배치하기
-    if (CDInputMgr::GetInstance()->Get_DIKeyState(VK_LBUTTON) & 0x80)
+    auto input = CDInputMgr::GetInstance();
+
+    if (input->KeyDown(VK_LBUTTON))
     {
         CScene* scene = CManagement::GetInstance()->Get_Scene();
         if (scene)
@@ -336,8 +341,7 @@ void CMainEditorMgr::Update_MapObjectPlacement(const _float& timeDelta)
     }
 
     // 우클릭 : 배치 종료
-    if (CDInputMgr::GetInstance()->Get_DIKeyState(VK_LBUTTON) & 0x80 ||
-        CDInputMgr::GetInstance()->Get_DIKeyState(VK_ESCAPE))
+    if (input->KeyDown(VK_LBUTTON) || input->KeyDown(VK_ESCAPE))
     {
         m_PlacingMapObject = false;
         Safe_Release(m_PreviewMapObject);
@@ -365,8 +369,11 @@ void CMainEditorMgr::Render_MapObjectWindow()
     // 배치 취소
     if (m_PlacingMapObject)
     {
-        m_PlacingMapObject = false;
-        Safe_Release(m_PreviewMapObject);
+        if (ImGui::Button("Cancel Place"))
+        {
+            m_PlacingMapObject = false;
+            Safe_Release(m_PreviewMapObject);
+        }
     }
 
     ImGui::End();
@@ -377,7 +384,7 @@ bool CMainEditorMgr::Get_MouseWorldPosOnTerrain(_vec3& outPos)
 {
     // TODO : 마우스 월드좌표로 변환하기. 일단은 상수값으로 실험
 
-    outPos = _vec3(0.f, 0.f, 0.f);
+    outPos = _vec3(0.1f, 3.1f, 3.1f);
 
     return true;
 }

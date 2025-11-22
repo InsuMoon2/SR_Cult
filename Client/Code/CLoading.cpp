@@ -239,7 +239,7 @@ _uint CLoading::Loading_ForState()
     // Grass [풀때기]
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::TEX_GRASS, CTexture::Create(m_GraphicDev, TEXTUREID::TEX_NORMAL,
-            L"../Bin/Resource/Texture/MapObject/WeedShrub/WeedShrub%d", 20))))
+            L"../Bin/Resource/Texture/MapObject/WeedShrub/WeedShrub%d.png", 20))))
     return E_FAIL;
 
 #pragma endregion

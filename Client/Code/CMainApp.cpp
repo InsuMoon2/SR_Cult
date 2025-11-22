@@ -134,19 +134,6 @@ HRESULT CMainApp::Ready_DefaultSetting(DEVICE* graphicDev)
 
 HRESULT CMainApp::Ready_Scene(DEVICE graphicDev)
 {
-   /* Engine::CScene* logo = CLogo::Create(graphicDev);
-
-    if (nullptr == logo)
-        return E_FAIL;
-
-    if (FAILED(m_ManagementClass->Set_Scene(logo)))
-    {
-        MSG_BOX("Logo Setting Failed");
-        return E_FAIL;
-    }
-
-    return S_OK;*/
-
     return CSceneMgr::GetInstance()->Ready_SceneMgr(graphicDev);
 }
 
@@ -186,7 +173,7 @@ void CMainApp::Free()
 #pragma region 데이터 파싱 테스트
 
     CItemDB::DestroyInstance();
-    CDropSystem::DestroyInstance();
+    CDropSystem::DestroyInstance(); 
 
 #pragma endregion
 }
