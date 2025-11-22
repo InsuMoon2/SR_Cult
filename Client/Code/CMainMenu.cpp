@@ -31,8 +31,6 @@ HRESULT CMainMenu::Ready_Scene()
     if (FAILED(Ready_UI_Layer(LAYERTYPE::UI)))
         return E_FAIL;
 
-
-
     return S_OK;
 }
 
@@ -133,6 +131,7 @@ HRESULT CMainMenu::Ready_UI_Layer(LAYERTYPE layerType)
     CUIIcon* pGameObject = CUIIcon::Create(m_GraphicDev);
     pGameObject->Set_TextureIndex(0);
     pGameObject->Get_Transform()->Set_Scale(262.f,143.f,1.f);
+    pGameObject->Get_Transform()->Set_Pos(WINCX/2, 0, 1);
    // pGameObject = CUIIcon::Create(m_GraphicDev);
 
     FAILED_CHECK_MSG(
