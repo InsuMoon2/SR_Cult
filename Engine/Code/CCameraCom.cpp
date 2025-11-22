@@ -187,9 +187,9 @@ void CCameraCom::Compute_Proj_Orthographic()
         1.f);
 }
 
-CCameraCom* CCameraCom::Create(DEVICE pGraphicDev)
+CCameraCom* CCameraCom::Create(DEVICE graphicDev)
 {
-    auto CameraCom = new CCameraCom(pGraphicDev);
+    auto CameraCom = new CCameraCom(graphicDev);
 
     if (FAILED(CameraCom->Ready_Camera()))
     {

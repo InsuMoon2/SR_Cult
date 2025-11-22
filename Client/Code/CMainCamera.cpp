@@ -71,24 +71,13 @@ HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
     if (m_TargetTransformCom == targetTransform)
         return S_OK;
 
-    // 기존 타겟이 있다면 해제 (RefCnt 감소)
-    Safe_Release(m_TargetTransformCom);
-
     // 새 타겟 설정
     m_TargetTransformCom = targetTransform;
 
     if (nullptr == m_TargetTransformCom)
-    {
         m_CameraCom->Set_CamMode(CCameraCom::CAM_FREE);
-    }
     else
-    {
-        // 새 타겟 참조 (RefCnt 증가)
-        // 다른 오브젝트의 컴포넌트를 가져와서 오랫동안 참조해야 한다면
-        // AddRef()를 통해 수명을 연장시켜야 안전합니다.
-        m_TargetTransformCom->AddRef();
         m_CameraCom->Set_CamMode(CCameraCom::CAM_TARGET);
-    }
 
     return S_OK;
 }
@@ -197,7 +186,6 @@ void CMainCamera::Key_Input(const _float& timeDelta)
         m_TransformCom->Move_Pos(dir, timeDelta, -speed);
         moving = true;
     }
-
 }
 
 void CMainCamera::Chase_CamTarget(const _float& timeDelta)
@@ -258,8 +246,5 @@ CMainCamera* CMainCamera::Create(DEVICE graphicDev)
 
 void CMainCamera::Free()
 {
-    // 가지고 있던 타겟의 참조를 해제해야 메모리 누수가 발생하지 않습니다.
-    Safe_Release(m_TargetTransformCom);
-
     CGameObject::Free();
 }
