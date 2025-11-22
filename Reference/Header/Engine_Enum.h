@@ -84,6 +84,7 @@ enum class COMPONENTTYPE
     COMBATSTAT,
     INVENTORY,
     CONTROLLER_PLAYER,
+    WEAPON_EQUIP,
 
     TEXTURE,
     TEX_PLAYER,
@@ -95,6 +96,8 @@ enum class COMPONENTTYPE
     TEX_UI_HEART,
     TEX_UI_WEAPON,
     TEX_ITEM,
+    TEX_MANUCHAR,
+    TEX_UIICON,
 
     // TODO : Test Tile -> 은수 Texture 버전이랑 합치면 고치기
     TEX_TILE_284,
@@ -142,5 +145,19 @@ enum class ACTORDIR
 
     PLAYERDIR_END
 };
+
+
+enum class SCENETYPE
+{
+    SC_LOGO,
+    SC_MAINMENU,
+    SC_STAGE,
+    SC_STAGE1,
+    SC_STAGE2,
+    SC_BOSSSTAGE,
+    SC_EDIT,
+    SC_END
+};
+
 }
 #endif // Engine_Enum_h__

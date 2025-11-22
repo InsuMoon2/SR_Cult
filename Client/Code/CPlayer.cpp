@@ -14,6 +14,7 @@
 #include "CState.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CWeaponEquip.h"
 
 CPlayer::CPlayer(DEVICE graphicDev)
     : CGameObject(graphicDev),
@@ -26,6 +27,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_CombatStatCom(nullptr),
       m_PlayerControllerCom(nullptr),
       m_Inventory(nullptr)
+      m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::CPlayer(const CPlayer& rhs)
@@ -39,10 +41,15 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_CombatStatCom(nullptr),
       m_PlayerControllerCom(nullptr),
       m_Inventory(nullptr)
+      m_WeaponEquipCom(nullptr)
 { }
 
 CPlayer::~CPlayer()
-{ }
+{
+
+
+
+}
 
 HRESULT CPlayer::Ready_GameObject()
 {
@@ -56,7 +63,7 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_Hp(6.f);
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
-    m_CombatStatCom->Set_Mp(5.f);
+    m_CombatStatCom->Set_Mp(100.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
@@ -219,6 +226,12 @@ HRESULT CPlayer::Add_Component()
     
     m_Components[ID_DYNAMIC].insert(
         { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
+    // weaponequip
+
+    m_WeaponEquipCom = CreateProtoComponent<CWeaponEquip>(this, COMPONENTTYPE::WEAPON_EQUIP);
+    NULL_CHECK_RETURN(m_WeaponEquipCom, E_FAIL);
+
+    m_Components[ID_STATIC].insert({ COMPONENTTYPE::WEAPON_EQUIP, m_WeaponEquipCom });
 
     return S_OK;
 }

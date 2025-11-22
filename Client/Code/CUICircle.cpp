@@ -98,9 +98,6 @@ void CUICircle::Render_GameObject()
             m_TransformCom->Set_Scale(scale);
         }
 
-
-
-
     }
     ImGui::End();
 }
@@ -143,9 +140,6 @@ CUICircle* CUICircle::Create(DEVICE graphicDev)
 
 void CUICircle::Free()
 {
-    Safe_Release(m_BufferCom);
-    Safe_Release(m_TextureCom);
-    Safe_Release(m_TransformCom);
-
+ 
     CUI::Free();
 }

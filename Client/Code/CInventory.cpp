@@ -90,14 +90,14 @@ bool CInventory::AddItem(ItemInstance itemInst)
 {
     //ItemInstance의 id(= itemId)는 “인스턴스를 만들 때 즉시 넣어준다.”
 
-    Item* itemDate = CItemDB::GetInstance()->GetItemById(itemInst.itemId);
+    Item* itemData = CItemDB::GetInstance()->GetItemById(itemInst.itemId);
 
     // 스택가능한지
     for (auto& slot : m_vecInven)
     {
-        if (slot.itemInst.itemId == itemInst.itemId && itemDate->stackable == true)
+        if (slot.itemInst.itemId == itemInst.itemId && itemData->stackable == true)
         {
-            if (itemDate->maxStack > slot.count)
+            if (itemData->maxStack > slot.count)
             {
                 slot.count++;
                 return true;
@@ -109,7 +109,7 @@ bool CInventory::AddItem(ItemInstance itemInst)
     {
         int slot;
         // 스택불가, 같은 아이템 없다
-        switch (itemDate->type)
+        switch (itemData->type)
         {
         case ItemType::FoodMaterial:
             slot = FindEmptySlot(ItemType::FoodMaterial);
@@ -118,6 +118,8 @@ bool CInventory::AddItem(ItemInstance itemInst)
             else
             {
                 m_vecInven[slot].itemInst = itemInst;
+                m_vecInven[slot].count++;
+
                 return true;
             }
             break;
@@ -166,6 +168,7 @@ int CInventory::FindEmptySlot(ItemType itemtype)
     {
         if (m_vecInven[i].SlotType == itemtype)
         {
+            if (m_vecInven[i].itemInst.itemId == -1)
             if (m_vecInven[i].itemInst.itemId == -1)
                 return static_cast<int>(i);
         }

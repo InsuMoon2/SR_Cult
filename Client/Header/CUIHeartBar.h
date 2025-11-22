@@ -40,7 +40,6 @@ private:
    float              m_Hp;
    float               m_maxHp;
 
-   int                 m_ID;
    static int          m_nextID;
    HEARTSTATE         m_HeartState;
 

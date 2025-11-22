@@ -86,6 +86,7 @@ void CHumanMonster::Render_GameObject()
 
 
     Render_Setting();
+
     if (m_TextureCom && m_AnimatorCom)
     {
         const wstring& key   = m_AnimatorCom->Get_CurKey();

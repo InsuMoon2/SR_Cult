@@ -2,6 +2,8 @@
 #include "CGameObject.h"
 #include "Engine_Define.h"
 
+class CWeaponEquip;
+
 BEGIN(Engine)
 class CPlayerController;
 class CRcTex;
@@ -30,9 +32,10 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-    void         OnBeginOverlap(CCollider* self, CCollider* other) override;
-    void         OnEndOverlap(CCollider* self, CCollider* other) override;
-    CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
+    void          OnBeginOverlap(CCollider* self, CCollider* other) override;
+    void          OnEndOverlap(CCollider* self, CCollider* other) override;
+    CCombatStat*  Get_CombatStat() { return m_CombatStatCom; }
+    CWeaponEquip* Get_WeaponEquip() { return m_WeaponEquipCom; }
 
 private:
     HRESULT Add_Component();
@@ -51,6 +54,8 @@ private:
     Engine::CState*            m_StateCom;
     Engine::CCombatStat*       m_CombatStatCom;
     Engine::CPlayerController* m_PlayerControllerCom;
+    Engine::CWeaponEquip* m_WeaponEquipCom;
+
 
     CInventory* m_Inventory;
 
