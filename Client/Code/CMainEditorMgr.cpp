@@ -12,7 +12,9 @@
 #include "CComInspectors.h"
 #include "CTerrainRenderer.h"
 #include "CTransform.h"
-#include "CBOxCollider.h"
+#include "CBoxCollider.h"
+#include "CInventory.h"
+#include "CWeaponEquip.h"
 
 IMPLEMENT_SINGLETON(CMainEditorMgr)
 
@@ -147,7 +149,18 @@ void CMainEditorMgr::Render_Inspector()
     ImGui::Separator();
     ImGui::Text("[ Components ]");
 
-    // Dynamic Component 전체 맵 순회 -> 지금은 Dynamic 컴포넌트만 보여주기
+    Render_DynamicComponents(obj);
+    Render_StaticComponents(obj);
+
+    ImGui::Separator();
+    obj->Render_Editor();
+
+    Render_SelectComponent();
+}
+
+void CMainEditorMgr::Render_DynamicComponents(CGameObject* obj)
+{
+    // Dynamic Component
     const auto& dynamicComponents = obj->Get_DynamicComponents();
 
     for (const auto& typePair : dynamicComponents)
@@ -167,11 +180,40 @@ void CMainEditorMgr::Render_Inspector()
             m_Context->Select_Component(com);
         }
     }
+}
 
-    ImGui::Separator();
+void CMainEditorMgr::Render_StaticComponents(CGameObject* obj)
+{
+    // Static Component
+    auto inven = obj->Get_Component(ID_STATIC, COMPONENTTYPE::INVENTORY);
+    if (inven)
+    {
+        wstring wTypeName = inven->Get_Name();
+        string typeName(wTypeName.begin(), wTypeName.end());
 
-    obj->Render_Editor();
+        bool isSelected = (inven == m_Context->Get_SelectedComponent());
+        if (ImGui::Selectable(typeName.c_str(), isSelected))
+        {
+            m_Context->Select_Component(inven);
+        }
+    }
 
+    auto weapon = obj->Get_Component(ID_STATIC, COMPONENTTYPE::WEAPON_EQUIP);
+    if (weapon)
+    {
+        wstring wTypeName = weapon->Get_Name();
+        string typeName(wTypeName.begin(), wTypeName.end());
+
+        bool isSelected = (weapon == m_Context->Get_SelectedComponent());
+        if (ImGui::Selectable(typeName.c_str(), isSelected))
+        {
+            m_Context->Select_Component(weapon);
+        }
+    }
+}
+
+void CMainEditorMgr::Render_SelectComponent()
+{
     // 선택된 컴포넌트의 인스펙터
     CComponent* selectComponent = m_Context->Get_SelectedComponent();
     if (selectComponent)
@@ -182,6 +224,7 @@ void CMainEditorMgr::Render_Inspector()
 
         switch (selectComponent->Get_Type())
         {
+            // Dynamic
         case COMPONENTTYPE::TRANSFORM:
         {
             auto transform = dynamic_cast<CTransform*>(selectComponent);
@@ -219,6 +262,21 @@ void CMainEditorMgr::Render_Inspector()
         {
             auto collider = dynamic_cast<CBoxCollider*>(selectComponent);
             BoxColl_Inspector(collider);
+            break;
+        }
+
+        // Static
+        case COMPONENTTYPE::INVENTORY:
+        {
+            auto inven = dynamic_cast<CInventory*>(selectComponent);
+            Inventory_Inspector(inven);
+            break;
+        }
+
+        case COMPONENTTYPE::WEAPON_EQUIP:
+        {
+            auto weapon = dynamic_cast<CWeaponEquip*>(selectComponent);
+            Weapon_Inspector(weapon);
             break;
         }
 

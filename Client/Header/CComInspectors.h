@@ -4,12 +4,11 @@
 #include "CTransform.h"
 #include "CState.h"
 #include "CCombatStat.h"
-#include "CTimerMgr.h"
 #include "CCameraCom.h"
-#include "CTerrain.h"
 #include "CTerrainRenderer.h"
-#include "CBoxCol.h"
 #include "CBoxCollider.h"
+#include "CInventory.h"
+#include "CWeaponEquip.h"
 
 USING(Engine)
 
@@ -94,7 +93,7 @@ static void State_Inspector(CState* state)
     const char* curState = ToString(state->Get_State());
     const char* curDir = ToString(state->Get_Dir());
 
-    ImGui::PushID("State");
+    ImGui::PushID("State_Inspector");
     {
         // --- State ---
         ImGui::Text("State : ");
@@ -123,7 +122,7 @@ static void CombatStat_Inspector(CCombatStat* stat)
     _float speed = stat->Get_Speed();
     _float attack = stat->Get_Attack();
 
-    ImGui::PushID("CombatStat");
+    ImGui::PushID("CombatStat_Inspector");
     {
         const float column_width = 80.0f;
 
@@ -208,7 +207,7 @@ static void Camera_Inspector(CCameraCom* camera)
 
     const float column_width = 100.0f;
 
-    ImGui::PushID("Camera");
+    ImGui::PushID("Camera_Inspector");
     {
         // ------------------------
         // CAM_MODE 편집
@@ -300,7 +299,7 @@ static void BoxColl_Inspector(CBoxCollider* collider)
         return;
 
     ImGui::Text("[ Scale ]");
-    ImGui::PushID("BoxScale");
+    ImGui::PushID("BoxColl_Inspector");
     {
         _vec3 scale = collider->Get_Size();
 
@@ -309,4 +308,157 @@ static void BoxColl_Inspector(CBoxCollider* collider)
     }
     ImGui::PopID();
     
+}
+
+static void Inventory_Inspector(CInventory* inven)
+{
+    if (inven == nullptr)
+        return;
+
+    const vector<InventorySlot>& slots = inven->GetVector();
+    int slotCount = (_int)slots.size();
+
+    ImGui::PushID("Inventory_Inspector");
+    {
+        ImGui::Text("[ Inventory ]");
+        ImGui::Text("Slot Count : %d", slotCount);
+        ImGui::Spacing();
+
+        if (slotCount == 0)
+        {
+            ImGui::Text("Empty Inventory");
+            return;
+        }
+
+        ImGui::Columns(3, "ItemColumns");
+        ImGui::Text("Index"); ImGui::NextColumn();
+        ImGui::Text("Item"); ImGui::NextColumn();
+        ImGui::Text("Count"); ImGui::NextColumn();
+        ImGui::Separator();
+
+        for (_int i = 0; i < slotCount; i++)
+        {
+            const InventorySlot& slot = slots[i];
+
+            // Index
+            ImGui::Text("%d", i);
+            ImGui::NextColumn();
+
+            // Name
+            Item* itemData = nullptr;
+            if (slot.itemInst.itemId >= 0)
+            {
+                itemData = CItemDB::GetInstance()->GetItemById(slot.itemInst.itemId);
+            }
+
+            if (itemData)
+            {
+                ImGui::Text("%s", itemData->name.c_str());
+
+                // 설명 툴팁도 나오도록
+                if (ImGui::IsItemHovered())
+                {
+                    ImGui::SetNextWindowSize(ImVec2(300.f, 0.f)); 
+
+                    ImGui::BeginTooltip();
+
+                    ImGui::PushTextWrapPos(ImGui::GetCursorPos().x + 280.f);  
+
+                    ImGui::TextWrapped("%s", itemData->desc.c_str());
+                    if (!itemData->additionalDesc.empty())
+                    {
+                        ImGui::Separator();
+                        ImGui::TextWrapped("%s", itemData->additionalDesc.c_str());
+                    }
+                    ImGui::EndTooltip();
+                }
+            }
+            else
+            {
+                ImGui::Text("-");
+            }
+            ImGui::NextColumn();
+
+            // 4) Count
+            if (slot.itemInst.itemId >= 0)
+                ImGui::Text("%d", slot.count);
+            else
+                ImGui::Text("-");
+            ImGui::NextColumn();
+        }
+
+        ImGui::Columns(1);
+    }
+    ImGui::PopID();
+
+}
+
+static void Weapon_Inspector(CWeaponEquip* weapon)
+{
+    if (weapon == nullptr)
+        return;
+
+    ImGui::PushID("WeaponEquip_Inspector");
+    {
+        ImGui::Text("[ Weapon Equip ]");
+        ImGui::Separator();
+
+        const InventorySlot& slot = weapon->m_iCurrentWeaponSlot;
+        int weaponId = weapon->m_iCurrentWeaponID;
+
+        if (weaponId < 0 || slot.itemInst.itemId < 0)
+        {
+            ImGui::Text("Equipped : None");
+            ImGui::PopID();
+            return;
+        }
+
+        Item* itemData = CItemDB::GetInstance()->GetItemById(weaponId);
+
+        if (itemData == nullptr)
+        {
+            ImGui::Text("Equipped : Invalid Item (ID = %d)", weaponId);
+            ImGui::PopID();
+            return;
+        }
+
+        ImGui::Text("ID    : %d", itemData->id);
+        ImGui::Text("Name  : %s", itemData->name.c_str());
+        ImGui::Text("Type  : %s", "Weapon");
+        ImGui::Text("Count : %d", slot.count);
+        ImGui::Spacing();
+
+        ImGui::TextWrapped("%s", itemData->desc.c_str());
+        if (!itemData->additionalDesc.empty())
+        {
+            ImGui::Separator();
+            ImGui::TextWrapped("%s", itemData->additionalDesc.c_str());
+        }
+
+        ImGui::Spacing();
+
+        // 스탯 출력
+        if (!itemData->stats.empty())
+        {
+            ImGui::Text("Stats");
+            ImGui::Separator();
+
+            for (const auto& kv : itemData->stats)
+            {
+                const std::string& key = kv.first;
+                float              value = kv.second;
+
+                ImGui::Text("%s : %.1f", key.c_str(), value);
+            }
+        }
+
+        ImGui::Spacing();
+
+        // 장착 해제
+        if (ImGui::Button("Unequip Weapon"))
+        {
+            weapon->Unequip_Weapon();
+        }
+    }
+    ImGui::PopID();
 }

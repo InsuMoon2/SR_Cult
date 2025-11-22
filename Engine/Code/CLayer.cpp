@@ -63,11 +63,33 @@ _int CLayer::Update_Layer(const _float& timeDelta)
 
 void CLayer::LateUpdate_Layer(const _float& timeDelta)
 {
-    for (auto& pair : m_Objects)
+    // PendingKill 추가
+    for (auto mapIter = m_Objects.begin(); mapIter != m_Objects.end(); ++mapIter)
     {
-        for (auto* obj : pair.second)
+        auto& objList = mapIter->second;
+
+        for (auto iter = objList.begin(); iter != objList.end(); )
         {
+            CGameObject* obj = *iter;
+
+            if (obj == nullptr)
+            {
+                iter = objList.erase(iter);
+                continue;
+            }
+
             obj->LateUpdate_GameObject(timeDelta);
+
+            if (obj->Is_PendingDestroy())
+            {
+                // 참고카운트 줄이고, 삭제
+                Safe_Release(obj);
+                iter = objList.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
         }
     }
 }

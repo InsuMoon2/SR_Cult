@@ -231,8 +231,8 @@ HRESULT CPlayer::Add_Component()
 
     m_Components[ID_DYNAMIC].insert(
         { COMPONENTTYPE::CONTROLLER_PLAYER, m_PlayerControllerCom });
-    // weaponequip
 
+    // weaponequip
     m_WeaponEquipCom = CreateProtoComponent<CWeaponEquip>(this, COMPONENTTYPE::WEAPON_EQUIP);
     NULL_CHECK_RETURN(m_WeaponEquipCom, E_FAIL);
 

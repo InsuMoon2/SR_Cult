@@ -13,25 +13,29 @@ CCollisionManager::~CCollisionManager()
     CCollisionManager::Free();
 }
 
-void CCollisionManager::Ready_Collision()
-{
-    // TODO
-}
-
 void CCollisionManager::Update()
 {
     auto& colliders = m_Colliders;
-
-    const _uint count = static_cast<_uint>(m_Colliders.size());
+    const _uint count = static_cast<_uint>(colliders.size());
 
     for (_uint i = 0; i < count; i++)
     {
+        CCollider* src = colliders[i];
+        if (src == nullptr)
+            continue;
+
+        CGameObject* ownerSrc = src->Get_Owner();
+        if (ownerSrc == nullptr || ownerSrc->Is_PendingDestroy())
+            continue;
+
         for (_uint j = i + 1; j < count; j++)
         {
-            CCollider* src = m_Colliders[i];
-            CCollider* dst = m_Colliders[j];
+            CCollider* dst = colliders[j];
+            if (dst == nullptr)
+                continue;
 
-            if (src == nullptr || dst == nullptr)
+            CGameObject* ownerDst = dst->Get_Owner();
+            if (ownerDst == nullptr || ownerDst->Is_PendingDestroy())
                 continue;
 
             // TODO : Owner 세팅 후 비교
