@@ -161,8 +161,6 @@ void CPlayer::Render_Editor()
 
     ImGui::Text("=== Player ===");
 
-    
-
     // 이제 ImGui는 GameObject의 OnEditor를 상속받아서 Render하면 된다. 따로 호출해줄 필요도 없음.
     // 추가로 띄우고 싶은거 있으면 추가하기
 }

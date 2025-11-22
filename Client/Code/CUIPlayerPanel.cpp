@@ -148,6 +148,13 @@ void CUIPlayerPanel::Render_GameObject()
     //ImGui::End();
 }
 
+void CUIPlayerPanel::Render_Editor()
+{
+    CUIPanel::Render_Editor();
+
+    ImGui::Text("Player Panel ~");
+}
+
 CUIPlayerPanel* CUIPlayerPanel::Create(DEVICE graphicDev)
 {
     auto mainmenuPanel = new CUIPlayerPanel(graphicDev);
