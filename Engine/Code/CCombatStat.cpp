@@ -14,7 +14,7 @@ CCombatStat::CCombatStat(const CCombatStat& rhs)
       m_Attack(0),
       m_Hp(0),
       m_Mp(0),
-      m_Speed(10)
+      m_Speed(rhs.m_Speed)
 { }
 
 CCombatStat::~CCombatStat()

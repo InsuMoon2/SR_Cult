@@ -4,6 +4,7 @@
 
 BEGIN(Engine)
 class CEditContext;
+class CGameObject;
 END
 
 class CMainEditorMgr : public CBase
@@ -23,6 +24,11 @@ public:
 private:
     void Render_Hierarchy();
     void Render_Inspector();
+
+    void Render_DynamicComponents(CGameObject* obj);
+    void Render_StaticComponents(CGameObject* obj);
+
+    void Render_SelectComponent();
 
     virtual void Free() override;
 

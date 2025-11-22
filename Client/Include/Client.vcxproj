@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header\CClient_EnumHelper.h" />
     <ClInclude Include="..\Header\CComInspectors.h" />
     <ClInclude Include="..\Header\CDroppedItem.h" />
     <ClInclude Include="..\Header\CDropSystem.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Code\CClient_EnumHelper.cpp" />
     <ClCompile Include="..\Code\CDroppedItem.cpp" />
     <ClCompile Include="..\Code\CDropSystem.cpp" />
     <ClCompile Include="..\Code\CEdit.cpp" />

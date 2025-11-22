@@ -15,7 +15,9 @@ CCollider::CCollider(const CCollider& rhs)
 { }
 
 CCollider::~CCollider()
-{ }
+{
+    CCollisionManager::GetInstance()->RemoveCollider(this);
+}
 
 HRESULT CCollider::Ready_Collider()
 {
@@ -236,4 +238,9 @@ bool CCollider::CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider
     _float sum = r1 + r2;
 
     return distSq <= (sum * sum);
+}
+
+void CCollider::Free()
+{
+    CComponent::Free();
 }

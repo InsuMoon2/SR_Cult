@@ -107,6 +107,7 @@ void CDroppedItem::Render_GameObject()
 void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnBeginOverlap(self, other);
+
     CPlayer* ply = dynamic_cast<CPlayer*>(other->Get_Owner());
     if (ply != nullptr)
     {
@@ -121,7 +122,7 @@ void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
         }
 
         //*** 아이템 지우기 ***
-        //
+        Mark_As_PendingKill();
     }
 
     cout << "item Hit" << endl;

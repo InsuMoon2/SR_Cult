@@ -64,12 +64,6 @@
     <Filter Include="05. UI\01. UI\04. UI">
       <UniqueIdentifier>{f5ba0def-b59a-4d45-9d5e-3212b4671db6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Inventory">
-      <UniqueIdentifier>{04ec017b-992f-4772-bbe2-7a8edb69490f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05. WeaponEquip">
-      <UniqueIdentifier>{5101c023-1c97-43e5-9bc5-7e7e08c1f0d8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Scene">
       <UniqueIdentifier>{3f93eee2-8a00-49f0-b535-bb50e2584051}</UniqueIdentifier>
     </Filter>
@@ -124,6 +118,15 @@
     <Filter Include="01. Manager">
       <UniqueIdentifier>{58c808c6-fb36-4533-b7c9-5fe4324476c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97. Component\00. Inventory">
+      <UniqueIdentifier>{42fc51e2-7aa1-4069-af85-516f4b17ee0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Component\01. Weapon">
+      <UniqueIdentifier>{0ea6be3b-e306-4e3b-a944-ff7f76a55091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Component\02. Terrain">
+      <UniqueIdentifier>{a82a3041-8adf-4ea9-b83c-573792a7e93c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="97. Component\03. Player Controller">
       <UniqueIdentifier>{f2106dd3-bd45-46c3-8297-8a8688247354}</UniqueIdentifier>
     </Filter>
@@ -177,9 +180,6 @@
     <ClInclude Include="..\Header\CItemDB.h">
       <Filter>03. Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CInventory.h">
-      <Filter>04. Inventory</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\ItemData.h">
       <Filter>03. Item</Filter>
     </ClInclude>
@@ -225,9 +225,6 @@
     <ClInclude Include="..\Header\CUIWeapon.h">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CWeaponEquip.h">
-      <Filter>05. WeaponEquip</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMenuChar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -240,9 +237,6 @@
     <ClInclude Include="..\Header\CSceneMgr.h">
       <Filter>01. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CTerrainRenderer.h">
-      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CMainEditorMgr.h">
       <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClInclude>
@@ -251,6 +245,18 @@
     </ClInclude>
     <ClInclude Include="..\Header\CPlayerController.h">
       <Filter>97. Component\03. Player Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CInventory.h">
+      <Filter>97. Component\00. Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CWeaponEquip.h">
+      <Filter>97. Component\01. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTerrainRenderer.h">
+      <Filter>97. Component\02. Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CClient_EnumHelper.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +299,6 @@
     <ClCompile Include="..\Code\CItemDB.cpp">
       <Filter>03. Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CInventory.cpp">
-      <Filter>04. Inventory</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CDroppedItem.cpp">
       <Filter>03. GameObject\03. Item</Filter>
     </ClCompile>
@@ -335,9 +338,6 @@
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>02. GameObject\09. MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CWeaponEquip.cpp">
-      <Filter>05. WeaponEquip</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CMenuChar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -350,14 +350,23 @@
     <ClCompile Include="..\Code\CSceneMgr.cpp">
       <Filter>01. Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CTerrainRenderer.cpp">
-      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CMainEditorMgr.cpp">
       <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CPlayerController.cpp">
       <Filter>97. Component\03. Player Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CInventory.cpp">
+      <Filter>97. Component\00. Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CWeaponEquip.cpp">
+      <Filter>97. Component\01. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTerrainRenderer.cpp">
+      <Filter>97. Component\02. Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CClient_EnumHelper.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
