@@ -24,14 +24,17 @@ public:
 public:
     _float Get_Attack() { return m_Attack; }
     _float Get_Hp() { return m_Hp; }
-    _float Get_MaxHp() { return m_maxHp; }
+    _float Get_MaxHp() { return m_MaxHp; }
     _float Get_Mp() { return m_Mp; }
-    _float Get_MaxMp() { return m_maxMp; }
+    _float Get_Speed() { return m_Speed; }
+    _float Get_MaxMp() { return m_MaxMp; }
 
-    void Set_Attack(float attack) { m_Attack = attack; }
-    void Set_Hp(float hp) { m_Hp = hp; }
-    void Set_MaxHp(float maxHp) { m_maxHp = maxHp; }
-    void Set_Mp(float mp) { m_Mp = mp; }
+    void Set_Attack(_float attack) { m_Attack = attack; }
+    void Set_Hp(_float hp) { m_Hp = hp; }
+    void Set_MaxHp(_float maxHp) { m_MaxHp = maxHp; }
+    void Set_Mp(_float mp) { m_Mp = mp; }
+    void Set_MaxMp(_float maxMp) { m_MaxMp = maxMp; }
+    void Set_Speed(_float speed) { m_Speed = speed; }
 
     void Add_Attack(float attack) { m_Attack += attack; }
 public:
@@ -46,9 +49,10 @@ private:
     _float m_Attack;
 
     _float m_Hp;
-    _float m_maxHp =6.f;
+    _float m_MaxHp = 6.f;
     _float m_Mp;
-    _float m_maxMp = 100.f;
+    _float m_MaxMp = 10.f;
+    _float m_Speed;
 };
 
 END

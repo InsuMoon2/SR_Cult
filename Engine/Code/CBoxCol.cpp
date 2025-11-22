@@ -31,7 +31,7 @@ HRESULT CBoxCol::Ready_Buffer()
 
     m_VB->Lock(0, 0, (void**)&pVertex, 0);
 
-    D3DXCOLOR color = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.5f);
+    D3DXCOLOR color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
     //D3DXCOLOR color = D3DXCOLOR(0.f, 0.f, 0.f, 0.5f);
 
     // 전면

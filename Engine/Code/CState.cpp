@@ -53,6 +53,8 @@ void CState::LateUpdate_Component()
 
 void CState::Update_Animation()
 {
+    wstring str = this->Get_Name();
+
     // Animator를 안 들고 있으면, Owner에서 한번 탐색
     if (m_Animator == nullptr && m_Owner != nullptr)
     {

@@ -15,6 +15,8 @@
 #include "CProtoMgr.h"
 #include "CRenderer.h"
 #include "CTimerMgr.h"
+#include "CMainEditorMgr.h"
+#include "CEditContext.h"
 #include "CSceneMgr.h"
 
 CMainApp::CMainApp()
@@ -33,7 +35,14 @@ HRESULT CMainApp::Ready_MainApp()
     if (FAILED(Ready_Scene(m_GraphicDev)))
         return E_FAIL;
 
-    CImGuiManager::GetInstance()->InitImGui(g_hWnd, m_GraphicDev);
+    // ImGui
+    {
+        CImGuiManager::GetInstance()->InitImGui(g_hWnd, m_GraphicDev);
+
+        CEditContext* ctx = CEditContext::Create();
+        CMainEditorMgr::GetInstance()->Set_EditContext(ctx);
+    }
+    
 
 #pragma region 데이터 파싱 테스트
 
@@ -76,6 +85,7 @@ void CMainApp::Render_MainApp()
 
     m_ManagementClass->Render_Scene(m_GraphicDev);
 
+    CMainEditorMgr::GetInstance()->Render();
     CImGuiManager::GetInstance()->Render();
 
     m_DeviceClass->Render_End();
@@ -164,6 +174,7 @@ void CMainApp::Free()
     CProtoMgr::DestroyInstance();
     CFrameMgr::DestroyInstance();
     CTimerMgr::DestroyInstance();
+    CMainEditorMgr::DestroyInstance();
     CImGuiManager::DestroyInstance();
     CManagement::DestroyInstance();
     CGraphicDev::DestroyInstance();

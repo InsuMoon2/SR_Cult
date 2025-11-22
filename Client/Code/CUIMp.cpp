@@ -86,47 +86,6 @@ void CUIMp::Render_GameObject()
     m_BufferCom->Render_Buffer();
 
     m_GraphicDev->SetRenderState(D3DRS_SCISSORTESTENABLE, FALSE);
-
-    if (ImGui::Begin("Player UI"))
-    {
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader(("Gauge")), ImGuiTreeNodeFlags_DefaultOpen)
-        {
-            _vec3 gaugePos = m_TransformCom->Get_Pos();
-
-            ImGui::Text("Gauge Position");
-            float itemWidth = 80.0f;
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("## XP X", (float*)&gaugePos.x);
-            ImGui::SameLine();
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##XP Y", (float*)&gaugePos.y);
-            ImGui::SameLine();
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("##XP Z", (float*)&gaugePos.z);
-
-            m_TransformCom->Set_Pos(gaugePos);
-
-            _vec3 gaugeScale = m_TransformCom->Get_Scale();
-
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleX", (float*)&gaugeScale.x);
-            ImGui::SameLine();
-            ImGui::SetNextItemWidth(itemWidth);
-            ImGui::InputFloat("XP ScaleY", (float*)&gaugeScale.y);
-
-            m_TransformCom->Set_Scale(gaugeScale);
-        }
-    }
-    ImGui::End();
 }
 
 HRESULT CUIMp::Add_Component()

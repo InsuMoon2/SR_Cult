@@ -43,6 +43,24 @@
     <Filter Include="05. UI\01. UI\03. UIWeapon">
       <UniqueIdentifier>{aebde5dc-3c0e-447e-85ea-05deb7023a1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="99. ImGui_Editor">
+      <UniqueIdentifier>{ae297ee4-6c1d-49d1-9257-6fa1219b5fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\00. MainEditor">
+      <UniqueIdentifier>{71c23e36-4c26-44b1-a9af-31a21ded4f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\01. EditorScript">
+      <UniqueIdentifier>{ed2d34f5-a5bc-478c-8152-8ce28467148a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99. ImGui_Editor\02. EditorMap">
+      <UniqueIdentifier>{b91c336f-3e56-430e-8e19-7119b696ba9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98. Utility">
+      <UniqueIdentifier>{6c679534-91b2-4e50-a8e7-3c3c107db823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Component">
+      <UniqueIdentifier>{9095604f-165d-433a-a8a8-f4b8f34e6c89}</UniqueIdentifier>
+    </Filter>
     <Filter Include="05. UI\01. UI\04. UI">
       <UniqueIdentifier>{f5ba0def-b59a-4d45-9d5e-3212b4671db6}</UniqueIdentifier>
     </Filter>
@@ -172,10 +190,10 @@
       <Filter>03. Item</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CEdit.h">
-      <Filter>02. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTerrain.h">
-      <Filter>02. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\CTestMonster.h">
       <Filter>03. GameObject\02. Monster</Filter>
@@ -195,6 +213,12 @@
     <ClInclude Include="..\Header\CUICircle.h">
       <Filter>05. UI\01. UI\01. UICircle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CMapObjectBase.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapObject_Grass.h">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\CUIWeapon.h">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
     </ClInclude>
@@ -212,6 +236,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\CSceneMgr.h">
       <Filter>01. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CTerrainRenderer.h">
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMainEditorMgr.h">
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CComInspectors.h">
+      <Filter>99. ImGui_Editor\01. EditorScript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,10 +297,10 @@
       <Filter>03. Item</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CEdit.cpp">
-      <Filter>02. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTerrain.cpp">
-      <Filter>02. Scene\02. Editor</Filter>
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CTestMonster.cpp">
       <Filter>03. GameObject\02. Monster</Filter>
@@ -284,11 +317,17 @@
     <ClCompile Include="..\Code\CUICircle.cpp">
       <Filter>05. UI\01. UI\01. UICircle</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\CUIWeapon.cpp">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>02. GameObject\09. MapObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CWeaponEquip.cpp">
       <Filter>05. WeaponEquip</Filter>
@@ -304,6 +343,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CSceneMgr.cpp">
       <Filter>01. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTerrainRenderer.cpp">
+      <Filter>99. ImGui_Editor\02. EditorMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMainEditorMgr.cpp">
+      <Filter>99. ImGui_Editor\00. MainEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

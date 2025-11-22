@@ -13,6 +13,8 @@
 #include "CUICircle.h"
 #include "CUIMp.h"
 #include "CUIPlayerPanel.h"
+#include "CEditContext.h"
+#include "CMainEditorMgr.h"
 #include "CUIWeapon.h"
 #include "CItemDB.h"
 
@@ -204,7 +206,6 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
     FAILED_CHECK_MSG(
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUICircle) failed");
-
 
     gameObject = CUIWeapon::Create(m_GraphicDev);
 

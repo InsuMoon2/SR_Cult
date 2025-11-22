@@ -1,5 +1,7 @@
 ﻿#pragma once
+
 #include "CProtoMgr.h"
+#include "CEnumHelper.h"
 
 BEGIN(Engine)
 class CGameObject;
@@ -23,6 +25,12 @@ static T* CreateProtoComponent(CGameObject* Owner, COMPONENTTYPE eComponentType)
     }
 
     component->Set_Owner(Owner);
+    component->Set_Type(eComponentType);
+
+    const char* tempChar = ToString(eComponentType);
+    wstring componentName = CharToWString(tempChar);
+
+    component->Set_Name(componentName);
 
     return component;
 }

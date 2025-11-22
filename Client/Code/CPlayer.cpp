@@ -28,7 +28,7 @@ CPlayer::CPlayer(DEVICE graphicDev)
       m_PlayerControllerCom(nullptr),
       m_WeaponEquipCom(nullptr),
       m_Inventory(nullptr)
-{ }
+{}
 
 CPlayer::CPlayer(const CPlayer& rhs)
     : CGameObject(rhs),
@@ -42,7 +42,7 @@ CPlayer::CPlayer(const CPlayer& rhs)
       m_PlayerControllerCom(nullptr),
       m_WeaponEquipCom(nullptr),
       m_Inventory(nullptr)
-{ }
+{}
 
 CPlayer::~CPlayer()
 { }
@@ -59,7 +59,8 @@ HRESULT CPlayer::Ready_GameObject()
     m_CombatStatCom->Set_Hp(6.f);
     m_CombatStatCom->Set_MaxHp(100.f);
     m_CombatStatCom->Set_Attack(10.f);
-    m_CombatStatCom->Set_Mp(100.f);
+    m_CombatStatCom->Set_Mp(5.f);
+    m_CombatStatCom->Set_Speed(5.f);
 
     // Transform 테스트
     m_TransformCom->Set_Pos(_vec3(0.f, 0.f, 1.f));
@@ -116,8 +117,6 @@ void CPlayer::Render_GameObject()
 
     m_BufferCom->Render_Buffer();
 
-    Render_ImGui();
-
     Render_Reset();
 
     m_BoxColCom->Render(); // Render Reset 이후 호출해야함
@@ -158,6 +157,16 @@ void CPlayer::OnEndOverlap(CCollider* self, CCollider* other)
     CGameObject::OnEndOverlap(self, other);
 
     cout << "Player HitOut" << endl;
+}
+
+void CPlayer::Render_Editor()
+{
+    CGameObject::Render_Editor();
+
+    ImGui::Text("=== Player ===");
+
+    // 이제 ImGui는 GameObject의 OnEditor를 상속받아서 Render하면 된다. 따로 호출해줄 필요도 없음.
+    // 추가로 띄우고 싶은거 있으면 추가하기
 }
 
 HRESULT CPlayer::Add_Component()
@@ -248,70 +257,6 @@ void CPlayer::Animation_Setting()
     // CState쪽에는 PlayerRun이라는 앞쪽 이름(상태)만 적어주면,
     // 자동으로 _LEFT 등 뒤쪽에 적어놓은 이름(방향)을 찾아준다
     m_StateCom->Set_AnimInfo(ACTORSTATE::RUN, L"PlayerRun", ANIMSTATE::LOOP);
-}
-
-void CPlayer::Render_ImGui()
-{
-    if (ImGui::Begin("Player Inspector"))
-    {
-        // TransformComponent
-        if (m_TransformCom && ImGui::CollapsingHeader("Transform Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            _vec3 pos = m_TransformCom->Get_Pos();
-
-            ImGui::Text("Position");
-
-            ImGui::Text("X :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosX", (float*)&pos.x);
-
-            ImGui::Text("Y :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosY", (float*)&pos.y);
-
-            ImGui::Text("Z :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##PlayerPosZ", (float*)&pos.z);
-
-            m_TransformCom->Set_Pos(pos);
-        }
-
-        // StateComponent
-        if (m_StateCom && ImGui::CollapsingHeader("State Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("State : %s", Engine::ToString(m_StateCom->Get_State()));
-            ImGui::Text("Dir   : %s", Engine::ToString(m_StateCom->Get_Dir()));
-        }
-
-        // CombatStatComponent
-        if (m_CombatStatCom && ImGui::CollapsingHeader("CombatStat Component", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            ImGui::Text("Hp : %.2f", m_CombatStatCom->Get_Hp());
-            ImGui::Text("Mp : %.2f", m_CombatStatCom->Get_Mp());
-            ImGui::Text("Attack : %.2f", m_CombatStatCom->Get_Attack());
-        }
-
-        if (m_CombatStatCom && ImGui::CollapsingHeader("Set Stat", ImGuiTreeNodeFlags_DefaultOpen))
-        {
-            const float hp = m_CombatStatCom->Get_Hp();
-
-            ImGui::Text("Set Hp :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##Player Hp", (float*)&hp);
-
-            m_CombatStatCom->Set_Hp(hp);
-
-            const float mp = m_CombatStatCom->Get_Mp();
-
-            ImGui::Text("Set Mp :");
-            ImGui::SameLine();
-            ImGui::InputFloat("##Player Mp", (float*)&mp);
-
-            m_CombatStatCom->Set_Mp(mp);
-        }
-    }
-
-    ImGui::End();
 }
 
 CPlayer* CPlayer::Create(DEVICE graphicDev)

@@ -23,13 +23,25 @@ public:
     virtual _int Update_Component(const _float& timeDelta) { return 0; }
     virtual void LateUpdate_Component() { }
 
-    CGameObject* Get_Owner() { return m_Owner; }
-    void         Set_Owner(CGameObject* owner);
-
+    CGameObject*      Get_Owner() { return m_Owner; }
+    
     CTransform*       Get_Transform() { return m_TransformCom; }
     const CTransform* Get_Transform() const { return m_TransformCom; }
 
+    COMPONENTTYPE     Get_Type() const { return m_ComponentType; }
+    virtual wstring   Get_Name() { return m_ComponentName; }
+
+    void              Set_Owner(CGameObject* owner);
+    void              Set_Type(COMPONENTTYPE type) { m_ComponentType = type; }
+    void              Set_Name(wstring name) { m_ComponentName = name; }
+
+    // Editor
+    virtual void Render_Editor() {};
+
 protected:
+    COMPONENTTYPE m_ComponentType;
+    wstring       m_ComponentName;
+
     DEVICE m_GraphicDev;
 
     CGameObject* m_Owner;

@@ -13,7 +13,7 @@ CMonster::CMonster(DEVICE graphicDev)
       m_BufferCom(nullptr),
       m_TransformCom(nullptr),
       m_RectColCom(nullptr)
-{ }
+{}
 
 CMonster::CMonster(const CMonster& rhs)
     : CGameObject(rhs),

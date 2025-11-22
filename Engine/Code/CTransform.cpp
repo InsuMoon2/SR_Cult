@@ -70,6 +70,7 @@ void CTransform::LateUpdate_Component()
 
     m_PrevScale    = m_Scale;
     m_PrevRotation = m_Rotation;
+
 }
 
 _vec3 CTransform::Get_Rotation() const
@@ -99,6 +100,32 @@ _float CTransform::Get_Rotation(ROTATION eType) const
 void CTransform::Get_Info(INFO type, _vec3* info)
 {
     memcpy(info, &m_matWorld.m[type][0], sizeof(_vec3));
+}
+
+void CTransform::Set_Rotation(const _vec3& rad)
+{
+    m_EulerRad = rad;
+    D3DXQuaternionRotationYawPitchRoll(&m_Rotation,
+        rad.y, rad.x, rad.z);
+    m_IsDirty = true;
+}
+
+void CTransform::Set_RotationAxis(ROTATION axis, float v)
+{
+    switch (axis)
+    {
+    case ROT_X:
+        m_EulerRad.x = v;
+        break;
+    case ROT_Y:
+        m_EulerRad.y = v;
+        break;
+    case ROT_Z:
+        m_EulerRad.z = v;
+        break;
+    }
+
+    Set_Rotation(m_EulerRad);
 }
 
 void CTransform::Move_Pos(const _vec3& dir, const _float& timeDelta, const _float& speed)

@@ -30,9 +30,14 @@ public:
     virtual void    Render_Scene() PURE;
 
     void AddObjectOnLayer(LAYERTYPE layerType, CGameObject* obj, OBJTYPE objType);
+
+    // Editor
+    const map<LAYERTYPE, CLayer*>& Get_Layers() const { return m_Layers; }
+
 protected:
     map<LAYERTYPE, CLayer*> m_Layers;
     DEVICE                  m_GraphicDev;
+    
 
 protected:
     void Free() override;

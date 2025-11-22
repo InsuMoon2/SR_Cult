@@ -37,13 +37,14 @@ public:
     CCombatStat*  Get_CombatStat() { return m_CombatStatCom; }
     CWeaponEquip* Get_WeaponEquip() { return m_WeaponEquipCom; }
 
+    virtual void Render_Editor() override;
+
 private:
     HRESULT Add_Component();
     void    Animation_Setting();
 
     void Render_Setting();
     void Render_Reset();
-    void Render_ImGui();
 
 private:
     // Engine Components    /////////////////
