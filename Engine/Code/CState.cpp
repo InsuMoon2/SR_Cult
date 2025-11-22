@@ -10,21 +10,19 @@ CState::CState(DEVICE graphicDev)
       m_Dir(ACTORDIR::LEFT),
       m_PrevDir(ACTORDIR::PLAYERDIR_END),
       m_Animator(nullptr)
-{}
+{ }
 
 CState::CState(const CState& rhs)
-    : CComponent(rhs.m_GraphicDev),
+    : CComponent(rhs),
       m_State(ACTORSTATE::IDLE),
       m_PrevState(ACTORSTATE::PLAYERSTATE_END),
       m_Dir(ACTORDIR::LEFT),
       m_PrevDir(ACTORDIR::PLAYERDIR_END),
       m_Animator(nullptr)
-{}
+{ }
 
 CState::~CState()
-{
-    CState::Free();
-}
+{ }
 
 HRESULT CState::Ready_StateComponent(DEVICE graphicDev)
 {

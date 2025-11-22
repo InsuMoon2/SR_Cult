@@ -1,5 +1,7 @@
-﻿#include "CPlayerController.h"
+﻿#include "pch.h"
+#include "CPlayerController.h"
 
+#include "CCombatStat.h"
 #include "CDInputMgr.h"
 #include "CGameObject.h"
 #include "CState.h"
@@ -7,12 +9,14 @@
 
 CPlayerController::CPlayerController(DEVICE graphicDev)
     : CComponent(graphicDev),
-      m_OwnerStateCom(nullptr)
+      m_OwnerStateCom(nullptr),
+      m_OwnerCombatStat(nullptr)
 { }
 
 CPlayerController::CPlayerController(const CPlayerController& rhs)
     : CComponent(rhs),
-      m_OwnerStateCom(nullptr)
+      m_OwnerStateCom(nullptr),
+      m_OwnerCombatStat(nullptr)
 { }
 
 CPlayerController::~CPlayerController()
@@ -25,9 +29,6 @@ HRESULT CPlayerController::Ready_PlayerController()
 
 _int CPlayerController::Update_Component(const _float& timeDelta)
 {
-    if (nullptr == m_OwnerStateCom)
-        Init_OwnerComponent();
-    
     Key_Input(timeDelta);
 
     return 0;
@@ -36,24 +37,34 @@ _int CPlayerController::Update_Component(const _float& timeDelta)
 void CPlayerController::LateUpdate_Component()
 { }
 
-void CPlayerController::Init_OwnerComponent()
+HRESULT CPlayerController::Init_OwnerComponent()
 {
     m_OwnerStateCom =
         dynamic_cast<CState*>(m_Owner->Get_Component(ID_DYNAMIC, COMPONENTTYPE::STATE));
 
-    NULL_CHECK_MSG(m_OwnerStateCom, L"CPlayerController : Owner's State init setting failed");;
+    m_OwnerCombatStat =
+        dynamic_cast<CCombatStat*>(m_Owner->Get_Component(ID_DYNAMIC, COMPONENTTYPE::COMBATSTAT));
+
+    NULL_CHECK_RETURN_MSG(
+        m_OwnerStateCom,
+        E_FAIL,
+        L"CPlayerController::Init_OwnerComponent(): Owner's STATE caching has failed");
+
+    NULL_CHECK_RETURN_MSG(
+        m_OwnerCombatStat,
+        E_FAIL,
+        L"CPlayerController::Init_OwnerComponent(): Owner's COMBATSTAT caching has failed");
+
+    return S_OK;
 }
 
 void CPlayerController::Key_Input(const _float& timeDelta)
 {
-    auto inputMgr = CDInputMgr::GetInstance();
+    const auto inputMgr = CDInputMgr::GetInstance();
 
     // ---------------------------------
     // 1. 방향 입력 벡터 계산
     // ---------------------------------
-    _vec3 look  = g_WorldLook;
-    _vec3 right = g_WorldRight;
-
     _vec3 moveDir = { 0.f, 0.f, 0.f };
     int   axis_X{};
     int   axis_Z{};
@@ -61,40 +72,38 @@ void CPlayerController::Key_Input(const _float& timeDelta)
     if (inputMgr->Get_DIKeyState(DIK_W) & 0x80 ||
         inputMgr->Get_DIKeyState(DIK_UP) & 0x80)
     {
-        moveDir += look;
+        moveDir += g_WorldLook;
         ++axis_Z;
     }
     if (inputMgr->Get_DIKeyState(DIK_S) & 0x80 ||
         inputMgr->Get_DIKeyState(DIK_DOWN) & 0x80)
     {
-        moveDir -= look;
+        moveDir -= g_WorldLook;
         --axis_Z;
     }
     if (inputMgr->Get_DIKeyState(DIK_D) & 0x80 ||
         inputMgr->Get_DIKeyState(DIK_RIGHT) & 0x80)
     {
-        moveDir += right;
+        moveDir += g_WorldRight;
         ++axis_X;
     }
     if (inputMgr->Get_DIKeyState(DIK_A) & 0x80 ||
         inputMgr->Get_DIKeyState(DIK_LEFT) & 0x80)
     {
-        moveDir -= right;
+        moveDir -= g_WorldRight;
         --axis_X;
     }
 
     // ---------------------------------
     // 2. 상태 및 속도 결정
     // ---------------------------------
-    bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
-
+    const bool isMoving = (D3DXVec3LengthSq(&moveDir) > 0.f);
+    const auto speed    = m_OwnerCombatStat->Get_Speed();
     ACTORSTATE nextState;
-    _float     curSpeed{};
 
     if (isMoving)
     {
         nextState = ACTORSTATE::RUN;
-        curSpeed  = 10.f;
 
         // TODO 석호: 예시 코드. 상태 추가시 이런 식으로 변경
         //if (GetAsyncKeyState('Z') & 0x8000) 
@@ -121,7 +130,7 @@ void CPlayerController::Key_Input(const _float& timeDelta)
     if (isMoving)
     {
         D3DXVec3Normalize(&moveDir, &moveDir);
-        m_TransformCom->Move_Pos(moveDir, timeDelta, curSpeed);
+        m_TransformCom->Move_Pos(moveDir, timeDelta, speed);
 
         // 공격 중에는 방향 전환을 막고 싶다면 여기에 조건을 걸면 됨
         // if (eNextState != ACTORSTATE::ATTACK) 
@@ -180,5 +189,8 @@ CComponent* CPlayerController::Clone()
 
 void CPlayerController::Free()
 {
+    m_OwnerStateCom   = nullptr;
+    m_OwnerCombatStat = nullptr;
+
     CComponent::Free();
 }

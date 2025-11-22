@@ -124,6 +124,9 @@
     <Filter Include="01. Manager">
       <UniqueIdentifier>{58c808c6-fb36-4533-b7c9-5fe4324476c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="97. Component\03. Player Controller">
+      <UniqueIdentifier>{f2106dd3-bd45-46c3-8297-8a8688247354}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -246,6 +249,9 @@
     <ClInclude Include="..\Header\CComInspectors.h">
       <Filter>99. ImGui_Editor\01. EditorScript</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CPlayerController.h">
+      <Filter>97. Component\03. Player Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -349,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\CMainEditorMgr.cpp">
       <Filter>99. ImGui_Editor\00. MainEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CPlayerController.cpp">
+      <Filter>97. Component\03. Player Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,18 +2,23 @@
 #include "CAnimator.h"
 
 CCombatStat::CCombatStat(DEVICE GraphicDev)
-    : CComponent(GraphicDev), m_Attack(0), m_Hp(0), m_Mp(0)
-
-{}
+    : CComponent(GraphicDev),
+      m_Attack(0),
+      m_Hp(0),
+      m_Mp(0),
+      m_Speed(10)
+{ }
 
 CCombatStat::CCombatStat(const CCombatStat& rhs)
-    : CComponent(rhs.m_GraphicDev), m_Attack(0), m_Hp(0), m_Mp(0)
-{}
+    : CComponent(rhs),
+      m_Attack(0),
+      m_Hp(0),
+      m_Mp(0),
+      m_Speed(10)
+{ }
 
 CCombatStat::~CCombatStat()
-{
-    Free();
-}
+{ }
 
 HRESULT CCombatStat::Ready_StateComponent(DEVICE GraphicDev)
 {
