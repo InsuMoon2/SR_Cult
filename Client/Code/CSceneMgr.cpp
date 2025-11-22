@@ -1,0 +1,99 @@
+﻿#include "pch.h"
+#include "CSceneMgr.h"
+#include "CStage.h"
+#include "CEdit.h"
+#include "CMainMenu.h"
+#include "Engine_Enum.h"
+#include "CLogo.h"
+
+IMPLEMENT_SINGLETON(CSceneMgr)
+
+
+CSceneMgr::CSceneMgr()
+{
+    m_pGraphicDev = nullptr;
+}
+
+CSceneMgr::~CSceneMgr()
+{
+    Free();
+}
+
+HRESULT CSceneMgr::Ready_SceneMgr(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+    m_pGraphicDev = pGraphicDev;
+    m_pGraphicDev->AddRef();
+
+    Engine::CScene* logo = CLogo::Create(pGraphicDev);
+
+    if (nullptr == logo)
+        return E_FAIL;
+
+    if (FAILED(CManagement::GetInstance()->Set_Scene(logo)))
+    {
+        MSG_BOX("Logo Setting Failed");
+        return E_FAIL;
+    }
+
+    return S_OK;
+
+
+
+}
+
+void CSceneMgr::Render_SceneMgr()
+{
+    
+}
+
+void CSceneMgr::Change_SceneMgr(SCENETYPE typeInput)
+{
+    _bool bFailed = false;
+    SCENETYPE type = typeInput;
+    switch (type)
+    {
+    case SCENETYPE::SC_MAINMENU:
+        if (FAILED(CManagement::GetInstance()
+            ->Request_ChangeScene(CMainMenu::Create(m_pGraphicDev))))
+        {
+            bFailed = true;
+        }
+        break;
+    case SCENETYPE::SC_STAGE:
+        if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CStage::Create(m_pGraphicDev))))
+        {
+            bFailed = true;
+        }
+        break;
+    case SCENETYPE::SC_EDIT:
+        if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CEdit::Create(m_pGraphicDev))))
+        {
+            bFailed = true;
+        }
+        break;
+    //case SC_STAGE1:
+    //    if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CMonsterTestScene::Create(m_pGraphicDev))))
+    //    {
+    //        bFailed = true;
+    //    }
+    //    break;
+    //case SC_STAGE2:
+    //    if (FAILED(CManagement::GetInstance()->Request_ChangeScene(CUITestScene::Create(m_pGraphicDev))))
+    //    {
+    //        bFailed = true;
+    //    }
+    //    break;
+    case SCENETYPE::SC_END:
+        break;
+    default:
+        break;
+    }
+
+
+
+}
+
+void CSceneMgr::Free()
+{
+    Safe_Release(m_pGraphicDev);
+}

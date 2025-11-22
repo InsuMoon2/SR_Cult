@@ -55,6 +55,50 @@ void CUICircle::Render_GameObject()
     m_TextureCom->Set_Texture(0);
 
     m_BufferCom->Render_Buffer();
+
+    if (ImGui::Begin("Player UI"))
+    {
+
+        // TransformComponent
+        if (m_TransformCom && ImGui::CollapsingHeader(("Circle")), ImGuiTreeNodeFlags_DefaultOpen)
+        {
+            const _vec3& pos = m_TransformCom->Get_Pos();
+
+            ImGui::Text("Circle Position");
+            float itemWidth = 80.0f;
+            ImGui::Text("X :");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("##Circle X", (float*)&pos.x);
+            ImGui::SameLine();
+
+            ImGui::Text("Y :");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("##Circle Y", (float*)&pos.y);
+            ImGui::SameLine();
+
+            ImGui::Text("Z :");
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("##Circle Z", (float*)&pos.z);
+
+
+            m_TransformCom->Set_Pos(pos);
+
+            const _vec3& scale = m_TransformCom->Get_Scale();
+
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("Circle ScaleX", (float*)&scale.x);
+            ImGui::SameLine();
+            ImGui::SetNextItemWidth(itemWidth);
+            ImGui::InputFloat("Circle ScaleY", (float*)&scale.y);
+
+            m_TransformCom->Set_Scale(scale);
+        }
+
+    }
+    ImGui::End();
 }
 
 HRESULT CUICircle::Add_Component()
@@ -94,9 +138,6 @@ CUICircle* CUICircle::Create(DEVICE graphicDev)
 
 void CUICircle::Free()
 {
-    Safe_Release(m_BufferCom);
-    Safe_Release(m_TextureCom);
-    Safe_Release(m_TransformCom);
-
+ 
     CUI::Free();
 }

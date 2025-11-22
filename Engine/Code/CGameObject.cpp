@@ -3,13 +3,15 @@
 #include "CComponent.h"
 
 CGameObject::CGameObject(DEVICE graphicDev)
-    : m_GraphicDev(graphicDev)
+    : m_GraphicDev(graphicDev),
+      m_Active(true)
 {
     m_GraphicDev->AddRef();
 }
 
 CGameObject::CGameObject(const CGameObject& rhs)
-    : m_GraphicDev(rhs.m_GraphicDev)
+    : m_GraphicDev(rhs.m_GraphicDev),
+      m_Active(true)
 {
     m_GraphicDev->AddRef();
 }
@@ -18,7 +20,7 @@ CGameObject::~CGameObject()
 { }
 
 CComponent* CGameObject::Get_Component(COMPONENTID componentID, COMPONENTTYPE componentType)
- {
+{
     CComponent* component = Find_Component(componentID, componentType);
 
     if (nullptr == component)
@@ -57,7 +59,7 @@ CComponent* CGameObject::Find_Component(COMPONENTID componentID, COMPONENTTYPE c
 {
     auto& componentMap = m_Components[componentID];
 
-     auto iter = componentMap.find(componentType);
+    auto iter = componentMap.find(componentType);
 
     if (iter == componentMap.end())
         return nullptr;

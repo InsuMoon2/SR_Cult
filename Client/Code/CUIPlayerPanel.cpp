@@ -120,24 +120,24 @@ void CUIPlayerPanel::Render_GameObject()
 
     //            ImGui::Text("Position");
 
-    //            ImGui::Text("X :");
-    //            ImGui::SameLine();
-    //            ImGui::InputFloat("##HeartX", (float*)&pos.x);
+                ImGui::Text("X :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartX",(float*)&pos.x);
 
-    //            ImGui::Text("Y :");
-    //            ImGui::SameLine();
-    //            ImGui::InputFloat("##HeartY", (float*)&pos.y);
+                ImGui::Text("Y :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartY",(float*)&pos.y);
 
-    //            ImGui::Text("Z :");
-    //            ImGui::SameLine();
-    //            ImGui::InputFloat("##HeartZ", (float*)&pos.z);
+                ImGui::Text("Z :");
+                ImGui::SameLine();
+                ImGui::InputFloat("##HeartZ",(float*)&pos.z);
 
     //            m_HeartTransformCom->Set_Pos(pos);
 
     //            const _vec3& scale = m_HeartTransformCom->Get_Scale();
 
-    //            ImGui::InputFloat("ScaleX", (float*)&scale.x);
-    //            ImGui::InputFloat("ScaleY", (float*)&scale.y);
+                ImGui::InputFloat("##ScaleX",(float*)&scale.x);
+                ImGui::InputFloat("##ScaleY",(float*)&scale.y);
 
     //            m_HeartTransformCom->Set_Scale(scale);
     //        }

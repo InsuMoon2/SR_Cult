@@ -2,7 +2,10 @@
 #include "CGameObject.h"
 #include "Engine_Define.h"
 
+class CWeaponEquip;
+
 BEGIN(Engine)
+class CPlayerController;
 class CRcTex;
 class CTransform;
 class CTexture;
@@ -29,28 +32,33 @@ public:
     void    LateUpdate_GameObject(const _float& timeDelta) override;
     void    Render_GameObject() override;
 
-    void         OnBeginOverlap(CCollider* self, CCollider* other) override;
-    void         OnEndOverlap(CCollider* self, CCollider* other) override;
-    CCombatStat* Get_CombatStat() { return m_CombatStatCom; }
+    void          OnBeginOverlap(CCollider* self, CCollider* other) override;
+    void          OnEndOverlap(CCollider* self, CCollider* other) override;
+    CCombatStat*  Get_CombatStat() { return m_CombatStatCom; }
+    CWeaponEquip* Get_WeaponEquip() { return m_WeaponEquipCom; }
 
     virtual void Render_Editor() override;
 
 private:
     HRESULT Add_Component();
     void    Animation_Setting();
-    void    Key_Input(const _float& timeDelta);
 
     void Render_Setting();
     void Render_Reset();
 
 private:
-    Engine::CRcTex*       m_BufferCom;
-    Engine::CTransform*   m_TransformCom;
-    Engine::CTexture*     m_TextureCom;
-    Engine::CAnimator*    m_AnimatorCom;
-    Engine::CBoxCollider* m_BoxColCom;
-    Engine::CState*       m_StateCom;
-    Engine::CCombatStat*  m_CombatStatCom;
+    // Engine Components    /////////////////
+    Engine::CRcTex*            m_BufferCom;
+    Engine::CTransform*        m_TransformCom;
+    Engine::CTexture*          m_TextureCom;
+    Engine::CAnimator*         m_AnimatorCom;
+    Engine::CBoxCollider*      m_BoxColCom;
+    Engine::CState*            m_StateCom;
+    Engine::CCombatStat*       m_CombatStatCom;
+    Engine::CPlayerController* m_PlayerControllerCom;
+
+    // Client Components    /////////////////
+    CWeaponEquip* m_WeaponEquipCom;
 
     CInventory* m_Inventory;
 

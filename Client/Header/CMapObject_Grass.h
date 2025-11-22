@@ -7,7 +7,7 @@ class CMapObject_Grass : public CMapObjectBase
 private:
     explicit CMapObject_Grass(DEVICE graphicDev);
     explicit CMapObject_Grass(const CMapObjectBase& rhs);
-    virtual  ~CMapObject_Grass();
+    ~CMapObject_Grass() override;
 
 public:
     HRESULT Ready_GameObject() override;
@@ -23,5 +23,3 @@ public:
 protected:
     void Free() override;
 };
-
-

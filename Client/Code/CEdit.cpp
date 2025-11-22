@@ -13,6 +13,11 @@
 #include "CTransform.h"
 #include "CTriCol.h"
 
+#include "CDInputMgr.h"
+#include "CMainMenu.h"
+#include "CSceneMgr.h"
+
+
 CEdit::CEdit(DEVICE graphicDev)
     : Engine::CScene(graphicDev)
 { }
@@ -42,6 +47,13 @@ _int CEdit::Update_Scene(const _float& timeDelta)
 {
     _int exit = Engine::CScene::Update_Scene(timeDelta);
 
+
+    //안은수 테스트
+    // Stage
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(DIK_0) & 0x80)
+    {
+        CSceneMgr::GetInstance()->Change_SceneMgr(SCENETYPE::SC_MAINMENU);
+    }
     return exit;
 }
 
@@ -94,17 +106,17 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
             layer,
             &gameObject),
         L"Persistent object setup failed");
-
+    
     // 플레이어의 Transform 가져오기
     const auto playerTransform =
         dynamic_cast<CTransform*>(gameObject->Get_Component(
             ID_DYNAMIC,
             COMPONENTTYPE::TRANSFORM));
-
+    
     // -----------------------------
     // Camera
     // -----------------------------
-
+    
     // 카메라 생성
     FAILED_CHECK_MSG(
         Engine::AcquirePersistentObject<CMainCamera>(
@@ -113,7 +125,7 @@ HRESULT CEdit::Ready_GameLogic_Layer(LAYERTYPE layerType)
             layer,
             &gameObject),
         L"Persistent object setup failed");
-
+    
     // 카메라 타겟을 플레이어로 설정
     dynamic_cast<CMainCamera*>(gameObject)->Set_CamTarget(playerTransform);
 

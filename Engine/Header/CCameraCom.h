@@ -108,16 +108,14 @@ private:
 
     _matrix m_matView, m_matProj;
 
-    _vec3 m_Offset;         // 3인칭 카메라의 타겟 기준 오프셋 (거리)
-
-    _vec3 m_Pos, m_Look, m_Up, m_Eye, m_At;
-
+    _vec3  m_Offset;        // 3인칭 카메라의 타겟 기준 오프셋 (거리)
+    _vec3  m_Pos, m_Look,   m_Up,   m_Eye, m_At;
     _float m_FOV, m_Aspect, m_Near, m_Far;
 
     _bool m_isDirty;        // 투영 변환 재연산 트리거
 
 public:
-    static CCameraCom* Create(DEVICE pGraphicDev);
+    static CCameraCom* Create(DEVICE graphicDev);
     CComponent*        Clone() override;
 
 private:

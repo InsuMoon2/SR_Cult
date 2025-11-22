@@ -22,7 +22,7 @@ CDropSystem::~CDropSystem()
 void CDropSystem::SpawnDrop(DEVICE pGraphicDev,const ItemInstance& itemInst, const _vec3& worldPos)
 {
     CDroppedItem* pDrop = CDroppedItem::Create(pGraphicDev, itemInst, worldPos);
-    dynamic_cast<CStage*>(m_nowScene)->AddObjectOnLayer(LAYERTYPE::GAMELOGIC, pDrop, OBJTYPE::ITEM);
+    m_nowScene->AddObjectOnLayer(LAYERTYPE::GAMELOGIC, pDrop, OBJTYPE::ITEM);
 }
 
 void CDropSystem::SpawnAllFromInven(DEVICE pGraphicDev,CInventory& Inven)

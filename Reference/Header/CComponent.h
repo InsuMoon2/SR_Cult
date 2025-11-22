@@ -43,10 +43,12 @@ protected:
     wstring       m_ComponentName;
 
     DEVICE m_GraphicDev;
-    _bool  m_IsClone;
 
     CGameObject* m_Owner;
     CTransform*  m_TransformCom;
+
+    _bool m_IsClone;
+    _bool m_Active;         // 컴포넌트의 업데이트와 렌더를 하면 true, 안할거면 false로 바꾸면 되는 스위치
 
 public:
     virtual CComponent* Clone() PURE;		// 프로토타입 사용 예

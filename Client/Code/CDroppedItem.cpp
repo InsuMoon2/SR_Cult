@@ -13,6 +13,7 @@
 #include "CRenderer.h"
 #include "CTexture.h"
 #include "CTransform.h"
+#include "CWeaponEquip.h"
 #include "ItemData.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
@@ -69,12 +70,14 @@ void CDroppedItem::Render_GameObject()
 {
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
     m_GraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
     m_GraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     m_GraphicDev->SetRenderState(D3DRS_ALPHAREF, 0);
+
     //
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
     
@@ -84,10 +87,13 @@ void CDroppedItem::Render_GameObject()
 
     //
 
+    m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 
     //
 
@@ -101,8 +107,18 @@ void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
     if (ply != nullptr)
     {
         //CDropSystem::GetInstance()->
+
+        if (CItemDB::GetInstance()->GetItemById(m_itemInst.itemId)->type == ItemType::Weapon)
+        {
+            ply->Get_WeaponEquip()->Equip_Weapon(m_itemInst);
+        }
+        else
+        {
         CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
         dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
+            
+        }
+
 
         //*** 아이템 지우기 ***
         //
@@ -159,7 +175,7 @@ CDroppedItem* CDroppedItem::Create(DEVICE graphicDev, ItemInstance itemInst, _ve
 
     if (FAILED(DroppedItem->Ready_GameObject(pos)))
     {
-        MSG_BOX("pPlayer Create Failed");
+        MSG_BOX("DroppedItem Create Failed");
         Safe_Release(DroppedItem);
         return nullptr;
     }

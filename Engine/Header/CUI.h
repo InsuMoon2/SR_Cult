@@ -32,6 +32,7 @@ protected:
     CTexture*   m_TextureCom;
     CRcTex*     m_BufferCom;
     int         m_ID;
+    bool        m_Invisible;
 };
 
 END

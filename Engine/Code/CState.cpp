@@ -3,8 +3,8 @@
 #include "CGameObject.h"
 #include "CTransform.h"
 
-CState::CState(DEVICE GraphicDev)
-    : CComponent(GraphicDev),
+CState::CState(DEVICE graphicDev)
+    : CComponent(graphicDev),
       m_State(ACTORSTATE::IDLE),
       m_PrevState(ACTORSTATE::PLAYERSTATE_END),
       m_Dir(ACTORDIR::LEFT),
@@ -13,12 +13,7 @@ CState::CState(DEVICE GraphicDev)
 {}
 
 CState::CState(const CState& rhs)
-    : CComponent(rhs.m_GraphicDev)
-      /*, m_State(rhs.m_State)
-      , m_Dir(rhs.m_Dir)
-      , m_PrevState(rhs.m_PrevState)
-      , m_Animator(rhs.m_Animator)*/
-      ,
+    : CComponent(rhs.m_GraphicDev),
       m_State(ACTORSTATE::IDLE),
       m_PrevState(ACTORSTATE::PLAYERSTATE_END),
       m_Dir(ACTORDIR::LEFT),
@@ -31,7 +26,7 @@ CState::~CState()
     CState::Free();
 }
 
-HRESULT CState::Ready_StateComponent(DEVICE GraphicDev)
+HRESULT CState::Ready_StateComponent(DEVICE graphicDev)
 {
     m_State     = ACTORSTATE::IDLE;
     m_PrevState = ACTORSTATE::PLAYERSTATE_END;
@@ -136,33 +131,33 @@ void CState::Update_Animation()
     }
 }
 
-void CState::Change_State(ACTORSTATE State)
+void CState::Change_State(ACTORSTATE state)
 {
-    if (m_State == State)
+    if (m_State == state)
         return;
 
-    m_State = State;
+    m_State = state;
 }
 
-void CState::Change_Dir(ACTORDIR Dir)
+void CState::Change_Dir(ACTORDIR dir)
 {
-    if (m_Dir == Dir)
+    if (m_Dir == dir)
         return;
 
-    m_Dir = Dir;
+    m_Dir = dir;
 }
 
-void CState::Set_AnimInfo(ACTORSTATE PlayerState, const wstring& Key, ANIMSTATE AnimState)
+void CState::Set_AnimInfo(ACTORSTATE playerState, const wstring& key, ANIMSTATE animState)
 {
-    m_PlayerStateMap[PlayerState] = Key;
-    m_AnimStateMap[PlayerState]   = AnimState;
+    m_PlayerStateMap[playerState] = key;
+    m_AnimStateMap[playerState]   = animState;
 }
 
-CState* CState::Create(DEVICE GraphicDev)
+CState* CState::Create(DEVICE graphicDev)
 {
-    CState* state = new CState(GraphicDev);
+    CState* state = new CState(graphicDev);
 
-    if (FAILED(state->Ready_StateComponent(GraphicDev)))
+    if (FAILED(state->Ready_StateComponent(graphicDev)))
     {
         Safe_Release(state);
         MSG_BOX("StateCom Create Failed");
