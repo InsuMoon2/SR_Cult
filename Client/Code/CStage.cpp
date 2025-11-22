@@ -132,11 +132,8 @@ HRESULT CStage::Ready_GameLogic_Layer(LAYERTYPE layerType)
         dynamic_cast<CCombatStat*>(gameObject->Get_Component(
             ID_DYNAMIC,
             COMPONENTTYPE::COMBATSTAT));
-    //! 여기서 Get_Component를 이용해서, 현재 플레이어를 담고 있는 gameObject 안의
-    //! CCombatStat를 정석적인 방법으로 검색해서 m_PlayerCombatStatCom에 저장
 
-    m_PlayerCombatStatCom->AddRef();
-    //! 남의 것을 함부로 가져왔으므로 레퍼런스 카운트를 증가시켜서 빌려 쓴다는 것을 명시
+    //m_PlayerCombatStatCom->AddRef();
 
     // -----------------------------
     // Monster

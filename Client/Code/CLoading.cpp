@@ -9,6 +9,7 @@
 #include "CCombatStat.h"
 #include "CInventory.h"
 #include "CItemDB.h"
+#include "CPlayerController.h"
 #include "CProtoMgr.h"
 #include "CRcCol.h"
 #include "CRectCollider.h"
@@ -255,6 +256,10 @@ _uint CLoading::Loading_ForState()
     if (FAILED(pProtoMgr->Ready_Prototype(
         COMPONENTTYPE::INVENTORY, CInventory::Create(m_GraphicDev))))
         return E_FAIL;
+
+    //if (FAILED(pProtoMgr->Ready_Prototype(
+    //    COMPONENTTYPE::CONTROLLER_PLAYER, CPlayerController::Create(m_GraphicDev))))
+    //    return E_FAIL;
 
     m_LoadingText = L"COMPLETE: PRESS 1 -> Stage|PRESS 2 -> Editor";
 

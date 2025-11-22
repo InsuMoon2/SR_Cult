@@ -159,7 +159,7 @@ CDroppedItem* CDroppedItem::Create(DEVICE graphicDev, ItemInstance itemInst, _ve
 
     if (FAILED(DroppedItem->Ready_GameObject(pos)))
     {
-        MSG_BOX("pPlayer Create Failed");
+        MSG_BOX("Dropped Item Create Failed");
         Safe_Release(DroppedItem);
         return nullptr;
     }

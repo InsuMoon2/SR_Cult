@@ -83,10 +83,7 @@ HRESULT CMainCamera::Set_CamTarget(CTransform* targetTransform)
     }
     else
     {
-        // 새 타겟 참조 (RefCnt 증가)
-        // 다른 오브젝트의 컴포넌트를 가져와서 오랫동안 참조해야 한다면
-        // AddRef()를 통해 수명을 연장시켜야 안전합니다.
-        m_TargetTransformCom->AddRef();
+        //m_TargetTransformCom->AddRef();
         m_CameraCom->Set_CamMode(CCameraCom::CAM_TARGET);
     }
 
