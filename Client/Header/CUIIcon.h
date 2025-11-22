@@ -3,11 +3,12 @@
 
 class CUIIcon : public CUI
 {
-protected:
+private:
     explicit CUIIcon(DEVICE pGraphicDev);
     explicit CUIIcon(const CUIIcon& rhs);
     ~CUIIcon() override;
 
+public:
     HRESULT Ready_GameObject() override;
     _int    Update_GameObject(const _float& timeDelta) override;
     void    LateUpdate_GameObject(const _float& timeDelta) override;
@@ -25,6 +26,6 @@ private:
     static int m_nextID;
     int        m_textureIndex = 0;
 
-protected:
+private:
     void Free() override;
 };

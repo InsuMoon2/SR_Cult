@@ -17,20 +17,25 @@
 #include "ItemData.h"
 
 CDroppedItem::CDroppedItem(DEVICE graphicDev, ItemInstance itemInst)
-    : CGameObject(graphicDev), m_itemInst(itemInst),
-      m_BufferCom(nullptr), m_BoxColCom(nullptr), m_TextureCom(nullptr), m_TransformCom(nullptr)
-{
+    : CGameObject(graphicDev),
+      m_BufferCom(nullptr),
+      m_TransformCom(nullptr),
+      m_TextureCom(nullptr),
+      m_BoxColCom(nullptr),
+      m_itemInst(itemInst)
+{ }
 
-}
-
-CDroppedItem::CDroppedItem(const CDroppedItem& rhs) : CGameObject(rhs), m_itemInst(rhs.m_itemInst),
-m_BufferCom(rhs.m_BufferCom), m_BoxColCom(rhs.m_BoxColCom), m_TextureCom(rhs.m_TextureCom), m_TransformCom(rhs.m_TransformCom)
-{
-}
+CDroppedItem::CDroppedItem(const CDroppedItem& rhs)
+    : CGameObject(rhs),
+      m_BufferCom(rhs.m_BufferCom),
+      m_TransformCom(rhs.m_TransformCom),
+      m_TextureCom(rhs.m_TextureCom),
+      m_BoxColCom(rhs.m_BoxColCom),
+      m_itemInst(rhs.m_itemInst)
+{ }
 
 CDroppedItem::~CDroppedItem()
-{
-}
+{ }
 
 HRESULT CDroppedItem::Ready_GameObject()
 {
@@ -46,7 +51,7 @@ HRESULT CDroppedItem::Ready_GameObject(_vec3 pos)
         return E_FAIL;
 
     m_TransformCom->Set_Pos(pos);
-    m_TransformCom->Set_Scale({ 0.4f,0.4f,0.4f });
+    m_TransformCom->Set_Scale({ 0.4f, 0.4f, 0.4f });
     m_BoxColCom->Set_Size(_vec3(2.f, 2.f, 2.f));
 
     return S_OK;
@@ -80,7 +85,7 @@ void CDroppedItem::Render_GameObject()
 
     //
     m_GraphicDev->SetTransform(D3DTS_WORLD, &m_TransformCom->Get_World());
-    
+
     m_TextureCom->Set_Texture(m_index);
 
     m_BufferCom->Render_Buffer();
@@ -93,7 +98,6 @@ void CDroppedItem::Render_GameObject()
 
     m_GraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
     m_GraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
 
     //
 
@@ -109,21 +113,16 @@ void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
         //CDropSystem::GetInstance()->
 
         if (CItemDB::GetInstance()->GetItemById(m_itemInst.itemId)->type == ItemType::Weapon)
-        {
             ply->Get_WeaponEquip()->Equip_Weapon(m_itemInst);
-        }
         else
         {
-        CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
-        dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
-            
+            CComponent* com = ply->Get_Component(COMPONENTID::ID_STATIC, COMPONENTTYPE::INVENTORY);
+            dynamic_cast<CInventory*>(com)->AddItem(m_itemInst);
         }
-
 
         //*** 아이템 지우기 ***
         //
     }
-
 
     cout << "item Hit" << endl;
 }
@@ -131,7 +130,6 @@ void CDroppedItem::OnBeginOverlap(CCollider* self, CCollider* other)
 void CDroppedItem::OnEndOverlap(CCollider* self, CCollider* other)
 {
     CGameObject::OnEndOverlap(self, other);
-
 }
 
 HRESULT CDroppedItem::Add_Component()
@@ -153,7 +151,6 @@ HRESULT CDroppedItem::Add_Component()
     NULL_CHECK_RETURN(m_TextureCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ COMPONENTTYPE::TEX_ITEM, m_TextureCom });
-
 
     // RectCol Componet
     m_BoxColCom = CreateProtoComponent<CBoxCollider>(this, COMPONENTTYPE::BOX_COLL);

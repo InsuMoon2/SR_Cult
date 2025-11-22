@@ -12,8 +12,7 @@ class CCombatStat;
 class CState;
 END
 
-class CMenuChar :
-    public CGameObject
+class CMenuChar : public CGameObject
 {
 private:
     explicit CMenuChar(DEVICE graphicDev);
@@ -38,15 +37,15 @@ public:
     void OnEndOverlap(CCollider* self, CCollider* other) override;
 
 private:
-    CRcTex* m_BufferCom;
+    CRcTex*     m_BufferCom;
     CTransform* m_TransformCom;
-    CTexture* m_TextureCom;
-    CAnimator* m_AnimatorCom;
-    CState* m_StateCom;
+    CTexture*   m_TextureCom;
+    CAnimator*  m_AnimatorCom;
+    CState*     m_StateCom;
+
 public:
     static CMenuChar* Create(DEVICE graphicDev);
 
-protected:
+private:
     void Free() override;
 };
-

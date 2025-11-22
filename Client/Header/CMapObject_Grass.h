@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include "CMapObjectBase.h"
 
 class CMapObject_Grass : public CMapObjectBase
@@ -20,6 +19,6 @@ public:
 
     static CMapObject_Grass* Create(DEVICE graphicDev);
 
-protected:
+private:
     void Free() override;
 };
