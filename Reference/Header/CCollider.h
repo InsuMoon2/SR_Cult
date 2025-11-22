@@ -41,9 +41,13 @@ public:
     // Sphere vs Sphere
     static bool CheckCollisionSphere2Sphere(CSphereCollider* s1, CSphereCollider* s2);
 
-    // TODO : 충돌처리 조건 더 필요하면 추가하기
+protected:
+    void Free() override;
 
 protected:
+    
+    // TODO : 충돌처리 조건 더 필요하면 추가하기
+
     COLLIDERTYPE m_ColliderType;
     bool         m_ShowDebug = true;      // 디버그 렌더링 여부
 

@@ -18,7 +18,6 @@ public:
     Item*    GetItemById(int id);
     ItemType StringToItemType(string s);
     wstring  ToWString(const string& str);
-
     wstring Utf8ToWstring(const string& str);
 
     const vector<Item>& GetVector() const { return m_vecItems; }
