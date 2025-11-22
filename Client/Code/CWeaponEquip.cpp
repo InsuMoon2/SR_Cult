@@ -7,7 +7,8 @@
 CWeaponEquip::CWeaponEquip(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_iCurrentWeaponID(-1),
-      m_iCurrentWeaponSlot{}
+      m_iCurrentWeaponSlot{},
+      m_WeaponEquipped(false)
 {
     // 빈 슬롯 시작이 -1이면, -1로 맞추는게 안전함.
     m_iCurrentWeaponSlot.itemInst.itemId = -1;
@@ -17,7 +18,8 @@ CWeaponEquip::CWeaponEquip(DEVICE graphicDev)
 CWeaponEquip::CWeaponEquip(const CWeaponEquip& rhs)
     : CComponent(rhs),
       m_iCurrentWeaponID(-1),
-      m_iCurrentWeaponSlot{}
+      m_iCurrentWeaponSlot{},
+      m_WeaponEquipped(false)
 {
     m_iCurrentWeaponSlot.itemInst.itemId = -1;
     m_iCurrentWeaponSlot.count = 0;

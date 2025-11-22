@@ -239,6 +239,11 @@ _uint CLoading::Loading_ForState()
         COMPONENTTYPE::TEX_UIICON, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec1))))
         return E_FAIL;
 
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_UI_SKILLCOUNT, CTexture::Create(m_GraphicDev, TEX_NORMAL,
+            L"../Bin/Resource/Texture/UI/PlayerState/Skill/Skillcount%d.png",2))))
+        return E_FAIL;
+
 #pragma endregion
 
     m_LoadingText = L"Etc LOADING..........";

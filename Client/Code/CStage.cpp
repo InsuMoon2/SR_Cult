@@ -19,6 +19,7 @@
 #include "CUIWeapon.h"
 #include "ItemInstance.h"
 #include "CUIIcon.h"
+#include "CUISKillCount.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),
@@ -215,15 +216,24 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
         layer->Add_GameObject(OBJTYPE::UI, gameObject),
         L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIWeapon) failed");
 
-    CUIWeapon* uiweapon = dynamic_cast<CUIWeapon*>(gameObject);
+    //왼쪽 상단 스킬 아이콘 UI
+    CUIIcon* pgameObject = CUIIcon::Create(m_GraphicDev);
+    pgameObject->Set_TextureIndex(1);
+    pgameObject->Get_Transform()->Set_Pos(-535.f, 260.f, 0.f);
+    pgameObject->Get_Transform()->Set_Scale(13.5f, 15.f, 0.f);
 
-
-    CUIIcon* pGameObject = CUIIcon::Create(m_GraphicDev);
-    pGameObject->Set_TextureIndex(1);
-    pGameObject->Get_Transform()->Set_Scale(262.f, 143.f, 1.f);
     FAILED_CHECK_MSG(
-        layer->Add_GameObject(OBJTYPE::UI, gameObject),
-        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIIcon) failed");
+    layer->Add_GameObject(OBJTYPE::UI, pgameObject),
+    L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIIcon) failed");
+
+    CUISkillCount* uiSkillCount = CUISkillCount::Create(m_GraphicDev);
+    
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::UI, uiSkillCount),
+        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUISKillCount) failed");
+
+
+
     m_Layers.insert({ layerType, layer });
 
     return S_OK;

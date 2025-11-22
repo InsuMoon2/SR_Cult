@@ -196,10 +196,12 @@
     <ClInclude Include="..\Header\CTerrainRenderer.h" />
     <ClInclude Include="..\Header\CTestMonster.h" />
     <ClInclude Include="..\Header\CTerrain.h" />
+    <ClInclude Include="..\Header\CUIInventoryCell.h" />
     <ClInclude Include="..\Header\CUICircle.h" />
     <ClInclude Include="..\Header\CUIHeartBar.h" />
     <ClInclude Include="..\Header\CUIIcon.h" />
     <ClInclude Include="..\Header\CUIPlayerPanel.h" />
+    <ClInclude Include="..\Header\CUISkillCount.h" />
     <ClInclude Include="..\Header\CUIWeapon.h" />
     <ClInclude Include="..\Header\CWeaponEquip.h" />
     <ClInclude Include="..\Header\ItemData.h" />
@@ -236,11 +238,13 @@
     <ClCompile Include="..\Code\CTerrainRenderer.cpp" />
     <ClCompile Include="..\Code\CTestMonster.cpp" />
     <ClCompile Include="..\Code\CTerrain.cpp" />
+    <ClCompile Include="..\Code\CUIInventoryCell.cpp" />
     <ClCompile Include="..\Code\CUICircle.cpp" />
     <ClCompile Include="..\Code\CUIHeartBar.cpp" />
     <ClCompile Include="..\Code\CUIIcon.cpp" />
     <ClCompile Include="..\Code\CUIPlayerPanel.cpp" />
     <ClCompile Include="..\Code\CUIMp.cpp" />
+    <ClCompile Include="..\Code\CUISkillCount.cpp" />
     <ClCompile Include="..\Code\CUIWeapon.cpp" />
     <ClCompile Include="..\Code\CWeaponEquip.cpp" />
     <ClCompile Include="Client.cpp" />

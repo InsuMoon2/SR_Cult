@@ -61,9 +61,6 @@
     <Filter Include="97. Component">
       <UniqueIdentifier>{9095604f-165d-433a-a8a8-f4b8f34e6c89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. UI\01. UI\04. UI">
-      <UniqueIdentifier>{f5ba0def-b59a-4d45-9d5e-3212b4671db6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Scene">
       <UniqueIdentifier>{3f93eee2-8a00-49f0-b535-bb50e2584051}</UniqueIdentifier>
     </Filter>
@@ -126,6 +123,12 @@
     </Filter>
     <Filter Include="97. Component\02. Terrain">
       <UniqueIdentifier>{a82a3041-8adf-4ea9-b83c-573792a7e93c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\01. UI\04. UISkillCount">
+      <UniqueIdentifier>{f5ba0def-b59a-4d45-9d5e-3212b4671db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\01. UI\05. UIInventoryCell">
+      <UniqueIdentifier>{4310f1dd-5ece-4cd9-9cba-8031db119dc0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -252,6 +255,12 @@
     <ClInclude Include="..\Header\CClient_EnumHelper.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\CUISkillCount.h">
+      <Filter>05. UI\01. UI\04. UISkillCount</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CUIInventoryCell.h">
+      <Filter>05. UI\01. UI\05. UIInventoryCell</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -358,6 +367,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\CClient_EnumHelper.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUISkillCount.cpp">
+      <Filter>05. UI\01. UI\04. UISkillCount</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CUIInventoryCell.cpp">
+      <Filter>05. UI\01. UI\05. UIInventoryCell</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
