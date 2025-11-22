@@ -138,7 +138,7 @@ void CManagement::Commit_ChangeScene()
 void CManagement::Free()
 {
     Safe_Release(m_Scene);
+    Safe_Release(m_NextScene);
     Safe_Release(m_PersistentPlayer);
     Safe_Release(m_PersistentCamera);
-    Safe_Release(m_NextScene);
 }
