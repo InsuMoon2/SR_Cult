@@ -1,6 +1,11 @@
 ﻿#pragma once
 
 #include "CBase.h"
+#include "CMapObjectBase.h"
+#include "Engine_Enum.h"
+
+class CMapObjectBase;
+class CMapObjectGrass;
 
 BEGIN(Engine)
 class CEditContext;
@@ -16,12 +21,19 @@ private:
     virtual ~CMainEditorMgr();
 
 public:
-    void Set_EditContext(CEditContext* ctx);
+    void Ready_MainEditor(DEVICE graphicDev, CEditContext* ctx);
 
     // 매 프레임 ImGui로 메인 에디터 창 그리는 부분
-    void Render(); 
+    void Render_MainEditor();
+
+    // MapObject
+    void Update_MapObjectPlacement(const _float& timeDelta);
+    void Render_MapObjectWindow();
+    bool Get_MouseWorldPosOnTerrain(_vec3& outPos);
 
 private:
+    void Set_EditContext(CEditContext* ctx);
+
     void Render_Hierarchy();
     void Render_Inspector();
 
@@ -30,10 +42,19 @@ private:
 
     void Render_SelectComponent();
 
+
+protected:
     virtual void Free() override;
 
 private:
-    CEditContext* m_Context;
+    DEVICE m_GraphicDev = nullptr;
+
+    CEditContext* m_Context = nullptr;
+
+    // MapObject 배치
+    MAPOBJTYPE      m_SelectedMapObjType = MAPOBJTYPE::MAPOBJEND;
+    CMapObjectBase* m_PreviewMapObject = nullptr;
+    bool            m_PlacingMapObject = false;
 
 };
 

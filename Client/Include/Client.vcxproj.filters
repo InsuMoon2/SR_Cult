@@ -201,12 +201,6 @@
     <ClInclude Include="..\Header\CHumanMonster.h">
       <Filter>03. GameObject\02. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CMapObjectBase.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\CMapObject_Grass.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\CUIMp.h">
       <Filter>05. UI\01. UI\02. UIMp</Filter>
     </ClInclude>
@@ -249,7 +243,13 @@
     <ClInclude Include="..\Header\CTerrainRenderer.h">
       <Filter>97. Component\02. Terrain</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CClient_EnumHelper.h">
+    <ClInclude Include="..\Header\CMapObject_Grass.h">
+      <Filter>03. GameObject\09. MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CMapObjectBase.h">
+      <Filter>03. GameObject\09. MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\CClient_CreateHelper.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -311,9 +311,6 @@
     <ClCompile Include="..\Code\CHumanMonster.cpp">
       <Filter>03. GameObject\02. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\CUIMp.cpp">
       <Filter>05. UI\01. UI\02. UIMp</Filter>
     </ClCompile>
@@ -325,9 +322,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\CUIWeapon.cpp">
       <Filter>05. UI\01. UI\03. UIWeapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\CMapObjectBase.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\CMapObjectBase.cpp">
       <Filter>02. GameObject\09. MapObject</Filter>
@@ -356,8 +350,11 @@
     <ClCompile Include="..\Code\CTerrainRenderer.cpp">
       <Filter>97. Component\02. Terrain</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CClient_EnumHelper.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="..\Code\CMapObject_Grass.cpp">
+      <Filter>03. GameObject\09. MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CMapObjectBase.cpp">
+      <Filter>03. GameObject\09. MapObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -64,6 +64,7 @@ enum class OBJTYPE
     BOSS2,
     HUMANMONSTER,
     TERRAIN,
+    PLACEMENT,
 
     OBJ_END
 };
@@ -146,7 +147,6 @@ enum class ACTORDIR
 
     PLAYERDIR_END
 };
-
 
 enum class SCENETYPE
 {

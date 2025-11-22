@@ -40,9 +40,8 @@ HRESULT CMainApp::Ready_MainApp()
         CImGuiManager::GetInstance()->InitImGui(g_hWnd, m_GraphicDev);
 
         CEditContext* ctx = CEditContext::Create();
-        CMainEditorMgr::GetInstance()->Set_EditContext(ctx);
+        CMainEditorMgr::GetInstance()->Ready_MainEditor(m_GraphicDev, ctx);
     }
-    
 
 #pragma region 데이터 파싱 테스트
 
@@ -67,8 +66,8 @@ int CMainApp::Update_MainApp(const float& timeDelta)
     // Imgui
     {
         CImGuiManager::GetInstance()->Update();
-        /*ImGui::Begin("New Windows");
-        ImGui::End();*/
+
+        CMainEditorMgr::GetInstance()->Update_MapObjectPlacement(timeDelta);
     }
 
     return 0;
@@ -85,8 +84,12 @@ void CMainApp::Render_MainApp()
 
     m_ManagementClass->Render_Scene(m_GraphicDev);
 
-    CMainEditorMgr::GetInstance()->Render();
-    CImGuiManager::GetInstance()->Render();
+    CMainEditorMgr::GetInstance()->Render_MainEditor();
+
+    // ImGui
+    {
+        CImGuiManager::GetInstance()->Render();
+    }
 
     m_DeviceClass->Render_End();
 }

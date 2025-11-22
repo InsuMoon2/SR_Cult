@@ -15,13 +15,14 @@
 #include "CBoxCollider.h"
 #include "CInventory.h"
 #include "CWeaponEquip.h"
+#include "CClient_CreateHelper.h"
+#include "CDInputMgr.h"
+#include "CLayer.h"
 
 IMPLEMENT_SINGLETON(CMainEditorMgr)
 
 CMainEditorMgr::CMainEditorMgr()
-    : m_Context(nullptr)
-{
-}
+{ }
 
 CMainEditorMgr::~CMainEditorMgr()
 {
@@ -35,7 +36,7 @@ void CMainEditorMgr::Set_EditContext(CEditContext* ctx)
     m_Context = ctx;
 }
 
-void CMainEditorMgr::Render()
+void CMainEditorMgr::Render_MainEditor()
 {
     if (!m_Context)
         return;
@@ -46,6 +47,12 @@ void CMainEditorMgr::Render()
 
     else
         MSG_BOX("Scene Is Where ? ");
+
+    // 프리뷰 오브젝트 렌더
+    if (m_PlacingMapObject && m_PreviewMapObject)
+    {
+        m_PreviewMapObject->Render_GameObject();
+    }
 
     ImGui::Begin("MainEditor");
 
@@ -62,6 +69,16 @@ void CMainEditorMgr::Render()
     ImGui::EndChild();
 
     ImGui::End();
+
+    // MapObject
+    Render_MapObjectWindow();
+}
+
+void CMainEditorMgr::Ready_MainEditor(DEVICE graphicDev, CEditContext* ctx)
+{
+    m_GraphicDev = graphicDev;
+
+    Set_EditContext(ctx);
 }
 
 void CMainEditorMgr::Render_Hierarchy()
@@ -282,11 +299,87 @@ void CMainEditorMgr::Render_SelectComponent()
 
         // 다른 컴포넌트 타입 ImGui에 보여줄거 있으면 추가하기
 
-
         }
-
-
     }
+}
+
+void CMainEditorMgr::Update_MapObjectPlacement(const _float& timeDelta)
+{
+    if (!m_PlacingMapObject || m_PreviewMapObject == nullptr)
+        return;
+
+    // 마우스 -> 월드좌표
+    _vec3 worldPos;
+    if (Get_MouseWorldPosOnTerrain(worldPos))
+    {
+        m_PreviewMapObject->Set_WorldPos(worldPos);
+    }
+
+    // 좌클릭 하면 배치하기
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(VK_LBUTTON) & 0x80)
+    {
+        CScene* scene = CManagement::GetInstance()->Get_Scene();
+        if (scene)
+        {
+            CLayer* layer = scene->Get_Layer(LAYERTYPE::ENVIRONMENT);
+            if (layer)
+            {
+                CMapObjectBase* newObj = CreateMapObjectType(m_GraphicDev, m_SelectedMapObjType);
+                if (newObj)
+                {
+                    newObj->Set_WorldPos(worldPos);
+                    layer->Add_GameObject(OBJTYPE::PLACEMENT, newObj);
+
+                }
+            }
+        }
+    }
+
+    // 우클릭 : 배치 종료
+    if (CDInputMgr::GetInstance()->Get_DIKeyState(VK_LBUTTON) & 0x80 ||
+        CDInputMgr::GetInstance()->Get_DIKeyState(VK_ESCAPE))
+    {
+        m_PlacingMapObject = false;
+        Safe_Release(m_PreviewMapObject);
+    }
+}
+
+void CMainEditorMgr::Render_MapObjectWindow()
+{
+    ImGui::Begin("Map Objects");
+
+    // Grass 풀때기만 일단
+    if (ImGui::Selectable("Grass", m_SelectedMapObjType == MAPOBJTYPE::GRASS))
+    {
+        m_SelectedMapObjType = MAPOBJTYPE::GRASS;
+
+        Safe_Release(m_PreviewMapObject);
+
+        // 새 프리뷰 설정. 투명하게도 할지?
+        m_PreviewMapObject = CreateMapObjectType(m_GraphicDev, m_SelectedMapObjType);
+        m_PlacingMapObject = (m_PreviewMapObject != nullptr); // m_PreviewMapObject이 있으면 true
+    }
+
+    // 추가 예정) Rock, Tree 등등
+
+    // 배치 취소
+    if (m_PlacingMapObject)
+    {
+        m_PlacingMapObject = false;
+        Safe_Release(m_PreviewMapObject);
+    }
+
+    ImGui::End();
+
+}
+
+bool CMainEditorMgr::Get_MouseWorldPosOnTerrain(_vec3& outPos)
+{
+    // TODO : 마우스 월드좌표로 변환하기. 일단은 상수값으로 실험
+
+    outPos = _vec3(0.f, 0.f, 0.f);
+
+    return true;
 }
 
 void CMainEditorMgr::Free()

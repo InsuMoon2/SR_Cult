@@ -23,7 +23,6 @@
 #include "ItemData.h"
 #include "ItemInstance.h"
 #include "CWeaponEquip.h"
-#include "CClient_EnumHelper.h"
 
 CLoading::CLoading(DEVICE pGraphicDev)
     : m_GraphicDev(pGraphicDev),
@@ -230,14 +229,18 @@ _uint CLoading::Loading_ForState()
         return E_FAIL;
 
     //UIICON 텍스쳐
-    
     vector<wstring> pathVec1;
     pathVec1.push_back(L"../Bin/Resource/Texture/UI/MainMenu/Title0.png");
-
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
         COMPONENTTYPE::TEX_UIICON, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec1))))
         return E_FAIL;
+
+    // Grass [풀때기]
+    if (FAILED(pProtoMgr->Ready_Prototype(
+        COMPONENTTYPE::TEX_GRASS, CTexture::Create(m_GraphicDev, TEXTUREID::TEX_NORMAL,
+            L"../Bin/Resource/Texture/MapObject/WeedShrub/WeedShrub%d", 20))))
+    return E_FAIL;
 
 #pragma endregion
 

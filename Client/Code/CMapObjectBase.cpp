@@ -86,6 +86,8 @@ HRESULT CMapObjectBase::Add_BaseComponent(COMPONENTTYPE InType)
     NULL_CHECK_RETURN(m_BufferCom, E_FAIL);
 
     m_Components[ID_STATIC].insert({ InType, m_TextureCom });
+
+    return S_OK;
 }
 
 void CMapObjectBase::Free()
