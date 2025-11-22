@@ -17,7 +17,8 @@ public:
     void Unequip_Weapon();
     void ApplyWeaponStat(Item* item);
     void RemoveWeaponStat();
-    //int             Get_CurrentWeaponID() { return m_iCurrentWeaponID; }
+    bool Get_WeaponEquipped() { return m_WeaponEquipped; }
+    int             Get_CurrentWeaponID() { return m_iCurrentWeaponID; }
 
     static CWeaponEquip* Create(DEVICE graphicDev);
     CComponent*          Clone() override;
@@ -27,4 +28,5 @@ protected:
 public:
     int           m_iCurrentWeaponID;
     InventorySlot m_iCurrentWeaponSlot;
+    bool          m_WeaponEquipped;
 };

@@ -7,13 +7,15 @@
 CWeaponEquip::CWeaponEquip(DEVICE graphicDev)
     : CComponent(graphicDev),
       m_iCurrentWeaponID(0),
-      m_iCurrentWeaponSlot{}
+      m_iCurrentWeaponSlot{},
+      m_WeaponEquipped(false)
 { }
 
 CWeaponEquip::CWeaponEquip(const CWeaponEquip& rhs)
     : CComponent(rhs),
       m_iCurrentWeaponID(0),
-      m_iCurrentWeaponSlot{}
+      m_iCurrentWeaponSlot{},
+      m_WeaponEquipped(false)
 { }
 
 CWeaponEquip::~CWeaponEquip()
@@ -31,6 +33,9 @@ void CWeaponEquip::Equip_Weapon(ItemInstance itemInst)
 
     if (itemData)
         ApplyWeaponStat(itemData);
+
+    m_WeaponEquipped = true;
+
     cout << "Weapon Equipped" << endl;
 }
 
@@ -42,6 +47,7 @@ void CWeaponEquip::Unequip_Weapon()
     RemoveWeaponStat();
 
     m_iCurrentWeaponID = -1;
+    m_WeaponEquipped = false;
 }
 
 void CWeaponEquip::ApplyWeaponStat(Item* item)

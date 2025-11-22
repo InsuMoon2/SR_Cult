@@ -211,7 +211,7 @@ _uint CLoading::Loading_ForState()
     if (FAILED(CProtoMgr::GetInstance()
         ->Ready_Prototype(COMPONENTTYPE::TEX_UI_WEAPON,
             Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL,
-                L"../Bin/Resource/Texture/UI/PlayerState/Icon/Weapon_Sword.png", 1))))
+                L"../Bin/Resource/Texture/UI/PlayerState/Icon/Weapon%d.png", 2))))
         return E_FAIL;
 
 
@@ -232,7 +232,7 @@ _uint CLoading::Loading_ForState()
     
     vector<wstring> pathVec1;
     pathVec1.push_back(L"../Bin/Resource/Texture/UI/MainMenu/Title0.png");
-
+	pathVec1.push_back(L"../Bin/Resource/Texture/UI/PlayerState/Sermon/Sermon_Icon.png");
 
     if (FAILED(CProtoMgr::GetInstance()->Ready_Prototype(
         COMPONENTTYPE::TEX_UIICON, Engine::CTexture::Create(m_GraphicDev, TEX_NORMAL, pathVec1))))

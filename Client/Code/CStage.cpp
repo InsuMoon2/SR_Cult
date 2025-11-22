@@ -18,6 +18,7 @@
 #include "CUIPlayerPanel.h"
 #include "CUIWeapon.h"
 #include "ItemInstance.h"
+#include "CUIIcon.h"
 
 CStage::CStage(DEVICE graphicDev)
     : Engine::CScene(graphicDev),
@@ -216,6 +217,13 @@ HRESULT CStage::Ready_UI_Layer(LAYERTYPE layerType)
 
     CUIWeapon* uiweapon = dynamic_cast<CUIWeapon*>(gameObject);
 
+
+    CUIIcon* pGameObject = CUIIcon::Create(m_GraphicDev);
+    pGameObject->Set_TextureIndex(1);
+    pGameObject->Get_Transform()->Set_Scale(262.f, 143.f, 1.f);
+    FAILED_CHECK_MSG(
+        layer->Add_GameObject(OBJTYPE::UI, gameObject),
+        L"CStage::Ready_UI_Layer() failed: CLayer::Add_GameObject(CUIIcon) failed");
     m_Layers.insert({ layerType, layer });
 
     return S_OK;
